@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "antfu.iconify",
+    "antfu.unocss",
+    "esbenp.prettier-vscode",
+    "samverschueren.linter-xo"
+  ]
+}
