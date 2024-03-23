@@ -14,16 +14,16 @@ const TextMessage: ParentComponent<TextMessageProps> = (props) => {
   return (
     <Box
       color={props.color ?? 'default'}
-      class='w-fit relative'
+      class='w-fit relative flex flex-row'
       classList={{
         'opacity-50': props.status === 'sending',
       }}
     >
-      {props.children}
+      <div>{props.children}</div>
       <Text
-        as='span'
+        as='div'
         size='smaller'
-        class='ml-2 float-right w-fit inline-flex flex-row gap-0.5 items-center translate-y-3'
+        class='ml-2 inline-flex flex-row gap-0.5 items-end justify-center translate-y-1'
       >
         <Show
           when={props.status === 'read'}

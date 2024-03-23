@@ -18,7 +18,6 @@ export const createTypings = () => {
   const [typings, setTypings] = createStore<Record<string, string[]>>();
 
   const onTyping = (event: MatrixEvent, member: RoomMember) => {
-    console.log(member.roomId, event, member);
     if (member.typing) {
       setTypings(member.roomId, (ids) => {
         const data = ids ?? [];

@@ -1,6 +1,5 @@
 import type { MatrixClient as BaseMatrixClient, User } from 'matrix-js-sdk';
 import * as sdk from 'matrix-js-sdk';
-import { type Accessor, type Setter, createSignal } from 'solid-js';
 import { logger } from 'matrix-js-sdk/lib/logger';
 import RoomList, {
   RoomListEvents,
@@ -12,10 +11,12 @@ logger.disableAll();
 
 export enum ClientEvents {
   Started = 'MatrixClient.Started',
+  SyncState = 'MatrixClient.SyncState',
 }
 
 export type ClientEventsHandlerMap = {
   [ClientEvents.Started]: () => void;
+  [ClientEvents.SyncState]: (state: sdk.SyncState) => void;
 };
 
 export function createNewSessionId(): string {
@@ -29,12 +30,10 @@ export class MatrixClient extends sdk.TypedEventEmitter<
   ClientEvents | RoomListEvents,
   ClientEventsHandlerMap & RoomListEventsHandlerMap
 > {
-  public error: Accessor<boolean>;
   public done = false;
   public readonly id: string;
   public readonly userId: string;
   private holdClient?: BaseMatrixClient;
-  private readonly setError: Setter<boolean>;
   private readonly homeserver: string;
   private readonly accessToken: string;
   private readonly deviceId?: string;
@@ -75,9 +74,6 @@ export class MatrixClient extends sdk.TypedEventEmitter<
     this.homeserver = homeserver;
     this.accessToken = accessToken;
     this.userId = userId;
-    const [error, setError] = createSignal(false);
-    this.error = error;
-    this.setError = setError;
     this.deviceId = deviceId;
   }
 
@@ -171,6 +167,7 @@ export class MatrixClient extends sdk.TypedEventEmitter<
 
   setupSync() {
     this.client.on(sdk.ClientEvent.Sync, (state, prev) => {
+      this.emit(ClientEvents.SyncState, state);
       // eslint-disable-next-line default-case
       switch (state) {
         case sdk.SyncState.Prepared: {
@@ -187,7 +184,6 @@ export class MatrixClient extends sdk.TypedEventEmitter<
 
         case sdk.SyncState.Error: {
           console.log(`=> User ID: ${this.userId} State: ${state}`);
-          this.setError(true);
           break;
         }
 
@@ -197,7 +193,6 @@ export class MatrixClient extends sdk.TypedEventEmitter<
         }
 
         case sdk.SyncState.Syncing: {
-          this.setError(false);
           break;
         }
 

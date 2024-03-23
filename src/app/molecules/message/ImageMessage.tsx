@@ -21,7 +21,7 @@ const ImageMessage: Component<ImageBoxProps> = (props) => {
         'opacity-50': props.status === 'sending',
       }}
     >
-      <img {...image} class='rounded-lg max-w-2/3' />
+      <img {...image} class='rounded-lg' />
       <Text
         as='span'
         size='smaller'
