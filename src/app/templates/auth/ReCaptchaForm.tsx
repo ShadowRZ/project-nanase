@@ -1,28 +1,28 @@
-import { type Component, Show, onMount } from 'solid-js'
-import { createScriptLoader } from '@solid-primitives/script-loader'
-import { type FlowData } from '~/lib/auth'
-import UserFocusDuotone from '~icons/ph/user-focus-duotone'
-import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg'
+import { type Component, Show, onMount } from 'solid-js';
+import { createScriptLoader } from '@solid-primitives/script-loader';
+import { type FlowData } from '~/lib/auth';
+import UserFocusDuotone from '~icons/ph/user-focus-duotone';
+import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
 
-const GRECAPTCHA_LOAD_CALLBACK = '__PROJECT_NANASE_GRECAPTCHA_LOADED__'
-const GRECAPTCHA_LOADER_URL = `https://www.recaptcha.net/recaptcha/api.js?onload=${GRECAPTCHA_LOAD_CALLBACK}&render=explicit`
+const GRECAPTCHA_LOAD_CALLBACK = '__PROJECT_NANASE_GRECAPTCHA_LOADED__';
+const GRECAPTCHA_LOADER_URL = `https://www.recaptcha.net/recaptcha/api.js?onload=${GRECAPTCHA_LOAD_CALLBACK}&render=explicit`;
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface Window {
-    [GRECAPTCHA_LOAD_CALLBACK]: () => void
+    [GRECAPTCHA_LOAD_CALLBACK]: () => void;
   }
 }
 
 type ReCaptchaFormProps = {
-  sitekey: string
-  session?: string
-  finishFlow: (auth: FlowData) => void
-  busy: boolean
-}
+  sitekey: string;
+  session?: string;
+  finishFlow: (auth: FlowData) => void;
+  busy: boolean;
+};
 
 const ReCaptchaForm: Component<ReCaptchaFormProps> = (props) => {
-  let ref!: HTMLDivElement
+  let ref!: HTMLDivElement;
   const renderCaptcha = (): void => {
     window.grecaptcha.render(ref, {
       sitekey: props.sitekey,
@@ -31,21 +31,21 @@ const ReCaptchaForm: Component<ReCaptchaFormProps> = (props) => {
           type: 'm.login.recaptcha',
           response,
           session: props.session,
-        })
+        });
       },
-    })
-  }
+    });
+  };
 
   onMount(() => {
     if (window.grecaptcha === undefined) {
-      window[GRECAPTCHA_LOAD_CALLBACK] = renderCaptcha
+      window[GRECAPTCHA_LOAD_CALLBACK] = renderCaptcha;
       createScriptLoader({
         src: GRECAPTCHA_LOADER_URL,
-      })
+      });
     } else {
-      renderCaptcha()
+      renderCaptcha();
     }
-  })
+  });
 
   return (
     <div class='mt-2 flex flex-col gap-2'>
@@ -70,7 +70,7 @@ const ReCaptchaForm: Component<ReCaptchaFormProps> = (props) => {
         </p>
       </Show>
     </div>
-  )
-}
+  );
+};
 
-export default ReCaptchaForm
+export default ReCaptchaForm;

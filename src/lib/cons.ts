@@ -3,6 +3,6 @@ const cons = {
   internal: {
     COMMAND_MENTION_TYPE_ID: 'project-nanase/command',
   },
-}
+};
 
-export default cons
+export default cons;

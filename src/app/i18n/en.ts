@@ -16,4 +16,4 @@ export const dict = {
   confirm_logout: 'Logout',
   confirm: 'Confirm',
   cancel: 'Cancel',
-}
+};

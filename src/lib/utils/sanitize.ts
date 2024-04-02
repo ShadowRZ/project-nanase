@@ -1,8 +1,8 @@
 // https://spec.matrix.org/latest/client-server-api/#mroommessage-msgtypes
 // https://github.com/cinnyapp/cinny/blob/689adde8ae148d2de76bab0d11d7e0e8f35b7439/src/util/sanitize.js
-import sanitizeHtml, { type Attributes, type Tag } from 'sanitize-html'
+import sanitizeHtml, { type Attributes, type Tag } from 'sanitize-html';
 
-const MAX_NESTING_DEPTH = 100
+const MAX_NESTING_DEPTH = 100;
 
 const ALLOWED_HTML_TAGS = [
   'font',
@@ -44,9 +44,9 @@ const ALLOWED_HTML_TAGS = [
   'img',
   'details',
   'summary',
-]
+];
 
-const URL_SCHEMES = ['https', 'http', 'ftp', 'mailto', 'magnet']
+const URL_SCHEMES = ['https', 'http', 'ftp', 'mailto', 'magnet'];
 
 const TAG_ALLOWED_ATTRS = {
   font: ['style', 'data-mx-bg-color', 'data-mx-color', 'color'],
@@ -62,39 +62,39 @@ const TAG_ALLOWED_ATTRS = {
   img: ['width', 'height', 'alt', 'title', 'src', 'data-mx-emoticon'],
   ol: ['start'],
   code: ['class'],
-}
+};
 
 const TAG_ALLOWED_SCHEMES = {
   img: ['mxc'],
   a: URL_SCHEMES,
-}
+};
 
 const TAG_ALLOWED_CLASSES = {
   code: ['language-*'],
-}
+};
 
 function transformAnchorTag(tagName: string, attribs: Attributes): Tag {
   const userLink = /^https?:\/\/matrix.to\/#\/(@.+:.+)/.exec(
     decodeURIComponent(attribs.href)
-  )
+  );
   if (userLink !== null) {
     // Convert user link to pill
-    const userId = userLink[1]
+    const userId = userLink[1];
     const pill = {
       tagName: 'span',
       attribs: {
         'data-project-nanase-pill': userId,
       },
-    }
-    return pill
+    };
+    return pill;
   }
 
   const rex =
-    /[\u{1F300}-\u{1F5FF}\u{1F900}-\u{1F9FF}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F1E6}-\u{1F1FF}\u{1F191}-\u{1F251}\u{1F004}\u{1F0CF}\u{1F170}-\u{1F171}\u{1F17E}-\u{1F17F}\u{1F18E}\u{3030}\u{2B50}\u{2B55}\u{2934}-\u{2935}\u{2B05}-\u{2B07}\u{2B1B}-\u{2B1C}\u{3297}\u{3299}\u{303D}\u{00A9}\u{00AE}\u{2122}\u{23F3}\u{24C2}\u{23E9}-\u{23EF}\u{25B6}\u{23F8}-\u{23FA}]/gu
+    /[\u{1F300}-\u{1F5FF}\u{1F900}-\u{1F9FF}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F1E6}-\u{1F1FF}\u{1F191}-\u{1F251}\u{1F004}\u{1F0CF}\u{1F170}-\u{1F171}\u{1F17E}-\u{1F17F}\u{1F18E}\u{3030}\u{2B50}\u{2B55}\u{2934}-\u{2935}\u{2B05}-\u{2B07}\u{2B1B}-\u{2B1C}\u{3297}\u{3299}\u{303D}\u{00A9}\u{00AE}\u{2122}\u{23F3}\u{24C2}\u{23E9}-\u{23EF}\u{25B6}\u{23F8}-\u{23FA}]/gu;
   const newHref = attribs.href.replaceAll(
     rex,
     (match) => `[e-${match.codePointAt(0)?.toString(16)}]`
-  )
+  );
 
   return {
     tagName,
@@ -104,7 +104,7 @@ function transformAnchorTag(tagName: string, attribs: Attributes): Tag {
       rel: 'noopener',
       target: '_blank',
     },
-  }
+  };
 }
 
 export function sanitizeMatrixHtml(html: string) {
@@ -135,5 +135,5 @@ export function sanitizeMatrixHtml(html: string) {
       'mx-reply', // Rich Reply
     ],
     nestingLimit: MAX_NESTING_DEPTH,
-  })
+  });
 }
