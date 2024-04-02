@@ -200,7 +200,7 @@ const MemberContent: Component<Omit<EventProps, 'timelineSet'>> = (props) => {
       timestamp={props.event.localTimestamp}
     >
       {' '}
-      {renderMemberContent(event())}
+      {renderMemberContent(event()) ?? 'has an unrecognized member change.'}
     </StateMessageShell>
   );
 };
@@ -293,6 +293,11 @@ const TimelineItem: Component<EventProps> = (props) => {
         </Match>
         <Match when={type() === 'm.room.member'}>
           <MemberContent roomId={roomId()} event={event()} />
+        </Match>
+        <Match when={type() === 'm.room.create'}>
+          <StateMessage roomId={roomId()} event={event()}>
+            created the room.
+          </StateMessage>
         </Match>
       </Switch>
     </div>
