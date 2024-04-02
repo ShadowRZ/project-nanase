@@ -32,3 +32,7 @@ export function getEditedEvent(
     .sort((m1, m2) => m2.getTs() - m1.getTs())
     .find((ev) => ev.getSender() === event.getSender());
 }
+
+export const isMembershipChanged = (event: MatrixEvent): boolean =>
+  event.getContent().membership !== event.getPrevContent().membership ||
+  event.getContent().reason !== event.getPrevContent().reason;

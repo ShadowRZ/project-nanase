@@ -1,4 +1,4 @@
-import { Button, Image } from '@kobalte/core';
+import { Button } from '@kobalte/core';
 import {
   MsgType,
   type EventTimelineSet,
@@ -33,6 +33,7 @@ import {
   type Sticker,
 } from '~/types/event-content';
 import TrashDuotone from '~icons/ph/trash-duotone';
+import { renderMemberContent } from '~/app/utils/renderMemberContent';
 
 const RedactedMessage: Component = () => {
   return (
@@ -184,6 +185,26 @@ const StickerContent: Component<EventProps> = (props) => {
   );
 };
 
+const MemberContent: Component<Omit<EventProps, 'timelineSet'>> = (props) => {
+  const roomId = () => props.roomId;
+  const event = () => props.event;
+  const sender = () => event().getSender()!;
+  const { name, avatar } = getRoomScopedProfile(roomId(), sender());
+  const prevName = () => event().getPrevContent().displayname ?? name();
+
+  return (
+    <StateMessageShell
+      name={prevName()}
+      avatar={avatar()}
+      userId={sender()}
+      timestamp={props.event.localTimestamp}
+    >
+      {' '}
+      {renderMemberContent(event())}
+    </StateMessageShell>
+  );
+};
+
 const RoomMessage: ParentComponent<Omit<EventProps, 'timelineSet'>> = (
   props
 ) => {
@@ -214,6 +235,7 @@ const StateMessage: ParentComponent<Omit<EventProps, 'timelineSet'>> = (
       userId={sender()}
       timestamp={props.event.localTimestamp}
     >
+      {' '}
       {props.children}
     </StateMessageShell>
   );
@@ -268,6 +290,9 @@ const TimelineItem: Component<EventProps> = (props) => {
               </Show>
             </ErrorBoundary>
           </RoomMessage>
+        </Match>
+        <Match when={type() === 'm.room.member'}>
+          <MemberContent roomId={roomId()} event={event()} />
         </Match>
       </Switch>
     </div>

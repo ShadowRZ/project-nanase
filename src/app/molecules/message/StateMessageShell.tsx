@@ -15,7 +15,10 @@ const StateMessageShell: ParentComponent<MessageProps> = (props) => {
     <div class='pr-1 pl-4 flex flex-row items-center gap-2 overflow-hidden'>
       <Avatar size='small' src={props.avatar} />
       <Text font='italic' class='opacity-50 flex-1'>
-        {props.name ?? props.userId} {props.children}
+        <Text font='bold' as='span'>
+          {props.name ?? props.userId}
+        </Text>
+        {props.children}
       </Text>
       <Text size='small' class='opacity-50'>
         <Time timestamp={props.timestamp} />
