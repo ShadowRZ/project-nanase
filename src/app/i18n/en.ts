@@ -8,6 +8,7 @@ export const dict = {
   security: 'Security',
   devtools: 'Developer Tools',
   switch_user: 'Switch User',
+  view_source: 'View Source',
   logout: 'Logout',
   search: 'Search',
   logout_dialog_title: 'Logout?',

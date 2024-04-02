@@ -38,11 +38,11 @@ const ConfrimDialog: Component<DialogProps> = (props) => {
     >
       <AlertDialog.Portal>
         <AlertDialog.Overlay class='z-50 fixed inset-0 bg-black/25 animate-overlay-close ui-expanded:animate-overlay-open' />
-        <div class='fixed inset-0 z-50 flex items-center justify-center'>
+        <div class='fixed inset-0 z-50 flex items-center justify-center m-4'>
           <Panel
             style='bordered'
             as={AlertDialog.Content}
-            class='animate-dialog-close ui-expanded:animate-dialog-open p-4 mx-4 max-w-md w-full'
+            class='animate-dialog-close ui-expanded:animate-dialog-open p-4 max-w-md w-full max-h-full'
             onOpenAutoFocus={(ev: Event) => {
               ev.preventDefault();
             }}

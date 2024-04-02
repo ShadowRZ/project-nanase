@@ -28,27 +28,29 @@ const Dialog: ParentComponent<DialogProps> = (props) => {
       {...others}
     >
       <KDialog.Portal>
-        <KDialog.Overlay class='bg-black/50' />
-        <Panel
-          style='bordered'
-          as={KDialog.Content}
-          class='p-4 mx-4 max-w-md w-full'
-        >
-          <div class='flex flex-row gap-2 items-center mb-4'>
-            <span class='flex flex-col grow'>
-              <Text as={KDialog.Title} font='bold'>
-                {local.title}
-              </Text>
-              <Show when={local.description}>
-                <Text class='text-slate-500' as={KDialog.Description}>
-                  {local.description}
+        <KDialog.Overlay class='z-50 fixed inset-0 bg-black/25 animate-overlay-close ui-expanded:animate-overlay-open' />
+        <div class='fixed inset-0 z-50 flex items-center justify-center m-4'>
+          <Panel
+            style='bordered'
+            as={KDialog.Content}
+            class='animate-dialog-close ui-expanded:animate-dialog-open p-4 max-w-4xl w-full max-h-full overflow-hidden flex flex-col'
+          >
+            <div class='flex flex-row gap-2 items-center mb-4'>
+              <span class='flex flex-col grow'>
+                <Text as={KDialog.Title} font='bold'>
+                  {local.title}
                 </Text>
-              </Show>
-            </span>
-            <IconButton as={KDialog.CloseButton} type='normal' icon={XIcon} />
-          </div>
-          {local.children}
-        </Panel>
+                <Show when={local.description}>
+                  <Text class='text-slate-500' as={KDialog.Description}>
+                    {local.description}
+                  </Text>
+                </Show>
+              </span>
+              <IconButton as={KDialog.CloseButton} type='normal' icon={XIcon} />
+            </div>
+            {local.children}
+          </Panel>
+        </div>
       </KDialog.Portal>
     </KDialog.Root>
   );

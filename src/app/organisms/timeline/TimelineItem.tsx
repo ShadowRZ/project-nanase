@@ -14,7 +14,9 @@ import {
   createMemo,
   type Component,
   type ParentComponent,
+  createSignal,
 } from 'solid-js';
+import ViewSourceDialog from '../view-source/ViewSourceDialog';
 import Box from '~/app/atoms/box/Box';
 import { createReplyEvent } from '~/app/hooks/createReplyEvent';
 import CImageMessage from '~/app/molecules/message/ImageMessage';
@@ -305,37 +307,51 @@ const TimelineItem: Component<EventProps> = (props) => {
   const roomId = () => props.roomId;
   const event = () => props.event;
   const timelineSet = () => props.timelineSet;
-  const type = () => event().getWireType();
+  const sourceCode = createMemo(() => JSON.stringify(event().event, null, 2));
+
+  const [sourceOpen, setSourceOpen] = createSignal(false);
 
   return (
-    <ContextMenu.Root>
-      <ContextMenu.Trigger
-        as='div'
-        data-project-nanase-roomid={roomId()}
-        data-project-nanase-eventid={event().getId()}
-        class='ui-expanded:bg-slate-100 dark:ui-expanded:bg-slate-900 px-2 py-1'
-      >
-        <TimelineItemContent
-          roomId={roomId()}
-          event={event()}
-          timelineSet={timelineSet()}
-        />
-      </ContextMenu.Trigger>
-      <ContextMenu.Portal>
-        <Panel
-          style='bordered'
-          as={ContextMenu.Content}
-          class='z-5 animate-popup-close ui-expanded:animate-popup-open'
+    <>
+      <ContextMenu.Root>
+        <ContextMenu.Trigger
+          as='div'
+          data-project-nanase-roomid={roomId()}
+          data-project-nanase-eventid={event().getId()}
+          class='ui-expanded:bg-slate-100 dark:ui-expanded:bg-slate-900 px-2 py-1'
         >
-          <ContextMenu.Item class='rounded-t-lg px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'>
-            <ArrowBendUpLeftDuotone /> Reply
-          </ContextMenu.Item>
-          <ContextMenu.Item class='rounded-b-lg px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'>
-            <CodeDuotone /> View Source
-          </ContextMenu.Item>
-        </Panel>
-      </ContextMenu.Portal>
-    </ContextMenu.Root>
+          <TimelineItemContent
+            roomId={roomId()}
+            event={event()}
+            timelineSet={timelineSet()}
+          />
+        </ContextMenu.Trigger>
+        <ContextMenu.Portal>
+          <Panel
+            style='bordered'
+            as={ContextMenu.Content}
+            class='z-5 animate-popup-close ui-expanded:animate-popup-open'
+          >
+            <ContextMenu.Item class='rounded-t-lg px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'>
+              <ArrowBendUpLeftDuotone /> Reply
+            </ContextMenu.Item>
+            <ContextMenu.Item
+              onSelect={() => {
+                setSourceOpen(true);
+              }}
+              class='rounded-b-lg px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'
+            >
+              <CodeDuotone /> View Source
+            </ContextMenu.Item>
+          </Panel>
+        </ContextMenu.Portal>
+      </ContextMenu.Root>
+      <ViewSourceDialog
+        open={sourceOpen()}
+        onOpenChange={setSourceOpen}
+        content={sourceCode()}
+      />
+    </>
   );
 };
 
