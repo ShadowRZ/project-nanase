@@ -53,14 +53,17 @@ const RoomTimeline: Component<RoomTimelineProps> = (props) => {
   const scroll = createScrollPosition(() => timelineRef);
 
   createEffect(() => {
-    if (scroll.y <= 256) paginateBack().catch(() => {});
+    if (scroll.y <= 256 && events()?.at(0)?.getType() !== 'm.room.create')
+      paginateBack().catch(() => {});
   });
 
   return (
     <div ref={timelineRef} class='relative grow h-full overflow-y-auto'>
-      <div class='mt-1 px-2 py-1'>
-        <Placeholder />
-      </div>
+      <Show when={events()?.at(0)?.getType() !== 'm.room.create'}>
+        <div class='mt-1 px-2 py-1'>
+          <Placeholder />
+        </div>
+      </Show>
       <Show when={timelineSet() !== undefined}>
         <For each={events()}>
           {(event) => {
