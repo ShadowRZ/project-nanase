@@ -1,4 +1,4 @@
-import { Button } from '@kobalte/core';
+import { Button, ContextMenu } from '@kobalte/core';
 import {
   MsgType,
   type EventTimelineSet,
@@ -32,8 +32,11 @@ import {
   type MaybeFormattedMessage,
   type Sticker,
 } from '~/types/event-content';
-import TrashDuotone from '~icons/ph/trash-duotone';
 import { renderMemberContent } from '~/app/utils/renderMemberContent';
+import Panel from '~/app/atoms/panel/Panel';
+import TrashDuotone from '~icons/ph/trash-duotone';
+import ArrowBendUpLeftDuotone from '~icons/ph/arrow-bend-up-left-duotone';
+import CodeDuotone from '~icons/ph/code-duotone';
 
 const RedactedMessage: Component = () => {
   return (
@@ -108,7 +111,7 @@ const MessageContent: Component<EventProps> = (props) => {
       <Switch>
         <Match when={msgtype() === MsgType.Text}>
           <CTextMessage
-            timestamp={event().localTimestamp}
+            timestamp={event().getTs()}
             status='sent'
             color={sender() === selfId() ? 'primary' : 'default'}
           >
@@ -139,7 +142,7 @@ const MessageContent: Component<EventProps> = (props) => {
             </Show>
 
             <CImageMessage
-              timestamp={event().localTimestamp}
+              timestamp={event().getTs()}
               status='sent'
               width={(content() as ImageMessage).info.w}
               height={(content() as ImageMessage).info.h}
@@ -175,7 +178,7 @@ const StickerContent: Component<EventProps> = (props) => {
         />
       </Show>
       <CImageMessage
-        timestamp={event().localTimestamp}
+        timestamp={event().getTs()}
         status='sent'
         width={width()}
         height={height()}
@@ -197,7 +200,7 @@ const MemberContent: Component<Omit<EventProps, 'timelineSet'>> = (props) => {
       name={prevName()}
       avatar={avatar()}
       userId={sender()}
-      timestamp={props.event.localTimestamp}
+      timestamp={props.event.getTs()}
     >
       {' '}
       {renderMemberContent(event()) ?? 'has an unrecognized member change.'}
@@ -233,11 +236,68 @@ const StateMessage: ParentComponent<Omit<EventProps, 'timelineSet'>> = (
       name={name()}
       avatar={avatar()}
       userId={sender()}
-      timestamp={props.event.localTimestamp}
+      timestamp={props.event.getTs()}
     >
       {' '}
       {props.children}
     </StateMessageShell>
+  );
+};
+
+const TimelineItemContent: Component<EventProps> = (props) => {
+  const roomId = () => props.roomId;
+  const event = () => props.event;
+  const timelineSet = () => props.timelineSet;
+  const type = () => event().getWireType();
+
+  return (
+    <Switch
+      fallback={
+        <StateMessage roomId={roomId()} event={event()}>
+          sent{' '}
+          <code class='px-2 font-mono bg-gray-200 rounded-md border border-slate-100'>
+            {type()}
+          </code>{' '}
+          event.
+        </StateMessage>
+      }
+    >
+      <Match when={type() === 'm.room.redaction'}>
+        <StateMessage roomId={roomId()} event={event()}>
+          redacted a message.
+        </StateMessage>
+      </Match>
+      <Match when={type() === 'm.room.message'}>
+        <RoomMessage roomId={roomId()} event={event()}>
+          <MessageContent
+            roomId={roomId()}
+            event={event()}
+            timelineSet={timelineSet()}
+          />
+        </RoomMessage>
+      </Match>
+      <Match when={type() === 'm.sticker'}>
+        <RoomMessage roomId={roomId()} event={event()}>
+          <ErrorBoundary fallback={<div>Failed to render event</div>}>
+            <Show when={!event().isRedacted()} fallback={<RedactedMessage />}>
+              <StickerContent
+                roomId={roomId()}
+                event={event()}
+                timelineSet={timelineSet()}
+              />
+            </Show>
+          </ErrorBoundary>
+        </RoomMessage>
+      </Match>
+      <Match when={type() === 'm.room.member'}>
+        <MemberContent roomId={roomId()} event={event()} />
+      </Match>
+      <Match when={type() === 'm.room.create'}>
+        <StateMessage roomId={roomId()} event={event()}>
+          created the room.
+        </StateMessage>
+      </Match>
+    </Switch>
   );
 };
 
@@ -248,59 +308,34 @@ const TimelineItem: Component<EventProps> = (props) => {
   const type = () => event().getWireType();
 
   return (
-    <div
-      data-project-nanase-roomid={roomId()}
-      data-project-nanase-eventid={event().getId()}
-      class='hover:bg-slate-100 dark:hover:bg-slate-900 px-2 py-1'
-    >
-      <Switch
-        fallback={
-          <StateMessage roomId={roomId()} event={event()}>
-            sent{' '}
-            <code class='px-2 font-mono bg-gray-200 rounded-md border border-slate-100'>
-              {type()}
-            </code>{' '}
-            event.
-          </StateMessage>
-        }
+    <ContextMenu.Root>
+      <ContextMenu.Trigger
+        as='div'
+        data-project-nanase-roomid={roomId()}
+        data-project-nanase-eventid={event().getId()}
+        class='ui-expanded:bg-slate-100 dark:ui-expanded:bg-slate-900 px-2 py-1'
       >
-        <Match when={type() === 'm.room.redaction'}>
-          <StateMessage roomId={roomId()} event={event()}>
-            redacted a message.
-          </StateMessage>
-        </Match>
-        <Match when={type() === 'm.room.message'}>
-          <RoomMessage roomId={roomId()} event={event()}>
-            <MessageContent
-              roomId={roomId()}
-              event={event()}
-              timelineSet={timelineSet()}
-            />
-          </RoomMessage>
-        </Match>
-        <Match when={type() === 'm.sticker'}>
-          <RoomMessage roomId={roomId()} event={event()}>
-            <ErrorBoundary fallback={<div>Failed to render event</div>}>
-              <Show when={!event().isRedacted()} fallback={<RedactedMessage />}>
-                <StickerContent
-                  roomId={roomId()}
-                  event={event()}
-                  timelineSet={timelineSet()}
-                />
-              </Show>
-            </ErrorBoundary>
-          </RoomMessage>
-        </Match>
-        <Match when={type() === 'm.room.member'}>
-          <MemberContent roomId={roomId()} event={event()} />
-        </Match>
-        <Match when={type() === 'm.room.create'}>
-          <StateMessage roomId={roomId()} event={event()}>
-            created the room.
-          </StateMessage>
-        </Match>
-      </Switch>
-    </div>
+        <TimelineItemContent
+          roomId={roomId()}
+          event={event()}
+          timelineSet={timelineSet()}
+        />
+      </ContextMenu.Trigger>
+      <ContextMenu.Portal>
+        <Panel
+          style='bordered'
+          as={ContextMenu.Content}
+          class='z-5 animate-popup-close ui-expanded:animate-popup-open'
+        >
+          <ContextMenu.Item class='rounded-t-lg px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'>
+            <ArrowBendUpLeftDuotone /> Reply
+          </ContextMenu.Item>
+          <ContextMenu.Item class='rounded-b-lg px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'>
+            <CodeDuotone /> View Source
+          </ContextMenu.Item>
+        </Panel>
+      </ContextMenu.Portal>
+    </ContextMenu.Root>
   );
 };
 

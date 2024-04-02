@@ -75,7 +75,7 @@ export const createRoomResource = (roomId: () => string) => {
   };
 
   const onTimeLine = (event: MatrixEvent): void => {
-    mutateLastTs(event.localTimestamp);
+    mutateLastTs(event.getTs());
   };
 
   const onUnread = (): void => {
