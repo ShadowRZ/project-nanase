@@ -32,13 +32,14 @@ export function renderTextContent(content, _roomId) {
         components: {
           span: (props) => (
             <Switch fallback={<span {...props} />}>
-              {/* <Match when={'data-project-nanase-pill' in props}>
-                <HoverableMention
-                  roomId={roomId}
-                  userId={props['data-project-nanase-pill']}
-                  avatar={undefined}
-                />
-              </Match> */}
+              <Match when={'data-project-nanase-pill' in props}>
+                <a
+                  href={`https://matrix.to/#/${props['data-project-nanase-pill']}`}
+                  target='_blank'
+                >
+                  {props['data-project-nanase-pill']}
+                </a>
+              </Match>
               <Match when={'data-mx-spoiler' in props}>
                 <span class='px-1 bg-black dark:bg-white text-transparent hover:text-white dark:hover:text-black'>
                   {props.children}
