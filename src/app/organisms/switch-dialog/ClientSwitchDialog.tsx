@@ -60,6 +60,7 @@ const ClientSwitchDialog: Component<ClientSwitchDialogProps> = (props) => {
         modal
         open={props.open}
         onOpenChange={props.onOpenChange}
+        contentClass='w-full max-w-md'
       >
         <div class='mt-2 flex flex-col gap-1'>
           <For each={ids()}>

@@ -1,5 +1,5 @@
 import { type MatrixEvent } from 'matrix-js-sdk';
-import { type Component, createEffect } from 'solid-js';
+import { type Component, createMemo } from 'solid-js';
 import HighlightCode from '~/app/components/highlight/HighlightCode';
 import t from '~/app/i18n';
 import Dialog from '~/app/molecules/dialog/Dialog';
@@ -12,7 +12,7 @@ export type ViewSourceDialogProps = {
 
 const ViewSourceDialog: Component<ViewSourceDialogProps> = (props) => {
   const event = () => props.event;
-  const content = () => JSON.stringify(event().event, null, 2);
+  const content = createMemo(() => JSON.stringify(event().event, null, 2));
 
   return (
     <Dialog
@@ -20,6 +20,7 @@ const ViewSourceDialog: Component<ViewSourceDialogProps> = (props) => {
       modal
       open={props.open}
       onOpenChange={props.onOpenChange}
+      contentClass='w-full max-w-4xl'
     >
       <div class='flex flex-col'>
         <span>
@@ -35,7 +36,7 @@ const ViewSourceDialog: Component<ViewSourceDialogProps> = (props) => {
       </div>
       <HighlightCode
         lang='json'
-        class='min-w-0 min-h-0 w-full max-w-4xl overflow-y-hidden shrink font-mono rounded-lg border border-slate-200 dark:border-slate-800'
+        class='min-w-0 min-h-0 overflow-y-hidden max-w-4xl shrink font-mono rounded-lg border border-slate-200 dark:border-slate-800'
       >
         {content()}
       </HighlightCode>

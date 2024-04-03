@@ -11,6 +11,7 @@ type DialogProps = {
   onOpenChange: (open: boolean) => void;
   title: string;
   description?: string;
+  contentClass?: string;
 };
 
 const Dialog: ParentComponent<DialogProps> = (props) => {
@@ -20,6 +21,7 @@ const Dialog: ParentComponent<DialogProps> = (props) => {
     'title',
     'description',
     'children',
+    'contentClass',
   ]);
   return (
     <KDialog.Root
@@ -33,9 +35,9 @@ const Dialog: ParentComponent<DialogProps> = (props) => {
           <Panel
             style='bordered'
             as={KDialog.Content}
-            class='animate-dialog-close ui-expanded:animate-dialog-open p-4 max-w-4xl w-full max-h-full overflow-hidden flex flex-col'
+            class={`animate-dialog-close ui-expanded:animate-dialog-open p-4 max-h-full overflow-hidden flex flex-col ${local.contentClass}`}
           >
-            <div class='flex flex-row gap-2 items-center mb-4'>
+            <div class='flex flex-row gap-2 items-center mb-2'>
               <span class='flex flex-col grow'>
                 <Text as={KDialog.Title} font='bold'>
                   {local.title}

@@ -307,7 +307,8 @@ const TimelineItem: Component<EventProps> = (props) => {
   const roomId = () => props.roomId;
   const event = () => props.event;
   const timelineSet = () => props.timelineSet;
-  const sourceCode = createMemo(() => JSON.stringify(event().event, null, 2));
+  const canReply = () =>
+    !(event().isState() || event().isRedacted() || event().isRedaction());
 
   const [sourceOpen, setSourceOpen] = createSignal(false);
 
@@ -332,9 +333,11 @@ const TimelineItem: Component<EventProps> = (props) => {
             as={ContextMenu.Content}
             class='z-5 animate-popup-close ui-expanded:animate-popup-open'
           >
-            <ContextMenu.Item class='rounded-t-lg px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'>
-              <ArrowBendUpLeftDuotone /> Reply
-            </ContextMenu.Item>
+            <Show when={canReply()}>
+              <ContextMenu.Item class='rounded-t-lg px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'>
+                <ArrowBendUpLeftDuotone /> Reply
+              </ContextMenu.Item>
+            </Show>
             <ContextMenu.Item
               onSelect={() => {
                 setSourceOpen(true);
