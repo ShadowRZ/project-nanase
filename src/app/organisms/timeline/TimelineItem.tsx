@@ -15,6 +15,7 @@ import {
   type Component,
   type ParentComponent,
   createSignal,
+  For,
 } from 'solid-js';
 import ViewSourceDialog from '../view-source/ViewSourceDialog';
 import Box from '~/app/atoms/box/Box';
@@ -25,10 +26,11 @@ import StateMessageShell from '~/app/molecules/message/StateMessageShell';
 import CTextMessage from '~/app/molecules/message/TextMessage';
 import { getRoomScopedProfile } from '~/app/utils/getRoomScopedProfile';
 import { renderTextContent } from '~/app/utils/renderTextContent';
-import { getEditedEvent } from '~/app/utils/room';
+import { getEditedEvent, getEventReactions } from '~/app/utils/room';
 import { useCurrentClient } from '~/app/hooks/useCurrentClient';
 import { trimReplyFallback } from '~/lib/utils/matrix';
 import {
+  type Reaction,
   type AnyMessage,
   type ImageMessage,
   type MaybeFormattedMessage,
@@ -210,17 +212,28 @@ const MemberContent: Component<Omit<EventProps, 'timelineSet'>> = (props) => {
   );
 };
 
-const RoomMessage: ParentComponent<Omit<EventProps, 'timelineSet'>> = (
-  props
-) => {
+const RoomMessage: ParentComponent<EventProps> = (props) => {
   const roomId = () => props.roomId;
   const event = () => props.event;
+  const timelineSet = () => props.timelineSet;
   const sender = () => event().getSender()!;
   const { name, avatar } = getRoomScopedProfile(roomId(), sender());
+  const keyedReactions = () => getEventReactions(timelineSet(), event());
 
   return (
     <MessageShell name={name()} userId={sender()} avatar={avatar()}>
       {props.children}
+      <For each={keyedReactions()}>
+        {([key, reactions]) => {
+          const count = reactions.size;
+
+          return (
+            <div>
+              {key}: {count}
+            </div>
+          );
+        }}
+      </For>
     </MessageShell>
   );
 };
@@ -270,7 +283,11 @@ const TimelineItemContent: Component<EventProps> = (props) => {
         </StateMessage>
       </Match>
       <Match when={type() === 'm.room.message'}>
-        <RoomMessage roomId={roomId()} event={event()}>
+        <RoomMessage
+          roomId={roomId()}
+          event={event()}
+          timelineSet={timelineSet()}
+        >
           <MessageContent
             roomId={roomId()}
             event={event()}
@@ -279,7 +296,11 @@ const TimelineItemContent: Component<EventProps> = (props) => {
         </RoomMessage>
       </Match>
       <Match when={type() === 'm.sticker'}>
-        <RoomMessage roomId={roomId()} event={event()}>
+        <RoomMessage
+          roomId={roomId()}
+          event={event()}
+          timelineSet={timelineSet()}
+        >
           <ErrorBoundary fallback={<div>Failed to render event</div>}>
             <Show when={!event().isRedacted()} fallback={<RedactedMessage />}>
               <StickerContent

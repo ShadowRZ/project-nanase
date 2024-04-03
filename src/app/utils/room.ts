@@ -2,6 +2,7 @@ import {
   type MatrixEvent,
   RelationType,
   type EventTimelineSet,
+  EventType,
 } from 'matrix-js-sdk';
 
 export function annoationOrReplace(event: MatrixEvent) {
@@ -22,6 +23,19 @@ export function getEventEdits(
   );
 
   return edits?.getRelations() ?? [];
+}
+
+export function getEventReactions(
+  timelineSet: EventTimelineSet,
+  event: MatrixEvent
+): Array<[string, Set<MatrixEvent>]> {
+  const edits = timelineSet.relations.getChildEventsForEvent(
+    event.getId()!,
+    RelationType.Annotation,
+    EventType.Reaction
+  );
+
+  return edits?.getSortedAnnotationsByKey() ?? [];
 }
 
 export function getEditedEvent(

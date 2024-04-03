@@ -34,3 +34,11 @@ export type Sticker = {
   url: string;
   body: string;
 };
+
+export type Reaction = {
+  'm.relates_to': {
+    event_id: string;
+    key: string;
+    rel_type: 'm.annotation';
+  };
+};
