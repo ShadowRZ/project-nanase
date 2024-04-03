@@ -349,7 +349,7 @@ const TimelineItem: Component<EventProps> = (props) => {
       <ViewSourceDialog
         open={sourceOpen()}
         onOpenChange={setSourceOpen}
-        content={sourceCode()}
+        event={event()}
       />
     </>
   );

@@ -2,6 +2,7 @@
 import '@fontsource-variable/outfit';
 import '@unocss/reset/tailwind.css';
 import 'uno.css';
+import 'prismjs/themes/prism.min.css';
 import { render } from 'solid-js/web';
 import './lib/keyframes.css';
 import App from './app/pages/App';
