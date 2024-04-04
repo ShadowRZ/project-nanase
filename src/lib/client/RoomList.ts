@@ -3,6 +3,7 @@ import {
   type MatrixClient,
   ClientEvent,
   EventTimeline,
+  RoomStateEvent,
 } from 'matrix-js-sdk';
 
 export enum RoomListEvents {
@@ -63,11 +64,11 @@ export default class RoomList extends TypedEventEmitter<
     const children: string[] = [];
     if (spaceChilds)
       for (const event of spaceChilds) {
-        const child = event.event.state_key!;
+        const child = event.getStateKey()!;
         // https://github.com/matrix-org/matrix-spec-proposals/pull/1772
         if (
           event.getType() === 'm.space.child' &&
-          Object.hasOwn(event.event.content ?? {}, 'via')
+          Object.hasOwn(event.getContent(), 'via')
         ) {
           children.push(child);
         }
@@ -119,6 +120,30 @@ export default class RoomList extends TypedEventEmitter<
           this.rooms.add(roomId);
           this.emit(RoomListEvents.ListUpdated);
         }
+      }
+    });
+
+    // Update space childrens
+    this.client.on(RoomStateEvent.Events, (event, state) => {
+      if (event.getType() === 'm.space.child') {
+        const roomId = event.getRoomId()!;
+        const childId = event.getStateKey()!;
+        if (
+          event.getType() === 'm.space.child' &&
+          Object.hasOwn(event.getContent(), 'via')
+        ) {
+          const children = this.spaceChildrens.get(roomId) ?? [];
+          children.push(childId);
+          this.spaceChildrens.set(roomId, children);
+        } else {
+          const children = this.spaceChildrens.get(roomId) ?? [];
+          this.spaceChildrens.set(
+            roomId,
+            children.filter((e) => e !== childId)
+          );
+        }
+
+        this.emit(RoomListEvents.ListUpdated);
       }
     });
   }
