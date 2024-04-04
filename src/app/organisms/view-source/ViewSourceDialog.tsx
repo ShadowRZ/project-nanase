@@ -36,7 +36,7 @@ const ViewSourceDialog: Component<ViewSourceDialogProps> = (props) => {
       </div>
       <HighlightCode
         lang='json'
-        class='min-w-0 min-h-0 overflow-y-hidden max-w-4xl shrink font-mono rounded-lg border border-slate-200 dark:border-slate-800'
+        class='min-w-0 min-h-0 max-w-4xl shrink font-mono rounded-lg border border-slate-200 dark:border-slate-800'
       >
         {content()}
       </HighlightCode>

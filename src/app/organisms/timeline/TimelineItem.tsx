@@ -270,7 +270,7 @@ const TimelineItemContent: Component<EventProps> = (props) => {
       fallback={
         <StateMessage roomId={roomId()} event={event()}>
           sent{' '}
-          <code class='px-2 font-mono bg-gray-200 rounded-md border border-slate-100'>
+          <code class='px-2 font-mono bg-gray-200 dark:bg-gray-800 rounded-md border border-slate-100'>
             {type()}
           </code>{' '}
           event.

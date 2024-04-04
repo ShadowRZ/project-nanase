@@ -8,6 +8,7 @@ import {
 } from 'solid-js';
 import { createIntersectionObserver } from '@solid-primitives/intersection-observer';
 import { createScrollPosition } from '@solid-primitives/scroll';
+import RoomBeginning from './RoomBeginning';
 import TimelineItem from '~/app/organisms/timeline/TimelineItem';
 import { annoationOrReplace } from '~/app/utils/room';
 import { createRoomEvents } from '~/app/hooks/createRoomEvents';
@@ -58,8 +59,11 @@ const RoomTimeline: Component<RoomTimelineProps> = (props) => {
   });
 
   return (
-    <div ref={timelineRef} class='relative grow h-full overflow-y-auto'>
-      <Show when={events()?.at(0)?.getType() !== 'm.room.create'}>
+    <div
+      ref={timelineRef}
+      class='relative grow h-full overflow-y-auto flex flex-col'
+    >
+      <Show when={events()?.at(0)?.getWireType() !== 'm.room.create'}>
         <div class='mt-1 px-2 py-1'>
           <Placeholder />
         </div>
@@ -74,6 +78,9 @@ const RoomTimeline: Component<RoomTimelineProps> = (props) => {
 
             return (
               <Show when={!annoationOrReplace(ev())}>
+                <Show when={event.getWireType() === 'm.room.create'}>
+                  <RoomBeginning />
+                </Show>
                 <TimelineItem
                   event={ev()}
                   roomId={roomId()}
