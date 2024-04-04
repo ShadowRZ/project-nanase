@@ -83,7 +83,7 @@ const ReplyItem: Component<ReplyItemProps> = (props) => {
               target()!.getSender()!
             ).name() ?? target()!.getSender()!}
           </span>
-          <span class='shrink truncate text-wrap'>
+          <span class='shrink truncate text-wrap whitespace-pre-wrap'>
             {trimReplyFallback(target()?.getContent().body as string)}
           </span>
         </Show>

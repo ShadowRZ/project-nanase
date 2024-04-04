@@ -22,6 +22,7 @@ export default defineConfig({
           'border-left': '.15em solid currentColor',
           'padding-left': '.5em',
           margin: '.1em 0',
+          'font-style': 'normal',
         },
       },
     }),
