@@ -17,6 +17,7 @@ import { createRoomList } from '~/app/hooks/createRoomList';
 import RoomItem from '~/app/molecules/room/RoomItem';
 import { useCurrentClient } from '~/app/hooks/useCurrentClient';
 import { trimReplyFallback } from '~/lib/utils/matrix';
+import { createSpaceRoomList } from '~/app/hooks/createSpaceRoomList';
 
 // 'chats' | 'directs' | 'favorties'
 export type RoomCategory = 'chats' | 'directs' | string;
@@ -83,32 +84,9 @@ const RoomListItem: Component<RoomListItemProps> = (props) => {
   );
 };
 
-const ChatsRoomList: Component = () => {
-  const rooms = createRoomList(() => 'chats');
-  return (
-    <Suspense fallback={<Placeholder />}>
-      <Show when={rooms()}>
-        <For each={rooms()}>{(item) => <RoomListItem roomId={item} />}</For>
-      </Show>
-    </Suspense>
-  );
-};
-
-const DirectsRoomList: Component = () => {
-  const rooms = createRoomList(() => 'directs');
-  return (
-    <Suspense fallback={<Placeholder />}>
-      <Show when={rooms()}>
-        <For each={rooms()}>
-          {(item) => <RoomListItem roomId={item} isDirect />}
-        </For>
-      </Show>
-    </Suspense>
-  );
-};
-
 const SpaceRoomList: Component<RoomListProps> = (props) => {
-  const rooms = createRoomList(() => props.category);
+  const category = () => props.category;
+  const rooms = createSpaceRoomList(category);
 
   return (
     <Suspense fallback={<Placeholder />}>
@@ -121,6 +99,7 @@ const SpaceRoomList: Component<RoomListProps> = (props) => {
 
 const RoomList: Component<RoomListProps> = (props) => {
   const category = (): RoomCategory => props.category;
+  const { chats, directs } = createRoomList();
 
   return (
     <div class='px-1 py-1 flex flex-col gap-1'>
@@ -129,10 +108,22 @@ const RoomList: Component<RoomListProps> = (props) => {
       </Show> */}
       <Switch fallback={<SpaceRoomList category={category()} />}>
         <Match when={category() === 'chats'}>
-          <ChatsRoomList />
+          <Suspense fallback={<Placeholder />}>
+            <Show when={chats()}>
+              <For each={chats()}>
+                {(item) => <RoomListItem roomId={item} />}
+              </For>
+            </Show>
+          </Suspense>
         </Match>
         <Match when={category() === 'directs'}>
-          <DirectsRoomList />
+          <Suspense fallback={<Placeholder />}>
+            <Show when={directs()}>
+              <For each={directs()}>
+                {(item) => <RoomListItem roomId={item} isDirect />}
+              </For>
+            </Show>
+          </Suspense>
         </Match>
       </Switch>
     </div>

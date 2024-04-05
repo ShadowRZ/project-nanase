@@ -61,7 +61,7 @@ export default class RoomList extends TypedEventEmitter<
       .getLiveTimeline()
       .getState(EventTimeline.FORWARDS)
       ?.getStateEvents('m.space.child');
-    const children: string[] = [];
+    const children = new Set<string>();
     if (spaceChilds)
       for (const event of spaceChilds) {
         const child = event.getStateKey()!;
@@ -70,11 +70,11 @@ export default class RoomList extends TypedEventEmitter<
           event.getType() === 'm.space.child' &&
           Object.hasOwn(event.getContent(), 'via')
         ) {
-          children.push(child);
+          children.add(child);
         }
       }
 
-    return children;
+    return Array.from(children);
   }
 
   private getMDirects(): Set<string> {

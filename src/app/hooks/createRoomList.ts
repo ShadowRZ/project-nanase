@@ -1,52 +1,36 @@
 import { createEffect, createMemo, createResource, onCleanup } from 'solid-js';
+import { useClientData } from './useClientData';
 import { useCurrentClient } from '~/app/hooks/useCurrentClient';
 import { RoomListEvents } from '~/lib/client/RoomList';
 
-export function createRoomList(category: () => 'chats' | 'directs' | string) {
-  const client = useCurrentClient();
-  const source = createMemo(() => {
-    return {
-      client: client(),
-      category: category(),
-    };
-  });
-  const [rooms, { refetch: refetchRooms }] = createResource(
-    source,
-    async ($source) => {
-      const { client, category } = $source;
-      if (client === undefined) return [];
-      await client.wait();
-      switch (category) {
-        case 'chats': {
-          return Array.from(client.roomList.rooms);
-        }
+export function createRoomList() {
+  const { roomList } = useClientData();
 
-        case 'directs': {
-          return Array.from(client.roomList.directs);
-        }
-
-        default: {
-          return client.roomList.spaceChildrens.get(category) ?? [];
-        }
-      }
-    }
+  const [chats, { refetch: refetchChats }] = createResource(
+    roomList,
+    ($roomList) => Array.from($roomList.rooms)
+  );
+  const [directs, { refetch: refetchDirects }] = createResource(
+    roomList,
+    ($roomList) => Array.from($roomList.directs)
   );
 
   const onRoomList = () => {
-    void refetchRooms();
+    void refetchChats();
+    void refetchDirects();
   };
 
   createEffect(() => {
-    const thisClient = client();
-    if (thisClient !== undefined) {
-      void refetchRooms();
+    const thisRoomList = roomList();
+    if (thisRoomList !== undefined) {
+      onRoomList();
     }
 
-    thisClient?.on(RoomListEvents.ListUpdated, onRoomList);
+    thisRoomList?.on(RoomListEvents.ListUpdated, onRoomList);
     onCleanup(() => {
-      thisClient?.off(RoomListEvents.ListUpdated, onRoomList);
+      thisRoomList?.off(RoomListEvents.ListUpdated, onRoomList);
     });
   });
 
-  return rooms;
+  return { chats, directs };
 }
