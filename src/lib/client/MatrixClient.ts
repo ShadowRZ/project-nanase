@@ -5,7 +5,7 @@ import RoomList, {
   RoomListEvents,
   type RoomListEventsHandlerMap,
 } from './RoomList';
-import { type ClientData } from '~/types/client';
+import { type SessionData } from '~/types/client';
 
 logger.disableAll();
 
@@ -154,7 +154,7 @@ export class MatrixClient extends sdk.TypedEventEmitter<
     };
   }
 
-  public sessionData(): ClientData {
+  public sessionData(): SessionData {
     return {
       homeserver: this.homeserver,
       accessToken: this.accessToken,

@@ -1,6 +1,6 @@
 import { TypedEventEmitter } from 'matrix-js-sdk';
 import { MatrixClient, createNewSessionId } from './MatrixClient';
-import { type ClientDatas as ClientSessions } from '~/types/client';
+import { type SessionDatas as ClientSessions } from '~/types/client';
 import { type ClientData } from '~/lib/auth';
 
 const PROJECT_NANASE_SESSIONS_TOKEN = 'project-nanase-sessions';
