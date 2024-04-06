@@ -36,10 +36,11 @@ import {
 } from '~/types/event-content';
 import { renderMemberContent } from '~/app/utils/renderMemberContent';
 import Panel from '~/app/atoms/panel/Panel';
+import QuotedEvent from '~/app/organisms/quoted-event/QuotedEvent';
+import { type RelationData } from '~/types/room';
 import TrashDuotone from '~icons/ph/trash-duotone';
 import ArrowBendUpLeftDuotone from '~icons/ph/arrow-bend-up-left-duotone';
 import CodeDuotone from '~icons/ph/code-duotone';
-import QuotedEvent from '~/app/organisms/quoted-event/QuotedEvent';
 
 const RedactedMessage: Component = () => {
   return (
@@ -54,6 +55,7 @@ type EventProps = {
   roomId: string;
   event: MatrixEvent;
   timelineSet: EventTimelineSet;
+  setRelationData?: (rel: RelationData | undefined) => void;
 };
 
 const MessageContent: Component<EventProps> = (props) => {
@@ -316,7 +318,15 @@ const TimelineItem: Component<EventProps> = (props) => {
             class='z-5 animate-popup-close ui-expanded:animate-popup-open'
           >
             <Show when={canReply()}>
-              <ContextMenu.Item class='rounded-t-lg px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'>
+              <ContextMenu.Item
+                onSelect={() => {
+                  props.setRelationData?.({
+                    type: 'reply',
+                    eventId: event().getId()!,
+                  });
+                }}
+                class='rounded-t-lg px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'
+              >
                 <ArrowBendUpLeftDuotone /> Reply
               </ContextMenu.Item>
             </Show>

@@ -13,9 +13,11 @@ import TimelineItem from '~/app/organisms/timeline/TimelineItem';
 import { annoationOrReplace } from '~/app/utils/room';
 import { createRoomEvents } from '~/app/hooks/createRoomEvents';
 import Placeholder from '~/app/components/placeholder/Placeholder';
+import { type RelationData } from '~/types/room';
 
 type RoomTimelineProps = {
   roomId: string;
+  setRelationData: (rel: RelationData | undefined) => void;
 };
 
 const RoomTimeline: Component<RoomTimelineProps> = (props) => {
@@ -85,6 +87,7 @@ const RoomTimeline: Component<RoomTimelineProps> = (props) => {
                   event={ev()}
                   roomId={roomId()}
                   timelineSet={timelineSet()!}
+                  setRelationData={props.setRelationData}
                 />
               </Show>
             );
