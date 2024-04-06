@@ -32,7 +32,8 @@ const IconButton: Component<IconButtonProps> = (props) => {
           local.type === 'small-bordered',
         'rounded-md p-1 hover:bg-slate-200 dark:hover-bg-slate-800':
           local.type === 'normal',
-        'rounded-full p-1': local.type === 'circle',
+        'rounded-full p-1 hover:bg-slate-200 dark:hover-bg-slate-800':
+          local.type === 'circle',
         'border-rose-500': local.checked,
         'border-rose-500/50': !local.checked,
       }}
