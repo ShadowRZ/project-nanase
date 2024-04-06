@@ -5,7 +5,7 @@ import Text from '~/app/atoms/text/Text';
 export type ClientProfileProps = {
   avatar?: string;
   name?: string;
-  userId?: string;
+  userId: string;
 };
 
 const ProfileContent: Component<ClientProfileProps> = (props) => {

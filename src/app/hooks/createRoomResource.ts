@@ -1,31 +1,21 @@
 import {
   EventTimeline,
   EventType,
+  NotificationCountType,
   RoomEvent,
   RoomStateEvent,
   type MRoomTopicEventContent,
   type MatrixEvent,
   type Room,
   type RoomState,
-  NotificationCountType,
-  type RoomMember,
-  RoomMemberEvent,
 } from 'matrix-js-sdk';
-import {
-  createEffect,
-  createMemo,
-  createResource,
-  createSignal,
-  onCleanup,
-} from 'solid-js';
-import { useCurrentClient } from '~/app/hooks/useCurrentClient';
+import { createEffect, createMemo, createResource, onCleanup } from 'solid-js';
+import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 import { getRoomAvatarUrl } from '~/lib/utils/matrix';
 
 export const createRoomResource = (roomId: () => string) => {
-  const client = useCurrentClient();
-  const room = createMemo(
-    () => client()?.client.getRoom(roomId()) ?? undefined
-  );
+  const client = createCurrentClientResource();
+  const room = createMemo(() => client()?.getRoom(roomId()) ?? undefined);
 
   const [name, { mutate: mutateName }] = createResource(
     room,

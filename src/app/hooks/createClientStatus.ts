@@ -1,11 +1,10 @@
 import { createEffect, createSignal, onCleanup } from 'solid-js';
-import { type SyncState } from 'matrix-js-sdk';
-import { useClientsController } from './useClientsController';
-import { ClientEvents } from '~/lib/client/MatrixClient';
+import { ClientEvent, type SyncState } from 'matrix-js-sdk';
+import { createClientResource } from './createClientResource';
+import { useAppContext } from './useAppContext';
 
-export default function createClientStatus(id: () => string) {
-  const controller = useClientsController();
-  const client = () => controller()?.getClient(id());
+export function createClientStatus(id: () => string) {
+  const client = createClientResource(id);
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   const [status, setStatus] = createSignal<SyncState | null>(null);
@@ -16,11 +15,16 @@ export default function createClientStatus(id: () => string) {
 
   createEffect(() => {
     const thisClient = client();
-    thisClient?.on(ClientEvents.SyncState, onSync);
+    thisClient?.on(ClientEvent.Sync, onSync);
     onCleanup(() => {
-      thisClient?.off(ClientEvents.SyncState, onSync);
+      thisClient?.off(ClientEvent.Sync, onSync);
     });
   });
 
   return status;
+}
+
+export function createCurrentClientStatus() {
+  const { current } = useAppContext();
+  return createClientStatus(current);
 }

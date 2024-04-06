@@ -1,26 +1,18 @@
 import { Navigate, Route, MemoryRouter as Router } from '@solidjs/router';
-import {
-  Show,
-  createSignal,
-  onCleanup,
-  onMount,
-  type Component,
-} from 'solid-js';
-import FeatureCheck from './FeatureCheck';
-import { AppContext } from '~/app/hooks/useAppContext';
-import { useClientsController } from '~/app/hooks/useClientsController';
-import MatrixChat from '~/app/templates/client/MatrixChat';
-import AuthContent from '~/app/templates/auth/Auth';
+import { Show, createSignal, type Component } from 'solid-js';
 import Panel from '~/app/atoms/panel/Panel';
-import ClientsController, {
-  ControllerEvents,
-} from '~/lib/client/ClientsController';
-import { type MatrixClient } from '~/lib/client/MatrixClient';
-import { type ClientData } from '~/lib/auth';
+import { AppContext } from '~/app/hooks/useAppContext';
+import AuthContent from '~/app/templates/auth/Auth';
+import MatrixChat from '~/app/templates/client/MatrixChat';
+import { type SessionData } from '~/lib/auth';
+import restoreFromStorage, {
+  isInitial,
+  populateClientData,
+} from '~/lib/client/storage';
 
 const AuthWrapper: Component = () => {
-  const onClientCreated = (data: ClientData) => {
-    ClientsController.populateClientData(data);
+  const onClientCreated = (data: SessionData) => {
+    populateClientData(data);
     window.location.reload();
   };
 
@@ -51,63 +43,29 @@ const AuthWrapper: Component = () => {
   );
 };
 
-const ChatWrapper: Component = () => {
-  const controller = useClientsController();
-
-  return (
-    <Show when={controller() !== undefined}>
-      <MatrixChat />
-    </Show>
-  );
-};
-
 const Index: Component = () => {
-  const controller = useClientsController();
-
   return (
-    <Show
-      when={!ClientsController.newSession()}
-      fallback={<Navigate href='/login' />}
-    >
-      <Show when={controller() !== undefined}>
-        <Navigate href='/rooms' />
-      </Show>
+    <Show when={!isInitial()} fallback={<Navigate href='/login' />}>
+      <Navigate href='/rooms' />
     </Show>
   );
 };
 
 const App: Component = () => {
-  const [controller] = createSignal(
-    ClientsController.restoreFromLocalStorage()
-  );
-
-  const [client, setClient] = createSignal<MatrixClient | undefined>(
-    controller()?.currentClient
-  );
-
-  const onChanged = (_prev: MatrixClient, next: MatrixClient) => {
-    setClient(next);
-  };
-
-  onMount(() => {
-    controller()?.on(ControllerEvents.ClientChanged, onChanged);
-  });
-
-  onCleanup(() => {
-    controller()?.off(ControllerEvents.ClientChanged, onChanged);
-  });
+  const { clients, current: storedCurrent } = restoreFromStorage()!;
+  const [current, setCurrent] = createSignal(storedCurrent);
 
   return (
     <AppContext.Provider
       value={{
-        controller,
-        client,
+        clients,
+        current,
       }}
     >
       <Router>
         <Route path='/' component={Index} />
         <Route path='/login' component={AuthWrapper} />
-        <Route path='/rooms/:id?' component={ChatWrapper} />
+        <Route path='/rooms/:id?' component={MatrixChat} />
       </Router>
     </AppContext.Provider>
   );

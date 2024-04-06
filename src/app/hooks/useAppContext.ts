@@ -1,10 +1,10 @@
 import { useContext, createContext } from 'solid-js';
-import type ClientsController from '~/lib/client/ClientsController';
-import { type MatrixClient } from '~/lib/client/MatrixClient';
+import { type MatrixClient } from 'matrix-js-sdk';
+import type RoomList from '~/lib/client/RoomList';
 
 type AppContextProps = {
-  controller: () => ClientsController | undefined;
-  client: () => MatrixClient | undefined;
+  clients: Map<string, [string, Promise<MatrixClient>, Promise<RoomList>]>;
+  current: () => string;
 };
 
 export const AppContext = createContext<AppContextProps>();

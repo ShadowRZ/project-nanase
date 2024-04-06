@@ -1,36 +1,13 @@
-import { createEffect, createMemo, createResource, onCleanup } from 'solid-js';
-import { useClientData } from './useClientData';
-import { useCurrentClient } from '~/app/hooks/useCurrentClient';
-import { RoomListEvents } from '~/lib/client/RoomList';
+import { createResource } from 'solid-js';
+import { useAppContext } from './useAppContext';
 
-export function createRoomList() {
-  const { roomList } = useClientData();
+export default function createRoomList() {
+  const { clients, current } = useAppContext();
 
-  const [chats, { refetch: refetchChats }] = createResource(
-    roomList,
-    ($roomList) => Array.from($roomList.rooms)
-  );
-  const [directs, { refetch: refetchDirects }] = createResource(
-    roomList,
-    ($roomList) => Array.from($roomList.directs)
-  );
-
-  const onRoomList = () => {
-    void refetchChats();
-    void refetchDirects();
-  };
-
-  createEffect(() => {
-    const thisRoomList = roomList();
-    if (thisRoomList !== undefined) {
-      onRoomList();
-    }
-
-    thisRoomList?.on(RoomListEvents.ListUpdated, onRoomList);
-    onCleanup(() => {
-      thisRoomList?.off(RoomListEvents.ListUpdated, onRoomList);
-    });
+  const [roomList] = createResource(current, async ($current) => {
+    const [, _client, roomList] = clients.get($current)!;
+    return roomList;
   });
 
-  return { chats, directs };
+  return roomList;
 }

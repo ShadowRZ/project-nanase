@@ -1,18 +1,11 @@
-import {
-  type Component,
-  For,
-  createSignal,
-  onCleanup,
-  onMount,
-} from 'solid-js';
-import { useNavigate } from '@solidjs/router';
 import { Button } from '@kobalte/core';
-import Dialog from '~/app/molecules/dialog/Dialog';
-import { useClientsController } from '~/app/hooks/useClientsController';
-import { ControllerEvents } from '~/lib/client/ClientsController';
-import ProfileContent from '~/app/molecules/profile/ProfileContent';
+import { useNavigate } from '@solidjs/router';
+import { For, createSignal, type Component } from 'solid-js';
 import { createClientProfile } from '~/app/hooks/createClientProfile';
+import { useAppContext } from '~/app/hooks/useAppContext';
 import t from '~/app/i18n';
+import Dialog from '~/app/molecules/dialog/Dialog';
+import ProfileContent from '~/app/molecules/profile/ProfileContent';
 import UserCirclePlusDuotone from '~icons/ph/user-circle-plus-duotone';
 
 export type ClientSwitchDialogProps = {
@@ -25,33 +18,19 @@ type ClientSwitchItemProps = {
 };
 
 const ClientSwitchItem: Component<ClientSwitchItemProps> = (props) => {
+  const { clients } = useAppContext();
   const id = () => props.id;
-  const context = useClientsController();
-  const client = context()?.getClient(props.id);
   const { name, avatar } = createClientProfile(id);
-  const userId = (): string | undefined => client?.userId;
+  const userId = () => clients.get(id())![0];
 
   return <ProfileContent name={name()} avatar={avatar()} userId={userId()} />;
 };
 
 const ClientSwitchDialog: Component<ClientSwitchDialogProps> = (props) => {
-  const context = useClientsController();
+  const { clients, current } = useAppContext();
   const navigate = useNavigate();
-  const [ids, setIds] = createSignal<string[]>([]);
+  const [ids, setIds] = createSignal<string[]>(Array.from(clients.keys()));
   const [addAccount, setAddAccount] = createSignal(false);
-
-  const onClientsUpdated = (ids: string[]): void => {
-    setIds(ids);
-  };
-
-  onMount(() => {
-    context()?.on(ControllerEvents.ClientsUpdated, onClientsUpdated);
-    context()?.updateClients();
-  });
-
-  onCleanup(() => {
-    context()?.off(ControllerEvents.ClientsUpdated, onClientsUpdated);
-  });
 
   return (
     <>
@@ -68,15 +47,13 @@ const ClientSwitchDialog: Component<ClientSwitchDialogProps> = (props) => {
               <Button.Root
                 onClick={() => {
                   props.onOpenChange(false);
-                  context()?.switch(id);
+                  // TODO context()?.switch(id);
                   navigate(`/rooms`, { replace: true });
                 }}
                 class='text-start p-2 transition duration-200 rounded-xl flex flex-row gap-2 w-full'
                 classList={{
-                  'bg-transparent hover:bg-neutral-200/75':
-                    id !== context()?.current,
-                  'bg-rose-200/25 hover:bg-rose-200/75':
-                    id === context()?.current,
+                  'bg-transparent hover:bg-neutral-200/75': id !== current(),
+                  'bg-rose-200/25 hover:bg-rose-200/75': id === current(),
                 }}
               >
                 <ClientSwitchItem id={id} />

@@ -1,9 +1,7 @@
 import { type Component, createSignal } from 'solid-js';
 import { DropdownMenu, Tooltip } from '@kobalte/core';
-import { useClientsController } from '~/app/hooks/useClientsController';
 import ProfileContent from '~/app/molecules/profile/ProfileContent';
 import ClientSwitchDialog from '~/app/organisms/switch-dialog/ClientSwitchDialog';
-import { createCurrentClientProfile } from '~/app/hooks/createCurrentClientProfile';
 import PowerDuotone from '~icons/ph/power-duotone';
 import UserSwitchDuotone from '~icons/ph/user-switch-duotone';
 import UserCircleDuotone from '~icons/ph/user-circle-duotone';
@@ -12,15 +10,19 @@ import TooltipContent from '~/app/atoms/tooltip/TooltipContent';
 import Panel from '~/app/atoms/panel/Panel';
 import ImageButton from '~/app/atoms/button/ImageButton';
 import ConfrimDialog from '~/app/molecules/confrim-dialog/ConfirmDialog';
+import { createCurrentClientProfile } from '~/app/hooks/createClientProfile';
+import { useAppContext } from '~/app/hooks/useAppContext';
+import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 
 const DropdownMenuWrapper: Component = (props) => {
   return <DropdownMenu.Trigger as={Tooltip.Trigger} {...props} />;
 };
 
 const AccountMenu: Component = () => {
-  const controller = useClientsController();
+  const { clients, current } = useAppContext();
   const { name, avatar } = createCurrentClientProfile();
-  const userId = (): string | undefined => controller()?.currentClient.userId;
+  const client = createCurrentClientResource();
+  const userId = () => clients.get(current())![0];
 
   const [logoutOpen, setLogoutOpen] = createSignal(false);
   const [switchOpen, setSwitchOpen] = createSignal(false);
@@ -103,9 +105,14 @@ const AccountMenu: Component = () => {
         cancel={t('cancel')}
         onConfirm={() => {
           setLogoutOpen(false);
-          controller()
-            ?.logoutCurrentClient()
-            .catch(() => {});
+          client()
+            ?.logout()
+            .then(() => {
+              window.location.reload();
+            })
+            .catch(() => {
+              window.location.reload();
+            });
         }}
         onCancel={() => setLogoutOpen(false)}
       />

@@ -4,7 +4,7 @@ import {
   RoomMemberEvent,
 } from 'matrix-js-sdk';
 import { createEffect, createResource, onCleanup } from 'solid-js';
-import { useCurrentClient } from '~/app/hooks/useCurrentClient';
+import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 import { getRoomMemberAvatarUrl } from '~/lib/utils/matrix';
 import { type ProfileResource } from '~/types/profile';
 
@@ -12,8 +12,8 @@ export const createRoomScopedProfile = (
   roomId: string,
   userId: string
 ): ProfileResource => {
-  const client = useCurrentClient();
-  const room = () => client()?.client.getRoom(roomId) ?? undefined;
+  const client = createCurrentClientResource();
+  const room = () => client()?.getRoom(roomId) ?? undefined;
   const member = () => room()?.getMember(userId) ?? undefined;
 
   const [name, { mutate: mutateName, refetch: refetchName }] = createResource(

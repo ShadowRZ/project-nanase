@@ -3,7 +3,7 @@ import { useNavigate } from '@solidjs/router';
 import { type ILoginFlowsResponse, type MatrixClient } from 'matrix-js-sdk';
 import { Show, type Component } from 'solid-js';
 import { SSOLogin } from './SSOLogin';
-import { type ClientData } from '~/lib/auth';
+import { type SessionData } from '~/lib/auth';
 import { findSSOFlows } from '~/lib/utils/matrix';
 import Input from '~/app/atoms/input/Input';
 import KeyDuotone from '~icons/ph/key-duotone';
@@ -19,7 +19,7 @@ type LoginForm = {
 export type LoginProps = {
   flows: ILoginFlowsResponse;
   client: MatrixClient;
-  onClientCreated: (data: ClientData) => void;
+  onClientCreated: (data: SessionData) => void;
 };
 
 const Login: Component<LoginProps> = (props) => {
@@ -34,7 +34,7 @@ const Login: Component<LoginProps> = (props) => {
         values.username,
         values.password
       );
-      const data: ClientData = {
+      const data: SessionData = {
         ...result,
         homeserver: client().getHomeserverUrl(),
       };

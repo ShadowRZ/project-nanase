@@ -1,9 +1,9 @@
 import { createResource, createEffect, onCleanup } from 'solid-js';
-import { useClientData } from './useClientData';
+import createRoomList from './createRoomList';
 import { RoomListEvents } from '~/lib/client/RoomList';
 
 export function createSpaceRoomList(category: () => string) {
-  const { roomList } = useClientData();
+  const roomList = createRoomList();
 
   const [spaceChildrens, { refetch: refetchSpaceChildrens }] = createResource(
     roomList,

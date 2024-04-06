@@ -1,7 +1,7 @@
 import { Tooltip } from '@kobalte/core';
 import { For, type Component, Suspense, Show } from 'solid-js';
 import Avatar from '~/app/atoms/avatar/Avatar';
-import { createSpaceList } from '~/app/hooks/createSpaceList';
+import { createSpaceList } from '~/app/hooks/createSpaces';
 import { createRoomResource } from '~/app/hooks/createRoomResource';
 import FoldersDuotone from '~icons/ph/folders-duotone';
 import ImageButton from '~/app/atoms/button/ImageButton';

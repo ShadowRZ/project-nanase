@@ -10,10 +10,10 @@ import {
   RoomMemberEvent,
 } from 'matrix-js-sdk';
 import { createStore } from 'solid-js/store';
-import { useCurrentClient } from './useCurrentClient';
+import { createCurrentClientResource } from './createClientResource';
 
 export const createTypings = () => {
-  const client = useCurrentClient();
+  const client = createCurrentClientResource();
 
   const [typings, setTypings] = createStore<Record<string, string[]>>();
 
@@ -36,9 +36,9 @@ export const createTypings = () => {
 
   createEffect(() => {
     const thisClient = client();
-    thisClient?.client.on(RoomMemberEvent.Typing, onTyping);
+    thisClient?.on(RoomMemberEvent.Typing, onTyping);
     onCleanup(() => {
-      thisClient?.client.off(RoomMemberEvent.Typing, onTyping);
+      thisClient?.off(RoomMemberEvent.Typing, onTyping);
     });
   });
 

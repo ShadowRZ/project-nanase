@@ -1,4 +1,4 @@
-export type SessionData = {
+export type ClientData = {
   id: string;
   homeserver: string;
   userId: string;
@@ -7,4 +7,4 @@ export type SessionData = {
   refreshToken?: string;
 };
 
-export type SessionDatas = SessionData[];
+export type ClientDatas = ClientData[];

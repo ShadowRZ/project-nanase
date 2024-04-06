@@ -10,7 +10,7 @@ import {
 import Login from './Login';
 import { Register } from './Register';
 import { getHomeserverUrl } from '~/lib/utils/matrix';
-import { type ClientData } from '~/lib/auth';
+import { type SessionData } from '~/lib/auth';
 import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
 
 type AuthLoadingProps = {
@@ -109,7 +109,7 @@ const Homeserver: Component<HomeserverProps> = (props) => {
 type LoginOrRegister = 'login' | 'register';
 
 export type AuthContentProps = {
-  onClientCreated: (data: ClientData) => void;
+  onClientCreated: (data: SessionData) => void;
 };
 
 export const AuthContent: Component<AuthContentProps> = (props) => {

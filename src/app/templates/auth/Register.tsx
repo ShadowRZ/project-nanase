@@ -18,7 +18,7 @@ import ReCaptchaForm from './ReCaptchaForm';
 import { SSOLogin } from './SSOLogin';
 import {
   completeRegisterStage,
-  type ClientData,
+  type SessionData,
   type FlowData,
 } from '~/lib/auth';
 import { findSSOFlows } from '~/lib/utils/matrix';
@@ -175,7 +175,7 @@ export type RegisterProps = {
   registerInfo: IAuthData;
   loginFlows: ILoginFlowsResponse;
   client: MatrixClient;
-  onClientCreated: (data: ClientData) => void;
+  onClientCreated: (data: SessionData) => void;
 };
 
 export const Register: Component<RegisterProps> = (props) => {
@@ -258,8 +258,8 @@ export const Register: Component<RegisterProps> = (props) => {
     completeRegisterStage(client(), username, password, auth)
       .then((resp) => {
         if (resp.done) {
-          const data: ClientData = {
-            ...(resp.data as ClientData),
+          const data: SessionData = {
+            ...(resp.data as SessionData),
             homeserver: client().getHomeserverUrl(),
           };
           onClientCreated(data);
@@ -308,8 +308,8 @@ export const Register: Component<RegisterProps> = (props) => {
             })
               .then((dummyResp) => {
                 if (dummyResp.done) {
-                  const data: ClientData = {
-                    ...(dummyResp.data as ClientData),
+                  const data: SessionData = {
+                    ...(dummyResp.data as SessionData),
                     homeserver: client().getHomeserverUrl(),
                   };
                   onClientCreated(data);

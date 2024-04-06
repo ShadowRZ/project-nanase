@@ -27,7 +27,7 @@ import CTextMessage from '~/app/molecules/message/TextMessage';
 import { getRoomScopedProfile } from '~/app/utils/getRoomScopedProfile';
 import { renderTextContent } from '~/app/utils/renderTextContent';
 import { getEditedEvent, getEventReactions } from '~/app/utils/room';
-import { useCurrentClient } from '~/app/hooks/useCurrentClient';
+import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 import { trimReplyFallback } from '~/lib/utils/matrix';
 import {
   type Reaction,
@@ -99,9 +99,9 @@ type EventProps = {
 };
 
 const MessageContent: Component<EventProps> = (props) => {
-  const client = useCurrentClient();
+  const client = createCurrentClientResource();
   const sender = () => event().getSender()!;
-  const selfId = () => client()!.client.getSafeUserId();
+  const selfId = () => client()!.getSafeUserId();
   const timelineSet = () => props.timelineSet;
   const event = () => props.event;
   const edited = () => getEditedEvent(timelineSet(), event());
@@ -124,7 +124,7 @@ const MessageContent: Component<EventProps> = (props) => {
                 roomId={props.roomId}
                 eventId={event().replyEventId!}
                 timelineSet={timelineSet()}
-                client={client()!.client}
+                client={client()!}
                 primary={sender() === selfId()}
               />
             </Show>
@@ -141,7 +141,7 @@ const MessageContent: Component<EventProps> = (props) => {
                 roomId={props.roomId}
                 eventId={event().replyEventId!}
                 timelineSet={timelineSet()}
-                client={client()!.client}
+                client={client()!}
               />
             </Show>
 
@@ -150,7 +150,10 @@ const MessageContent: Component<EventProps> = (props) => {
               status='sent'
               width={(content() as ImageMessage).info.w}
               height={(content() as ImageMessage).info.h}
-              src={client()!.mxcUrlToHttp((content() as ImageMessage).url)}
+              src={
+                client()!.mxcUrlToHttp((content() as ImageMessage).url) ??
+                undefined
+              }
             />
           </Box>
         </Match>
@@ -160,7 +163,7 @@ const MessageContent: Component<EventProps> = (props) => {
 };
 
 const StickerContent: Component<EventProps> = (props) => {
-  const client = useCurrentClient();
+  const client = createCurrentClientResource();
   const timelineSet = () => props.timelineSet;
   const event = () => props.event;
   const edited = () => getEditedEvent(timelineSet(), event());
@@ -178,7 +181,7 @@ const StickerContent: Component<EventProps> = (props) => {
           roomId={props.roomId}
           eventId={event().replyEventId!}
           timelineSet={timelineSet()}
-          client={client()!.client}
+          client={client()!}
         />
       </Show>
       <CImageMessage
@@ -186,7 +189,7 @@ const StickerContent: Component<EventProps> = (props) => {
         status='sent'
         width={width()}
         height={height()}
-        src={url()}
+        src={url() ?? undefined}
       />
     </>
   );

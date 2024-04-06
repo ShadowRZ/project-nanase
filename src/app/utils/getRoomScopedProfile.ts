@@ -1,13 +1,13 @@
 import { type ProfileResource } from '~/types/profile';
-import { useCurrentClient } from '~/app/hooks/useCurrentClient';
+import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 import { getRoomMemberAvatarUrl } from '~/lib/utils/matrix';
 
 export const getRoomScopedProfile = (
   roomId: string,
   userId: string
 ): ProfileResource => {
-  const client = useCurrentClient();
-  const room = () => client()?.client.getRoom(roomId) ?? undefined;
+  const client = createCurrentClientResource();
+  const room = () => client()?.getRoom(roomId) ?? undefined;
   const member = () => room()?.getMember(userId) ?? undefined;
   const name = () => member()?.name;
   const avatar = () => {

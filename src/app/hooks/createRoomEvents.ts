@@ -6,13 +6,11 @@ import {
   createSignal,
   onCleanup,
 } from 'solid-js';
-import { useCurrentClient } from '~/app/hooks/useCurrentClient';
+import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 
 export const createRoomEvents = (roomId: () => string) => {
-  const client = useCurrentClient();
-  const room = createMemo(
-    () => client()!.client.getRoom(roomId()) ?? undefined
-  );
+  const client = createCurrentClientResource();
+  const room = createMemo(() => client()!.getRoom(roomId()) ?? undefined);
   const timelineSet = createMemo(() => room()?.getUnfilteredTimelineSet());
   const timeline = createMemo(() => timelineSet()?.getLiveTimeline());
 
@@ -30,7 +28,7 @@ export const createRoomEvents = (roomId: () => string) => {
     await room()?.loadMembersIfNeeded();
     const thisTimeline = timeline();
     if (thisTimeline !== undefined) {
-      await client()?.client.paginateEventTimeline(thisTimeline, {
+      await client()?.paginateEventTimeline(thisTimeline, {
         backwards: true,
         limit: 10,
       });
