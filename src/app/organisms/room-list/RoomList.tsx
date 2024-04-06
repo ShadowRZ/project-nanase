@@ -1,23 +1,15 @@
 import { useNavigate, useParams } from '@solidjs/router';
-import { RoomEvent, type MatrixEvent, type Room } from 'matrix-js-sdk';
-import {
-  For,
-  Match,
-  Show,
-  Suspense,
-  Switch,
-  createResource,
-  onCleanup,
-  onMount,
-  type Component,
-} from 'solid-js';
-import { createRoomResource } from '~/app/hooks/createRoomResource';
+import { type Room } from 'matrix-js-sdk';
+import { For, Match, Show, Suspense, Switch, type Component } from 'solid-js';
 import Placeholder from '~/app/components/placeholder/Placeholder';
-import { createRooms } from '~/app/hooks/createRooms';
-import RoomItem from '~/app/molecules/room/RoomItem';
 import { createCurrentClientResource } from '~/app/hooks/createClientResource';
-import { trimReplyFallback } from '~/lib/utils/matrix';
+import createRoomLastEvent from '~/app/hooks/createRoomLastEvent';
+import { createRoomResource } from '~/app/hooks/createRoomResource';
+import { createRoomScopedProfile } from '~/app/hooks/createRoomScopedProfile';
+import { createRooms } from '~/app/hooks/createRooms';
 import { createSpaceRoomList } from '~/app/hooks/createSpaceRooms';
+import RoomItem from '~/app/molecules/room/RoomItem';
+import { trimReplyFallback } from '~/lib/utils/matrix';
 
 // 'chats' | 'directs' | 'favorties'
 export type RoomCategory = 'chats' | 'directs' | string;
@@ -28,38 +20,17 @@ export type RoomListProps = {
 
 export type RoomListItemProps = {
   roomId: string;
-  isDirect?: boolean;
-};
-
-export type RoomSummaryProps = {
-  roomId: string;
-  isDirect?: boolean;
 };
 
 const RoomListItem: Component<RoomListItemProps> = (props) => {
   const roomId = (): string => props.roomId;
   const { name, avatar, lastTs, unread } = createRoomResource(roomId);
-  const isDirect = () => props.isDirect ?? false;
   const client = createCurrentClientResource();
   const room = (): Room | undefined =>
     client()?.getRoom(props.roomId) ?? undefined;
   const navigate = useNavigate();
   const selectedRoom = (): string | undefined => useParams().id;
-  const [event, { refetch }] = createResource(room, ($room) =>
-    $room.getLastLiveEvent()
-  );
-
-  const onTimeLine = (_event: MatrixEvent): void => {
-    void refetch();
-  };
-
-  onMount(() => {
-    room()?.on(RoomEvent.Timeline, onTimeLine);
-  });
-
-  onCleanup(() => {
-    room()?.off(RoomEvent.Timeline, onTimeLine);
-  });
+  const event = createRoomLastEvent(roomId);
 
   return (
     <Show when={room() !== undefined}>
@@ -72,7 +43,40 @@ const RoomListItem: Component<RoomListItemProps> = (props) => {
         avatar={avatar()}
         roomId={props.roomId}
         lastTs={lastTs()!}
-        direct={isDirect()}
+        unread={unread()}
+        lastSender={
+          event()?.sender?.name ?? (event()?.getContent().sender as string)
+        }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        lastContent={trimReplyFallback(event()?.getContent().body)}
+      />
+    </Show>
+  );
+};
+
+const RoomListItemDirect: Component<RoomListItemProps> = (props) => {
+  const roomId = (): string => props.roomId;
+  const { lastTs, unread } = createRoomResource(roomId);
+  const client = createCurrentClientResource();
+  const room = (): Room | undefined =>
+    client()?.getRoom(props.roomId) ?? undefined;
+  const dmUser = () => room()!.guessDMUserId();
+  const { name, avatar } = createRoomScopedProfile(roomId(), dmUser());
+  const navigate = useNavigate();
+  const selectedRoom = (): string | undefined => useParams().id;
+  const event = createRoomLastEvent(roomId);
+
+  return (
+    <Show when={room() !== undefined}>
+      <RoomItem
+        onClick={() => {
+          navigate(`/rooms/${props.roomId}`, { replace: true });
+        }}
+        current={selectedRoom() === props.roomId}
+        name={name() ?? props.roomId}
+        avatar={avatar()}
+        roomId={props.roomId}
+        lastTs={lastTs()!}
         unread={unread()}
         lastSender={
           event()?.sender?.name ?? (event()?.getContent().sender as string)
@@ -100,7 +104,7 @@ const Directs: Component = () => {
   return (
     <Show when={directs()}>
       <For each={directs()}>
-        {(item) => <RoomListItem roomId={item} isDirect />}
+        {(item) => <RoomListItemDirect roomId={item} />}
       </For>
     </Show>
   );

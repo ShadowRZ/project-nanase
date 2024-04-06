@@ -1,5 +1,5 @@
 import { type MatrixClient } from 'matrix-js-sdk';
-import type RoomList from './RoomList';
+import type RoomList from './room-list';
 import createClientData from './client-data';
 import { createNewSessionId } from './session-id';
 import { type ClientContext, type ClientDatas } from '~/types/client';

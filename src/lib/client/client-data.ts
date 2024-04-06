@@ -5,7 +5,7 @@ import {
   ClientEvent,
   SyncState,
 } from 'matrix-js-sdk';
-import RoomList from './RoomList';
+import RoomList from './room-list';
 import { type ClientContext } from '~/types/client';
 
 export default function createClientData(

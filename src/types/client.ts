@@ -1,5 +1,5 @@
 import { type MatrixClient } from 'matrix-js-sdk';
-import type RoomList from '~/lib/client/RoomList';
+import type RoomList from '~/lib/client/room-list';
 
 export type ClientData = {
   id: string;

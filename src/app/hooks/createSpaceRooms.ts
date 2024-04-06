@@ -1,6 +1,6 @@
 import { createResource, createEffect, onCleanup } from 'solid-js';
 import createRoomList from './createRoomList';
-import { RoomListEvents } from '~/lib/client/RoomList';
+import { RoomListEvents } from '~/lib/client/room-list';
 
 export function createSpaceRoomList(category: () => string) {
   const roomList = createRoomList();

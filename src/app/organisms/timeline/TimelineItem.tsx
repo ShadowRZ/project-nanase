@@ -27,7 +27,10 @@ import CTextMessage from '~/app/molecules/message/TextMessage';
 import { getRoomScopedProfile } from '~/app/utils/getRoomScopedProfile';
 import { renderTextContent } from '~/app/utils/renderTextContent';
 import { getEditedEvent, getEventReactions } from '~/app/utils/room';
-import { createCurrentClientResource } from '~/app/hooks/createClientResource';
+import {
+  createCurrentClientResource,
+  createCurrentClientUserId,
+} from '~/app/hooks/createClientResource';
 import { trimReplyFallback } from '~/lib/utils/matrix';
 import {
   type Reaction,
@@ -101,7 +104,7 @@ type EventProps = {
 const MessageContent: Component<EventProps> = (props) => {
   const client = createCurrentClientResource();
   const sender = () => event().getSender()!;
-  const selfId = () => client()!.getSafeUserId();
+  const selfId = createCurrentClientUserId();
   const timelineSet = () => props.timelineSet;
   const event = () => props.event;
   const edited = () => getEditedEvent(timelineSet(), event());
