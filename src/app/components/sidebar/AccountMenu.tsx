@@ -22,7 +22,7 @@ const AccountMenu: Component = () => {
   const { clients, current } = useAppContext();
   const { name, avatar } = createCurrentClientProfile();
   const client = createCurrentClientResource();
-  const userId = () => clients.get(current())![0];
+  const userId = () => clients.get(current())!.userId;
 
   const [logoutOpen, setLogoutOpen] = createSignal(false);
   const [switchOpen, setSwitchOpen] = createSignal(false);

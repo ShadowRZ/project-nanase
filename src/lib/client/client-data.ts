@@ -6,6 +6,7 @@ import {
   SyncState,
 } from 'matrix-js-sdk';
 import RoomList from './RoomList';
+import { type ClientContext } from '~/types/client';
 
 export default function createClientData(
   homeserver: string,
@@ -18,7 +19,7 @@ export default function createClientData(
     accessToken: string,
     userId: string,
     deviceId?: string
-  ) => {
+  ): Promise<[MatrixClient, Promise<void>]> => {
     // TODO: Proper persistence
     // const store = new IndexedDBStore({
     //   indexedDB: window.indexedDB,
@@ -53,7 +54,7 @@ export default function createClientData(
     // TODO
     // client.setGlobalErrorOnUnknownDevices(false)
 
-    await new Promise<void>((resolve) => {
+    const wait = new Promise<void>((resolve) => {
       if (client.isInitialSyncComplete()) resolve();
       else
         client.once(ClientEvent.Sync, (state) => {
@@ -61,7 +62,28 @@ export default function createClientData(
         });
     });
 
+    return [client, wait];
+  };
+
+  const roomListFn = async (
+    waitClient: Promise<[MatrixClient, Promise<void>]>
+  ) => {
+    const [client, wait] = await waitClient;
+    await wait;
+
+    return new RoomList(client);
+  };
+
+  const clientFn = async (
+    waitClient: Promise<[MatrixClient, Promise<void>]>
+  ) => {
+    const [client] = await waitClient;
     return client;
+  };
+
+  const waitFn = async (waitClient: Promise<[MatrixClient, Promise<void>]>) => {
+    const [, wait] = await waitClient;
+    await wait;
   };
 
   const returnFn = (
@@ -69,11 +91,18 @@ export default function createClientData(
     accessToken: string,
     userId: string,
     deviceId?: string
-  ): [string, Promise<MatrixClient>, Promise<RoomList>] => {
-    const client = clientPromiseFn(baseUrl, accessToken, userId, deviceId);
-    const roomListPromise = client.then((client) => new RoomList(client));
+  ): ClientContext => {
+    const waitClient = clientPromiseFn(baseUrl, accessToken, userId, deviceId);
+    const client = clientFn(waitClient);
+    const wait = waitFn(waitClient);
+    const roomList = roomListFn(waitClient);
 
-    return [userId, client, roomListPromise];
+    return {
+      userId,
+      client,
+      wait,
+      roomList,
+    };
   };
 
   return returnFn(homeserver, accessToken, userId, deviceId);

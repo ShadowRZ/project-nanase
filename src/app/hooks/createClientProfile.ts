@@ -33,6 +33,24 @@ export function createClientProfile(id: () => string) {
 
   createEffect(() => {
     const thisUser = user();
+    const thisClient = client();
+    if (thisUser !== undefined) {
+      thisClient
+        ?.getProfileInfo(thisUser.userId)
+        .then(({ displayname, avatar_url }) => {
+          setName(displayname);
+          setAvatar(
+            avatar_url === undefined
+              ? undefined
+              : thisClient?.mxcUrlToHttp(avatar_url, 48, 48, 'crop') ??
+                  undefined
+          );
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+
     thisUser?.on(UserEvent.DisplayName, onDisplayName);
     thisUser?.on(UserEvent.AvatarUrl, onAvatarUrl);
     onCleanup(() => {

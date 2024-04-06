@@ -5,7 +5,7 @@ export default function createRoomList() {
   const { clients, current } = useAppContext();
 
   const [roomList] = createResource(current, async ($current) => {
-    const [, _client, roomList] = clients.get($current)!;
+    const { roomList } = clients.get($current)!;
     return roomList;
   });
 

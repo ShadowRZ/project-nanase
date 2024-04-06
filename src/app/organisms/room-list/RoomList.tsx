@@ -84,16 +84,36 @@ const RoomListItem: Component<RoomListItemProps> = (props) => {
   );
 };
 
+const Chats: Component = () => {
+  const { chats } = createRooms();
+
+  return (
+    <Show when={chats()}>
+      <For each={chats()}>{(item) => <RoomListItem roomId={item} />}</For>
+    </Show>
+  );
+};
+
+const Directs: Component = () => {
+  const { directs } = createRooms();
+
+  return (
+    <Show when={directs()}>
+      <For each={directs()}>
+        {(item) => <RoomListItem roomId={item} isDirect />}
+      </For>
+    </Show>
+  );
+};
+
 const SpaceRoomList: Component<RoomListProps> = (props) => {
   const category = () => props.category;
   const rooms = createSpaceRoomList(category);
 
   return (
-    <Suspense fallback={<Placeholder />}>
-      <Show when={rooms()}>
-        <For each={rooms()}>{(item) => <RoomListItem roomId={item} />}</For>
-      </Show>
-    </Suspense>
+    <Show when={rooms()}>
+      <For each={rooms()}>{(item) => <RoomListItem roomId={item} />}</For>
+    </Show>
   );
 };
 
@@ -106,18 +126,22 @@ const RoomList: Component<RoomListProps> = (props) => {
       {/* <Show when={!['chats', 'directs', 'favorites'].includes(category())}>
         <SpaceHeader spaceId={category()} />
       </Show> */}
-      <Switch fallback={<SpaceRoomList category={category()} />}>
+      <Switch
+        fallback={
+          <Suspense fallback={<Placeholder />}>
+            <SpaceRoomList category={category()} />{' '}
+          </Suspense>
+        }
+      >
         <Match when={category() === 'chats'}>
-          <Show when={chats()}>
-            <For each={chats()}>{(item) => <RoomListItem roomId={item} />}</For>
-          </Show>
+          <Suspense fallback={<Placeholder />}>
+            <Chats />
+          </Suspense>
         </Match>
         <Match when={category() === 'directs'}>
-          <Show when={directs()}>
-            <For each={directs()}>
-              {(item) => <RoomListItem roomId={item} isDirect />}
-            </For>
-          </Show>
+          <Suspense fallback={<Placeholder />}>
+            <Directs />
+          </Suspense>
         </Match>
       </Switch>
     </div>

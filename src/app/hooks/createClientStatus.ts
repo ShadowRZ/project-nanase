@@ -10,6 +10,7 @@ export function createClientStatus(id: () => string) {
   const [status, setStatus] = createSignal<SyncState | null>(null);
 
   const onSync = (state: SyncState) => {
+    console.log(state);
     setStatus(state);
   };
 

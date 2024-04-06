@@ -1,5 +1,6 @@
 import { Navigate, Route, MemoryRouter as Router } from '@solidjs/router';
-import { Show, createSignal, type Component } from 'solid-js';
+import { Show, createResource, createSignal, type Component } from 'solid-js';
+import { createClientResource } from '../hooks/createClientResource';
 import Panel from '~/app/atoms/panel/Panel';
 import { AppContext } from '~/app/hooks/useAppContext';
 import AuthContent from '~/app/templates/auth/Auth';
@@ -51,23 +52,35 @@ const Index: Component = () => {
   );
 };
 
-const App: Component = () => {
+const ChatWrapper: Component = () => {
   const { clients, current: storedCurrent } = restoreFromStorage()!;
   const [current, setCurrent] = createSignal(storedCurrent);
+
+  const [client] = createResource(current, async ($current) => {
+    const { client } = clients.get($current)!;
+    return client;
+  });
 
   return (
     <AppContext.Provider
       value={{
+        client,
         clients,
         current,
       }}
     >
-      <Router>
-        <Route path='/' component={Index} />
-        <Route path='/login' component={AuthWrapper} />
-        <Route path='/rooms/:id?' component={MatrixChat} />
-      </Router>
+      <MatrixChat />
     </AppContext.Provider>
+  );
+};
+
+const App: Component = () => {
+  return (
+    <Router>
+      <Route path='/' component={Index} />
+      <Route path='/login' component={AuthWrapper} />
+      <Route path='/rooms/:id?' component={ChatWrapper} />
+    </Router>
   );
 };
 

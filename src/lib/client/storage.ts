@@ -2,7 +2,7 @@ import { type MatrixClient } from 'matrix-js-sdk';
 import type RoomList from './RoomList';
 import createClientData from './client-data';
 import { createNewSessionId } from './session-id';
-import { type ClientDatas } from '~/types/client';
+import { type ClientContext, type ClientDatas } from '~/types/client';
 import cons from '~/lib/cons';
 import { type SessionData } from '~/lib/auth';
 
@@ -11,10 +11,7 @@ export default function restoreFromStorage() {
   if (current === null) return undefined;
   const stored = localStorage.getItem(cons.internal.storage.SESSIONS_TOKEN);
   if (stored === null) return undefined;
-  const clients = new Map<
-    string,
-    [string, Promise<MatrixClient>, Promise<RoomList>]
-  >();
+  const clients = new Map<string, ClientContext>();
 
   const data = JSON.parse(stored) as ClientDatas;
 

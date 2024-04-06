@@ -10,7 +10,7 @@ import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 
 export const createRoomEvents = (roomId: () => string) => {
   const client = createCurrentClientResource();
-  const room = createMemo(() => client()!.getRoom(roomId()) ?? undefined);
+  const room = createMemo(() => client()?.getRoom(roomId()) ?? undefined);
   const timelineSet = createMemo(() => room()?.getUnfilteredTimelineSet());
   const timeline = createMemo(() => timelineSet()?.getLiveTimeline());
 

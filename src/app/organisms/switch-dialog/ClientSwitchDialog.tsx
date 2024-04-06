@@ -21,7 +21,7 @@ const ClientSwitchItem: Component<ClientSwitchItemProps> = (props) => {
   const { clients } = useAppContext();
   const id = () => props.id;
   const { name, avatar } = createClientProfile(id);
-  const userId = () => clients.get(id())![0];
+  const userId = () => clients.get(id())!.userId;
 
   return <ProfileContent name={name()} avatar={avatar()} userId={userId()} />;
 };

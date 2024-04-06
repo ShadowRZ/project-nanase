@@ -1,3 +1,6 @@
+import { type MatrixClient } from 'matrix-js-sdk';
+import type RoomList from '~/lib/client/RoomList';
+
 export type ClientData = {
   id: string;
   homeserver: string;
@@ -8,3 +11,10 @@ export type ClientData = {
 };
 
 export type ClientDatas = ClientData[];
+
+export type ClientContext = {
+  userId: string;
+  client: Promise<MatrixClient>;
+  wait: Promise<void>;
+  roomList: Promise<RoomList>;
+};
