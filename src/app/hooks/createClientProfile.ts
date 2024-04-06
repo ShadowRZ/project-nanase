@@ -9,48 +9,41 @@ import { createClientResource } from './createClientResource';
 import { useAppContext } from './useAppContext';
 
 export function createClientProfile(id: () => string) {
+  const { clients } = useAppContext();
   const client = createClientResource(id);
+  const wait = async () => clients.get(id())!.wait;
 
-  const [name, setName] = createSignal<string>();
-  const [avatar, setAvatar] = createSignal<string>();
+  const [user] = createResource(client, ($client) => {
+    return $client.getUser($client.getSafeUserId())!;
+  });
 
-  const [user] = createResource(
-    client,
-    ($client) => $client.getUser($client.getSafeUserId())!
+  const [name, { refetch: refetchName }] = createResource(
+    user,
+    ($user) => $user.displayName
+  );
+  const [avatar, { refetch: refetchAvatar }] = createResource(user, ($user) =>
+    $user.avatarUrl === undefined
+      ? undefined
+      : client()?.mxcUrlToHttp($user.avatarUrl, 48, 48, 'crop') ?? undefined
   );
 
   const onDisplayName = (_event: MatrixEvent | undefined, user: User): void => {
-    setName(user.displayName);
+    void refetchName();
   };
 
   const onAvatarUrl = (_event: MatrixEvent | undefined, user: User): void => {
-    setAvatar(
-      user.avatarUrl === undefined
-        ? undefined
-        : client()?.mxcUrlToHttp(user.avatarUrl, 48, 48, 'crop') ?? undefined
-    );
+    void refetchAvatar();
   };
 
   createEffect(() => {
     const thisUser = user();
-    const thisClient = client();
-    if (thisUser !== undefined) {
-      thisClient
-        ?.getProfileInfo(thisUser.userId)
-        .then(({ displayname, avatar_url }) => {
-          setName(displayname);
-          setAvatar(
-            avatar_url === undefined
-              ? undefined
-              : thisClient?.mxcUrlToHttp(avatar_url, 48, 48, 'crop') ??
-                  undefined
-          );
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-
+    const waiter = wait();
+    waiter
+      .then(() => {
+        void refetchName();
+        void refetchAvatar();
+      })
+      .catch(() => {});
     thisUser?.on(UserEvent.DisplayName, onDisplayName);
     thisUser?.on(UserEvent.AvatarUrl, onAvatarUrl);
     onCleanup(() => {
