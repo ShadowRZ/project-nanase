@@ -1,15 +1,13 @@
-import { Button, ContextMenu } from '@kobalte/core';
+import { ContextMenu } from '@kobalte/core';
 import {
   MsgType,
   type EventTimelineSet,
-  type MatrixClient,
   type MatrixEvent,
 } from 'matrix-js-sdk';
 import {
   ErrorBoundary,
   Match,
   Show,
-  Suspense,
   Switch,
   createMemo,
   type Component,
@@ -17,9 +15,8 @@ import {
   createSignal,
   For,
 } from 'solid-js';
-import ViewSourceDialog from '../view-source/ViewSourceDialog';
+import ViewSourceDialog from '~/app/organisms/view-source/ViewSourceDialog';
 import Box from '~/app/atoms/box/Box';
-import { createReplyEvent } from '~/app/hooks/createReplyEvent';
 import CImageMessage from '~/app/molecules/message/ImageMessage';
 import MessageShell from '~/app/molecules/message/MessageShell';
 import StateMessageShell from '~/app/molecules/message/StateMessageShell';
@@ -31,9 +28,7 @@ import {
   createCurrentClientResource,
   createCurrentClientUserId,
 } from '~/app/hooks/createClientResource';
-import { trimReplyFallback } from '~/lib/utils/matrix';
 import {
-  type Reaction,
   type AnyMessage,
   type ImageMessage,
   type MaybeFormattedMessage,
@@ -44,6 +39,7 @@ import Panel from '~/app/atoms/panel/Panel';
 import TrashDuotone from '~icons/ph/trash-duotone';
 import ArrowBendUpLeftDuotone from '~icons/ph/arrow-bend-up-left-duotone';
 import CodeDuotone from '~icons/ph/code-duotone';
+import QuotedEvent from '~/app/organisms/quoted-event/QuotedEvent';
 
 const RedactedMessage: Component = () => {
   return (
@@ -51,47 +47,6 @@ const RedactedMessage: Component = () => {
       <TrashDuotone />
       This message was deleted.
     </div>
-  );
-};
-
-type ReplyItemProps = {
-  roomId: string;
-  eventId: string;
-  timelineSet: EventTimelineSet;
-  client: MatrixClient;
-  primary?: boolean;
-};
-
-const ReplyItem: Component<ReplyItemProps> = (props) => {
-  const target = createReplyEvent(
-    props.roomId,
-    props.eventId,
-    props.timelineSet,
-    props.client
-  );
-
-  return (
-    <Button.Root
-      class='w-fit text-start mb-1 pl-2 border-l-2 flex flex-col'
-      classList={{
-        'border-inherit': props.primary,
-        'border-rose-500': !props.primary,
-      }}
-    >
-      <Suspense fallback={<span>......</span>}>
-        <Show when={target()}>
-          <span class='font-bold'>
-            {getRoomScopedProfile(
-              props.roomId,
-              target()!.getSender()!
-            ).name() ?? target()!.getSender()!}
-          </span>
-          <span class='shrink truncate text-wrap whitespace-pre-wrap'>
-            {trimReplyFallback(target()?.getContent().body as string)}
-          </span>
-        </Show>
-      </Suspense>
-    </Button.Root>
   );
 };
 
@@ -123,7 +78,7 @@ const MessageContent: Component<EventProps> = (props) => {
             color={sender() === selfId() ? 'primary' : 'default'}
           >
             <Show when={event().replyEventId !== undefined}>
-              <ReplyItem
+              <QuotedEvent
                 roomId={props.roomId}
                 eventId={event().replyEventId!}
                 timelineSet={timelineSet()}
@@ -140,7 +95,7 @@ const MessageContent: Component<EventProps> = (props) => {
         <Match when={msgtype() === MsgType.Image}>
           <Box color='default' class='max-w-2/3'>
             <Show when={event().replyEventId !== undefined}>
-              <ReplyItem
+              <QuotedEvent
                 roomId={props.roomId}
                 eventId={event().replyEventId!}
                 timelineSet={timelineSet()}
@@ -180,7 +135,7 @@ const StickerContent: Component<EventProps> = (props) => {
   return (
     <>
       <Show when={event().replyEventId !== undefined}>
-        <ReplyItem
+        <QuotedEvent
           roomId={props.roomId}
           eventId={event().replyEventId!}
           timelineSet={timelineSet()}

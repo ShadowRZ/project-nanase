@@ -7,6 +7,11 @@ import Placeholder from '@tiptap/extension-placeholder';
 import StarterKit from '@tiptap/starter-kit';
 import { onMount, type Component } from 'solid-js';
 import { createTiptapEditor } from 'solid-tiptap';
+import IconButton from '~/app/atoms/button/IconButton';
+import PaperclipDuotone from '~icons/ph/paperclip-duotone';
+import PaperPlaneTiltDuotone from '~icons/ph/paper-plane-tilt-duotone';
+import SmileyDuotone from '~icons/ph/smiley-duotone';
+import StickerDuotone from '~icons/ph/sticker-duotone';
 
 type EditorProps = {
   ref: (editor?: TiptapEditor) => void;
@@ -51,11 +56,41 @@ const Editor: Component<EditorProps> = (props) => {
   });
 
   return (
-    <div
-      data-project-nanase-composer
-      class='grow max-h-32 overflow-y-scroll scrollbar-none'
-      ref={ref}
-    />
+    <div class='flex flex-row items-center px-1 gap-1'>
+      <IconButton
+        type='circle'
+        icon={PaperclipDuotone}
+        class='size-8'
+        iconClass='size-5 text-slate-700'
+        title='Upload'
+      />
+      <div
+        data-project-nanase-composer
+        class='grow max-h-32 overflow-y-scroll scrollbar-none'
+        ref={ref}
+      />
+      <IconButton
+        type='circle'
+        icon={StickerDuotone}
+        class='size-8'
+        iconClass='size-5 text-slate-700'
+        title='Insert Emoji'
+      />
+      <IconButton
+        type='circle'
+        icon={SmileyDuotone}
+        class='size-8'
+        iconClass='size-5 text-slate-700'
+        title='Send Sticker'
+      />
+      <IconButton
+        type='circle'
+        icon={PaperPlaneTiltDuotone}
+        class='size-8 group'
+        iconClass='size-5 text-rose-500 group-disabled:text-rose-500/50'
+        title='Send'
+      />
+    </div>
   );
 };
 
