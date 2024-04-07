@@ -1,21 +1,17 @@
 import { Rerun } from '@solid-primitives/keyed';
-import { Show, createEffect, createSignal, type Component } from 'solid-js';
-import { type Editor as TiptapEditor } from '@tiptap/core';
 import { useNavigate } from '@solidjs/router';
+import { type JSONContent } from '@tiptap/core';
+import { Show, createMemo, createSignal, type Component } from 'solid-js';
 import RoomTimeline from './RoomTimeline';
-import { createRoomResource } from '~/app/hooks/createRoomResource';
-import RoomIntro from '~/app/molecules/room-intro/RoomIntro';
 import Editor from '~/app/components/editor/Editor';
-import { createTypings } from '~/app/hooks/createTypings';
-import createRoomOnLeaveEffect from '~/app/hooks/createRoomOnLeaveEffect';
-import { createCurrentClientResource } from '~/app/hooks/createClientResource';
-import { createRoomEvents } from '~/app/hooks/createRoomEvents';
-import { type RelationData } from '~/types/room';
-import QuotedEvent from '~/app/organisms/quoted-event/QuotedEvent';
-import ArrowBendUpLeftDuotone from '~icons/ph/arrow-bend-up-left-duotone';
-import XIcon from '~icons/ph/x';
-import IconButton from '~/app/atoms/button/IconButton';
 import EditorReference from '~/app/components/editor/EditorReference';
+import { createCurrentClientResource } from '~/app/hooks/createClientResource';
+import createRoomOnLeaveEffect from '~/app/hooks/createRoomOnLeaveEffect';
+import { createRoomResource } from '~/app/hooks/createRoomResource';
+import { createTypings } from '~/app/hooks/createTypings';
+import RoomIntro from '~/app/molecules/room-intro/RoomIntro';
+import { isPlain, proseJSONToHTML } from '~/app/utils/proseJSON';
+import { type RelationData } from '~/types/room';
 
 type RoomProps = {
   roomId: string;
@@ -23,16 +19,29 @@ type RoomProps = {
 
 const Room: Component<RoomProps> = (props) => {
   const client = createCurrentClientResource();
-  const roomId = (): string => props.roomId;
+  const roomId = createMemo(() => props.roomId);
   const { name, topic, avatar } = createRoomResource(roomId);
   const typings = createTypings();
   const [relationData, setRelationData] = createSignal<RelationData>();
-  let ref!: TiptapEditor;
 
   const navigate = useNavigate();
   createRoomOnLeaveEffect(roomId, () => {
-    navigate(`/rooms`, { replace: true });
+    navigate('/rooms', { replace: true });
   });
+
+  const onSend = (doc: JSONContent, text: string) => {
+    const plain = isPlain(doc.content ?? []);
+    if (plain) {
+      client()!
+        .sendTextMessage(roomId(), text)
+        .catch(() => {});
+    } else {
+      const html = proseJSONToHTML(doc);
+      client()!
+        .sendHtmlMessage(roomId(), text, html)
+        .catch(() => {});
+    }
+  };
 
   return (
     <div class='flex flex-col h-dvh'>
@@ -50,12 +59,7 @@ const Room: Component<RoomProps> = (props) => {
             }}
           />
         </Show>
-        <Editor
-          ref={(v) => {
-            ref = v!;
-          }}
-          onSend={() => {}}
-        />
+        <Editor onSend={onSend} />
       </div>
     </div>
   );

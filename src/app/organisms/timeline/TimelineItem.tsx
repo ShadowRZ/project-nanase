@@ -64,6 +64,7 @@ const MessageContent: Component<EventProps> = (props) => {
   const selfId = createCurrentClientUserId();
   const timelineSet = () => props.timelineSet;
   const event = () => props.event;
+  const sending = () => event().isSending();
   const edited = () => getEditedEvent(timelineSet(), event());
   const content = () =>
     (edited()?.getContent()?.['m.new_content'] as AnyMessage | undefined) ??
@@ -76,7 +77,7 @@ const MessageContent: Component<EventProps> = (props) => {
         <Match when={msgtype() === MsgType.Text}>
           <CTextMessage
             timestamp={event().getTs()}
-            status='sent'
+            status={sending() ? 'sending' : 'sent'}
             color={sender() === selfId() ? 'primary' : 'default'}
           >
             <Show when={event().replyEventId !== undefined}>

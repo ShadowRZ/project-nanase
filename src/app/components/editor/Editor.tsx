@@ -4,29 +4,34 @@ import {
   type Editor as TiptapEditor,
 } from '@tiptap/core';
 import Placeholder from '@tiptap/extension-placeholder';
-import StarterKit from '@tiptap/starter-kit';
-import { onMount, type Component } from 'solid-js';
+import { type Component } from 'solid-js';
 import { createTiptapEditor } from 'solid-tiptap';
 import IconButton from '~/app/atoms/button/IconButton';
-import PaperclipDuotone from '~icons/ph/paperclip-duotone';
+import { ProseExtensions } from '~/app/lib/editor-extensions';
 import PaperPlaneTiltDuotone from '~icons/ph/paper-plane-tilt-duotone';
+import PaperclipDuotone from '~icons/ph/paperclip-duotone';
 import SmileyDuotone from '~icons/ph/smiley-duotone';
 import StickerDuotone from '~icons/ph/sticker-duotone';
 
 type EditorProps = {
-  ref: (editor?: TiptapEditor) => void;
-  onSend: (doc: JSONContent) => void;
+  onSend: (doc: JSONContent, text: string) => void;
 };
 
 const Editor: Component<EditorProps> = (props) => {
   let ref!: HTMLDivElement;
 
+  function editorSend(editor: TiptapEditor): void {
+    const json = editor.getJSON();
+    const text = editor.getText({ blockSeparator: '\n' });
+    props.onSend(json, text);
+    editor.commands.setContent('');
+  }
+
   const EnterExtension = Extension.create({
-    addKeyboardShortcuts(this) {
+    addKeyboardShortcuts() {
       return {
-        Enter() {
-          // @ts-expect-error Bugged :(
-          props.onSend((this.editor as TiptapEditor).getJSON());
+        Enter({ editor }) {
+          editorSend(editor);
           return true;
         },
       };
@@ -36,7 +41,7 @@ const Editor: Component<EditorProps> = (props) => {
   const editor = createTiptapEditor(() => ({
     element: ref,
     extensions: [
-      StarterKit,
+      ...ProseExtensions,
       Placeholder.configure({
         emptyEditorClass:
           'first:before:content-[attr(data-placeholder)] before:opacity-50 before:pointer-events-none before:float-left before:h-0',
@@ -50,10 +55,6 @@ const Editor: Component<EditorProps> = (props) => {
       },
     },
   }));
-
-  onMount(() => {
-    props.ref?.(editor());
-  });
 
   return (
     <div class='flex flex-row items-center px-1 gap-1'>
@@ -84,6 +85,9 @@ const Editor: Component<EditorProps> = (props) => {
         title='Send Sticker'
       />
       <IconButton
+        onClick={() => {
+          editorSend(editor()!);
+        }}
         type='circle'
         icon={PaperPlaneTiltDuotone}
         class='size-8 group'
