@@ -4,6 +4,9 @@ import CTextMessage from './TextMessage';
 const meta: Meta<typeof CTextMessage> = {
   component: CTextMessage,
   tags: ['autodocs'],
+  args: {
+    read: false,
+  },
   argTypes: {
     color: {
       control: 'radio',
@@ -11,7 +14,7 @@ const meta: Meta<typeof CTextMessage> = {
     },
     status: {
       control: 'radio',
-      options: ['sending', 'sent', 'read'],
+      options: ['sending', 'sent'],
     },
   },
   render: (props) => (

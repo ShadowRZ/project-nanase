@@ -7,7 +7,8 @@ import Checks from '~icons/ph/checks';
 type TextMessageProps = {
   timestamp: number;
   color?: 'primary' | 'default';
-  status: 'sending' | 'sent' | 'read';
+  status: 'sending' | 'sent';
+  read?: boolean;
 };
 
 const TextMessage: ParentComponent<TextMessageProps> = (props) => {
@@ -26,7 +27,7 @@ const TextMessage: ParentComponent<TextMessageProps> = (props) => {
         class='ml-2 inline-flex flex-row gap-0.5 items-end justify-center translate-y-1'
       >
         <Show
-          when={props.status === 'read'}
+          when={props.read ?? false}
           fallback={<div class='invisible h-4' />}
         >
           <Checks class='size-4' />

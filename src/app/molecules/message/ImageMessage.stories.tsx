@@ -7,10 +7,13 @@ const IMAGE_URL =
 const meta: Meta<typeof CImageMessage> = {
   component: CImageMessage,
   tags: ['autodocs'],
+  args: {
+    read: false,
+  },
   argTypes: {
     status: {
       control: 'radio',
-      options: ['sending', 'sent', 'read'],
+      options: ['sending', 'sent'],
     },
   },
   render: (props) => (

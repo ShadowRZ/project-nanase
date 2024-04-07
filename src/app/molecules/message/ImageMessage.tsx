@@ -9,7 +9,8 @@ type ImageBoxProps = {
   height: number;
   timestamp: number;
   color?: 'primary' | 'default';
-  status: 'sending' | 'sent' | 'read';
+  status: 'sending' | 'sent';
+  read?: boolean;
 };
 
 const ImageMessage: Component<ImageBoxProps> = (props) => {
@@ -27,7 +28,7 @@ const ImageMessage: Component<ImageBoxProps> = (props) => {
         size='smaller'
         class='box-content text-white px-1 absolute bottom-0 right-0 inline-flex flex-row gap-0.5 items-center bg-black/50 rounded-ee-lg'
       >
-        <Show when={props.status === 'read'}>
+        <Show when={props.read ?? false}>
           <Checks class='size-4' />
         </Show>
         <Time timestamp={props.timestamp} />
