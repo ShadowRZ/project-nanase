@@ -79,6 +79,7 @@ const MessageContent: Component<EventProps> = (props) => {
             timestamp={event().getTs()}
             status={sending() ? 'sending' : 'sent'}
             color={sender() === selfId() ? 'primary' : 'default'}
+            edited={edited() !== undefined}
           >
             <Show when={event().replyEventId !== undefined}>
               <QuotedEvent
@@ -108,7 +109,8 @@ const MessageContent: Component<EventProps> = (props) => {
 
             <CImageMessage
               timestamp={event().getTs()}
-              status='sent'
+              status={sending() ? 'sending' : 'sent'}
+              edited={edited() !== undefined}
               width={(content() as ImageMessage).info.w}
               height={(content() as ImageMessage).info.h}
               src={
@@ -170,7 +172,6 @@ const MemberContent: Component<Omit<EventProps, 'timelineSet'>> = (props) => {
       userId={sender()}
       timestamp={props.event.getTs()}
     >
-      {' '}
       {renderMemberContent(event()) ?? 'has an unrecognized member change.'}
     </StateMessageShell>
   );

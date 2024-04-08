@@ -27,6 +27,16 @@ export type ImageMessage = {
   url: string;
 } & Message<MsgType.Image>;
 
+export type FileInfo = {
+  mimetype?: string;
+  size?: number;
+};
+
+export type FileMessage = {
+  info: FileInfo;
+  url: string;
+} & Message<MsgType.File>;
+
 export type AnyMessage = MaybeFormattedMessage | ImageMessage;
 
 export type Sticker = {

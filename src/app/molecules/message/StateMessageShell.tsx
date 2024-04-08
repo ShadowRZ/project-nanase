@@ -17,7 +17,7 @@ const StateMessageShell: ParentComponent<MessageProps> = (props) => {
       <Text font='italic' class='opacity-50 flex-1'>
         <Text font='bold' as='span'>
           {props.name ?? props.userId}
-        </Text>
+        </Text>{' '}
         {props.children}
       </Text>
       <Text size='small' class='opacity-50'>
