@@ -1,10 +1,8 @@
-import { type MatrixClient } from 'matrix-js-sdk';
-import type RoomList from './room-list';
 import createClientData from './client-data';
 import { createNewSessionId } from './session-id';
-import { type ClientContext, type ClientDatas } from '~/types/client';
-import cons from '~/lib/cons';
 import { type SessionData } from '~/lib/auth';
+import cons from '~/lib/cons';
+import { type ClientContext, type ClientDatas } from '~/types/client';
 
 export default function restoreFromStorage() {
   const current = localStorage.getItem(cons.internal.storage.CURRENT_TOKEN);
@@ -17,6 +15,7 @@ export default function restoreFromStorage() {
 
   for (const item of data) {
     const client = createClientData(
+      item.id,
       item.homeserver,
       item.accessToken,
       item.userId,
