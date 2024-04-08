@@ -107,7 +107,7 @@ function transformAnchorTag(tagName: string, attribs: Attributes): Tag {
   };
 }
 
-export function sanitizeMatrixHtml(html: string) {
+export function sanitizeMatrixHtml(html: string, forUI?: boolean) {
   return sanitizeHtml(html, {
     allowedTags: ALLOWED_HTML_TAGS,
     allowedAttributes: TAG_ALLOWED_ATTRS,
@@ -123,9 +123,11 @@ export function sanitizeMatrixHtml(html: string) {
         'background-color': [/^#(?:[\da-fA-F]{3}){1,2}$/],
       },
     },
-    transformTags: {
-      a: transformAnchorTag,
-    },
+    transformTags: forUI
+      ? {}
+      : {
+          a: transformAnchorTag,
+        },
     nonTextTags: [
       'style',
       'script',
@@ -136,4 +138,15 @@ export function sanitizeMatrixHtml(html: string) {
     ],
     nestingLimit: MAX_NESTING_DEPTH,
   });
+}
+
+export function sanitizeText(body: string) {
+  const tagsToReplace: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  };
+  return body.replaceAll(/[&<>'"]/g, (tag) => tagsToReplace[tag] || tag);
 }

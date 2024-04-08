@@ -3,12 +3,14 @@ import Box from '~/app/atoms/box/Box';
 import Text from '~/app/atoms/text/Text';
 import Time from '~/app/atoms/time/Time';
 import Checks from '~icons/ph/checks';
+import PencilSimpleLine from '~icons/ph/pencil-simple-line';
 
 type TextMessageProps = {
   timestamp: number;
   color?: 'primary' | 'default';
   status: 'sending' | 'sent';
   read?: boolean;
+  edited?: boolean;
 };
 
 const TextMessage: ParentComponent<TextMessageProps> = (props) => {
@@ -26,6 +28,12 @@ const TextMessage: ParentComponent<TextMessageProps> = (props) => {
         size='smaller'
         class='ml-2 inline-flex flex-row gap-0.5 items-end justify-center translate-y-1'
       >
+        <Show
+          when={props.edited ?? false}
+          fallback={<div class='invisible h-4' />}
+        >
+          <PencilSimpleLine class='size-4' />
+        </Show>
         <Show
           when={props.read ?? false}
           fallback={<div class='invisible h-4' />}

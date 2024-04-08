@@ -50,3 +50,36 @@ export function getEditedEvent(
 export const isMembershipChanged = (event: MatrixEvent): boolean =>
   event.getContent().membership !== event.getPrevContent().membership ||
   event.getContent().reason !== event.getPrevContent().reason;
+
+export const trimReplyFromBody = (body: string): string => {
+  const match = /^> <.+?> .+\n(>.*\n)*?\n/m.exec(body);
+  if (!match) return body;
+  return body.slice(match[0].length);
+};
+
+export const trimReplyFromFormattedBody = (formattedBody: string): string => {
+  const suffix = '</mx-reply>';
+  const i = formattedBody.lastIndexOf(suffix);
+  if (i < 0) {
+    return formattedBody;
+  }
+
+  return formattedBody.slice(i + suffix.length);
+};
+
+export const parseReplyBody = (userId: string, body: string) =>
+  `> <${userId}> ${body.replaceAll('\n', '\n> ')}\n\n`;
+
+export const parseReplyFormattedBody = (
+  roomId: string,
+  userId: string,
+  eventId: string,
+  formattedBody: string
+): string => {
+  const replyToLink = `<a href="https://matrix.to/#/${encodeURIComponent(
+    roomId
+  )}/${encodeURIComponent(eventId)}">In reply to</a>`;
+  const userLink = `<a href="https://matrix.to/#/${encodeURIComponent(userId)}">${userId}</a>`;
+
+  return `<mx-reply><blockquote>${replyToLink}${userLink}<br />${formattedBody}</blockquote></mx-reply>`;
+};

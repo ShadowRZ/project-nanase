@@ -8,10 +8,16 @@ import { type Component } from 'solid-js';
 import { createTiptapEditor } from 'solid-tiptap';
 import IconButton from '~/app/atoms/button/IconButton';
 import { ProseExtensions } from '~/app/lib/editor-extensions';
+import { sanitizeText } from '~/lib/utils/sanitize';
 import PaperPlaneTiltDuotone from '~icons/ph/paper-plane-tilt-duotone';
 import PaperclipDuotone from '~icons/ph/paperclip-duotone';
 import SmileyDuotone from '~icons/ph/smiley-duotone';
 import StickerDuotone from '~icons/ph/sticker-duotone';
+
+export const customHtmlEqualsPlainText = (
+  customHtml: string,
+  plain: string
+): boolean => customHtml.replaceAll('<br/>', '\n') === sanitizeText(plain);
 
 type EditorProps = {
   onSend: (doc: JSONContent, text: string) => void;
