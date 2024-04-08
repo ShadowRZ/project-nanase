@@ -136,6 +136,7 @@ const StickerContent: Component<EventProps> = (props) => {
   const width = createMemo(() => content().info.w);
   const height = createMemo(() => content().info.h);
   const url = createMemo(() => client()!.mxcUrlToHttp(content().url));
+  const sending = () => event().isSending();
 
   return (
     <>
@@ -149,7 +150,8 @@ const StickerContent: Component<EventProps> = (props) => {
       </Show>
       <CImageMessage
         timestamp={event().getTs()}
-        status='sent'
+        status={sending() ? 'sending' : 'sent'}
+        edited={edited() !== undefined}
         width={width()}
         height={height()}
         src={url() ?? undefined}
@@ -218,7 +220,6 @@ const StateMessage: ParentComponent<Omit<EventProps, 'timelineSet'>> = (
       userId={sender()}
       timestamp={props.event.getTs()}
     >
-      {' '}
       {props.children}
     </StateMessageShell>
   );
