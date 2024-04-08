@@ -4,6 +4,7 @@ import {
   ClientEvent,
   EventTimeline,
   RoomStateEvent,
+  SyncState,
 } from 'matrix-js-sdk';
 
 export enum RoomListEvents {
@@ -22,18 +23,29 @@ export default class RoomList extends TypedEventEmitter<
   public directs = new Set<string>();
   public spaces = new Set<string>();
   public spaceChildrens = new Map<string, string[]>();
-  private readonly mDirects = new Set<string>();
+  private mDirects = new Set<string>();
   private readonly client: MatrixClient;
 
   constructor(client: MatrixClient) {
     super();
     this.client = client;
-    this.mDirects = this.getMDirects();
     this.populateRooms();
-    this.listenEvents();
+    if (client.isInitialSyncComplete()) {
+      this.listenEvents();
+      this.emit(RoomListEvents.ListUpdated);
+    } else {
+      client.once(ClientEvent.Sync, (state) => {
+        if (state === SyncState.Prepared) {
+          this.populateRooms();
+          this.emit(RoomListEvents.ListUpdated);
+          this.listenEvents();
+        }
+      });
+    }
   }
 
   private populateRooms(): void {
+    this.mDirects = this.getMDirects();
     this.rooms.clear();
     this.directs.clear();
     for (const room of this.client.getRooms()) {

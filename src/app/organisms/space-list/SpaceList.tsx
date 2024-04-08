@@ -47,19 +47,17 @@ const SpaceList: Component<SpaceListProps> = (props) => {
   const spaces = createSpaceList();
 
   return (
-    <Suspense>
-      <Show when={spaces()}>
-        <For each={spaces()}>
-          {(spaceId) => (
-            <SpaceItem
-              spaceId={spaceId}
-              category={props.category}
-              onCategoryChanged={props.onCategoryChanged}
-            />
-          )}
-        </For>
-      </Show>
-    </Suspense>
+    <Show when={spaces()}>
+      <For each={spaces()}>
+        {(spaceId) => (
+          <SpaceItem
+            spaceId={spaceId}
+            category={props.category}
+            onCategoryChanged={props.onCategoryChanged}
+          />
+        )}
+      </For>
+    </Show>
   );
 };
 

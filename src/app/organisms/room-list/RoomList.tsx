@@ -88,28 +88,6 @@ const RoomListItemDirect: Component<RoomListItemProps> = (props) => {
   );
 };
 
-const Chats: Component = () => {
-  const { chats } = createRooms();
-
-  return (
-    <Show when={chats()}>
-      <For each={chats()}>{(item) => <RoomListItem roomId={item} />}</For>
-    </Show>
-  );
-};
-
-const Directs: Component = () => {
-  const { directs } = createRooms();
-
-  return (
-    <Show when={directs()}>
-      <For each={directs()}>
-        {(item) => <RoomListItemDirect roomId={item} />}
-      </For>
-    </Show>
-  );
-};
-
 const SpaceRoomList: Component<RoomListProps> = (props) => {
   const category = () => props.category;
   const rooms = createSpaceRoomList(category);
@@ -130,22 +108,18 @@ const RoomList: Component<RoomListProps> = (props) => {
       {/* <Show when={!['chats', 'directs', 'favorites'].includes(category())}>
         <SpaceHeader spaceId={category()} />
       </Show> */}
-      <Switch
-        fallback={
-          <Suspense fallback={<Placeholder />}>
-            <SpaceRoomList category={category()} />{' '}
-          </Suspense>
-        }
-      >
+      <Switch fallback={<SpaceRoomList category={category()} />}>
         <Match when={category() === 'chats'}>
-          <Suspense fallback={<Placeholder />}>
-            <Chats />
-          </Suspense>
+          <Show when={chats()}>
+            <For each={chats()}>{(item) => <RoomListItem roomId={item} />}</For>
+          </Show>
         </Match>
         <Match when={category() === 'directs'}>
-          <Suspense fallback={<Placeholder />}>
-            <Directs />
-          </Suspense>
+          <Show when={directs()}>
+            <For each={directs()}>
+              {(item) => <RoomListItemDirect roomId={item} />}
+            </For>
+          </Show>
         </Match>
       </Switch>
     </div>

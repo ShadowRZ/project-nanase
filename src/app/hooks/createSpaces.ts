@@ -18,10 +18,6 @@ export function createSpaceList() {
 
   createEffect(() => {
     const thisRoomList = roomList();
-    if (thisRoomList !== undefined) {
-      onRoomList();
-    }
-
     thisRoomList?.on(RoomListEvents.ListUpdated, onRoomList);
     onCleanup(() => {
       thisRoomList?.off(RoomListEvents.ListUpdated, onRoomList);

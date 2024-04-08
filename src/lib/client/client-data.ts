@@ -68,8 +68,7 @@ export default function createClientData(
   const roomListFn = async (
     waitClient: Promise<[MatrixClient, Promise<void>]>
   ) => {
-    const [client, wait] = await waitClient;
-    await wait;
+    const [client] = await waitClient;
 
     return new RoomList(client);
   };
