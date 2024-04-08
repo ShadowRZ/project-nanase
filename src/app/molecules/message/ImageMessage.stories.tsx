@@ -30,3 +30,22 @@ export const ImageMessage: Story = {
     status: 'sent',
   },
 };
+
+export const CustomImageMessage: Story = {
+  args: {
+    timestamp: 1_700_000_000_000,
+    status: 'sent',
+  },
+  render: (props) => (
+    // @ts-expect-error Types are unknown.
+    <CImageMessage {...props}>
+      <div class='p-2 bg-gray-500'>
+        <p>This is an example of the ImageMessage with custom component.</p>
+        <p>
+          The gist is that it allows to use a custom component that handles
+          encrypted files.
+        </p>
+      </div>
+    </CImageMessage>
+  ),
+};
