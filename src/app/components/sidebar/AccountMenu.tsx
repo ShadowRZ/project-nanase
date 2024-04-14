@@ -46,7 +46,7 @@ const AccountMenu: Component = () => {
         <DropdownMenu.Portal>
           <Panel
             as={DropdownMenu.Content}
-            style='bordered'
+            decoration='bordered'
             class='mb-1 mr-4 max-w-[min(20rem,var(--kb-popper-content-available-width))] outline-none rounded-md bg-white dark-bg-black flex flex-col animate-popup-close ui-expanded:animate-popup-open'
           >
             <div class='rounded-t-md rounded-b-md bg-neutral-100 dark:bg-neutral-900 p-2 flex flex-row gap-2 items-center justify-start'>

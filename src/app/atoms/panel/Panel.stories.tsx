@@ -6,9 +6,9 @@ const meta: Meta<typeof Panel> = {
   component: Panel,
   tags: ['autodocs'],
   argTypes: {
-    style: {
+    decoration: {
       control: 'radio',
-      options: ['bordered', 'shadow'],
+      options: ['bordered', 'shadowed'],
     },
   },
   render: (props) => (
@@ -23,12 +23,12 @@ type Story = StoryObj<typeof meta>;
 
 export const BorderedPanel: Story = {
   args: {
-    style: 'bordered',
+    decoration: 'bordered',
   },
 };
 
 export const ShadowPanel: Story = {
   args: {
-    style: 'shadow',
+    decoration: 'shadow',
   },
 };

@@ -33,7 +33,7 @@ const Dialog: ParentComponent<DialogProps> = (props) => {
         <KDialog.Overlay class='z-50 fixed inset-0 bg-black/25 animate-overlay-close ui-expanded:animate-overlay-open' />
         <div class='fixed inset-0 z-50 flex items-center justify-center m-4'>
           <Panel
-            style='bordered'
+            decoration='bordered'
             as={KDialog.Content}
             class={`animate-dialog-close ui-expanded:animate-dialog-open p-4 max-h-full overflow-hidden flex flex-col ${local.contentClass}`}
           >

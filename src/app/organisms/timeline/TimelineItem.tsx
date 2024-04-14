@@ -316,7 +316,7 @@ const TimelineItem: Component<EventProps> = (props) => {
         </ContextMenu.Trigger>
         <ContextMenu.Portal>
           <Panel
-            style='bordered'
+            decoration='bordered'
             as={ContextMenu.Content}
             class='z-5 animate-popup-close ui-expanded:animate-popup-open'
           >

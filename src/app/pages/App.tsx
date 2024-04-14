@@ -20,7 +20,7 @@ const AuthWrapper: Component = () => {
   return (
     <div class='h-full flex flex-col overflow-y-scroll scrollbar-none'>
       <div class='flex flex-1 justify-center mx-4 my-16'>
-        <Panel style='shadow' class='p-4 w-md h-fit'>
+        <Panel decoration='shadowed' class='p-4 w-md h-fit'>
           <h2 class='font-bold text-2xl'>Login to Matrix</h2>
           <p class='opacity-50'>Select your homeserver and login.</p>
           <AuthContent onClientCreated={onClientCreated} />
