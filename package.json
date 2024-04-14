@@ -27,6 +27,7 @@
     "@types/grecaptcha": "^3.0.9",
     "@types/prismjs": "^1.26.3",
     "@types/sanitize-html": "^2.11.0",
+    "eslint-plugin-solid": "^0.13.2",
     "prettier": "^3.2.5",
     "solid-devtools": "^0.29.3",
     "storybook": "^8.0.6",

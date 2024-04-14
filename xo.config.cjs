@@ -2,6 +2,8 @@ module.exports = {
   space: true,
   semicolon: true,
   prettier: true,
+  plugins: ['solid'],
+  extends: ['plugin:solid/typescript'],
   rules: {
     'import/extensions': ['error', 'never', { svg: 'always' }],
     // Tiptap extensions are imcompatiable
