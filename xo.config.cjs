@@ -15,6 +15,5 @@ module.exports = {
     'unicorn/prefer-dom-node-text-content': 'off',
     '@typescript-eslint/naming-convention': 'off',
     '@typescript-eslint/no-empty-function': 'off',
-    '@typescript-eslint/no-unsafe-assignment': 'off',
   },
 };

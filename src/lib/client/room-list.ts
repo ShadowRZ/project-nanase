@@ -96,8 +96,9 @@ export default class RoomList extends TypedEventEmitter<
     if (mDirect === undefined) return mDirectsId;
 
     for (const direct of Object.keys(mDirect)) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, unicorn/no-array-for-each
-      mDirect[direct].forEach((directId: string) => mDirectsId.add(directId));
+      for (const directId of mDirect[direct] as string[]) {
+        mDirectsId.add(directId);
+      }
     }
 
     return mDirectsId;

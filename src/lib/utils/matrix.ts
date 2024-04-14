@@ -4,9 +4,8 @@ import {
   type ILoginFlowsResponse,
   type Room,
   type SSOFlow,
-  type MatrixEvent,
-  RelationType,
 } from 'matrix-js-sdk';
+import type ClientDiscovery from '~/types/discovery';
 
 export function getRoomAvatarUrl(room?: Room): string | undefined {
   if (room !== undefined) {
@@ -44,14 +43,12 @@ export async function getHomeserverUrl(servername: string): Promise<string> {
   if (/^https?:\/\//.exec(servername) !== null) protocol = '';
   const serverDiscoveryUrl = `${protocol}${servername}${WELL_KNOWN_URI}`;
   try {
-    const result = await (
-      await fetch(serverDiscoveryUrl, { method: 'GET' })
-    ).json(); // eslint-disable-line unicorn/no-await-expression-member
+    const resp = await fetch(serverDiscoveryUrl, { method: 'GET' });
+    const result = (await resp.json()) as ClientDiscovery;
 
-    const baseUrl = result?.['m.homeserver']?.base_url;
+    const baseUrl = result?.['m.homeserver']?.base_url as string | undefined;
     if (baseUrl === undefined)
       throw new Error('Your homeserver has an invaild config');
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return baseUrl;
   } catch {
     return `${protocol}${servername}`;

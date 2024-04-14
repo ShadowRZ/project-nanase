@@ -1,13 +1,12 @@
 import { fromDom } from 'hast-util-from-dom';
 import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
-import { Switch, Match } from 'solid-js'; // eslint-disable-line no-unused-vars
+import { Switch, Match } from 'solid-js';
 import linkifyElement from 'linkify-element';
 import { Fragment, jsx, jsxs } from 'solid-js/h/jsx-runtime';
 import { isEmojiOnly } from '~/app/utils/message';
 import { sanitizeMatrixHtml } from '~/lib/utils/sanitize';
 
 export function renderTextContent(content, _roomId) {
-  // eslint-disable-next-line no-undef
   const node = document.createElement('span');
   if (content.format === 'org.matrix.custom.html') {
     node.innerHTML = sanitizeMatrixHtml(content.formatted_body);

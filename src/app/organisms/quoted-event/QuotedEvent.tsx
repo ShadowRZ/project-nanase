@@ -2,7 +2,7 @@ import { Button } from '@kobalte/core';
 import { type EventTimelineSet, type MatrixClient } from 'matrix-js-sdk';
 import { type Component, Suspense, Show } from 'solid-js';
 import { createReplyEvent } from '~/app/hooks/createReplyEvent';
-import { getRoomScopedProfile } from '~/app/utils/getRoomScopedProfile';
+import createRoomProfileSnapshot from '~/app/hooks/createRoomProfileSnapshot';
 import { trimReplyFallback } from '~/lib/utils/matrix';
 
 type QuotedEventProps = {
@@ -21,6 +21,9 @@ const QuotedEvent: Component<QuotedEventProps> = (props) => {
     props.timelineSet,
     props.client
   );
+  const roomId = () => props.roomId;
+  const sender = () => target()!.getSender()!;
+  const { name } = createRoomProfileSnapshot(roomId, sender);
 
   return (
     <Button.Root
@@ -33,12 +36,7 @@ const QuotedEvent: Component<QuotedEventProps> = (props) => {
       <Suspense fallback={<span>......</span>}>
         <Show when={target()}>
           <Show when={props.showSender ?? true}>
-            <span class='font-bold'>
-              {getRoomScopedProfile(
-                props.roomId,
-                target()!.getSender()!
-              ).name() ?? target()!.getSender()!}
-            </span>
+            <span class='font-bold'>{name() ?? sender()}</span>
           </Show>
           <span
             class='shrink truncate text-wrap whitespace-pre-wrap'

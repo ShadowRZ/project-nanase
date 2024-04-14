@@ -30,7 +30,7 @@ type RoomProps = {
 
 const Room: Component<RoomProps> = (props) => {
   const client = createCurrentClientResource();
-  const roomId = createMemo(() => props.roomId);
+  const roomId = () => props.roomId;
   const { name, topic, avatar } = createRoomResource(roomId);
   const { timelineSet } = createRoomEvents(roomId);
   const typings = createTypings();

@@ -47,8 +47,7 @@ const RoomListItem: Component<RoomListItemProps> = (props) => {
         lastSender={
           event()?.sender?.name ?? (event()?.getContent().sender as string)
         }
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        lastContent={trimReplyFallback(event()?.getContent().body)}
+        lastContent={trimReplyFallback(event()?.getContent().body as string)}
       />
     </Show>
   );
@@ -81,8 +80,7 @@ const RoomListItemDirect: Component<RoomListItemProps> = (props) => {
         lastSender={
           event()?.sender?.name ?? (event()?.getContent().sender as string)
         }
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        lastContent={trimReplyFallback(event()?.getContent().body)}
+        lastContent={trimReplyFallback(event()?.getContent().body as string)}
       />
     </Show>
   );

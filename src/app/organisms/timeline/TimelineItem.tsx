@@ -21,7 +21,6 @@ import CImageMessage from '~/app/molecules/message/ImageMessage';
 import MessageShell from '~/app/molecules/message/MessageShell';
 import StateMessageShell from '~/app/molecules/message/StateMessageShell';
 import CTextMessage from '~/app/molecules/message/TextMessage';
-import { getRoomScopedProfile } from '~/app/utils/getRoomScopedProfile';
 import { renderTextContent } from '~/app/utils/renderTextContent';
 import { getEditedEvent, getEventReactions } from '~/app/utils/room';
 import {
@@ -41,6 +40,7 @@ import { type RelationData } from '~/types/room';
 import TrashDuotone from '~icons/ph/trash-duotone';
 import ArrowBendUpLeftDuotone from '~icons/ph/arrow-bend-up-left-duotone';
 import CodeDuotone from '~icons/ph/code-duotone';
+import createRoomProfileSnapshot from '~/app/hooks/createRoomProfileSnapshot';
 
 const RedactedMessage: Component = () => {
   return (
@@ -164,7 +164,7 @@ const MemberContent: Component<Omit<EventProps, 'timelineSet'>> = (props) => {
   const roomId = () => props.roomId;
   const event = () => props.event;
   const sender = () => event().getSender()!;
-  const { name, avatar } = getRoomScopedProfile(roomId(), sender());
+  const { name, avatar } = createRoomProfileSnapshot(roomId, sender);
   const prevName = () => event().getPrevContent().displayname ?? name();
 
   return (
@@ -184,7 +184,7 @@ const RoomMessage: ParentComponent<EventProps> = (props) => {
   const event = () => props.event;
   const timelineSet = () => props.timelineSet;
   const sender = () => event().getSender()!;
-  const { name, avatar } = getRoomScopedProfile(roomId(), sender());
+  const { name, avatar } = createRoomProfileSnapshot(roomId, sender);
   const keyedReactions = () => getEventReactions(timelineSet(), event());
 
   return (
@@ -211,7 +211,7 @@ const StateMessage: ParentComponent<Omit<EventProps, 'timelineSet'>> = (
   const roomId = () => props.roomId;
   const event = () => props.event;
   const sender = () => event().getSender()!;
-  const { name, avatar } = getRoomScopedProfile(roomId(), sender());
+  const { name, avatar } = createRoomProfileSnapshot(roomId, sender);
 
   return (
     <StateMessageShell

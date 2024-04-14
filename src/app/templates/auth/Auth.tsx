@@ -53,6 +53,7 @@ const Homeserver: Component<HomeserverProps> = (props) => {
     { equals: false }
   );
 
+  // eslint-disable-next-line solid/reactivity
   const trigger = debounce((homeserver: string) => {
     if (homeserver.trim() !== '') {
       props.onChange(undefined);

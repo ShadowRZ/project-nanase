@@ -26,7 +26,6 @@ const Login: Component<LoginProps> = (props) => {
   const client = (): MatrixClient => props.client;
   const flows = (): ILoginFlowsResponse => props.flows;
   const navigate = useNavigate();
-  const onClientCreated = props.onClientCreated;
 
   const onSubmit: SubmitHandler<LoginForm> = async (values) => {
     try {
@@ -38,7 +37,7 @@ const Login: Component<LoginProps> = (props) => {
         ...result,
         homeserver: client().getHomeserverUrl(),
       };
-      onClientCreated(data);
+      props.onClientCreated(data);
       navigate('/rooms', { replace: true });
     } catch (error: any) {
       throw new Error((error.data?.error as string) ?? 'Unknown Error');

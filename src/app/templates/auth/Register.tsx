@@ -1,3 +1,4 @@
+/* eslint-disable solid/reactivity */
 import {
   FormError,
   createForm,
@@ -179,7 +180,6 @@ export type RegisterProps = {
 };
 
 export const Register: Component<RegisterProps> = (props) => {
-  const onClientCreated = props.onClientCreated;
   const navigate = useNavigate();
   const loginFlows = (): ILoginFlowsResponse => props.loginFlows;
   const client = (): MatrixClient => props.client;
@@ -262,7 +262,7 @@ export const Register: Component<RegisterProps> = (props) => {
             ...(resp.data as SessionData),
             homeserver: client().getHomeserverUrl(),
           };
-          onClientCreated(data);
+          props.onClientCreated(data);
           navigate('/', { replace: true });
         } else {
           const completed = resp.data.completed ?? [];
@@ -312,7 +312,7 @@ export const Register: Component<RegisterProps> = (props) => {
                     ...(dummyResp.data as SessionData),
                     homeserver: client().getHomeserverUrl(),
                   };
-                  onClientCreated(data);
+                  props.onClientCreated(data);
                   navigate('/rooms', { replace: true });
                 }
               })

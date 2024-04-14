@@ -6,6 +6,7 @@ import { useAppContext } from './useAppContext';
 export function createClientStatus(id: () => string) {
   const client = createClientResource(id);
 
+  // In matrix-js-sdk, null is used for sync state.
   // eslint-disable-next-line @typescript-eslint/ban-types
   const [status, setStatus] = createSignal<SyncState | null>(null);
 

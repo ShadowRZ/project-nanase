@@ -16,8 +16,11 @@ type AsyncImageProps = {
 };
 
 const AsyncImage: Component<AsyncImageProps> = (props) => {
+  const srcInput = () => props.src;
   const [image] = splitProps(props, ['width', 'height']);
-  const [src, { refetch }] = createResource(props.src);
+  const [src, { refetch }] = createResource(srcInput, async ($src) => {
+    return $src();
+  });
 
   return (
     <ErrorBoundary

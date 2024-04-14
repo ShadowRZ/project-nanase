@@ -1,6 +1,7 @@
 import Prism from 'prismjs';
 import { onMount, type ParentComponent } from 'solid-js';
 // Prism plugins
+// Prism plugins are all incompatible with ESLint import/no-unassigned-import
 /* eslint-disable import/no-unassigned-import */
 import 'prismjs/components/prism-json';
 import 'prismjs/components/prism-javascript';
