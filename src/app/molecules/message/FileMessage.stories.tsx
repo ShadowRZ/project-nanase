@@ -7,6 +7,7 @@ const meta: Meta<typeof CFileMessage> = {
   tags: ['autodocs'],
   args: {
     read: false,
+    download: false,
     filename: 'file.bin',
     mime: 'application/octet-stream',
     onClick: fn(),

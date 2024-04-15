@@ -35,9 +35,10 @@ export type FileInfo = {
 export type FileMessage = {
   info: FileInfo;
   url: string;
+  filename?: string;
 } & Message<MsgType.File>;
 
-export type AnyMessage = MaybeFormattedMessage | ImageMessage;
+export type AnyMessage = MaybeFormattedMessage | ImageMessage | FileMessage;
 
 export type Sticker = {
   info: ImageInfo;

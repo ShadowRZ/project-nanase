@@ -68,6 +68,9 @@ dependencies:
   emojibase-data:
     specifier: ^15.3.0
     version: 15.3.0(emojibase@15.3.0)
+  file-saver:
+    specifier: ^2.0.5
+    version: 2.0.5
   hast-util-from-dom:
     specifier: ^5.0.0
     version: 5.0.0
@@ -127,6 +130,9 @@ devDependencies:
   '@storybook/test':
     specifier: ^8.0.6
     version: 8.0.6
+  '@types/file-saver':
+    specifier: ^2.0.7
+    version: 2.0.7
   '@types/grecaptcha':
     specifier: ^3.0.9
     version: 3.0.9
@@ -3696,6 +3702,10 @@ packages:
       '@types/serve-static': 1.15.7
     dev: true
 
+  /@types/file-saver@2.0.7:
+    resolution: {integrity: sha512-dNKVfHd/jk0SkR/exKGj2ggkB45MAkzvWCaqLUUgkyjITkGNzH8H+yUwr+BLJUBjZOe9w8X3wgmXhZDRg1ED6A==}
+    dev: true
+
   /@types/find-cache-dir@3.2.1:
     resolution: {integrity: sha512-frsJrz2t/CeGifcu/6uRo4b+SzAwT4NYCVPu1GN8IB9XTzrpPkGuV0tmh9mN+/L0PklAlsC3u5Fxt0ju00LXIw==}
     dev: true
@@ -6318,6 +6328,10 @@ packages:
     dependencies:
       flat-cache: 3.2.0
     dev: true
+
+  /file-saver@2.0.5:
+    resolution: {integrity: sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==}
+    dev: false
 
   /file-system-cache@2.3.0:
     resolution: {integrity: sha512-l4DMNdsIPsVnKrgEXbJwDJsA5mB8rGwHYERMgqQx/xAUtChPJMre1bXBzDEqqVbWv9AIbFezXMxeEkZDSrXUOQ==}

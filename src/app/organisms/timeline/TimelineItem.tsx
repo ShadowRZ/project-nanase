@@ -1,4 +1,5 @@
 import { ContextMenu } from '@kobalte/core';
+import FileSaver from 'file-saver';
 import {
   MsgType,
   type EventTimelineSet,
@@ -6,41 +7,43 @@ import {
 } from 'matrix-js-sdk';
 import {
   ErrorBoundary,
+  For,
   Match,
   Show,
   Switch,
   createMemo,
+  createSignal,
   type Component,
   type ParentComponent,
-  createSignal,
-  For,
 } from 'solid-js';
-import ViewSourceDialog from '~/app/organisms/view-source/ViewSourceDialog';
 import Box from '~/app/atoms/box/Box';
-import CImageMessage from '~/app/molecules/message/ImageMessage';
-import MessageShell from '~/app/molecules/message/MessageShell';
-import StateMessageShell from '~/app/molecules/message/StateMessageShell';
-import CTextMessage from '~/app/molecules/message/TextMessage';
-import { renderTextContent } from '~/app/utils/renderTextContent';
-import { getEditedEvent, getEventReactions } from '~/app/utils/room';
+import Panel from '~/app/atoms/panel/Panel';
 import {
   createCurrentClientResource,
   createCurrentClientUserId,
 } from '~/app/hooks/createClientResource';
+import createRoomProfileSnapshot from '~/app/hooks/createRoomProfileSnapshot';
+import CFileMessage from '~/app/molecules/message/FileMessage';
+import CImageMessage from '~/app/molecules/message/ImageMessage';
+import MessageShell from '~/app/molecules/message/MessageShell';
+import StateMessageShell from '~/app/molecules/message/StateMessageShell';
+import CTextMessage from '~/app/molecules/message/TextMessage';
+import QuotedEvent from '~/app/organisms/quoted-event/QuotedEvent';
+import ViewSourceDialog from '~/app/organisms/view-source/ViewSourceDialog';
+import { renderMemberContent } from '~/app/utils/renderMemberContent';
+import { renderTextContent } from '~/app/utils/renderTextContent';
+import { getEditedEvent, getEventReactions } from '~/app/utils/room';
 import {
+  type FileMessage,
   type AnyMessage,
   type ImageMessage,
   type MaybeFormattedMessage,
   type Sticker,
 } from '~/types/event-content';
-import { renderMemberContent } from '~/app/utils/renderMemberContent';
-import Panel from '~/app/atoms/panel/Panel';
-import QuotedEvent from '~/app/organisms/quoted-event/QuotedEvent';
 import { type RelationData } from '~/types/room';
-import TrashDuotone from '~icons/ph/trash-duotone';
 import ArrowBendUpLeftDuotone from '~icons/ph/arrow-bend-up-left-duotone';
 import CodeDuotone from '~icons/ph/code-duotone';
-import createRoomProfileSnapshot from '~/app/hooks/createRoomProfileSnapshot';
+import TrashDuotone from '~icons/ph/trash-duotone';
 
 const RedactedMessage: Component = () => {
   return (
@@ -97,7 +100,7 @@ const MessageContent: Component<EventProps> = (props) => {
           </CTextMessage>
         </Match>
         <Match when={msgtype() === MsgType.Image}>
-          <Box color='default' class='max-w-2/3'>
+          <Box color='default' class='max-w-2/3 max-h-2/3'>
             <Show when={event().replyEventId !== undefined}>
               <QuotedEvent
                 roomId={props.roomId}
@@ -119,6 +122,31 @@ const MessageContent: Component<EventProps> = (props) => {
               }
             />
           </Box>
+        </Match>
+        <Match when={msgtype() === MsgType.File}>
+          <Show when={event().replyEventId !== undefined}>
+            <QuotedEvent
+              roomId={props.roomId}
+              eventId={event().replyEventId!}
+              timelineSet={timelineSet()}
+              client={client()!}
+            />
+            <CFileMessage
+              timestamp={event().getTs()}
+              status={sending() ? 'sending' : 'sent'}
+              color={sender() === selfId() ? 'primary' : 'default'}
+              filename={(content() as FileMessage).filename ?? content().body}
+              mime={(content() as FileMessage).info.mimetype}
+              onClick={() => {
+                const url = (content() as FileMessage).url;
+                const httpUrl = client()!.mxcUrlToHttp(url);
+                const filename = (content() as FileMessage).filename ?? content().body;
+                if (httpUrl) {
+                  FileSaver.saveAs(httpUrl, filename);
+                }
+              }}
+            />
+          </Show>
         </Match>
       </Switch>
     </Show>
