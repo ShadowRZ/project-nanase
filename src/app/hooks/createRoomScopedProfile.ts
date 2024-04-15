@@ -16,19 +16,19 @@ export const createRoomScopedProfile = (
   const room = () => client()?.getRoom(roomId) ?? undefined;
   const member = () => room()?.getMember(userId) ?? undefined;
 
-  const [name, { mutate: mutateName, refetch: refetchName }] = createResource(
+  const [name, { refetch: refetchName }] = createResource(
     member,
     ($member) => $member.name
   );
 
-  const [avatar, { mutate: mutateAvatar, refetch: refetchAvatar }] =
-    createResource(member, ($member) =>
-      getRoomMemberAvatarUrl(room(), $member)
-    );
+  const [avatar, { refetch: refetchAvatar }] = createResource(
+    member,
+    ($member) => getRoomMemberAvatarUrl(room(), $member)
+  );
 
   const onMember = (_event: MatrixEvent, member: RoomMember) => {
-    mutateName(member.name);
-    mutateAvatar(getRoomMemberAvatarUrl(room(), member));
+    void refetchName();
+    void refetchAvatar();
   };
 
   createEffect(() => {

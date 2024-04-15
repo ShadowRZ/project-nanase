@@ -17,11 +17,11 @@ export const createRoomResource = (roomId: () => string) => {
   const client = createCurrentClientResource();
   const room = createMemo(() => client()?.getRoom(roomId()) ?? undefined);
 
-  const [name, { mutate: mutateName }] = createResource(
+  const [name, { refetch: refetchName }] = createResource(
     room,
     ($room) => $room.name as string | undefined
   );
-  const [topic, { mutate: mutateTopic }] = createResource(
+  const [topic, { refetch: refetchTopic }] = createResource(
     room,
     ($room) =>
       $room
@@ -30,14 +30,14 @@ export const createRoomResource = (roomId: () => string) => {
         ?.getStateEvents(EventType.RoomTopic, '')
         ?.getContent<MRoomTopicEventContent>().topic
   );
-  const [members, { mutate: mutateMembers }] = createResource(
+  const [members, { refetch: refetchMembers }] = createResource(
     room,
     ($room) => $room.getMembers().length
   );
-  const [lastTs, { mutate: mutateLastTs }] = createResource(room, ($room) =>
+  const [lastTs, { refetch: refetchLastTs }] = createResource(room, ($room) =>
     $room.getLastActiveTimestamp()
   );
-  const [avatar, { mutate: mutateAvatar }] = createResource(room, ($room) =>
+  const [avatar, { refetch: refetchAvatar }] = createResource(room, ($room) =>
     getRoomAvatarUrl($room)
   );
   const [unread, { refetch: refetchUnread }] = createResource(
@@ -48,24 +48,24 @@ export const createRoomResource = (roomId: () => string) => {
 
   const onRoomStateEvent = (event: MatrixEvent, _state: RoomState): void => {
     if (event.getType() === 'm.room.topic') {
-      mutateTopic(event.getContent<MRoomTopicEventContent>().topic);
+      void refetchTopic();
     }
 
     if (event.getType() === 'm.room.avatar') {
-      mutateAvatar(getRoomAvatarUrl(room()));
+      void refetchAvatar();
     }
   };
 
   const onRoomName = (room: Room): void => {
-    mutateName(room.name);
+    void refetchName();
   };
 
   const onRoomMembers = (_event: MatrixEvent, state: RoomState): void => {
-    mutateMembers(state.getMembers().length);
+    void refetchMembers();
   };
 
   const onTimeLine = (event: MatrixEvent): void => {
-    mutateLastTs(event.getTs());
+    void refetchLastTs();
   };
 
   const onUnread = (): void => {
