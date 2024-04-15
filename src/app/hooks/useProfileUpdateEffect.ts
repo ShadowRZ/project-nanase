@@ -1,17 +1,23 @@
-import {
-  createEffect,
-  createResource,
-  createSignal,
-  onCleanup,
-} from 'solid-js';
+import { createEffect, createResource, onCleanup } from 'solid-js';
 import { type MatrixEvent, type User, UserEvent } from 'matrix-js-sdk';
-import { createClientResource } from './createClientResource';
 import { useAppContext } from './useAppContext';
+import { setProfiles } from './createProfileStore';
 
-export function createClientProfile(id: () => string) {
+export default function useProfileUpdateEffect() {
   const { clients } = useAppContext();
-  const client = createClientResource(id);
-  const wait = async () => clients.get(id())!.wait;
+  for (const [id] of clients) {
+    useSingleProfileUpdateEffect(id);
+  }
+}
+
+function useSingleProfileUpdateEffect(id: string) {
+  const { clients } = useAppContext();
+  const [client] = createResource(id, async ($id) => {
+    const { client } = clients.get($id)!;
+    return client;
+  });
+
+  const wait = async () => clients.get(id)!.wait;
 
   const [user] = createResource(client, ($client) => {
     return $client.getUser($client.getSafeUserId())!;
@@ -44,6 +50,10 @@ export function createClientProfile(id: () => string) {
         void refetchAvatar();
       })
       .catch(() => {});
+    setProfiles(id, () => ({
+      name: name(),
+      avatar: avatar(),
+    }));
     thisUser?.on(UserEvent.DisplayName, onDisplayName);
     thisUser?.on(UserEvent.AvatarUrl, onAvatarUrl);
     onCleanup(() => {
@@ -51,14 +61,4 @@ export function createClientProfile(id: () => string) {
       thisUser?.off(UserEvent.AvatarUrl, onAvatarUrl);
     });
   });
-
-  return {
-    name,
-    avatar,
-  };
-}
-
-export function createCurrentClientProfile() {
-  const { current } = useAppContext();
-  return createClientProfile(current);
 }

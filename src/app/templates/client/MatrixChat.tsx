@@ -11,6 +11,7 @@ import {
 } from 'solid-js';
 import Sidebar from '~/app/components/sidebar/Sidebar';
 import { createCurrentClientStatus } from '~/app/hooks/createClientStatus';
+import useProfileUpdateEffect from '~/app/hooks/useProfileUpdateEffect';
 import RoomList, {
   type RoomCategory,
 } from '~/app/organisms/room-list/RoomList';
@@ -50,6 +51,8 @@ const SyncStatus: Component = () => {
 const MatrixChat: Component = () => {
   const [category, setCategory] = createSignal<RoomCategory>('chats');
   const selectedRoom = createMemo(() => useParams().id);
+
+  useProfileUpdateEffect();
 
   return (
     <div class='flex flex-row'>

@@ -1,18 +1,18 @@
-import { type Component, createSignal } from 'solid-js';
 import { DropdownMenu, Tooltip } from '@kobalte/core';
+import { createSignal, type Component } from 'solid-js';
+import ImageButton from '~/app/atoms/button/ImageButton';
+import Panel from '~/app/atoms/panel/Panel';
+import TooltipContent from '~/app/atoms/tooltip/TooltipContent';
+import { createCurrentClientResource } from '~/app/hooks/createClientResource';
+import { profiles } from '~/app/hooks/createProfileStore';
+import { useAppContext } from '~/app/hooks/useAppContext';
+import t from '~/app/i18n';
+import ConfrimDialog from '~/app/molecules/confrim-dialog/ConfirmDialog';
 import ProfileContent from '~/app/molecules/profile/ProfileContent';
 import ClientSwitchDialog from '~/app/organisms/switch-dialog/ClientSwitchDialog';
 import PowerDuotone from '~icons/ph/power-duotone';
-import UserSwitchDuotone from '~icons/ph/user-switch-duotone';
 import UserCircleDuotone from '~icons/ph/user-circle-duotone';
-import t from '~/app/i18n';
-import TooltipContent from '~/app/atoms/tooltip/TooltipContent';
-import Panel from '~/app/atoms/panel/Panel';
-import ImageButton from '~/app/atoms/button/ImageButton';
-import ConfrimDialog from '~/app/molecules/confrim-dialog/ConfirmDialog';
-import { createCurrentClientProfile } from '~/app/hooks/createClientProfile';
-import { useAppContext } from '~/app/hooks/useAppContext';
-import { createCurrentClientResource } from '~/app/hooks/createClientResource';
+import UserSwitchDuotone from '~icons/ph/user-switch-duotone';
 
 const DropdownMenuWrapper: Component = (props) => {
   return <DropdownMenu.Trigger as={Tooltip.Trigger} {...props} />;
@@ -20,7 +20,8 @@ const DropdownMenuWrapper: Component = (props) => {
 
 const AccountMenu: Component = () => {
   const { clients, current } = useAppContext();
-  const { name, avatar } = createCurrentClientProfile();
+  const name = () => profiles[current()]?.name;
+  const avatar = () => profiles[current()]?.avatar;
   const client = createCurrentClientResource();
   const userId = () => clients.get(current())!.userId;
 

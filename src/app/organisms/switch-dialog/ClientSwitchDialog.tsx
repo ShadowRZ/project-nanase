@@ -1,7 +1,7 @@
 import { Button } from '@kobalte/core';
 import { useNavigate } from '@solidjs/router';
 import { For, createSignal, type Component } from 'solid-js';
-import { createClientProfile } from '~/app/hooks/createClientProfile';
+import { profiles } from '~/app/hooks/createProfileStore';
 import { useAppContext } from '~/app/hooks/useAppContext';
 import t from '~/app/i18n';
 import Dialog from '~/app/molecules/dialog/Dialog';
@@ -20,7 +20,8 @@ type ClientSwitchItemProps = {
 const ClientSwitchItem: Component<ClientSwitchItemProps> = (props) => {
   const { clients } = useAppContext();
   const id = () => props.id;
-  const { name, avatar } = createClientProfile(id);
+  const name = () => profiles[id()]?.name;
+  const avatar = () => profiles[id()]?.avatar;
   const userId = () => clients.get(id())!.userId;
 
   return <ProfileContent name={name()} avatar={avatar()} userId={userId()} />;
