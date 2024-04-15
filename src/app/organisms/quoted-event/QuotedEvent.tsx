@@ -1,7 +1,8 @@
 import { Button } from '@kobalte/core';
 import { type EventTimelineSet, type MatrixClient } from 'matrix-js-sdk';
-import { type Component, Suspense, Show } from 'solid-js';
-import { createReplyEvent } from '~/app/hooks/createReplyEvent';
+import { type Component, Suspense, Show, ErrorBoundary } from 'solid-js';
+import Text from '~/app/atoms/text/Text';
+import { createFetchedEvent } from '~/app/hooks/createFetchedEvent';
 import createRoomProfileSnapshot from '~/app/hooks/createRoomProfileSnapshot';
 import { trimReplyFallback } from '~/lib/utils/matrix';
 
@@ -15,13 +16,11 @@ type QuotedEventProps = {
 };
 
 const QuotedEvent: Component<QuotedEventProps> = (props) => {
-  const target = createReplyEvent(
-    props.roomId,
-    props.eventId,
-    props.timelineSet,
-    props.client
-  );
   const roomId = () => props.roomId;
+  const eventId = () => props.eventId;
+  const timelineSet = () => props.timelineSet;
+  const client = () => props.client;
+  const target = createFetchedEvent(roomId, eventId, timelineSet, client);
   const sender = () => target()!.getSender()!;
   const { name } = createRoomProfileSnapshot(roomId, sender);
 
@@ -34,21 +33,23 @@ const QuotedEvent: Component<QuotedEventProps> = (props) => {
       }}
     >
       <Suspense fallback={<span>......</span>}>
-        <Show when={target()}>
-          <Show when={props.showSender ?? true}>
-            <span class='font-bold'>{name() ?? sender()}</span>
+        <ErrorBoundary fallback={<Text font='italic'>Event not found.</Text>}>
+          <Show when={target()}>
+            <Show when={props.showSender ?? true}>
+              <span class='font-bold'>{name() ?? sender()}</span>
+            </Show>
+            <span
+              class='shrink truncate text-wrap whitespace-pre-wrap'
+              classList={{
+                'opacity-50 font-italic': target()!.isRedacted(),
+              }}
+            >
+              {target()!.isRedacted()
+                ? 'Event was redacted.'
+                : trimReplyFallback(target()?.getContent().body as string)}
+            </span>
           </Show>
-          <span
-            class='shrink truncate text-wrap whitespace-pre-wrap'
-            classList={{
-              'opacity-50 font-italic': target()!.isRedacted(),
-            }}
-          >
-            {target()!.isRedacted()
-              ? 'Event was redacted.'
-              : trimReplyFallback(target()?.getContent().body as string)}
-          </span>
-        </Show>
+        </ErrorBoundary>
       </Suspense>
     </Button.Root>
   );
