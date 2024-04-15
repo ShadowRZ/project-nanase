@@ -1,6 +1,7 @@
 import { Navigate, Route, MemoryRouter as Router } from '@solidjs/router';
 import { Show, createResource, createSignal, type Component } from 'solid-js';
 import { createClientResource } from '../hooks/createClientResource';
+import FeatureCheck from './FeatureCheck';
 import Panel from '~/app/atoms/panel/Panel';
 import { AppContext } from '~/app/hooks/useAppContext';
 import AuthContent from '~/app/templates/auth/Auth';
@@ -76,11 +77,13 @@ const ChatWrapper: Component = () => {
 
 const App: Component = () => {
   return (
-    <Router>
-      <Route path='/' component={Index} />
-      <Route path='/login' component={AuthWrapper} />
-      <Route path='/rooms/:id?' component={ChatWrapper} />
-    </Router>
+    <FeatureCheck>
+      <Router>
+        <Route path='/' component={Index} />
+        <Route path='/login' component={AuthWrapper} />
+        <Route path='/rooms/:id?' component={ChatWrapper} />
+      </Router>
+    </FeatureCheck>
   );
 };
 

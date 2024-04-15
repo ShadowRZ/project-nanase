@@ -49,10 +49,8 @@ const FeatureCheck: ParentComponent = (props) => {
 
   return (
     <Suspense>
-      <Show when={idbSupport() !== undefined}>
-        <Show when={idbSupport()} fallback={<IDBUnsupported />}>
-          {props.children}
-        </Show>
+      <Show when={idbSupport() === true} fallback={<IDBUnsupported />}>
+        {props.children}
       </Show>
     </Suspense>
   );
