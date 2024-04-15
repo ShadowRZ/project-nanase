@@ -1,6 +1,10 @@
 import { Button } from '@kobalte/core';
-import { type EventTimelineSet, type MatrixClient } from 'matrix-js-sdk';
-import { type Component, Suspense, Show, ErrorBoundary } from 'solid-js';
+import {
+  type EventTimelineSet,
+  type MatrixClient,
+  type MatrixEvent,
+} from 'matrix-js-sdk';
+import { ErrorBoundary, Show, Suspense, type Component } from 'solid-js';
 import Text from '~/app/atoms/text/Text';
 import { createFetchedEvent } from '~/app/hooks/createFetchedEvent';
 import createRoomProfileSnapshot from '~/app/hooks/createRoomProfileSnapshot';
@@ -15,14 +19,42 @@ type QuotedEventProps = {
   showSender?: boolean;
 };
 
+type QuotedEventInnerProps = {
+  target: MatrixEvent;
+  roomId: string;
+  showSender?: boolean;
+};
+
+const QuotedEventInner: Component<QuotedEventInnerProps> = (props) => {
+  const roomId = () => props.roomId;
+  const target = () => props.target;
+  const sender = () => target().getSender()!;
+  const { name } = createRoomProfileSnapshot(roomId, sender);
+  return (
+    <>
+      <Show when={props.showSender ?? true}>
+        <span class='font-bold'>{name() ?? sender()}</span>
+      </Show>
+      <span
+        class='shrink truncate text-wrap whitespace-pre-wrap'
+        classList={{
+          'opacity-50 font-italic': target().isRedacted(),
+        }}
+      >
+        {target().isRedacted()
+          ? 'Event was redacted.'
+          : trimReplyFallback(target().getContent().body as string)}
+      </span>
+    </>
+  );
+};
+
 const QuotedEvent: Component<QuotedEventProps> = (props) => {
   const roomId = () => props.roomId;
   const eventId = () => props.eventId;
   const timelineSet = () => props.timelineSet;
   const client = () => props.client;
   const target = createFetchedEvent(roomId, eventId, timelineSet, client);
-  const sender = () => target()!.getSender()!;
-  const { name } = createRoomProfileSnapshot(roomId, sender);
 
   return (
     <Button.Root
@@ -35,19 +67,7 @@ const QuotedEvent: Component<QuotedEventProps> = (props) => {
       <Suspense fallback={<span>......</span>}>
         <ErrorBoundary fallback={<Text font='italic'>Event not found.</Text>}>
           <Show when={target()}>
-            <Show when={props.showSender ?? true}>
-              <span class='font-bold'>{name() ?? sender()}</span>
-            </Show>
-            <span
-              class='shrink truncate text-wrap whitespace-pre-wrap'
-              classList={{
-                'opacity-50 font-italic': target()!.isRedacted(),
-              }}
-            >
-              {target()!.isRedacted()
-                ? 'Event was redacted.'
-                : trimReplyFallback(target()?.getContent().body as string)}
-            </span>
+            <QuotedEventInner target={target()!} roomId={roomId()} />
           </Show>
         </ErrorBoundary>
       </Suspense>

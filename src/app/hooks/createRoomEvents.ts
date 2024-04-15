@@ -19,6 +19,7 @@ export const createRoomEvents = (roomId: () => string) => {
     ($timeline) => $timeline.getEvents(),
     {
       storage(init) {
+        // eslint-disable-next-line solid/reactivity
         return createSignal(init, { equals: false });
       },
     }

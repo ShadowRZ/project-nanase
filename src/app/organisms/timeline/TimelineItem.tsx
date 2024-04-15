@@ -34,8 +34,8 @@ import { renderMemberContent } from '~/app/utils/renderMemberContent';
 import { renderTextContent } from '~/app/utils/renderTextContent';
 import { getEditedEvent, getEventReactions } from '~/app/utils/room';
 import {
-  type FileMessage,
   type AnyMessage,
+  type FileMessage,
   type ImageMessage,
   type MaybeFormattedMessage,
   type Sticker,
@@ -95,12 +95,13 @@ const MessageContent: Component<EventProps> = (props) => {
             </Show>
             {renderTextContent(
               content() as MaybeFormattedMessage,
-              props.roomId
+              props.roomId,
+              client()!.baseUrl
             )}
           </CTextMessage>
         </Match>
         <Match when={msgtype() === MsgType.Image}>
-          <Box color='default' class='max-w-2/3 max-h-2/3'>
+          <Box color='default' class='max-w-2/3'>
             <Show when={event().replyEventId !== undefined}>
               <QuotedEvent
                 roomId={props.roomId}
@@ -131,22 +132,23 @@ const MessageContent: Component<EventProps> = (props) => {
               timelineSet={timelineSet()}
               client={client()!}
             />
-            <CFileMessage
-              timestamp={event().getTs()}
-              status={sending() ? 'sending' : 'sent'}
-              color={sender() === selfId() ? 'primary' : 'default'}
-              filename={(content() as FileMessage).filename ?? content().body}
-              mime={(content() as FileMessage).info.mimetype}
-              onClick={() => {
-                const url = (content() as FileMessage).url;
-                const httpUrl = client()!.mxcUrlToHttp(url);
-                const filename = (content() as FileMessage).filename ?? content().body;
-                if (httpUrl) {
-                  FileSaver.saveAs(httpUrl, filename);
-                }
-              }}
-            />
           </Show>
+          <CFileMessage
+            timestamp={event().getTs()}
+            status={sending() ? 'sending' : 'sent'}
+            color={sender() === selfId() ? 'primary' : 'default'}
+            filename={(content() as FileMessage).filename ?? content().body}
+            mime={(content() as FileMessage).info.mimetype}
+            onClick={() => {
+              const url = (content() as FileMessage).url;
+              const httpUrl = client()!.mxcUrlToHttp(url);
+              const filename =
+                (content() as FileMessage).filename ?? content().body;
+              if (httpUrl) {
+                FileSaver.saveAs(httpUrl, filename);
+              }
+            }}
+          />
         </Match>
       </Switch>
     </Show>
@@ -319,7 +321,7 @@ const TimelineItemContent: Component<EventProps> = (props) => {
 };
 
 const TimelineItem: Component<EventProps> = (props) => {
-  const roomId = () => props.roomId;
+  const roomId = createMemo(() => props.roomId);
   const event = () => props.event;
   const timelineSet = () => props.timelineSet;
   const canReply = () =>

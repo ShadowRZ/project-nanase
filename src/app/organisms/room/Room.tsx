@@ -59,7 +59,11 @@ const Room: Component<RoomProps> = (props) => {
       const replyFormattedBody =
         content.formatted_body === undefined
           ? sanitizeText(replyBody)
-          : sanitizeMatrixHtml(content.formatted_body as string, true);
+          : sanitizeMatrixHtml(
+              content.formatted_body as string,
+              client()!.baseUrl,
+              true
+            );
 
       const body = parseReplyBody(event.getSender()!, replyBody) + text;
       let htmlBody = parseReplyFormattedBody(

@@ -4,6 +4,7 @@ import {
   Match,
   Show,
   Switch,
+  createMemo,
   createSignal,
   type Component,
   type ParentComponent,
@@ -48,7 +49,7 @@ const SyncStatus: Component = () => {
 
 const MatrixChat: Component = () => {
   const [category, setCategory] = createSignal<RoomCategory>('chats');
-  const selectedRoom = (): string | undefined => useParams().id;
+  const selectedRoom = createMemo(() => useParams().id);
 
   return (
     <div class='flex flex-row'>
@@ -61,7 +62,7 @@ const MatrixChat: Component = () => {
       </div>
       <Show when={selectedRoom() !== undefined} fallback={<Welcome />}>
         <div class='absolute w-full min-w-0 md:static z-5 flex-1 flex flex-col h-dvh bg-white dark:bg-black'>
-          <Room roomId={selectedRoom()!} />
+          <Room roomId={selectedRoom()} />
         </div>
       </Show>
     </div>

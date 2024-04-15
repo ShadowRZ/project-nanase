@@ -30,11 +30,7 @@ const ImageMessage: ParentComponent<ImageBoxProps> = (props) => {
         'opacity-50': props.status === 'sending',
       }}
     >
-      {props.children ?? (
-        <Image.Root>
-          <Image.Img {...image} class='rounded-lg' />
-        </Image.Root>
-      )}
+      {props.children ?? <img {...image} class='rounded-lg' />}
       <Text
         as='span'
         size='smaller'

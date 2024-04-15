@@ -1,5 +1,6 @@
 // https://spec.matrix.org/latest/client-server-api/#mroommessage-msgtypes
 // https://github.com/cinnyapp/cinny/blob/689adde8ae148d2de76bab0d11d7e0e8f35b7439/src/util/sanitize.js
+import { getHttpUriForMxc } from 'matrix-js-sdk';
 import sanitizeHtml, { type Attributes, type Tag } from 'sanitize-html';
 
 const MAX_NESTING_DEPTH = 100;
@@ -107,7 +108,38 @@ function transformAnchorTag(tagName: string, attribs: Attributes): Tag {
   };
 }
 
-export function sanitizeMatrixHtml(html: string, forUI?: boolean) {
+function transformImgTag(
+  tagName: string,
+  attribs: Attributes,
+  baseUrl: string
+): Tag {
+  const { src } = attribs;
+  if (!src.startsWith('mxc://')) {
+    return {
+      tagName: 'a',
+      attribs: {
+        href: src,
+        rel: 'noopener',
+        target: '_blank',
+      },
+      text: attribs.alt || src,
+    };
+  }
+
+  return {
+    tagName,
+    attribs: {
+      ...attribs,
+      src: getHttpUriForMxc(baseUrl, src),
+    },
+  };
+}
+
+export function sanitizeMatrixHtml(
+  html: string,
+  baseUrl: string,
+  ignoreUIReplacement?: boolean
+) {
   return sanitizeHtml(html, {
     allowedTags: ALLOWED_HTML_TAGS,
     allowedAttributes: TAG_ALLOWED_ATTRS,
@@ -123,10 +155,13 @@ export function sanitizeMatrixHtml(html: string, forUI?: boolean) {
         'background-color': [/^#(?:[\da-fA-F]{3}){1,2}$/],
       },
     },
-    transformTags: forUI
+    transformTags: ignoreUIReplacement
       ? {}
       : {
           a: transformAnchorTag,
+          img(tagName, attribs) {
+            return transformImgTag(tagName, attribs, baseUrl);
+          },
         },
     nonTextTags: [
       'style',

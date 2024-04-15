@@ -3,13 +3,14 @@ import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
 import { Switch, Match } from 'solid-js';
 import linkifyElement from 'linkify-element';
 import { Fragment, jsx, jsxs } from 'solid-js/h/jsx-runtime';
+import { getHttpUriForMxc } from 'matrix-js-sdk';
 import { isEmojiOnly } from '~/app/utils/message';
 import { sanitizeMatrixHtml } from '~/lib/utils/sanitize';
 
-export function renderTextContent(content, _roomId) {
+export function renderTextContent(content, _roomId, baseUrl) {
   const node = document.createElement('span');
   if (content.format === 'org.matrix.custom.html') {
-    node.innerHTML = sanitizeMatrixHtml(content.formatted_body);
+    node.innerHTML = sanitizeMatrixHtml(content.formatted_body, baseUrl);
   } else {
     node.innerText = content.body;
   }
@@ -45,6 +46,20 @@ export function renderTextContent(content, _roomId) {
                 </span>
               </Match>
             </Switch>
+          ),
+          img: (props) => (
+            <img
+              {...props}
+              class='inline-block'
+              src={getHttpUriForMxc(
+                baseUrl,
+                props.src,
+                undefined,
+                undefined,
+                undefined,
+                true
+              )}
+            />
           ),
         },
       })}
