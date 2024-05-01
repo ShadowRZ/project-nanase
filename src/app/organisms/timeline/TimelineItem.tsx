@@ -78,12 +78,15 @@ const MessageContent: Component<EventProps> = (props) => {
   return (
     <Show when={!event().isRedacted()} fallback={<RedactedMessage />}>
       <Switch>
-        <Match when={msgtype() === MsgType.Text}>
+        <Match
+          when={msgtype() === MsgType.Text || msgtype() === MsgType.Notice}
+        >
           <CTextMessage
             timestamp={event().getTs()}
             status={sending() ? 'sending' : 'sent'}
             color={sender() === selfId() ? 'primary' : 'default'}
             edited={edited() !== undefined}
+            notice={msgtype() === MsgType.Notice}
           >
             <Show when={event().replyEventId !== undefined}>
               <QuotedEvent

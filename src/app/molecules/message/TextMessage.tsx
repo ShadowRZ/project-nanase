@@ -11,6 +11,7 @@ type TextMessageProps = {
   status: 'sending' | 'sent';
   read?: boolean;
   edited?: boolean;
+  notice?: boolean;
 };
 
 const TextMessage: ParentComponent<TextMessageProps> = (props) => {
@@ -22,7 +23,13 @@ const TextMessage: ParentComponent<TextMessageProps> = (props) => {
         'opacity-50': props.status === 'sending',
       }}
     >
-      <div>{props.children}</div>
+      <div
+        classList={{
+          'opacity-75': props.notice,
+        }}
+      >
+        {props.children}
+      </div>
       <Text
         as='div'
         size='smaller'

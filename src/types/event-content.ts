@@ -7,7 +7,7 @@ export type Message<T extends string> = {
 
 export type TextMessage<F extends string | undefined> = {
   format: F;
-} & Message<MsgType.Text>;
+} & Message<MsgType.Text | MsgType.Notice>;
 
 export type FormattedMessage = {
   formatted_body: string;
