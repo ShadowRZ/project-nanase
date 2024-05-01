@@ -348,7 +348,7 @@ const TimelineItem: Component<EventProps> = (props) => {
           <Panel
             decoration='bordered'
             as={ContextMenu.Content}
-            class='z-5 animate-popup-close ui-expanded:animate-popup-open'
+            class='z-5 animate-popup-close ui-expanded:animate-popup-open overflow-clip'
           >
             <Show when={canReply()}>
               <ContextMenu.Item
@@ -358,7 +358,7 @@ const TimelineItem: Component<EventProps> = (props) => {
                     eventId: event().getId()!,
                   });
                 }}
-                class='rounded-t-lg px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'
+                class='px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'
               >
                 <ArrowBendUpLeftDuotone /> Reply
               </ContextMenu.Item>
@@ -367,7 +367,7 @@ const TimelineItem: Component<EventProps> = (props) => {
               onSelect={() => {
                 setSourceOpen(true);
               }}
-              class='rounded-b-lg px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'
+              class='px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'
             >
               <CodeDuotone /> View Source
             </ContextMenu.Item>

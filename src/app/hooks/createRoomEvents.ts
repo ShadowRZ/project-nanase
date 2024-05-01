@@ -12,11 +12,10 @@ export const createRoomEvents = (roomId: () => string) => {
   const client = createCurrentClientResource();
   const room = createMemo(() => client()?.getRoom(roomId()) ?? undefined);
   const timelineSet = createMemo(() => room()?.getUnfilteredTimelineSet());
-  const timeline = createMemo(() => timelineSet()?.getLiveTimeline());
 
   const [events, { refetch: refetchEvents }] = createResource(
-    timeline,
-    ($timeline) => $timeline.getEvents(),
+    timelineSet,
+    ($timelineSet) => $timelineSet.getLiveTimeline().getEvents(),
     {
       storage(init) {
         // eslint-disable-next-line solid/reactivity
@@ -27,9 +26,9 @@ export const createRoomEvents = (roomId: () => string) => {
 
   const paginateBack = async () => {
     await room()?.loadMembersIfNeeded();
-    const thisTimeline = timeline();
-    if (thisTimeline !== undefined) {
-      await client()?.paginateEventTimeline(thisTimeline, {
+    const thisTimelineSet = timelineSet();
+    if (thisTimelineSet !== undefined) {
+      await client()?.paginateEventTimeline(thisTimelineSet.getLiveTimeline(), {
         backwards: true,
         limit: 10,
       });
