@@ -1,19 +1,12 @@
-import {
-  type Component,
-  Show,
-  createEffect,
-  For,
-  on,
-  createSignal,
-} from 'solid-js';
 import { createIntersectionObserver } from '@solid-primitives/intersection-observer';
-import { createScrollPosition } from '@solid-primitives/scroll';
 import { Key } from '@solid-primitives/keyed';
+import { createScrollPosition } from '@solid-primitives/scroll';
+import { Show, createEffect, createSignal, on, type Component } from 'solid-js';
 import RoomBeginning from './RoomBeginning';
+import Placeholder from '~/app/components/placeholder/Placeholder';
+import { createRoomEvents } from '~/app/hooks/createRoomEvents';
 import TimelineItem from '~/app/organisms/timeline/TimelineItem';
 import { annoationOrReplace } from '~/app/utils/room';
-import { createRoomEvents } from '~/app/hooks/createRoomEvents';
-import Placeholder from '~/app/components/placeholder/Placeholder';
 import { type RelationData } from '~/types/room';
 
 type RoomTimelineProps = {
@@ -74,18 +67,13 @@ const RoomTimeline: Component<RoomTimelineProps> = (props) => {
       <Show when={timelineSet() !== undefined}>
         <Key each={events()} by={(event) => event.getId()}>
           {(event) => {
-            const ev = () => {
-              void events();
-              return event();
-            };
-
             return (
-              <Show when={!annoationOrReplace(ev())}>
+              <Show when={!annoationOrReplace(event())}>
                 <Show when={event().getWireType() === 'm.room.create'}>
                   <RoomBeginning />
                 </Show>
                 <TimelineItem
-                  event={ev()}
+                  event={event()}
                   roomId={roomId()}
                   timelineSet={timelineSet()!}
                   setRelationData={props.setRelationData}

@@ -22,6 +22,8 @@ import {
   createCurrentClientResource,
   createCurrentClientUserId,
 } from '~/app/hooks/createClientResource';
+import createEventInfo from '~/app/hooks/createEventInfo';
+import createMaybeRedactedEvent from '~/app/hooks/createMaybeRedactedEvent';
 import createRoomProfileSnapshot from '~/app/hooks/createRoomProfileSnapshot';
 import CFileMessage from '~/app/molecules/message/FileMessage';
 import CImageMessage from '~/app/molecules/message/ImageMessage';
@@ -66,12 +68,11 @@ const MessageContent: Component<EventProps> = (props) => {
   const sender = () => event().getSender()!;
   const selfId = createCurrentClientUserId();
   const timelineSet = () => props.timelineSet;
-  const event = () => props.event;
+  const { event, edited, content } = createEventInfo<AnyMessage>(
+    timelineSet,
+    () => props.event
+  );
   const sending = () => event().isSending();
-  const edited = () => getEditedEvent(timelineSet(), event());
-  const content = () =>
-    (edited()?.getContent()?.['m.new_content'] as AnyMessage | undefined) ??
-    event().getContent<AnyMessage>();
   const msgtype = () => content().msgtype;
 
   return (
@@ -321,8 +322,8 @@ const TimelineItemContent: Component<EventProps> = (props) => {
 };
 
 const TimelineItem: Component<EventProps> = (props) => {
-  const roomId = createMemo(() => props.roomId);
-  const event = () => props.event;
+  const roomId = () => props.roomId;
+  const event = createMaybeRedactedEvent(() => props.event, roomId);
   const timelineSet = () => props.timelineSet;
   const canReply = () =>
     !(event().isState() || event().isRedacted() || event().isRedaction());
