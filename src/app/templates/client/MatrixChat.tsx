@@ -22,7 +22,7 @@ import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
 
 const StatusContainer: ParentComponent = (props) => {
   return (
-    <div class='absolute bottom-0 p-2 border-t w-full flex flex-row gap-2 items-center'>
+    <div class='sticky bottom-0 p-2 border-t w-full flex flex-row gap-2 items-center bg-white dark:bg-black'>
       {props.children}
     </div>
   );
