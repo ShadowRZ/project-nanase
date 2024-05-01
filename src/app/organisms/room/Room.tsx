@@ -1,4 +1,3 @@
-import { Rerun } from '@solid-primitives/keyed';
 import { useNavigate } from '@solidjs/router';
 import { type JSONContent } from '@tiptap/core';
 import { ContentHelpers } from 'matrix-js-sdk';
@@ -9,12 +8,11 @@ import Editor, {
 } from '~/app/components/editor/Editor';
 import EditorReference from '~/app/components/editor/EditorReference';
 import { createCurrentClientResource } from '~/app/hooks/createClientResource';
-import { createRoomEvents } from '~/app/hooks/createRoomEvents';
 import createRoomOnLeaveEffect from '~/app/hooks/createRoomOnLeaveEffect';
 import { createRoomResource } from '~/app/hooks/createRoomResource';
 import { createTypings } from '~/app/hooks/createTypings';
 import RoomIntro from '~/app/molecules/room-intro/RoomIntro';
-import { isPlain, proseJSONToHTML } from '~/app/utils/proseJSON';
+import { proseJSONToHTML } from '~/app/utils/proseJSON';
 import {
   getEditedEvent,
   parseReplyBody,
@@ -31,8 +29,8 @@ type RoomProps = {
 const Room: Component<RoomProps> = (props) => {
   const client = createCurrentClientResource();
   const roomId = () => props.roomId;
-  const { name, topic, avatar } = createRoomResource(roomId);
-  const { timelineSet } = createRoomEvents(roomId);
+  const { room, name, topic, avatar } = createRoomResource(roomId);
+  const timelineSet = createMemo(() => room()?.getUnfilteredTimelineSet());
   const typings = createTypings();
   const [relationData, setRelationData] = createSignal<
     RelationData | undefined
@@ -104,14 +102,17 @@ const Room: Component<RoomProps> = (props) => {
   return (
     <div class='flex flex-col h-dvh'>
       <RoomIntro name={name() ?? roomId()} topic={topic()} avatar={avatar()} />
-      <Rerun on={roomId}>
-        <RoomTimeline roomId={roomId()} setRelationData={setRelationData} />
-      </Rerun>
+      <RoomTimeline
+        roomId={roomId()}
+        timelineSet={timelineSet()!}
+        setRelationData={setRelationData}
+      />
       <div class='py-1 border-t-1 border-slate-200 dark:border-slate-800'>
         <Show when={relationData() !== undefined}>
           <EditorReference
             roomId={roomId()}
             relationData={relationData()!}
+            timelineSet={timelineSet()!}
             onClose={() => {
               setRelationData(undefined);
             }}

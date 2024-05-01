@@ -2,23 +2,31 @@ import { createIntersectionObserver } from '@solid-primitives/intersection-obser
 import { Key } from '@solid-primitives/keyed';
 import { createScrollPosition } from '@solid-primitives/scroll';
 import { Show, createEffect, createSignal, on, type Component } from 'solid-js';
+import { type EventTimelineSet } from 'matrix-js-sdk';
 import RoomBeginning from './RoomBeginning';
 import Placeholder from '~/app/components/placeholder/Placeholder';
 import { createRoomEvents } from '~/app/hooks/createRoomEvents';
 import TimelineItem from '~/app/organisms/timeline/TimelineItem';
 import { annoationOrReplace } from '~/app/utils/room';
 import { type RelationData } from '~/types/room';
+import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 
 type RoomTimelineProps = {
   roomId: string;
+  timelineSet: EventTimelineSet;
   setRelationData: (rel: RelationData | undefined) => void;
 };
 
 const RoomTimeline: Component<RoomTimelineProps> = (props) => {
   let endRef!: HTMLDivElement;
   let timelineRef!: HTMLDivElement;
+  const client = createCurrentClientResource();
   const roomId = () => props.roomId;
-  const { events, timelineSet, paginateBack } = createRoomEvents(roomId);
+  const timelineSet = () => props.timelineSet;
+  const { events, paginateBack } = createRoomEvents(
+    () => client()!,
+    timelineSet
+  );
   const [bottom, setBottom] = createSignal(true);
 
   createEffect(
@@ -75,7 +83,7 @@ const RoomTimeline: Component<RoomTimelineProps> = (props) => {
                 <TimelineItem
                   event={event()}
                   roomId={roomId()}
-                  timelineSet={timelineSet()!}
+                  timelineSet={timelineSet()}
                   setRelationData={props.setRelationData}
                 />
               </Show>

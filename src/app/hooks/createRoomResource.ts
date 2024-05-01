@@ -89,6 +89,7 @@ export const createRoomResource = (roomId: () => string) => {
   });
 
   return {
+    room,
     name,
     topic,
     avatar,

@@ -1,18 +1,19 @@
-import { RoomEvent } from 'matrix-js-sdk';
+import {
+  type EventTimelineSet,
+  RoomEvent,
+  type MatrixClient,
+} from 'matrix-js-sdk';
 import {
   createEffect,
-  createMemo,
   createResource,
   createSignal,
   onCleanup,
 } from 'solid-js';
-import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 
-export const createRoomEvents = (roomId: () => string) => {
-  const client = createCurrentClientResource();
-  const room = createMemo(() => client()?.getRoom(roomId()) ?? undefined);
-  const timelineSet = createMemo(() => room()?.getUnfilteredTimelineSet());
-
+export const createRoomEvents = (
+  client: () => MatrixClient,
+  timelineSet: () => EventTimelineSet
+) => {
   const [events, { refetch: refetchEvents }] = createResource(
     timelineSet,
     ($timelineSet) => $timelineSet.getLiveTimeline().getEvents(),
@@ -25,7 +26,6 @@ export const createRoomEvents = (roomId: () => string) => {
   );
 
   const paginateBack = async () => {
-    await room()?.loadMembersIfNeeded();
     const thisTimelineSet = timelineSet();
     if (thisTimelineSet !== undefined) {
       await client()?.paginateEventTimeline(thisTimelineSet.getLiveTimeline(), {
@@ -41,18 +41,16 @@ export const createRoomEvents = (roomId: () => string) => {
   };
 
   createEffect(() => {
-    const thisRoom = room();
-    if (thisRoom !== undefined) {
+    const thisTimelineSet = timelineSet();
+    if (thisTimelineSet !== undefined) {
       void refetchEvents();
     }
 
-    thisRoom?.on(RoomEvent.Timeline, onTimeLine);
-    thisRoom?.on(RoomEvent.LocalEchoUpdated, onTimeLine);
+    thisTimelineSet?.on(RoomEvent.Timeline, onTimeLine);
     onCleanup(() => {
-      thisRoom?.off(RoomEvent.Timeline, onTimeLine);
-      thisRoom?.off(RoomEvent.LocalEchoUpdated, onTimeLine);
+      thisTimelineSet?.off(RoomEvent.Timeline, onTimeLine);
     });
   });
 
-  return { events, timelineSet, paginateBack };
+  return { events, paginateBack };
 };

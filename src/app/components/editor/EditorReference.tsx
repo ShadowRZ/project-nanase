@@ -1,16 +1,16 @@
-import { Match, Switch, createEffect, type Component } from 'solid-js';
-import { Rerun } from '@solid-primitives/keyed';
+import { type EventTimelineSet } from 'matrix-js-sdk';
+import { Match, Switch, type Component } from 'solid-js';
 import IconButton from '~/app/atoms/button/IconButton';
 import { createCurrentClientResource } from '~/app/hooks/createClientResource';
-import { createRoomEvents } from '~/app/hooks/createRoomEvents';
 import QuotedEvent from '~/app/organisms/quoted-event/QuotedEvent';
 import { type RelationData } from '~/types/room';
 import ArrowBendUpLeftDuotone from '~icons/ph/arrow-bend-up-left-duotone';
-import XIcon from '~icons/ph/x';
 import PencilSimpleLineDuotone from '~icons/ph/pencil-simple-line-duotone';
+import XIcon from '~icons/ph/x';
 
 type EditorReferenceProps = {
   roomId: string;
+  timelineSet: EventTimelineSet;
   relationData: RelationData;
   onClose?: () => void;
 };
@@ -21,7 +21,7 @@ const EditorReference: Component<EditorReferenceProps> = (props) => {
   const type = () => relationData().type;
   const eventId = () => relationData().eventId;
   const client = createCurrentClientResource();
-  const { timelineSet } = createRoomEvents(roomId);
+  const timelineSet = () => props.timelineSet;
 
   return (
     <div class='px-2 flex flex-col gap-1 items-start'>
@@ -52,15 +52,13 @@ const EditorReference: Component<EditorReferenceProps> = (props) => {
         />
       </div>
       <div class='px-6 w-full'>
-        <Rerun on={eventId}>
-          <QuotedEvent
-            showSender={type() !== 'edit'}
-            roomId={roomId()}
-            eventId={eventId()}
-            timelineSet={timelineSet()!}
-            client={client()!}
-          />
-        </Rerun>
+        <QuotedEvent
+          showSender={type() !== 'edit'}
+          roomId={roomId()}
+          eventId={eventId()}
+          timelineSet={timelineSet()}
+          client={client()!}
+        />
       </div>
     </div>
   );
