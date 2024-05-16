@@ -16,9 +16,11 @@ export function renderTextContent(content, _roomId, baseUrl) {
   }
 
   linkifyElement(node, { rel: 'noopener', target: '_blank' });
-  node.className = 'mx-prose max-w-none text-wrap';
-  if (isEmojiOnly(content.body))
-    node.className = 'mx-prose max-w-none text-wrap text-4xl';
+
+  let className = 'mx-prose max-w-none text-wrap first:mt-0 last:mb-0';
+  if (isEmojiOnly(content.body)) className += ' text-4xl';
+  node.className = className;
+
   const hast = fromDom(node);
 
   return (

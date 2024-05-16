@@ -24,6 +24,37 @@ export default defineConfig({
           margin: '.1em 0',
           'font-style': 'normal',
         },
+        'pre,code': {
+          'word-break': 'break-all',
+          'white-space': 'pre-wrap',
+        },
+        h1: {
+          margin: '0.5em 0',
+        },
+        h2: {
+          margin: '0.5em 0',
+        },
+        h3: {
+          margin: '0.5em 0',
+        },
+        h4: {
+          margin: '0.5em 0',
+        },
+        h5: {
+          margin: '0.5em 0',
+        },
+        h6: {
+          margin: '0.5em 0',
+        },
+        p: {
+          margin: '0.5em 0',
+        },
+        '*:first-child': {
+          'margin-top': 0,
+        },
+        '*:last-child': {
+          'margin-bottom': 0,
+        },
       },
     }),
     presetKobalte(),
