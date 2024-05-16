@@ -7,7 +7,7 @@ import createRoomLastEvent from '~/app/hooks/createRoomLastEvent';
 import { createRoomResource } from '~/app/hooks/createRoomResource';
 import { createRoomScopedProfile } from '~/app/hooks/createRoomScopedProfile';
 import { createRooms } from '~/app/hooks/createRooms';
-import { createSpaceRoomList } from '~/app/hooks/createSpaceRooms';
+import { createSpaceChildrens } from '~/app/hooks/createSpaceRooms';
 import RoomItem from '~/app/molecules/room/RoomItem';
 import { trimReplyFallback } from '~/lib/utils/matrix';
 
@@ -88,7 +88,9 @@ const RoomListItemDirect: Component<RoomListItemProps> = (props) => {
 
 const SpaceRoomList: Component<RoomListProps> = (props) => {
   const category = () => props.category;
-  const rooms = createSpaceRoomList(category);
+  const spaceChildrens = createSpaceChildrens();
+
+  const rooms = () => spaceChildrens()?.[category()] ?? [];
 
   return (
     <Show when={rooms()}>

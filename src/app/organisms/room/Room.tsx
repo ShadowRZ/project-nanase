@@ -29,7 +29,8 @@ type RoomProps = {
 const Room: Component<RoomProps> = (props) => {
   const client = createCurrentClientResource();
   const roomId = () => props.roomId;
-  const { room, name, topic, avatar } = createRoomResource(roomId);
+  const { room, name, topic, avatar, maySendMessage } =
+    createRoomResource(roomId);
   const timelineSet = createMemo(() => room()?.getUnfilteredTimelineSet());
   const typings = createTypings();
   const [relationData, setRelationData] = createSignal<
@@ -107,19 +108,21 @@ const Room: Component<RoomProps> = (props) => {
         timelineSet={timelineSet()!}
         setRelationData={setRelationData}
       />
-      <div class='py-1 border-t-1 border-slate-200 dark:border-slate-800'>
-        <Show when={relationData() !== undefined}>
-          <EditorReference
-            roomId={roomId()}
-            relationData={relationData()!}
-            timelineSet={timelineSet()!}
-            onClose={() => {
-              setRelationData(undefined);
-            }}
-          />
-        </Show>
-        <Editor onSend={onSend} />
-      </div>
+      <Show when={maySendMessage()}>
+        <div class='py-1 border-t-1 border-slate-200 dark:border-slate-800'>
+          <Show when={relationData() !== undefined}>
+            <EditorReference
+              roomId={roomId()}
+              relationData={relationData()!}
+              timelineSet={timelineSet()!}
+              onClose={() => {
+                setRelationData(undefined);
+              }}
+            />
+          </Show>
+          <Editor onSend={onSend} />
+        </div>
+      </Show>
     </div>
   );
 };

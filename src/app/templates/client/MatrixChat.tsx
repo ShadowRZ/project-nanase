@@ -48,26 +48,39 @@ const SyncStatus: Component = () => {
   );
 };
 
-const MatrixChat: Component = () => {
+const LeftContent: Component = () => {
   const [category, setCategory] = createSignal<RoomCategory>('chats');
+
+  return (
+    <div class='flex flex-row flex-none relative w-full md:w-110 border-r sm:border-slate-200 dark:sm:border-slate-800'>
+      <Sidebar category={category()} onCategoryChanged={setCategory} />
+      <div class='relative w-full h-dvh overflow-y-scroll scrollbar-none'>
+        <RoomList category={category()} />
+        <SyncStatus />
+      </div>
+    </div>
+  );
+};
+
+const RightContent: Component = () => {
   const selectedRoom = createMemo(() => useParams().id);
 
+  return (
+    <Show when={selectedRoom() !== undefined} fallback={<Welcome />}>
+      <div class='absolute w-full min-w-0 md:static z-5 flex-1 flex flex-col h-dvh bg-white dark:bg-black'>
+        <Room roomId={selectedRoom()} />
+      </div>
+    </Show>
+  );
+};
+
+const MatrixChat: Component = () => {
   useProfileUpdateEffect();
 
   return (
     <div class='flex flex-row'>
-      <div class='flex flex-row flex-none relative w-full md:w-110 border-r sm:border-slate-200 dark:sm:border-slate-800'>
-        <Sidebar category={category()} onCategoryChanged={setCategory} />
-        <div class='relative w-full h-dvh overflow-y-scroll scrollbar-none'>
-          <RoomList category={category()} />
-          <SyncStatus />
-        </div>
-      </div>
-      <Show when={selectedRoom() !== undefined} fallback={<Welcome />}>
-        <div class='absolute w-full min-w-0 md:static z-5 flex-1 flex flex-col h-dvh bg-white dark:bg-black'>
-          <Room roomId={selectedRoom()} />
-        </div>
-      </Show>
+      <LeftContent />
+      <RightContent />
     </div>
   );
 };

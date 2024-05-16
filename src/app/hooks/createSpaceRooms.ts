@@ -2,15 +2,13 @@ import { createResource, createEffect, onCleanup } from 'solid-js';
 import createRoomList from './createRoomList';
 import { RoomListEvents } from '~/lib/client/room-list';
 
-export function createSpaceRoomList(category: () => string) {
+export function createSpaceChildrens() {
   const roomList = createRoomList();
 
   const [spaceChildrens, { refetch: refetchSpaceChildrens }] = createResource(
     roomList,
     ($roomList) => Object.fromEntries($roomList.spaceChildrens)
   );
-
-  const result = () => spaceChildrens()?.[category()] ?? [];
 
   const onRoomList = () => {
     void refetchSpaceChildrens();
@@ -24,5 +22,5 @@ export function createSpaceRoomList(category: () => string) {
     });
   });
 
-  return result;
+  return spaceChildrens;
 }

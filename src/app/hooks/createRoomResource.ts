@@ -45,6 +45,10 @@ export const createRoomResource = (roomId: () => string) => {
     ($room) =>
       $room.getRoomUnreadNotificationCount(NotificationCountType.Highlight) ?? 0
   );
+  const [maySendMessage, { refetch: refetchMaySendMessage }] = createResource(
+    room,
+    ($room) => $room.maySendMessage()
+  );
 
   const onRoomStateEvent = (event: MatrixEvent, _state: RoomState): void => {
     if (event.getType() === 'm.room.topic') {
@@ -53,6 +57,10 @@ export const createRoomResource = (roomId: () => string) => {
 
     if (event.getType() === 'm.room.avatar') {
       void refetchAvatar();
+    }
+
+    if (event.getType() === 'm.room.power_levels') {
+      void refetchMaySendMessage();
     }
   };
 
@@ -96,5 +104,6 @@ export const createRoomResource = (roomId: () => string) => {
     members,
     lastTs,
     unread,
+    maySendMessage,
   };
 };
