@@ -68,12 +68,8 @@ const MessageContent: Component<EventProps> = (props) => {
   const sender = () => event().getSender()!;
   const selfId = createCurrentClientUserId();
   const timelineSet = () => props.timelineSet;
-  const { event, edited, content } = createEventInfo<AnyMessage>(
-    timelineSet,
-    () => props.event
-  );
-  const sending = () => event().isSending();
-  const msgtype = () => content().msgtype;
+  const { event, edited, content, sending, msgtype } =
+    createEventInfo<AnyMessage>(timelineSet, () => props.event);
 
   return (
     <Show when={!event().isRedacted()} fallback={<RedactedMessage />}>
@@ -162,15 +158,13 @@ const MessageContent: Component<EventProps> = (props) => {
 const StickerContent: Component<EventProps> = (props) => {
   const client = createCurrentClientResource();
   const timelineSet = () => props.timelineSet;
-  const event = () => props.event;
-  const edited = () => getEditedEvent(timelineSet(), event());
-  const content = () =>
-    (edited()?.getContent()?.['m.new_content'] as Sticker | undefined) ??
-    event().getContent<Sticker>();
+  const { event, edited, content, sending } = createEventInfo<Sticker>(
+    timelineSet,
+    () => props.event
+  );
   const width = createMemo(() => content().info.w);
   const height = createMemo(() => content().info.h);
   const url = createMemo(() => client()!.mxcUrlToHttp(content().url));
-  const sending = () => event().isSending();
 
   return (
     <>
