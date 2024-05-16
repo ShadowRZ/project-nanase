@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from '@solidjs/router';
 import { type Room } from 'matrix-js-sdk';
-import { For, Match, Show, Suspense, Switch, type Component } from 'solid-js';
-import Placeholder from '~/app/components/placeholder/Placeholder';
+import { For, Match, Show, Switch, type Component } from 'solid-js';
 import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 import createRoomLastEvent from '~/app/hooks/createRoomLastEvent';
 import { createRoomResource } from '~/app/hooks/createRoomResource';
@@ -12,7 +11,20 @@ import RoomItem from '~/app/molecules/room/RoomItem';
 import { trimReplyFallback } from '~/lib/utils/matrix';
 
 // 'chats' | 'directs' | 'favorties'
-export type RoomCategory = 'chats' | 'directs' | string;
+export type ChatRooms = {
+  type: 'chats';
+};
+
+export type DirectRooms = {
+  type: 'directs';
+};
+
+export type SpaceRooms = {
+  type: 'space';
+  space: string;
+};
+
+export type RoomCategory = ChatRooms | DirectRooms | SpaceRooms;
 
 export type RoomListProps = {
   category: RoomCategory;
@@ -86,38 +98,41 @@ const RoomListItemDirect: Component<RoomListItemProps> = (props) => {
   );
 };
 
-const SpaceRoomList: Component<RoomListProps> = (props) => {
-  const category = () => props.category;
-  const spaceChildrens = createSpaceChildrens();
-
-  const rooms = () => spaceChildrens()?.[category()] ?? [];
-
-  return (
-    <Show when={rooms()}>
-      <For each={rooms()}>{(item) => <RoomListItem roomId={item} />}</For>
-    </Show>
-  );
-};
-
 const RoomList: Component<RoomListProps> = (props) => {
   const category = (): RoomCategory => props.category;
+  const categoryType = () => category().type;
   const { chats, directs } = createRooms();
+  const spaceChildrens = createSpaceChildrens();
+  const spaceId = () =>
+    category().type === 'space' ? (category() as SpaceRooms).space : undefined;
+  const spaceRooms = () => {
+    const thisSpaceId = spaceId();
+    if (thisSpaceId !== undefined) {
+      return spaceChildrens()?.[thisSpaceId] ?? [];
+    }
+
+    return [];
+  };
 
   return (
-    <div class='px-1 py-1 flex flex-col gap-1'>
-      {/* <Show when={!['chats', 'directs', 'favorites'].includes(category())}>
-        <SpaceHeader spaceId={category()} />
-      </Show> */}
-      <Switch fallback={<SpaceRoomList category={category()} />}>
-        <Match when={category() === 'chats'}>
+    <div class='px-1 py-1 flex flex-col gap-1 grow'>
+      <Switch>
+        <Match when={categoryType() === 'chats'}>
           <Show when={chats()}>
             <For each={chats()}>{(item) => <RoomListItem roomId={item} />}</For>
           </Show>
         </Match>
-        <Match when={category() === 'directs'}>
+        <Match when={categoryType() === 'directs'}>
           <Show when={directs()}>
             <For each={directs()}>
               {(item) => <RoomListItemDirect roomId={item} />}
+            </For>
+          </Show>
+        </Match>
+        <Match when={categoryType() === 'space'}>
+          <Show when={spaceChildrens() && spaceId()}>
+            <For each={spaceRooms()}>
+              {(item) => <RoomListItem roomId={item} />}
             </For>
           </Show>
         </Match>

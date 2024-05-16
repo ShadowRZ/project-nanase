@@ -49,12 +49,12 @@ const SyncStatus: Component = () => {
 };
 
 const LeftContent: Component = () => {
-  const [category, setCategory] = createSignal<RoomCategory>('chats');
+  const [category, setCategory] = createSignal<RoomCategory>({ type: 'chats' });
 
   return (
     <div class='flex flex-row flex-none relative w-full md:w-110 border-r sm:border-slate-200 dark:sm:border-slate-800'>
       <Sidebar category={category()} onCategoryChanged={setCategory} />
-      <div class='relative w-full h-dvh overflow-y-scroll scrollbar-none'>
+      <div class='relative w-full h-dvh overflow-y-scroll scrollbar-none flex flex-col'>
         <RoomList category={category()} />
         <SyncStatus />
       </div>

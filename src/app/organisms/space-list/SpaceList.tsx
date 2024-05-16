@@ -1,16 +1,15 @@
 import { Tooltip } from '@kobalte/core';
-import { For, type Component, Suspense, Show } from 'solid-js';
-import Avatar from '~/app/atoms/avatar/Avatar';
-import { createSpaceList } from '~/app/hooks/createSpaces';
-import { createRoomResource } from '~/app/hooks/createRoomResource';
-import FoldersDuotone from '~icons/ph/folders-duotone';
+import { For, Show, type Component } from 'solid-js';
 import ImageButton from '~/app/atoms/button/ImageButton';
 import TooltipContent from '~/app/atoms/tooltip/TooltipContent';
+import { createRoomResource } from '~/app/hooks/createRoomResource';
+import { createSpaceList } from '~/app/hooks/createSpaces';
+import FoldersDuotone from '~icons/ph/folders-duotone';
 
 type SpaceItemProps = {
   spaceId: string;
-  category: string;
-  onCategoryChanged: (category: string) => void;
+  currentSpaceId: string | undefined;
+  onCurrentSpaceIdChanged: (spaceId: string) => void;
 };
 
 const SpaceItem: Component<SpaceItemProps> = (props) => {
@@ -22,12 +21,12 @@ const SpaceItem: Component<SpaceItemProps> = (props) => {
       <ImageButton
         as={Tooltip.Trigger}
         onClick={() => {
-          props.onCategoryChanged(props.spaceId);
+          props.onCurrentSpaceIdChanged(props.spaceId);
         }}
         size='large'
         src={avatar()}
         icon={FoldersDuotone}
-        checked={props.category === props.spaceId}
+        checked={props.currentSpaceId === props.spaceId}
       />
       <Tooltip.Portal>
         <Tooltip.Content as={TooltipContent} class='ml-1'>
@@ -39,8 +38,8 @@ const SpaceItem: Component<SpaceItemProps> = (props) => {
 };
 
 type SpaceListProps = {
-  category: string;
-  onCategoryChanged: (category: string) => void;
+  currentSpaceId: string | undefined;
+  onCurrentSpaceIdChanged: (spaceId: string) => void;
 };
 
 const SpaceList: Component<SpaceListProps> = (props) => {
@@ -52,8 +51,8 @@ const SpaceList: Component<SpaceListProps> = (props) => {
         {(spaceId) => (
           <SpaceItem
             spaceId={spaceId}
-            category={props.category}
-            onCategoryChanged={props.onCategoryChanged}
+            currentSpaceId={props.currentSpaceId}
+            onCurrentSpaceIdChanged={props.onCurrentSpaceIdChanged}
           />
         )}
       </For>

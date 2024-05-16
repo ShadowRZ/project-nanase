@@ -2,7 +2,10 @@ import { Tooltip } from '@kobalte/core';
 import type { Component } from 'solid-js';
 import AccountMenu from './AccountMenu';
 import SpaceList from '~/app/organisms/space-list/SpaceList';
-import { type RoomCategory } from '~/app/organisms/room-list/RoomList';
+import {
+  type SpaceRooms,
+  type RoomCategory,
+} from '~/app/organisms/room-list/RoomList';
 import t from '~/app/i18n';
 import ChatCircleBold from '~icons/ph/chats-circle-bold';
 import UserBold from '~icons/ph/user-bold';
@@ -15,6 +18,11 @@ export type SidebarProps = {
 };
 
 const Sidebar: Component<SidebarProps> = (props) => {
+  const category = (): RoomCategory => props.category;
+  const categoryType = () => category().type;
+  const currentSpaceId = () =>
+    categoryType() === 'space' ? (category() as SpaceRooms).space : undefined;
+
   return (
     <div class='shrink-0 flex flex-col w-16 h-dvh overflow-y-scroll border-r sm:border-slate-200 dark:sm:border-slate-800 scrollbar-none'>
       <div class='flex flex-col gap-2 p-2'>
@@ -25,10 +33,10 @@ const Sidebar: Component<SidebarProps> = (props) => {
             iconClass='size-6'
             type='large-bordered'
             onClick={() => {
-              props.onCategoryChanged('chats');
+              props.onCategoryChanged({ type: 'chats' });
             }}
             icon={ChatCircleBold}
-            checked={props.category === 'chats'}
+            checked={categoryType() === 'chats'}
           />
           <Tooltip.Portal>
             <Tooltip.Content as={TooltipContent} class='ml-1'>
@@ -43,10 +51,10 @@ const Sidebar: Component<SidebarProps> = (props) => {
             iconClass='size-6'
             type='large-bordered'
             onClick={() => {
-              props.onCategoryChanged('directs');
+              props.onCategoryChanged({ type: 'directs' });
             }}
             icon={UserBold}
-            checked={props.category === 'directs'}
+            checked={categoryType() === 'directs'}
           />
           <Tooltip.Portal>
             <Tooltip.Content as={TooltipContent} class='ml-1'>
@@ -55,8 +63,10 @@ const Sidebar: Component<SidebarProps> = (props) => {
           </Tooltip.Portal>
         </Tooltip.Root>
         <SpaceList
-          category={props.category}
-          onCategoryChanged={props.onCategoryChanged}
+          currentSpaceId={currentSpaceId()}
+          onCurrentSpaceIdChanged={(spaceId) => {
+            props.onCategoryChanged({ type: 'space', space: spaceId });
+          }}
         />
       </div>
       <div class='mt-auto flex flex-col gap-2 p-2 sticky bottom-0 bg-white dark:bg-black'>
