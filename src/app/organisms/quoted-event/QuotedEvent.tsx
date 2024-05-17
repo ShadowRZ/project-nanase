@@ -36,7 +36,7 @@ const QuotedEventInner: Component<QuotedEventInnerProps> = (props) => {
         <span class='font-bold'>{name() ?? sender()}</span>
       </Show>
       <span
-        class='shrink truncate text-wrap whitespace-pre-wrap'
+        class='shrink truncate text-wrap whitespace-pre-wrap break-all'
         classList={{
           'opacity-50 font-italic': target().isRedacted(),
         }}

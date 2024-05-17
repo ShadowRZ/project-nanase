@@ -18,6 +18,9 @@ export default defineConfig({
     presetTypography({
       selectorName: 'mx-prose',
       cssExtend: {
+        a: {
+          'word-break': 'break-word',
+        },
         blockquote: {
           'border-left': '.15em solid currentColor',
           'padding-left': '.5em',
@@ -25,7 +28,7 @@ export default defineConfig({
           'font-style': 'normal',
         },
         'pre,code': {
-          'word-break': 'break-all',
+          'word-break': 'break-word',
           'white-space': 'pre-wrap',
         },
         h1: {
