@@ -80,14 +80,14 @@ const MessageContent: Component<EventComponentProps> = (props) => {
                 roomId={props.roomId}
                 eventId={event().replyEventId!}
                 timelineSet={timelineSet()}
-                client={client()!}
+                client={client()}
                 primary={sender() === selfId()}
               />
             </Show>
             {renderTextContent(
               content() as MaybeFormattedMessage,
               props.roomId,
-              client()!.baseUrl
+              client().baseUrl
             )}
           </CTextMessage>
         </Match>
@@ -98,7 +98,7 @@ const MessageContent: Component<EventComponentProps> = (props) => {
                 roomId={props.roomId}
                 eventId={event().replyEventId!}
                 timelineSet={timelineSet()}
-                client={client()!}
+                client={client()}
               />
             </Show>
 
@@ -109,7 +109,7 @@ const MessageContent: Component<EventComponentProps> = (props) => {
               width={(content() as ImageMessage).info.w}
               height={(content() as ImageMessage).info.h}
               src={
-                client()!.mxcUrlToHttp((content() as ImageMessage).url) ??
+                client().mxcUrlToHttp((content() as ImageMessage).url) ??
                 undefined
               }
             />
@@ -121,7 +121,7 @@ const MessageContent: Component<EventComponentProps> = (props) => {
               roomId={props.roomId}
               eventId={event().replyEventId!}
               timelineSet={timelineSet()}
-              client={client()!}
+              client={client()}
             />
           </Show>
           <CFileMessage
@@ -132,7 +132,7 @@ const MessageContent: Component<EventComponentProps> = (props) => {
             mime={(content() as FileMessage).info.mimetype}
             onClick={() => {
               const url = (content() as FileMessage).url;
-              const httpUrl = client()!.mxcUrlToHttp(url);
+              const httpUrl = client().mxcUrlToHttp(url);
               const filename =
                 (content() as FileMessage).filename ?? content().body;
               if (httpUrl) {
@@ -157,7 +157,7 @@ const StickerContent: Component<EventComponentProps> = (props) => {
   );
   const width = createMemo(() => content().info.w);
   const height = createMemo(() => content().info.h);
-  const url = createMemo(() => client()!.mxcUrlToHttp(content().url));
+  const url = createMemo(() => client().mxcUrlToHttp(content().url));
 
   return (
     <>
@@ -166,7 +166,7 @@ const StickerContent: Component<EventComponentProps> = (props) => {
           roomId={props.roomId}
           eventId={event().replyEventId!}
           timelineSet={timelineSet()}
-          client={client()!}
+          client={client()}
         />
       </Show>
       <CImageMessage

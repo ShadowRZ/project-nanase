@@ -23,10 +23,7 @@ const RoomTimeline: Component<RoomTimelineProps> = (props) => {
   const client = createCurrentClientResource();
   const roomId = () => props.roomId;
   const timelineSet = () => props.timelineSet;
-  const { events, paginateBack } = createRoomEvents(
-    () => client()!,
-    timelineSet
-  );
+  const { events, paginateBack } = createRoomEvents(client, timelineSet);
   const [bottom, setBottom] = createSignal(true);
 
   createEffect(
