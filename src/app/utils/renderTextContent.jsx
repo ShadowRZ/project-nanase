@@ -48,6 +48,7 @@ export function renderTextContent(content, _roomId, baseUrl) {
                 <a
                   href={`https://matrix.to/#/${props['data-project-nanase-pill']}`}
                   target='_blank'
+                  class='color-[--prject-nanase-pills]'
                 >
                   {props['data-project-nanase-pill']}
                 </a>

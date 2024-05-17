@@ -22,6 +22,11 @@ const TextMessage: ParentComponent<TextMessageProps> = (props) => {
       classList={{
         'opacity-50': props.status === 'sending',
       }}
+      style={{
+        '--un-prose-links': props.color === 'primary' ? '#bfdbfe' : '#3b82f6',
+        '--prject-nanase-pills':
+          props.color === 'primary' ? '#fff1f2' : '#e11d48',
+      }}
     >
       <div
         classList={{
