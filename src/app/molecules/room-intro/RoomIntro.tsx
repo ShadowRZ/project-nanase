@@ -1,13 +1,16 @@
 import { Show, type Component } from 'solid-js';
-import { Popover } from '@kobalte/core/popover';
+import { DropdownMenu } from '@kobalte/core/dropdown-menu';
 import Avatar from '~/app/atoms/avatar/Avatar';
 import IconButton from '~/app/atoms/button/IconButton';
 import Text from '~/app/atoms/text/Text';
+import Panel from '~/app/atoms/panel/Panel';
 import ChatCircleDotsBold from '~icons/ph/chat-circle-dots-bold';
 import UserCircleDuotone from '~icons/ph/user-circle-duotone';
 import ArrowLeft from '~icons/ph/arrow-left';
 import DotsThreeVerticalBold from '~icons/ph/dots-three-vertical-bold';
-import Panel from '~/app/atoms/panel/Panel';
+import UsersThreeDuotone from '~icons/ph/users-three-duotone';
+import GearDuotone from '~icons/ph/gear-duotone';
+import DoorOpenDuotone from '~icons/ph/door-open-duotone';
 
 type RoomIntroProps = {
   name: string;
@@ -49,22 +52,39 @@ const RoomIntro: Component<RoomIntroProps> = (props) => {
           </Text>
         </Show>
       </span>
-      <Popover>
+      <DropdownMenu placement='bottom-end'>
         <IconButton
-          as={Popover.Trigger}
+          as={DropdownMenu.Trigger}
           type='normal'
           icon={DotsThreeVerticalBold}
         />
-        <Popover.Portal>
+        <DropdownMenu.Portal>
           <Panel
-            as={Popover.Content}
+            as={DropdownMenu.Content}
             decoration='bordered'
-            class='mt-1 z-50 outline-none animate-hovercard-close ui-expanded:animate-hovercard-open'
+            class='mt-1 z-5 outline-none animate-hovercard-close ui-expanded:animate-hovercard-open overflow-clip'
           >
-            Hello
+            <DropdownMenu.Item
+              onSelect={() => {}}
+              class='px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'
+            >
+              <UsersThreeDuotone /> Members
+            </DropdownMenu.Item>
+            <DropdownMenu.Item
+              onSelect={() => {}}
+              class='px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'
+            >
+              <GearDuotone /> Settings
+            </DropdownMenu.Item>
+            <DropdownMenu.Item
+              onSelect={() => {}}
+              class='px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900 text-red'
+            >
+              <DoorOpenDuotone /> Leave Room
+            </DropdownMenu.Item>
           </Panel>
-        </Popover.Portal>
-      </Popover>
+        </DropdownMenu.Portal>
+      </DropdownMenu>
     </div>
   );
 };
