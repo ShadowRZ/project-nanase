@@ -22,7 +22,7 @@ const ClientSwitchItem: Component<ClientSwitchItemProps> = (props) => {
   const id = () => props.id;
   const name = () => profiles[id()]?.name;
   const avatar = () => profiles[id()]?.avatar;
-  const userId = () => clients.get(id())!.client.getSafeUserId();
+  const userId = () => clients.get(id())!.userId;
 
   return <ProfileContent name={name()} avatar={avatar()} userId={userId()} />;
 };

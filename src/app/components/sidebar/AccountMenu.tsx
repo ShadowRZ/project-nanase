@@ -23,7 +23,7 @@ const AccountMenu: Component = () => {
   const name = () => profiles[current()]?.name;
   const avatar = () => profiles[current()]?.avatar;
   const client = createCurrentClientResource();
-  const userId = () => clients.get(current())!.client.getSafeUserId();
+  const userId = () => clients.get(current())!.userId;
 
   const [logoutOpen, setLogoutOpen] = createSignal(false);
   const [switchOpen, setSwitchOpen] = createSignal(false);

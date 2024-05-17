@@ -48,11 +48,11 @@ const FeatureCheck: ParentComponent = (props) => {
   });
 
   return (
-    <Suspense>
+    <Show when={!idbSupport.loading}>
       <Show when={idbSupport() === true} fallback={<IDBUnsupported />}>
         {props.children}
       </Show>
-    </Suspense>
+    </Show>
   );
 };
 

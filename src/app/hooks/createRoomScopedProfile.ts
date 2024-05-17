@@ -1,7 +1,8 @@
 import {
+  type Room,
+  RoomMemberEvent,
   type MatrixEvent,
   type RoomMember,
-  RoomMemberEvent,
 } from 'matrix-js-sdk';
 import { createEffect, createResource, onCleanup } from 'solid-js';
 import { createCurrentClientResource } from '~/app/hooks/createClientResource';
@@ -17,13 +18,19 @@ export const createRoomScopedProfile = (
   const member = () => room()?.getMember(userId) ?? undefined;
 
   const [name, { refetch: refetchName }] = createResource(
-    member,
-    ($member) => $member.name
+    (): [Room | undefined, RoomMember | undefined] => [room(), member()],
+    async ([$room, $member]) => {
+      await $room?.loadMembersIfNeeded();
+      return $member?.name;
+    }
   );
 
   const [avatar, { refetch: refetchAvatar }] = createResource(
-    member,
-    ($member) => getRoomMemberAvatarUrl(room(), $member)
+    (): [Room | undefined, RoomMember | undefined] => [room(), member()],
+    async ([$room, $member]) => {
+      await $room?.loadMembersIfNeeded();
+      return getRoomMemberAvatarUrl(room(), $member);
+    }
   );
 
   const onMember = (_event: MatrixEvent, member: RoomMember) => {

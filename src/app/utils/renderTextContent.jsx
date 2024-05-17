@@ -33,7 +33,17 @@ export function renderTextContent(content, _roomId, baseUrl) {
         stylePropertyNameCase: 'css',
         components: {
           span: (props) => (
-            <Switch fallback={<span {...props} />}>
+            <Switch
+              fallback={
+                <span
+                  {...props}
+                  style={{
+                    color: props['data-mx-color'],
+                    'background-color': props['data-mx-bg-color'],
+                  }}
+                />
+              }
+            >
               <Match when={'data-project-nanase-pill' in props}>
                 <a
                   href={`https://matrix.to/#/${props['data-project-nanase-pill']}`}
@@ -62,6 +72,16 @@ export function renderTextContent(content, _roomId, baseUrl) {
                 true
               )}
             />
+          ),
+          font: (props) => (
+            <span
+              style={{
+                color: props.color,
+                'font-family': props.face,
+              }}
+            >
+              {props.children}
+            </span>
           ),
         },
       })}
