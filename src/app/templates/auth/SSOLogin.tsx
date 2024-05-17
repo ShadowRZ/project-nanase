@@ -1,4 +1,4 @@
-import { Button } from '@kobalte/core';
+import { Button } from '@kobalte/core/button';
 import { type Component, For, Match, Show, Switch } from 'solid-js';
 import { type IIdentityProvider, type MatrixClient } from 'matrix-js-sdk';
 import ArrowSquareOutDuotone from '~icons/ph/arrow-square-out-duotone';
@@ -57,7 +57,7 @@ export const SSOLogin: Component<SSOLoginProps> = (props) => {
       <div class='mt-2 flex flex-col gap-2'>
         <For each={props.idps}>
           {(idp) => (
-            <Button.Root
+            <Button
               onClick={() => {
                 ssoLoginBegin(idp.id);
               }}
@@ -88,7 +88,7 @@ export const SSOLogin: Component<SSOLoginProps> = (props) => {
                 </Match>
               </Switch>
               <span>{idp.name}</span>
-            </Button.Root>
+            </Button>
           )}
         </For>
       </div>

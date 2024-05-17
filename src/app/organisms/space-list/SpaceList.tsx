@@ -1,4 +1,4 @@
-import { Tooltip } from '@kobalte/core';
+import { Tooltip } from '@kobalte/core/tooltip';
 import { For, Show, type Component } from 'solid-js';
 import ImageButton from '~/app/atoms/button/ImageButton';
 import TooltipContent from '~/app/atoms/tooltip/TooltipContent';
@@ -17,7 +17,7 @@ const SpaceItem: Component<SpaceItemProps> = (props) => {
   const { name, avatar } = createRoomResource(spaceId);
 
   return (
-    <Tooltip.Root placement='right' openDelay={0} closeDelay={0}>
+    <Tooltip placement='right' openDelay={0} closeDelay={0}>
       <ImageButton
         as={Tooltip.Trigger}
         onClick={() => {
@@ -33,7 +33,7 @@ const SpaceItem: Component<SpaceItemProps> = (props) => {
           {name() ?? props.spaceId}
         </Tooltip.Content>
       </Tooltip.Portal>
-    </Tooltip.Root>
+    </Tooltip>
   );
 };
 

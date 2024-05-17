@@ -1,4 +1,5 @@
-import { Button, Image } from '@kobalte/core';
+import { Button } from '@kobalte/core/button';
+import { Image } from '@kobalte/core/image';
 import {
   ErrorBoundary,
   Show,
@@ -29,7 +30,7 @@ const AsyncImage: Component<AsyncImageProps> = (props) => {
           class='flex items-center justify-center'
           style={{ width: `${image.width}px`, height: `${image.height}px` }}
         >
-          <Button.Root
+          <Button
             onClick={() => {
               console.log('Clicked');
               void refetch();
@@ -39,11 +40,11 @@ const AsyncImage: Component<AsyncImageProps> = (props) => {
           >
             <ArrowsClockwiseDuotone />
             Reload
-          </Button.Root>
+          </Button>
         </div>
       )}
     >
-      <Image.Root>
+      <Image>
         <Image.Img {...image} src={src()} class='rounded-lg' />
         <Image.Fallback
           as='div'
@@ -54,7 +55,7 @@ const AsyncImage: Component<AsyncImageProps> = (props) => {
             <LoadingIndicator class='size-8' />
           </Show>
         </Image.Fallback>
-      </Image.Root>
+      </Image>
     </ErrorBoundary>
   );
 };

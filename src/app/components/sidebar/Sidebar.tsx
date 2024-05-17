@@ -1,4 +1,4 @@
-import { Tooltip } from '@kobalte/core';
+import { Tooltip } from '@kobalte/core/tooltip';
 import type { Component } from 'solid-js';
 import AccountMenu from './AccountMenu';
 import SpaceList from '~/app/organisms/space-list/SpaceList';
@@ -26,7 +26,7 @@ const Sidebar: Component<SidebarProps> = (props) => {
   return (
     <div class='shrink-0 flex flex-col w-16 h-dvh overflow-y-scroll border-r sm:border-slate-200 dark:sm:border-slate-800 scrollbar-none'>
       <div class='flex flex-col gap-2 p-2'>
-        <Tooltip.Root placement='right' openDelay={0} closeDelay={0}>
+        <Tooltip placement='right' openDelay={0} closeDelay={0}>
           <IconButton
             as={Tooltip.Trigger}
             class='text-rose-500'
@@ -43,8 +43,8 @@ const Sidebar: Component<SidebarProps> = (props) => {
               {t('chats')}
             </Tooltip.Content>
           </Tooltip.Portal>
-        </Tooltip.Root>
-        <Tooltip.Root placement='right' openDelay={0} closeDelay={0}>
+        </Tooltip>
+        <Tooltip placement='right' openDelay={0} closeDelay={0}>
           <IconButton
             as={Tooltip.Trigger}
             class='text-rose-500'
@@ -61,7 +61,7 @@ const Sidebar: Component<SidebarProps> = (props) => {
               {t('directs')}
             </Tooltip.Content>
           </Tooltip.Portal>
-        </Tooltip.Root>
+        </Tooltip>
         <SpaceList
           currentSpaceId={currentSpaceId()}
           onCurrentSpaceIdChanged={(spaceId) => {

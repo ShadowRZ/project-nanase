@@ -1,4 +1,4 @@
-import { Button } from '@kobalte/core';
+import { Button } from '@kobalte/core/button';
 import { Show, type Component } from 'solid-js';
 import Avatar from '~/app/atoms/avatar/Avatar';
 import NotificationCount from '~/app/atoms/notification/NotificationCount';
@@ -22,7 +22,7 @@ type RoomItemProps = {
 
 const RoomItem: Component<RoomItemProps> = (props) => {
   return (
-    <Button.Root
+    <Button
       onClick={props.onClick}
       class='text-start p-2 transition duration-150 rounded-2xl flex flex-row gap-2 w-full'
       classList={{
@@ -70,7 +70,7 @@ const RoomItem: Component<RoomItemProps> = (props) => {
           </Show>
         </span>
       </div>
-    </Button.Root>
+    </Button>
   );
 };
 

@@ -5,7 +5,7 @@ import {
   Switch,
   Match,
 } from 'solid-js';
-import { Button } from '@kobalte/core';
+import { Button } from '@kobalte/core/button';
 import { Dynamic } from 'solid-js/web';
 import Box from '~/app/atoms/box/Box';
 import Text from '~/app/atoms/text/Text';
@@ -30,7 +30,7 @@ type FileMessageProps = {
 const FileMessage: Component<FileMessageProps> = (props) => {
   return (
     <Box
-      as={Button.Root}
+      as={Button}
       color={props.color ?? 'default'}
       class='w-fit relative flex flex-row items-initial text-start'
       classList={{

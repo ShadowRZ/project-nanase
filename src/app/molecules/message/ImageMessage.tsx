@@ -1,10 +1,4 @@
-import { Image } from '@kobalte/core';
-import {
-  splitProps,
-  type Component,
-  Show,
-  type ParentComponent,
-} from 'solid-js';
+import { Show, splitProps, type ParentComponent } from 'solid-js';
 import Text from '~/app/atoms/text/Text';
 import Time from '~/app/atoms/time/Time';
 import Checks from '~icons/ph/checks';

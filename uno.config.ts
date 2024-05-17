@@ -57,6 +57,7 @@ export default defineConfig({
         },
       },
     }),
+    // @ts-expect-error Seems to work.
     presetKobalte(),
   ],
   // https://github.com/reslear/unocss-preset-scrollbar-hide
@@ -91,10 +92,10 @@ export default defineConfig({
     ],
     ['animate-popup-open', { animation: 'popup-open 200ms ease-out' }],
     ['animate-popup-close', { animation: 'popup-close 150ms ease-in' }],
-    ['animate-overlay-open', { animation: 'overlay-open 300ms ease-out' }],
-    ['animate-overlay-close', { animation: 'overlay-close 200ms ease-in' }],
-    ['animate-dialog-open', { animation: 'dialog-open 300ms ease-out' }],
-    ['animate-dialog-close', { animation: 'dialog-close 200ms ease-in' }],
+    ['animate-overlay-open', { animation: 'overlay-open 200ms ease-out' }],
+    ['animate-overlay-close', { animation: 'overlay-close 150ms ease-in' }],
+    ['animate-dialog-open', { animation: 'dialog-open 200ms ease-out' }],
+    ['animate-dialog-close', { animation: 'dialog-close 150ms ease-in' }],
     ['animate-hovercard-open', { animation: 'hovercard-open 200ms ease-out' }],
     ['animate-hovercard-close', { animation: 'hovercard-close 150ms ease-in' }],
   ],

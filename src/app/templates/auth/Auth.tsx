@@ -1,4 +1,4 @@
-import { TextField } from '@kobalte/core';
+import { TextField } from '@kobalte/core/text-field';
 import { type Component, Match, Show, Switch, createSignal } from 'solid-js';
 import { debounce } from '@solid-primitives/scheduled';
 import {
@@ -93,10 +93,10 @@ const Homeserver: Component<HomeserverProps> = (props) => {
 
   return (
     <>
-      <TextField.Root class='my-2 flex flex-col gap-2' onChange={onChange}>
+      <TextField class='my-2 flex flex-col gap-2' onChange={onChange}>
         <TextField.Label class='font-bold'>Homeserver</TextField.Label>
         <TextField.Input class='transition duration-200 rounded-xl p-2 ring ring-neutral/25 focus:ring-rose-500 focus:ring-2 outline-none' />
-      </TextField.Root>
+      </TextField>
       <Show when={progress().loading}>
         <AuthLoading message={progress().message} />
       </Show>

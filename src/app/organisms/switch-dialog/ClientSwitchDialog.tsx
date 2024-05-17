@@ -1,4 +1,4 @@
-import { Button } from '@kobalte/core';
+import { Button } from '@kobalte/core/button';
 import { useNavigate } from '@solidjs/router';
 import { For, createSignal, type Component } from 'solid-js';
 import { profiles } from '~/app/hooks/createProfileStore';
@@ -45,7 +45,7 @@ const ClientSwitchDialog: Component<ClientSwitchDialogProps> = (props) => {
         <div class='mt-2 flex flex-col gap-1'>
           <For each={ids()}>
             {(id) => (
-              <Button.Root
+              <Button
                 onClick={() => {
                   props.onOpenChange(false);
                   // TODO context()?.switch(id);
@@ -58,10 +58,10 @@ const ClientSwitchDialog: Component<ClientSwitchDialogProps> = (props) => {
                 }}
               >
                 <ClientSwitchItem id={id} />
-              </Button.Root>
+              </Button>
             )}
           </For>
-          <Button.Root
+          <Button
             onClick={() => {
               props.onOpenChange(false);
               setAddAccount(true);
@@ -74,7 +74,7 @@ const ClientSwitchDialog: Component<ClientSwitchDialogProps> = (props) => {
             <div class='grow flex flex-col overflow-hidden'>
               <span class='font-bold truncate'>Add Account</span>
             </div>
-          </Button.Root>
+          </Button>
         </div>
       </Dialog>
       {/* <AddAccountDialog open={addAccount()} onOpenChange={setAddAccount} /> */}

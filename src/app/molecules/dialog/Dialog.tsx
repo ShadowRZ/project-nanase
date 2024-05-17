@@ -1,4 +1,4 @@
-import { Dialog as KDialog } from '@kobalte/core';
+import { Dialog as KDialog } from '@kobalte/core/dialog';
 import { Show, type ParentComponent, splitProps } from 'solid-js';
 import IconButton from '~/app/atoms/button/IconButton';
 import Panel from '~/app/atoms/panel/Panel';
@@ -24,11 +24,7 @@ const Dialog: ParentComponent<DialogProps> = (props) => {
     'contentClass',
   ]);
   return (
-    <KDialog.Root
-      open={local.open}
-      onOpenChange={local.onOpenChange}
-      {...others}
-    >
+    <KDialog open={local.open} onOpenChange={local.onOpenChange} {...others}>
       <KDialog.Portal>
         <KDialog.Overlay class='z-50 fixed inset-0 bg-black/25 animate-overlay-close ui-expanded:animate-overlay-open' />
         <div class='fixed inset-0 z-50 flex items-center justify-center m-4'>
@@ -54,7 +50,7 @@ const Dialog: ParentComponent<DialogProps> = (props) => {
           </Panel>
         </div>
       </KDialog.Portal>
-    </KDialog.Root>
+    </KDialog>
   );
 };
 

@@ -1,5 +1,10 @@
-import { splitProps, type Component, type JSX, Show } from 'solid-js';
-import { Checkbox as KCheckbox } from '@kobalte/core';
+import { Checkbox as KCheckbox } from '@kobalte/core/checkbox';
+import {
+  Show,
+  splitProps,
+  type Component,
+  type ParentComponent,
+} from 'solid-js';
 import Text from '~/app/atoms/text/Text';
 import CheckBold from '~icons/ph/check-bold';
 
@@ -14,15 +19,15 @@ type CheckboxProps = {
   onChange?: (checked: boolean) => void;
 };
 
-const LabelText: Component = (props) => {
+const LabelText: ParentComponent = (props) => {
   return <Text as='label' font='bold' {...props} />;
 };
 
-const DescText: Component = (props) => {
+const DescText: ParentComponent = (props) => {
   return <Text as='div' {...props} />;
 };
 
-const ErrorText: Component = (props) => {
+const ErrorText: ParentComponent = (props) => {
   return <Text as='div' font='bold' color='error' {...props} />;
 };
 
@@ -35,7 +40,7 @@ const Checkbox: Component<CheckboxProps> = (props) => {
     'onChange',
   ]);
   return (
-    <KCheckbox.Root
+    <KCheckbox
       checked={props.checked}
       onChange={props.onChange}
       class='flex flex-row gap-2'
@@ -58,7 +63,7 @@ const Checkbox: Component<CheckboxProps> = (props) => {
           {props.error}
         </KCheckbox.ErrorMessage>
       </div>
-    </KCheckbox.Root>
+    </KCheckbox>
   );
 };
 

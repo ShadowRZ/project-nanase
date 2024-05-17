@@ -1,7 +1,7 @@
 import { klassed } from '@klass/solid';
-import { Button as KButton } from '@kobalte/core';
+import { Button as KButton } from '@kobalte/core/button';
 
-const Button = klassed(KButton.Root, {
+const Button = klassed(KButton, {
   base: 'transition duration-150 inline-flex justify-center rounded-xl',
   variants: {
     size: {

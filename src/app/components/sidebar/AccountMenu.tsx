@@ -1,4 +1,5 @@
-import { DropdownMenu, Tooltip } from '@kobalte/core';
+import { DropdownMenu } from '@kobalte/core/dropdown-menu';
+import { Tooltip } from '@kobalte/core/tooltip';
 import { createSignal, type Component } from 'solid-js';
 import ImageButton from '~/app/atoms/button/ImageButton';
 import Panel from '~/app/atoms/panel/Panel';
@@ -30,8 +31,8 @@ const AccountMenu: Component = () => {
 
   return (
     <>
-      <DropdownMenu.Root fitViewport modal preventScroll>
-        <Tooltip.Root placement='right' openDelay={0} closeDelay={0}>
+      <DropdownMenu fitViewport modal preventScroll>
+        <Tooltip placement='right' openDelay={0} closeDelay={0}>
           <ImageButton
             as={DropdownMenuWrapper}
             size='large'
@@ -43,7 +44,7 @@ const AccountMenu: Component = () => {
               {t('account_menu')}
             </Tooltip.Content>
           </Tooltip.Portal>
-        </Tooltip.Root>
+        </Tooltip>
         <DropdownMenu.Portal>
           <Panel
             as={DropdownMenu.Content}
@@ -57,7 +58,7 @@ const AccountMenu: Component = () => {
                 userId={userId()}
               />
               <div class='flex flex-row gap-2'>
-                <Tooltip.Root placement='top' openDelay={0} closeDelay={0}>
+                <Tooltip placement='top' openDelay={0} closeDelay={0}>
                   <DropdownMenu.Item
                     onSelect={() => {
                       setSwitchOpen(true);
@@ -72,8 +73,8 @@ const AccountMenu: Component = () => {
                       {t('switch_user')}
                     </Tooltip.Content>
                   </Tooltip.Portal>
-                </Tooltip.Root>
-                <Tooltip.Root placement='top' openDelay={0} closeDelay={0}>
+                </Tooltip>
+                <Tooltip placement='top' openDelay={0} closeDelay={0}>
                   <DropdownMenu.Item
                     onClick={() => {
                       setTimeout(() => {
@@ -90,12 +91,12 @@ const AccountMenu: Component = () => {
                       {t('logout')}
                     </Tooltip.Content>
                   </Tooltip.Portal>
-                </Tooltip.Root>
+                </Tooltip>
               </div>
             </div>
           </Panel>
         </DropdownMenu.Portal>
-      </DropdownMenu.Root>
+      </DropdownMenu>
       <ConfrimDialog
         type='danger'
         open={logoutOpen()}

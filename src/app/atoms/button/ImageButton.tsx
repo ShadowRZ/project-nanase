@@ -4,7 +4,7 @@ import {
   type ValidComponent,
   splitProps,
 } from 'solid-js';
-import { Image } from '@kobalte/core';
+import { Image } from '@kobalte/core/image';
 import { Dynamic } from 'solid-js/web';
 
 type ImageButtonProps = {
@@ -28,7 +28,7 @@ const ImageButton: Component<ImageButtonProps> = (props) => {
   ]);
 
   return (
-    <Image.Root
+    <Image
       as={local.as ?? 'button'}
       class='rounded-full bg-transparent shrink-0 overflow-clip outline-none group'
       classList={{
@@ -67,7 +67,7 @@ const ImageButton: Component<ImageButtonProps> = (props) => {
           }}
         />
       </Image.Fallback>
-    </Image.Root>
+    </Image>
   );
 };
 

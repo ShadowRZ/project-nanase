@@ -1,4 +1,4 @@
-import { TextField as KTextField } from '@kobalte/core';
+import { TextField as KTextField } from '@kobalte/core/text-field';
 import { type JSX, Show, splitProps, type Component } from 'solid-js';
 
 type InputProps = {
@@ -12,7 +12,9 @@ type InputProps = {
   required?: boolean | undefined;
   disabled?: boolean | undefined;
   autocomplete?: string | undefined;
-  ref: (element: HTMLInputElement | HTMLTextAreaElement) => void;
+  ref: (
+    element: HTMLInputElement | HTMLTextAreaElement | HTMLFormElement
+  ) => void;
   onInput: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, InputEvent>;
   onChange: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, Event>;
   onBlur: JSX.EventHandler<HTMLInputElement | HTMLTextAreaElement, FocusEvent>;
@@ -26,7 +28,7 @@ const Input: Component<InputProps> = (props) => {
   );
 
   return (
-    <KTextField.Root
+    <KTextField
       {...rootProps}
       validationState={props.error === '' ? 'valid' : 'invalid'}
       class='flex flex-col gap-2'
@@ -49,7 +51,7 @@ const Input: Component<InputProps> = (props) => {
       <KTextField.ErrorMessage class='text-red font-bold'>
         {props.error}
       </KTextField.ErrorMessage>
-    </KTextField.Root>
+    </KTextField>
   );
 };
 

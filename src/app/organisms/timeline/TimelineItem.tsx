@@ -1,4 +1,4 @@
-import { ContextMenu } from '@kobalte/core';
+import { ContextMenu } from '@kobalte/core/context-menu';
 import { type EventTimelineSet, type MatrixEvent } from 'matrix-js-sdk';
 import { Show, createSignal, type Component } from 'solid-js';
 import Panel from '~/app/atoms/panel/Panel';
@@ -27,7 +27,7 @@ const TimelineItem: Component<EventProps> = (props) => {
 
   return (
     <>
-      <ContextMenu.Root>
+      <ContextMenu>
         <ContextMenu.Trigger
           as='div'
           data-project-nanase-roomid={roomId()}
@@ -69,7 +69,7 @@ const TimelineItem: Component<EventProps> = (props) => {
             </ContextMenu.Item>
           </Panel>
         </ContextMenu.Portal>
-      </ContextMenu.Root>
+      </ContextMenu>
       <ViewSourceDialog
         open={sourceOpen()}
         onOpenChange={setSourceOpen}

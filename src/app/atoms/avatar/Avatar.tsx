@@ -1,5 +1,5 @@
 import { type Component, Show } from 'solid-js';
-import { Image } from '@kobalte/core';
+import { Image } from '@kobalte/core/image';
 import { Dynamic } from 'solid-js/web';
 import UserCircleDuotone from '~icons/ph/user-circle-duotone';
 
@@ -13,7 +13,7 @@ type AvatarProps = {
 
 const Avatar: Component<AvatarProps> = (props) => {
   return (
-    <Image.Root
+    <Image
       class='block shrink-0'
       classList={{
         'size-12': props.size === 'large',
@@ -49,7 +49,7 @@ const Avatar: Component<AvatarProps> = (props) => {
           }}
         />
       </Image.Fallback>
-    </Image.Root>
+    </Image>
   );
 };
 

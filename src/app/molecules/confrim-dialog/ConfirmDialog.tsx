@@ -1,4 +1,4 @@
-import { AlertDialog } from '@kobalte/core';
+import { AlertDialog } from '@kobalte/core/alert-dialog';
 import { type Component, Show, splitProps } from 'solid-js';
 import Button from '~/app/atoms/button/Button';
 import Panel from '~/app/atoms/panel/Panel';
@@ -29,7 +29,7 @@ const ConfrimDialog: Component<DialogProps> = (props) => {
     'onCancel',
   ]);
   return (
-    <AlertDialog.Root
+    <AlertDialog
       open={local.open}
       onOpenChange={local.onOpenChange}
       modal
@@ -82,7 +82,7 @@ const ConfrimDialog: Component<DialogProps> = (props) => {
           </Panel>
         </div>
       </AlertDialog.Portal>
-    </AlertDialog.Root>
+    </AlertDialog>
   );
 };
 

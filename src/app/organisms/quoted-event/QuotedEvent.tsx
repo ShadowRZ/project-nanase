@@ -1,4 +1,4 @@
-import { Button } from '@kobalte/core';
+import { Button } from '@kobalte/core/button';
 import {
   type EventTimelineSet,
   type MatrixClient,
@@ -57,7 +57,7 @@ const QuotedEvent: Component<QuotedEventProps> = (props) => {
   const target = createFetchedEvent(roomId, eventId, timelineSet, client);
 
   return (
-    <Button.Root
+    <Button
       class='w-fit text-start mb-1 pl-2 border-l-2 flex flex-col'
       classList={{
         'border-inherit': props.primary,
@@ -71,7 +71,7 @@ const QuotedEvent: Component<QuotedEventProps> = (props) => {
           </Show>
         </ErrorBoundary>
       </Suspense>
-    </Button.Root>
+    </Button>
   );
 };
 

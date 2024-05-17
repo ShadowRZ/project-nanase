@@ -60,7 +60,7 @@ const Room: Component<RoomProps> = (props) => {
           ? sanitizeText(replyBody)
           : sanitizeMatrixHtml(
               content.formatted_body as string,
-              client()!.baseUrl,
+              client().baseUrl,
               true
             );
 
@@ -81,7 +81,7 @@ const Room: Component<RoomProps> = (props) => {
         },
       };
 
-      client()!
+      client()
         .sendEvent(roomId(), 'm.room.message', sendContent)
         .catch(() => {});
 
@@ -89,12 +89,12 @@ const Room: Component<RoomProps> = (props) => {
     }
 
     if (plain) {
-      client()!
+      client()
         .sendTextMessage(roomId(), text)
         .catch(() => {});
     } else {
       const html = proseJSONToHTML(doc);
-      client()!
+      client()
         .sendHtmlMessage(roomId(), text, html)
         .catch(() => {});
     }
