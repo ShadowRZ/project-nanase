@@ -1,20 +1,23 @@
 import { Navigate, Route, MemoryRouter as Router } from '@solidjs/router';
-import { Show, createResource, createSignal, type Component } from 'solid-js';
-import { createClientResource } from '../hooks/createClientResource';
+import {
+  Show,
+  createSignal,
+  onCleanup,
+  onMount,
+  type Component,
+} from 'solid-js';
 import FeatureCheck from './FeatureCheck';
 import Panel from '~/app/atoms/panel/Panel';
+import { setProfiles } from '~/app/hooks/createProfileStore';
 import { AppContext } from '~/app/hooks/useAppContext';
 import AuthContent from '~/app/templates/auth/Auth';
 import MatrixChat from '~/app/templates/client/MatrixChat';
 import { type SessionData } from '~/lib/auth';
-import restoreFromStorage, {
-  isInitial,
-  populateClientData,
-} from '~/lib/client/storage';
+import { SessionList, SessionListEvents } from '~/lib/client/session';
 
 const AuthWrapper: Component = () => {
   const onClientCreated = (data: SessionData) => {
-    populateClientData(data);
+    SessionList.populateClientData(data);
     window.location.reload();
   };
 
@@ -47,19 +50,38 @@ const AuthWrapper: Component = () => {
 
 const Index: Component = () => {
   return (
-    <Show when={!isInitial()} fallback={<Navigate href='/login' />}>
+    <Show when={!SessionList.isInitial()} fallback={<Navigate href='/login' />}>
       <Navigate href='/rooms' />
     </Show>
   );
 };
 
 const ChatWrapper: Component = () => {
-  const { clients, current: storedCurrent } = restoreFromStorage()!;
+  const sessionList = SessionList.fromLocalStorage()!;
+  const { clients, current: storedCurrent } = sessionList;
   const [current, setCurrent] = createSignal(storedCurrent);
 
-  const [client] = createResource(current, async ($current) => {
-    const { client } = clients.get($current)!;
-    return client;
+  const session = () => clients.get(current())!;
+  const client = () => session().client;
+
+  const profileUpdate = (
+    id: string,
+    displayName?: string,
+    avatarUrl?: string
+  ) => {
+    setProfiles(id, () => ({
+      name: displayName,
+      avatar: avatarUrl,
+    }));
+  };
+
+  onMount(() => {
+    sessionList.startAll();
+    sessionList.on(SessionListEvents.ProfileUpdated, profileUpdate);
+  });
+
+  onCleanup(() => {
+    sessionList.off(SessionListEvents.ProfileUpdated, profileUpdate);
   });
 
   return (

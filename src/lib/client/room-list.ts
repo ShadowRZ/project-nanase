@@ -6,6 +6,7 @@ import {
   RoomStateEvent,
   SyncState,
 } from 'matrix-js-sdk';
+import { useClientPreparedCallback } from '~/lib/utils/event';
 
 export enum RoomListEvents {
   ListUpdated = 'RoomListEvents.ListUpdated',
@@ -34,12 +35,10 @@ export default class RoomList extends TypedEventEmitter<
       this.listenEvents();
       this.emit(RoomListEvents.ListUpdated);
     } else {
-      client.once(ClientEvent.Sync, (state) => {
-        if (state === SyncState.Prepared) {
-          this.populateRooms();
-          this.emit(RoomListEvents.ListUpdated);
-          this.listenEvents();
-        }
+      useClientPreparedCallback(client, () => {
+        this.populateRooms();
+        this.emit(RoomListEvents.ListUpdated);
+        this.listenEvents();
       });
     }
   }

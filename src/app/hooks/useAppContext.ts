@@ -1,10 +1,15 @@
-import { useContext, createContext, type Resource } from 'solid-js';
+import {
+  useContext,
+  createContext,
+  type Resource,
+  type Accessor,
+} from 'solid-js';
 import { type MatrixClient } from 'matrix-js-sdk';
-import { type ClientContext } from '~/types/client';
+import { type Session } from '~/lib/client/session';
 
 type AppContextProps = {
-  client: Resource<MatrixClient>;
-  clients: Map<string, ClientContext>;
+  client: Accessor<MatrixClient>;
+  clients: Map<string, Session>;
   current: () => string;
 };
 

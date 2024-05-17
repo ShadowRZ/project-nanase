@@ -4,9 +4,10 @@ import { useAppContext } from './useAppContext';
 export default function createRoomList() {
   const { clients, current } = useAppContext();
 
-  const [roomList] = createResource(current, async ($current) => {
-    const { roomList } = clients.get($current)!;
-    return roomList;
+  const session = () => clients.get(current())!;
+
+  const [roomList] = createResource(session, async ($session) => {
+    return $session.roomList();
   });
 
   return roomList;

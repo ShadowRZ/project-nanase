@@ -10,7 +10,7 @@ export type ClientData = {
   refreshToken?: string;
 };
 
-export type ClientDatas = ClientData[];
+export type ClientDataList = ClientData[];
 
 export type ClientContext = {
   userId: string;

@@ -11,7 +11,6 @@ import {
 } from 'solid-js';
 import Sidebar from '~/app/components/sidebar/Sidebar';
 import { createCurrentClientStatus } from '~/app/hooks/createClientStatus';
-import useProfileUpdateEffect from '~/app/hooks/useProfileUpdateEffect';
 import RoomList, {
   type RoomCategory,
 } from '~/app/organisms/room-list/RoomList';
@@ -75,8 +74,6 @@ const RightContent: Component = () => {
 };
 
 const MatrixChat: Component = () => {
-  useProfileUpdateEffect();
-
   return (
     <div class='flex flex-row'>
       <LeftContent />

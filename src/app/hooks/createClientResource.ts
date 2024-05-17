@@ -18,8 +18,8 @@ export function createCurrentClientUserId() {
   const { clients, current } = useAppContext();
 
   const [userId] = createResource(current, ($current) => {
-    const { userId } = clients.get($current)!;
-    return userId;
+    const { client } = clients.get($current)!;
+    return client.getSafeUserId();
   });
 
   return userId;
