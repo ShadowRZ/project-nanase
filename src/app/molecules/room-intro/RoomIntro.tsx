@@ -18,6 +18,9 @@ type RoomIntroProps = {
   avatar?: string;
   direct?: boolean;
   onBack?: () => void;
+  onMembers?: () => void;
+  onSettings?: () => void;
+  onLeaveRoom?: () => void;
 };
 
 const RoomIntro: Component<RoomIntroProps> = (props) => {
@@ -65,19 +68,19 @@ const RoomIntro: Component<RoomIntroProps> = (props) => {
             class='mt-1 z-5 outline-none animate-hovercard-close ui-expanded:animate-hovercard-open overflow-clip'
           >
             <DropdownMenu.Item
-              onSelect={() => {}}
+              onSelect={props.onMembers}
               class='px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'
             >
               <UsersThreeDuotone /> Members
             </DropdownMenu.Item>
             <DropdownMenu.Item
-              onSelect={() => {}}
+              onSelect={props.onSettings}
               class='px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'
             >
               <GearDuotone /> Settings
             </DropdownMenu.Item>
             <DropdownMenu.Item
-              onSelect={() => {}}
+              onSelect={props.onLeaveRoom}
               class='px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900 text-red'
             >
               <DoorOpenDuotone /> Leave Room

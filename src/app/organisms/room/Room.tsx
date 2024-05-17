@@ -1,6 +1,6 @@
 import { useNavigate } from '@solidjs/router';
 import { type JSONContent } from '@tiptap/core';
-import { ContentHelpers } from 'matrix-js-sdk';
+import { ContentHelpers, EventType } from 'matrix-js-sdk';
 import { Show, createMemo, createSignal, type Component } from 'solid-js';
 import RoomTimeline from './RoomTimeline';
 import Editor, {
@@ -21,6 +21,7 @@ import {
 import { sanitizeMatrixHtml, sanitizeText } from '~/lib/utils/sanitize';
 import { type AnyMessage } from '~/types/event-content';
 import { type RelationData } from '~/types/room';
+import ConfrimDialog from '~/app/molecules/confrim-dialog/ConfirmDialog';
 
 type RoomProps = {
   roomId: string;
@@ -82,7 +83,7 @@ const Room: Component<RoomProps> = (props) => {
       };
 
       client()
-        .sendEvent(roomId(), 'm.room.message', sendContent)
+        .sendEvent(roomId(), EventType.RoomMessage, sendContent)
         .catch(() => {});
 
       return;
@@ -100,9 +101,35 @@ const Room: Component<RoomProps> = (props) => {
     }
   };
 
+  const [leaveRoomOpen, setLeaveRoomOpen] = createSignal(false);
+
   return (
     <div class='flex flex-col h-dvh'>
-      <RoomIntro name={name() ?? roomId()} topic={topic()} avatar={avatar()} />
+      <RoomIntro
+        name={name() ?? roomId()}
+        topic={topic()}
+        avatar={avatar()}
+        onLeaveRoom={() => {
+          setLeaveRoomOpen(true);
+        }}
+        onBack={() => {
+          navigate('/rooms', { replace: true });
+        }}
+      />
+      <ConfrimDialog
+        type='danger'
+        open={leaveRoomOpen()}
+        onOpenChange={setLeaveRoomOpen}
+        title={'Leave Room'}
+        description={'Proceed to leave this room?'}
+        confirm={'Confirm'}
+        cancel={'Cancel'}
+        onConfirm={() => {
+          setLeaveRoomOpen(false);
+          console.log('Leave this room!');
+        }}
+        onCancel={() => setLeaveRoomOpen(false)}
+      />
       <RoomTimeline
         roomId={roomId()}
         timelineSet={timelineSet()!}

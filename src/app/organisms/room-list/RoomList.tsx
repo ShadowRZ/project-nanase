@@ -72,7 +72,7 @@ const RoomListItemDirect: Component<RoomListItemProps> = (props) => {
   const room = (): Room | undefined =>
     client()?.getRoom(props.roomId) ?? undefined;
   const dmUser = () => room()!.guessDMUserId();
-  const { name, avatar } = createRoomScopedProfile(roomId(), dmUser());
+  const { name, avatar } = createRoomScopedProfile(roomId, dmUser);
   const navigate = useNavigate();
   const selectedRoom = (): string | undefined => useParams().id;
   const event = createRoomLastEvent(roomId);

@@ -10,12 +10,12 @@ import { getRoomMemberAvatarUrl } from '~/lib/utils/matrix';
 import { type ProfileResource } from '~/types/profile';
 
 export const createRoomScopedProfile = (
-  roomId: string,
-  userId: string
+  roomId: () => string,
+  userId: () => string
 ): ProfileResource => {
   const client = createCurrentClientResource();
-  const room = () => client()?.getRoom(roomId) ?? undefined;
-  const member = () => room()?.getMember(userId) ?? undefined;
+  const room = () => client()?.getRoom(roomId()) ?? undefined;
+  const member = () => room()?.getMember(userId()) ?? undefined;
 
   const [name, { refetch: refetchName }] = createResource(
     (): [Room | undefined, RoomMember | undefined] => [room(), member()],

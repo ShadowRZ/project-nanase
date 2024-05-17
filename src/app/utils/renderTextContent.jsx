@@ -5,11 +5,13 @@ import { getHttpUriForMxc } from 'matrix-js-sdk';
 import { Match, Show, Switch } from 'solid-js';
 import { Fragment, jsx, jsxs } from 'solid-js/h/jsx-runtime';
 import HighlightCode from '~/app/components/highlight/HighlightCode';
+import { createRoomResource } from '~/app/hooks/createRoomResource';
+import { createRoomScopedProfile } from '~/app/hooks/createRoomScopedProfile';
 import { isEmojiOnly } from '~/app/utils/message';
 import { sanitizeMatrixHtml } from '~/lib/utils/sanitize';
 import ArrowRightBold from '~icons/ph/arrow-right-bold';
 
-export function renderTextContent(content, _roomId, baseUrl) {
+export function renderTextContent(content, roomId, baseUrl) {
   const node = document.createElement('span');
   if (content.format === 'org.matrix.custom.html') {
     node.innerHTML = sanitizeMatrixHtml(content.formatted_body, baseUrl);
@@ -112,7 +114,7 @@ export function renderTextContent(content, _roomId, baseUrl) {
               when={props.href.startsWith('https://matrix.to/#/')}
               fallback={<a {...props} />}
             >
-              <MatrixLink link={props.href} />
+              <MatrixLink link={props.href} roomId={roomId} />
             </Show>
           ),
           code: (props) => <HighlightCode>{props.children}</HighlightCode>,
@@ -131,6 +133,7 @@ function MatrixLink(props) {
     /^https?:\/\/matrix.to\/#\/(![^/]+:[^/]+)(?:\/(\$[^/]+))?(?:\?(.+))?/.exec(
       decodeURIComponent(props.link)
     );
+  const roomId = () => props.roomId;
 
   function renderRoomLink(result) {
     const part1 = result[1];
@@ -147,7 +150,7 @@ function MatrixLink(props) {
           target='_blank'
           class='color-[--project-nanase-pills] no-underline font-bold'
         >
-          {userLink()[1]}
+          @<UserName roomId={roomId()} userId={userLink()[1]} />
         </a>
       </Match>
       <Match when={roomAliasLink() !== null}>
@@ -165,9 +168,26 @@ function MatrixLink(props) {
           target='_blank'
           class='color-[--project-nanase-pills] no-underline font-bold'
         >
-          <ArrowRightBold class='inline mb-0.5' /> {roomLink()[1]}
+          <ArrowRightBold class='inline mb-0.5' />{' '}
+          {roomLink()[2] ? 'Event In ' : ''}
+          <RoomName roomId={roomLink()[1]} />
         </a>
       </Match>
     </Switch>
   );
+}
+
+function RoomName(props) {
+  const roomId = () => props.roomId;
+  const { name } = createRoomResource(roomId);
+
+  return <>{name() ?? roomId()}</>;
+}
+
+function UserName(props) {
+  const roomId = () => props.roomId;
+  const userId = () => props.userId;
+  const { name } = createRoomScopedProfile(roomId, userId);
+
+  return <>{name() ?? userId()}</>;
 }
