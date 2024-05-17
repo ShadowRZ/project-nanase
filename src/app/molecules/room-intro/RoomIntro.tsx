@@ -7,6 +7,7 @@ import Panel from '~/app/atoms/panel/Panel';
 import ChatCircleDotsBold from '~icons/ph/chat-circle-dots-bold';
 import UserCircleDuotone from '~icons/ph/user-circle-duotone';
 import ArrowLeft from '~icons/ph/arrow-left';
+import ShieldDuotone from '~icons/ph/shield-duotone';
 import DotsThreeVerticalBold from '~icons/ph/dots-three-vertical-bold';
 import UsersThreeDuotone from '~icons/ph/users-three-duotone';
 import GearDuotone from '~icons/ph/gear-duotone';
@@ -17,6 +18,7 @@ type RoomIntroProps = {
   topic?: string;
   avatar?: string;
   direct?: boolean;
+  encrypted?: boolean;
   onBack?: () => void;
   onMembers?: () => void;
   onSettings?: () => void;
@@ -47,6 +49,9 @@ const RoomIntro: Component<RoomIntroProps> = (props) => {
       </Show>
       <span class='grow flex flex-col flex-1 min-w-0 truncate'>
         <Text font='bold' content='truncate' class='flex-1'>
+          <Show when={props.encrypted}>
+            <ShieldDuotone class='inline mb-1 text-rose-500' />
+          </Show>{' '}
           {props.name}
         </Text>
         <Show when={props.topic}>

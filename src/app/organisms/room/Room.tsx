@@ -30,7 +30,7 @@ type RoomProps = {
 const Room: Component<RoomProps> = (props) => {
   const client = createCurrentClientResource();
   const roomId = () => props.roomId;
-  const { room, name, topic, avatar, maySendMessage } =
+  const { room, name, topic, avatar, encrypted, maySendMessage } =
     createRoomResource(roomId);
   const timelineSet = createMemo(() => room()?.getUnfilteredTimelineSet());
   const typings = createTypings();
@@ -109,6 +109,7 @@ const Room: Component<RoomProps> = (props) => {
         name={name() ?? roomId()}
         topic={topic()}
         avatar={avatar()}
+        encrypted={encrypted()}
         onLeaveRoom={() => {
           setLeaveRoomOpen(true);
         }}

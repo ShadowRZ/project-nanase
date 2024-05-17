@@ -49,6 +49,10 @@ export const createRoomResource = (roomId: () => string) => {
     room,
     ($room) => $room.maySendMessage()
   );
+  const [encrypted, { refetch: refetchEncrypted }] = createResource(
+    room,
+    ($room) => $room.hasEncryptionStateEvent()
+  );
 
   const onRoomStateEvent = (event: MatrixEvent, _state: RoomState): void => {
     if (event.getType() === 'm.room.topic') {
@@ -61,6 +65,10 @@ export const createRoomResource = (roomId: () => string) => {
 
     if (event.getType() === 'm.room.power_levels') {
       void refetchMaySendMessage();
+    }
+
+    if (event.getType() === 'm.room.encryption') {
+      void refetchEncrypted();
     }
   };
 
@@ -104,6 +112,7 @@ export const createRoomResource = (roomId: () => string) => {
     members,
     lastTs,
     unread,
+    encrypted,
     maySendMessage,
   };
 };
