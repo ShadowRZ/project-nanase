@@ -24,8 +24,8 @@ const TextMessage: ParentComponent<TextMessageProps> = (props) => {
       }}
       style={{
         '--un-prose-links': props.color === 'primary' ? '#bfdbfe' : '#3b82f6',
-        '--prject-nanase-pills':
-          props.color === 'primary' ? '#fff1f2' : '#e11d48',
+        '--project-nanase-pills':
+          props.color === 'primary' ? '#fecdd3' : '#e11d48',
       }}
     >
       <div

@@ -52,11 +52,15 @@ export default defineConfig({
         p: {
           margin: '0.5em 0',
         },
-        '*:first-child': {
+        'p:first-child': {
           'margin-top': 0,
         },
-        '*:last-child': {
+        'p:last-child': {
           'margin-bottom': 0,
+        },
+        pre: {
+          margin: '0',
+          padding: '0.25rem',
         },
       },
     }),

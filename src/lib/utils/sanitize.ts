@@ -56,8 +56,12 @@ const TAG_ALLOWED_ATTRS = {
     'data-mx-bg-color',
     'data-mx-color',
     'data-mx-spoiler',
+    'data-project-nanase-href',
     'data-project-nanase-pill',
     'data-project-nanase-ping',
+    'data-project-nanase-reference',
+    'data-project-nanase-reference-event',
+    'data-project-nanase-reference-vias',
   ],
   a: ['name', 'target', 'href', 'rel'],
   img: ['width', 'height', 'alt', 'title', 'src', 'data-mx-emoticon'],
@@ -78,13 +82,49 @@ function transformAnchorTag(tagName: string, attribs: Attributes): Tag {
   const userLink = /^https?:\/\/matrix.to\/#\/(@.+:.+)/.exec(
     decodeURIComponent(attribs.href)
   );
+  const roomAliasLink = /^https?:\/\/matrix.to\/#\/(#.+:.+)/.exec(
+    decodeURIComponent(attribs.href)
+  );
+  const roomLink =
+    /^https?:\/\/matrix.to\/#\/(![^/]+:[^/]+)(?:\/(\$[^?/]+))?(?:\?(.+))?/.exec(
+      decodeURIComponent(attribs.href)
+    );
   if (userLink !== null) {
     // Convert user link to pill
     const userId = userLink[1];
     const pill = {
       tagName: 'span',
       attribs: {
+        'data-project-nanase-href': attribs.href,
         'data-project-nanase-pill': userId,
+      },
+    };
+    return pill;
+  }
+
+  if (roomAliasLink !== null) {
+    const roomAlias = roomAliasLink[1];
+    const pill = {
+      tagName: 'span',
+      attribs: {
+        'data-project-nanase-href': attribs.href,
+        'data-project-nanase-reference': roomAlias,
+      },
+    };
+    return pill;
+  }
+
+  if (roomLink !== null) {
+    const roomId = roomLink[1];
+    const eventId = roomLink[2];
+    const vias = roomLink[3];
+    const pill = {
+      tagName: 'span',
+      attribs: {
+        'data-project-nanase-href': attribs.href,
+        'data-project-nanase-reference': roomId,
+        'data-project-nanase-reference-event': eventId,
+        'data-project-nanase-reference-vias': vias,
       },
     };
     return pill;

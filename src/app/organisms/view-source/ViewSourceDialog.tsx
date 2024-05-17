@@ -34,12 +34,9 @@ const ViewSourceDialog: Component<ViewSourceDialogProps> = (props) => {
           <span class='font-mono'>{event().getSender() ?? '<Unknown>'}</span>
         </span>
       </div>
-      <HighlightCode
-        lang='json'
-        class='min-w-0 min-h-0 max-w-4xl shrink font-mono rounded-lg border border-slate-200 dark:border-slate-800'
-      >
-        {content()}
-      </HighlightCode>
+      <pre class='min-w-0 min-h-0 max-w-4xl shrink font-mono rounded-lg border border-slate-200 dark:border-slate-800'>
+        <HighlightCode lang='json'>{content()}</HighlightCode>
+      </pre>
     </Dialog>
   );
 };

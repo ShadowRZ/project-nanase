@@ -19,7 +19,6 @@ import 'prismjs/components/prism-python';
 
 type HighlightCodeProps = {
   lang?: string;
-  class?: string;
 };
 
 const HighlightCode: ParentComponent<HighlightCodeProps> = (props) => {
@@ -30,18 +29,16 @@ const HighlightCode: ParentComponent<HighlightCodeProps> = (props) => {
   });
 
   return (
-    <pre class={props.class}>
-      <code
-        ref={ref}
-        class={`language-${props.lang ?? 'plain'}`}
-        style={{
-          'text-wrap': 'wrap',
-          'word-break': 'break-all', // @unocss-ignore
-        }}
-      >
-        {props.children}
-      </code>
-    </pre>
+    <code
+      ref={ref}
+      class={`language-${props.lang ?? 'plain'}`}
+      style={{
+        'text-wrap': 'wrap',
+        'word-break': 'break-all', // @unocss-ignore
+      }}
+    >
+      {props.children}
+    </code>
   );
 };
 
