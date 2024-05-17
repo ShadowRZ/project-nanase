@@ -12,7 +12,7 @@ export default defineConfig({
     presetWebFonts({
       provider: 'none',
       fonts: {
-        sans: ['Outfit Variable'],
+        sans: ['Inter Variable'],
       },
     }),
     presetTypography({

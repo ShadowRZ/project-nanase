@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@fontsource-variable/outfit':
-        specifier: ^5.0.13
-        version: 5.0.13
+      '@fontsource-variable/inter':
+        specifier: ^5.0.18
+        version: 5.0.18
       '@klass/core':
         specifier: ^3.4.11
         version: 3.4.11
@@ -1070,8 +1070,8 @@ packages:
   '@floating-ui/utils@0.2.2':
     resolution: {integrity: sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==}
 
-  '@fontsource-variable/outfit@5.0.13':
-    resolution: {integrity: sha512-y5yl8YcLqoQghwLfPaM420PKxG0DMKmobryGptXmv7Q5CX8F1vg8h714qEptXdtyoS9rHIMwLl/hJYLzZgSE4w==}
+  '@fontsource-variable/inter@5.0.18':
+    resolution: {integrity: sha512-rJzSrtJ3b7djiGFvRuTe6stDfbYJGhdQSfn2SI2WfXviee7Er0yKAHE5u7FU7OWVQQQ1x3+cxdmx9NdiAkcrcA==}
 
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -6925,7 +6925,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.2': {}
 
-  '@fontsource-variable/outfit@5.0.13': {}
+  '@fontsource-variable/inter@5.0.18': {}
 
   '@humanwhocodes/config-array@0.11.14':
     dependencies:

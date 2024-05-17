@@ -44,7 +44,7 @@
     "xo": "^0.58.0"
   },
   "dependencies": {
-    "@fontsource-variable/outfit": "^5.0.13",
+    "@fontsource-variable/inter": "^5.0.18",
     "@klass/core": "^3.4.11",
     "@klass/solid": "^3.4.11",
     "@kobalte/core": "^0.13.1",
