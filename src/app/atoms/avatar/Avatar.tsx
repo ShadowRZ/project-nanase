@@ -20,19 +20,17 @@ const Avatar: Component<AvatarProps> = (props) => {
         'size-6': props.size === 'small',
       }}
     >
-      <Show when={props.src !== undefined}>
-        <Image.Img
-          draggable={false}
-          class='rounded-full overflow-clip'
-          src={props.src}
-          classList={{
-            'outline outline-2 -outline-offset-2 outline-rose-500/50':
-              props.outlined,
-            'size-12': props.size === 'large',
-            'size-6': props.size === 'small',
-          }}
-        />
-      </Show>
+      <Image.Img
+        draggable={false}
+        class='rounded-full overflow-clip'
+        src={props.src}
+        classList={{
+          'outline outline-2 -outline-offset-2 outline-rose-500/50':
+            props.outlined,
+          'size-12': props.size === 'large',
+          'size-6': props.size === 'small',
+        }}
+      />
       <Image.Fallback
         class='flex items-center justify-center text-rose-500 rounded-full border-2 border-rose-500/50'
         classList={{
