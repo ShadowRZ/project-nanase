@@ -6,6 +6,7 @@ const Box = klassed('div', {
     color: {
       default: 'bg-slate-200 dark:bg-slate-800',
       primary: 'bg-rose-500 text-white',
+      secondary: 'bg-rose-100 dark:bg-rose-900',
     },
   },
 });

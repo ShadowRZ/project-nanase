@@ -5,7 +5,7 @@ const meta: Meta<typeof Box> = {
   component: Box,
   tags: ['autodocs'],
   argTypes: {
-    color: { control: 'radio', options: ['default', 'primary'] },
+    color: { control: 'radio', options: ['default', 'primary', 'secondary'] },
   },
 };
 
@@ -25,5 +25,13 @@ export const PrimaryBox: Story = {
   args: {
     text: 'default',
     color: 'primary',
+  },
+};
+
+export const SecondaryBox: Story = {
+  render: (props) => <Box {...props}>Long text Long text Long text</Box>,
+  args: {
+    text: 'default',
+    color: 'secondary',
   },
 };
