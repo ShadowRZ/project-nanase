@@ -11,7 +11,7 @@ import ArrowsClockwiseDuotone from '~icons/ph/arrows-clockwise-duotone';
 import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
 
 type AsyncImageProps = {
-  src: () => Promise<string>;
+  src?: () => Promise<string>;
   width?: number;
   height?: number;
 };

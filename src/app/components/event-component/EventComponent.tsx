@@ -14,6 +14,7 @@ import {
   type Component,
   type ParentComponent,
 } from 'solid-js';
+import AsyncImage from '~/app/components/async-image/AsyncImage';
 import Box from '~/app/atoms/box/Box';
 import {
   createCurrentClientResource,
@@ -38,6 +39,7 @@ import {
   type Sticker,
 } from '~/types/event-content';
 import TrashDuotone from '~icons/ph/trash-duotone';
+import { getMediaPromise } from '~/lib/utils/media';
 
 const RedactedMessage: Component = () => {
   return (
@@ -108,11 +110,17 @@ const MessageContent: Component<EventComponentProps> = (props) => {
               edited={edited() !== undefined}
               width={(content() as ImageMessage).info.w}
               height={(content() as ImageMessage).info.h}
-              src={
-                client().mxcUrlToHttp((content() as ImageMessage).url) ??
-                undefined
-              }
-            />
+            >
+              <AsyncImage
+                src={getMediaPromise(
+                  client(),
+                  client().mxcUrlToHttp((content() as ImageMessage).url) ??
+                    undefined
+                )}
+                width={(content() as ImageMessage).info.w}
+                height={(content() as ImageMessage).info.h}
+              />
+            </CImageMessage>
           </Box>
         </Match>
         <Match when={msgtype() === MsgType.File}>
@@ -157,7 +165,9 @@ const StickerContent: Component<EventComponentProps> = (props) => {
   );
   const width = createMemo(() => content().info.w);
   const height = createMemo(() => content().info.h);
-  const url = createMemo(() => client().mxcUrlToHttp(content().url));
+  const url = createMemo(
+    () => client().mxcUrlToHttp(content().url) ?? undefined
+  );
 
   return (
     <>
@@ -175,8 +185,13 @@ const StickerContent: Component<EventComponentProps> = (props) => {
         edited={edited() !== undefined}
         width={width()}
         height={height()}
-        src={url() ?? undefined}
-      />
+      >
+        <AsyncImage
+          src={getMediaPromise(client(), url())}
+          width={width()}
+          height={height()}
+        />
+      </CImageMessage>
     </>
   );
 };
