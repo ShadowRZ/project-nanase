@@ -29,6 +29,6 @@ export const BorderedPanel: Story = {
 
 export const ShadowPanel: Story = {
   args: {
-    decoration: 'shadow',
+    decoration: 'shadowed',
   },
 };
