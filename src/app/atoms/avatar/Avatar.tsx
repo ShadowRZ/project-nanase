@@ -1,6 +1,12 @@
 import { type Component, Show } from 'solid-js';
 import { Image } from '@kobalte/core/image';
 import { Dynamic } from 'solid-js/web';
+import {
+  avatar,
+  avatarFallback,
+  avatarImage,
+  fallbackIcon,
+} from './Avatar.css';
 import UserCircleDuotone from '~icons/ph/user-circle-duotone';
 
 type AvatarProps = {
@@ -14,37 +20,28 @@ type AvatarProps = {
 const Avatar: Component<AvatarProps> = (props) => {
   return (
     <Image
-      class='block shrink-0'
-      classList={{
-        'size-12': props.size === 'large',
-        'size-6': props.size === 'small',
-      }}
+      class={avatar({
+        size: props.size,
+      })}
     >
       <Image.Img
         draggable={false}
-        class='rounded-full overflow-clip'
+        class={avatarImage({
+          outlined: props.outlined,
+          size: props.size,
+        })}
         src={props.src}
-        classList={{
-          'outline outline-2 -outline-offset-2 outline-rose-500/50':
-            props.outlined,
-          'size-12': props.size === 'large',
-          'size-6': props.size === 'small',
-        }}
       />
       <Image.Fallback
-        class='flex items-center justify-center text-rose-500 rounded-full border-2 border-rose-500/50'
-        classList={{
-          'size-12': props.size === 'large',
-          'size-6': props.size === 'small',
-        }}
+        class={avatarFallback({
+          size: props.size,
+        })}
       >
         <Dynamic
           component={props.icon ?? UserCircleDuotone}
-          classList={{
-            'size-8': props.size === 'large' && !props.smallIcon,
-            'size-6': props.size === 'large' && props.smallIcon,
-            'size-4': props.size === 'small',
-          }}
+          class={fallbackIcon({
+            size: props.size,
+          })}
         />
       </Image.Fallback>
     </Image>
