@@ -2,11 +2,11 @@ import { klassed } from '@klass/solid';
 import { Button as KButton } from '@kobalte/core/button';
 
 const Button = klassed(KButton, {
-  base: 'transition duration-150 inline-flex justify-center rounded-xl',
+  base: 'transition duration-150 inline-flex justify-center',
   variants: {
     size: {
-      small: 'px-3 py-1',
-      medium: 'px-4 py-2',
+      small: 'px-3 py-1 rounded-lg',
+      medium: 'px-4 py-2 rounded-xl',
     },
     color: {
       primary:
