@@ -1,12 +1,24 @@
-import { klassed } from '@klass/solid';
+import { styled } from '~styled/jsx';
 
-const Box = klassed('div', {
-  base: 'rounded-lg p-2',
+const Box = styled('div', {
+  base: {
+    borderRadius: '0.5rem',
+    padding: '0.5rem',
+  },
   variants: {
     color: {
-      default: 'bg-slate-200 dark:bg-slate-800',
-      primary: 'bg-rose-500 text-white',
-      secondary: 'bg-rose-100 dark:bg-rose-900',
+      default: {
+        backgroundColor: 'mauve.3',
+        color: 'mauve.12',
+      },
+      primary: {
+        backgroundColor: 'ruby.9',
+        color: 'white',
+      },
+      secondary: {
+        backgroundColor: 'ruby.3',
+        color: 'ruby.12',
+      },
     },
   },
 });
