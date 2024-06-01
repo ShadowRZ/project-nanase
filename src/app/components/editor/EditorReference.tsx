@@ -57,7 +57,7 @@ const EditorReference: Component<EditorReferenceProps> = (props) => {
           roomId={roomId()}
           eventId={eventId()}
           timelineSet={timelineSet()}
-          client={client()!}
+          client={client()}
         />
       </div>
     </div>
