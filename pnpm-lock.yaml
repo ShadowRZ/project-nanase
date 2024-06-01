@@ -117,6 +117,9 @@ importers:
       '@pandacss/dev':
         specifier: ^0.41.0
         version: 0.41.0(typescript@5.4.5)
+      '@radix-ui/colors':
+        specifier: ^3.0.0
+        version: 3.0.0
       '@storybook/addon-essentials':
         specifier: ^8.1.1
         version: 8.1.1(@types/react@18.2.74)(prettier@3.2.5)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -150,6 +153,9 @@ importers:
       eslint-plugin-solid:
         specifier: ^0.14.0
         version: 0.14.0(eslint@8.57.0)(typescript@5.4.5)
+      pandacss-preset-radix-colors:
+        specifier: ^0.2.0
+        version: 0.2.0(@pandacss/dev@0.41.0(typescript@5.4.5))(@radix-ui/colors@3.0.0)
       prettier:
         specifier: ^3.2.5
         version: 3.2.5
@@ -1269,6 +1275,9 @@ packages:
 
   '@polka/url@1.0.0-next.25':
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}
+
+  '@radix-ui/colors@3.0.0':
+    resolution: {integrity: sha512-FUOsGBkHrYJwCSEtWRCIfQbZG7q1e6DgxCIOe1SUQzDe/7rXXeA47s8yCn6fuTNQAj1Zq4oTFi9Yjp3wzElcxg==}
 
   '@radix-ui/primitive@1.0.1':
     resolution: {integrity: sha512-yQ8oGX2GVsEYMWGxcovu1uGWPCxV5BFfeeYxqPmuAzUyLT9qmaMXSAhXpb0WrspIeqYzdJpkh2vHModJPgRIaw==}
@@ -4851,6 +4860,12 @@ packages:
   pako@0.2.9:
     resolution: {integrity: sha512-NUcwaKxUxWrZLpDG+z/xZaCgQITkA/Dv4V/T6bw7VON6l1Xz/VnrBqrYjZQ12TamKHzITTfOEIYUj48y2KXImA==}
 
+  pandacss-preset-radix-colors@0.2.0:
+    resolution: {integrity: sha512-I2HIibzgKvgub6ckriHJDXwehwIOOfnPEeN1wNlcfAodA9a1CzSe6A+eMuZC7XrxXKia5vV0UTomPKsLcC3P6Q==}
+    peerDependencies:
+      '@pandacss/dev': '>=0.0.1'
+      '@radix-ui/colors': '>=0.1.0'
+
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
@@ -7575,6 +7590,8 @@ snapshots:
   '@pkgr/core@0.1.1': {}
 
   '@polka/url@1.0.0-next.25': {}
+
+  '@radix-ui/colors@3.0.0': {}
 
   '@radix-ui/primitive@1.0.1':
     dependencies:
@@ -12076,6 +12093,11 @@ snapshots:
   p-try@2.2.0: {}
 
   pako@0.2.9: {}
+
+  pandacss-preset-radix-colors@0.2.0(@pandacss/dev@0.41.0(typescript@5.4.5))(@radix-ui/colors@3.0.0):
+    dependencies:
+      '@pandacss/dev': 0.41.0(typescript@5.4.5)
+      '@radix-ui/colors': 3.0.0
 
   parent-module@1.0.1:
     dependencies:

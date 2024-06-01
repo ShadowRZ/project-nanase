@@ -1,4 +1,5 @@
 import { defineConfig } from '@pandacss/dev';
+import radixColorsPreset from 'pandacss-preset-radix-colors';
 
 export default defineConfig({
   preflight: true,
@@ -7,6 +8,12 @@ export default defineConfig({
   theme: {
     extend: {},
   },
+  presets: [
+    radixColorsPreset({
+      darkMode: true,
+    }),
+    '@pandacss/preset-panda',
+  ],
   outdir: 'styled-system',
   jsxFramework: 'solid',
 });
