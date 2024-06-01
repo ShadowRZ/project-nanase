@@ -4,7 +4,7 @@ import Avatar from '~/app/atoms/avatar/Avatar';
 import NotificationCount from '~/app/atoms/notification/NotificationCount';
 import Text from '~/app/atoms/text/Text';
 import Time from '~/app/atoms/time/Time';
-import ChatCircleDotsBold from '~icons/ph/chat-circle-dots-bold';
+import HashStraightDuotone from '~icons/ph/hash-straight-duotone';
 import UserCircleDuotone from '~icons/ph/user-circle-duotone';
 
 type RoomItemProps = {
@@ -31,17 +31,12 @@ const RoomItem: Component<RoomItemProps> = (props) => {
       }}
     >
       <Show
-        when={!props.direct}
+        when={props.direct}
         fallback={
-          <Avatar src={props.avatar} size='large' icon={UserCircleDuotone} />
+          <Avatar src={props.avatar} size='large' icon={HashStraightDuotone} />
         }
       >
-        <Avatar
-          src={props.avatar}
-          size='large'
-          icon={ChatCircleDotsBold}
-          smallIcon
-        />
+        <Avatar src={props.avatar} size='large' icon={UserCircleDuotone} />
       </Show>
       <div class='grow flex flex-col overflow-hidden'>
         <span class='inline-flex overflow-hidden'>

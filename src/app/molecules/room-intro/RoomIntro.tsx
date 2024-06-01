@@ -4,7 +4,7 @@ import Avatar from '~/app/atoms/avatar/Avatar';
 import IconButton from '~/app/atoms/button/IconButton';
 import Text from '~/app/atoms/text/Text';
 import Panel from '~/app/atoms/panel/Panel';
-import ChatCircleDotsBold from '~icons/ph/chat-circle-dots-bold';
+import HashStraightDuotone from '~icons/ph/hash-straight-duotone';
 import UserCircleDuotone from '~icons/ph/user-circle-duotone';
 import ArrowLeft from '~icons/ph/arrow-left';
 import ShieldDuotone from '~icons/ph/shield-duotone';
@@ -40,12 +40,7 @@ const RoomIntro: Component<RoomIntroProps> = (props) => {
           <Avatar src={props.avatar} size='large' icon={UserCircleDuotone} />
         }
       >
-        <Avatar
-          src={props.avatar}
-          size='large'
-          icon={ChatCircleDotsBold}
-          smallIcon
-        />
+        <Avatar src={props.avatar} size='large' icon={HashStraightDuotone} />
       </Show>
       <span class='grow flex flex-col flex-1 min-w-0 truncate'>
         <Text font='bold' content='truncate' class='flex-1'>

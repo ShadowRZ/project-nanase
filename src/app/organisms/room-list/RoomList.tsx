@@ -93,6 +93,7 @@ const RoomListItemDirect: Component<RoomListItemProps> = (props) => {
           event()?.sender?.name ?? (event()?.getContent().sender as string)
         }
         lastContent={trimReplyFallback(event()?.getContent().body as string)}
+        direct
       />
     </Show>
   );
