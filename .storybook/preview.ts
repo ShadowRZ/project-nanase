@@ -1,5 +1,6 @@
 import 'uno.css';
 import '@unocss/reset/tailwind-compat.css';
+import '../src/index.css';
 import { withThemeByClassName } from '@storybook/addon-themes';
 
 // @ts-expect-error Internally used by Storybook
