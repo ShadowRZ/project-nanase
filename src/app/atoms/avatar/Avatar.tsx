@@ -14,7 +14,6 @@ type AvatarProps = {
   size: 'large' | 'small';
   outlined?: boolean;
   icon?: Component;
-  smallIcon?: boolean;
 };
 
 const Avatar: Component<AvatarProps> = (props) => {

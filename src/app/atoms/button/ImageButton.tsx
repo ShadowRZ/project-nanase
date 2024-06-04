@@ -14,7 +14,6 @@ type ImageButtonProps = {
   size: 'large' | 'small';
   checked?: boolean;
   icon: ValidComponent;
-  smallIcon?: boolean;
 };
 
 const ImageButton: Component<ImageButtonProps> = (props) => {
@@ -24,7 +23,6 @@ const ImageButton: Component<ImageButtonProps> = (props) => {
     'src',
     'icon',
     'size',
-    'smallIcon',
   ]);
 
   return (

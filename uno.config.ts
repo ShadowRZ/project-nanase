@@ -11,9 +11,6 @@ export default defineConfig({
     presetUno(),
     presetWebFonts({
       provider: 'none',
-      fonts: {
-        sans: ['Inter Variable'],
-      },
     }),
     presetTypography({
       selectorName: 'mx-prose',
