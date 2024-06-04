@@ -1,19 +1,67 @@
-import { klassed } from '@klass/solid';
 import { Button as KButton } from '@kobalte/core/button';
+import { styled } from '~styled/jsx';
 
-const Button = klassed(KButton, {
-  base: 'transition duration-150 inline-flex justify-center',
+const Button = styled(KButton, {
+  base: {
+    display: 'inline-flex',
+    justifyContent: 'center',
+    transitionProperty: 'background-color, filter',
+    transitionDuration: '150ms',
+    transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+  },
   variants: {
-    size: {
-      small: 'px-3 py-1 rounded-lg',
-      medium: 'px-4 py-2 rounded-xl',
-    },
     color: {
-      primary:
-        'bg-rose-500 text-white hover:bg-rose-700 disabled:bg-rose-500/50',
-      danger: 'bg-red-500 text-white hover:bg-red-700 disabled:bg-red-500/50',
-      secondary:
-        'bg-slate-200 text-black dark:text-white hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-900',
+      danger: {
+        backgroundColor: 'red.9',
+        color: 'white',
+        _disabled: {
+          backgroundColor: 'red.a.9',
+        },
+        _hover: {
+          backgroundColor: 'red.8',
+        },
+        _active: {
+          filter: 'brightness(0.90) saturate(1.1)',
+        },
+      },
+      primary: {
+        backgroundColor: 'ruby.9',
+        color: 'white',
+        _disabled: {
+          backgroundColor: 'ruby.a.9',
+        },
+        _hover: {
+          backgroundColor: 'ruby.10',
+        },
+        _active: {
+          filter: 'brightness(0.90) saturate(1.1)',
+        },
+      },
+      secondary: {
+        backgroundColor: 'ruby.3',
+        color: 'ruby.12',
+        _disabled: {
+          backgroundColor: 'ruby.a.3',
+        },
+        _hover: {
+          backgroundColor: 'ruby.7',
+        },
+        _active: {
+          backgroundColor: 'ruby.5',
+        },
+      },
+    },
+    size: {
+      small: {
+        px: '0.75rem',
+        py: '0.25rem',
+        borderRadius: '0.5em',
+      },
+      medium: {
+        px: '1rem',
+        py: '0.5rem',
+        borderRadius: '0.75em',
+      },
     },
   },
 });
