@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from 'storybook-solidjs';
 import IconButton from './IconButton';
-import UserCircleDuotone from '~icons/ph/user-circle-duotone';
+import UserCircleFill from '~icons/ph/user-circle-fill';
 
 const meta: Meta<typeof IconButton> = {
   component: IconButton,
@@ -11,7 +11,7 @@ const meta: Meta<typeof IconButton> = {
       options: ['large-bordered', 'small-bordered', 'normal', 'circle'],
     },
   },
-  render: (props) => <IconButton {...props} icon={UserCircleDuotone} />,
+  render: (props) => <IconButton {...props} icon={UserCircleFill} />,
 };
 
 export default meta;
