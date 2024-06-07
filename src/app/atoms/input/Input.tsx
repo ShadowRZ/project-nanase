@@ -1,5 +1,27 @@
 import { TextField as KTextField } from '@kobalte/core/text-field';
 import { type JSX, Show, splitProps, type Component } from 'solid-js';
+import { Flex, styled } from '~styled/jsx';
+import { flex } from '~styled/patterns';
+
+const InputField = styled(KTextField.Input, {
+  base: {
+    transitionProperty: 'outline-color',
+    transitionDuration: '150ms',
+    transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    outlineWidth: '2px',
+    outlineStyle: 'solid',
+    outlineOffset: '2px',
+    outlineColor: 'mauve.7',
+    borderRadius: '0.75rem',
+    padding: '0.5rem',
+    _disabled: {
+      cursor: 'not-allowed',
+    },
+    _focus: {
+      outlineColor: 'ruby.9',
+    },
+  },
+});
 
 type InputProps = {
   name: string;
@@ -31,24 +53,20 @@ const Input: Component<InputProps> = (props) => {
     <KTextField
       {...rootProps}
       validationState={props.error === '' ? 'valid' : 'invalid'}
-      class='flex flex-col gap-2'
+      as={Flex}
+      direction='column'
+      gap='2'
     >
       <Show when={props.label}>
         <KTextField.Label>{props.label}</KTextField.Label>
       </Show>
       <Show
         when={props.multiline}
-        fallback={
-          <KTextField.Input
-            {...inputProps}
-            type={props.type}
-            class='transition duration-200 rounded-xl p-2 ring ring-neutral/25 focus:ring-rose-500 focus:ring-2 outline-none disabled:cursor-not-allowed'
-          />
-        }
+        fallback={<InputField {...inputProps} type={props.type} />}
       >
         <KTextField.TextArea {...inputProps} autoResize />
       </Show>
-      <KTextField.ErrorMessage class='text-red font-bold'>
+      <KTextField.ErrorMessage as={styled.div} fontWeight='bold' color='red.11'>
         {props.error}
       </KTextField.ErrorMessage>
     </KTextField>
