@@ -1,12 +1,8 @@
 import { Checkbox as KCheckbox } from '@kobalte/core/checkbox';
-import {
-  Show,
-  splitProps,
-  type Component,
-  type ParentComponent,
-} from 'solid-js';
-import Text from '~/app/atoms/text/Text';
+import { Show, splitProps, type Component } from 'solid-js';
 import CheckBold from '~icons/ph/check-bold';
+import { css } from '~styled/css';
+import { Flex, Square, styled } from '~styled/jsx';
 
 type CheckboxProps = {
   [key: string]: any;
@@ -17,18 +13,6 @@ type CheckboxProps = {
   error?: string;
   checked?: boolean;
   onChange?: (checked: boolean) => void;
-};
-
-const LabelText: ParentComponent = (props) => {
-  return <Text as='label' font='bold' {...props} />;
-};
-
-const DescText: ParentComponent = (props) => {
-  return <Text as='div' {...props} />;
-};
-
-const ErrorText: ParentComponent = (props) => {
-  return <Text as='div' font='bold' color='error' {...props} />;
 };
 
 const Checkbox: Component<CheckboxProps> = (props) => {
@@ -43,23 +27,57 @@ const Checkbox: Component<CheckboxProps> = (props) => {
     <KCheckbox
       checked={props.checked}
       onChange={props.onChange}
-      class='flex flex-row gap-2'
+      as={Flex}
+      direction='row'
+      gap='2'
       validationState={props.error ? 'invalid' : 'valid'}
     >
-      <KCheckbox.Input {...inputProps} class='peer' />
-      <KCheckbox.Control class='shrink-0 mt-1 box-content size-6 rounded-md border peer-focus:outline ui-checked:outline ui-checked:outline-2 focus:outline-2 outline-offset-2 outline-rose-500 ui-checked:bg-rose-500'>
-        <KCheckbox.Indicator class='size-6 flex items-center justify-center'>
-          <CheckBold class='text-white' />
+      <KCheckbox.Input {...inputProps} />
+      <KCheckbox.Control
+        as={Square}
+        size='6'
+        rounded='md'
+        overflow='clip'
+        css={{
+          flexShrink: 0,
+          boxSizing: 'content-box',
+          borderWidth: '1px',
+          borderColor: 'mauve.7',
+          outlineOffset: '2px',
+          outlineColor: 'ruby.8',
+          _focus: {
+            outlineStyle: 'solid',
+            outlineWidth: '2px',
+          },
+        }}
+      >
+        <KCheckbox.Indicator
+          as={Flex}
+          w='6'
+          h='6'
+          align='center'
+          justify='center'
+          css={{
+            _checked: {
+              bg: 'ruby.9',
+            },
+          }}
+        >
+          <CheckBold class={css({ color: 'white' })} />
         </KCheckbox.Indicator>
       </KCheckbox.Control>
       <div>
-        <KCheckbox.Label as={LabelText}>{props.label}</KCheckbox.Label>
+        <KCheckbox.Label as={styled.label} fontWeight='bold'>
+          {props.label}
+        </KCheckbox.Label>
         <Show when={props.description && !props.error}>
-          <KCheckbox.Description as={DescText}>
-            {props.description}
-          </KCheckbox.Description>
+          <KCheckbox.Description>{props.description}</KCheckbox.Description>
         </Show>
-        <KCheckbox.ErrorMessage as={ErrorText}>
+        <KCheckbox.ErrorMessage
+          as={styled.div}
+          color='red.11'
+          fontWeight='bold'
+        >
           {props.error}
         </KCheckbox.ErrorMessage>
       </div>
