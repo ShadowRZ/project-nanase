@@ -1,11 +1,15 @@
 import type { Meta, StoryObj } from 'storybook-solidjs';
+import { fn } from '@storybook/test';
 import Avatar from './Avatar';
 
-const meta: Meta<typeof Avatar> = {
-  component: Avatar,
+const meta: Meta<typeof Avatar.Button> = {
+  component: Avatar.Button,
   tags: ['autodocs'],
   argTypes: {
     size: { control: 'radio', options: ['small', 'large'] },
+  },
+  args: {
+    onClick: fn(),
   },
 };
 
@@ -16,7 +20,6 @@ export const Large: Story = {
   args: {
     size: 'large',
     src: '',
-    outlined: true,
   },
 };
 
@@ -24,6 +27,21 @@ export const Small: Story = {
   args: {
     size: 'small',
     src: '',
-    outlined: true,
+  },
+};
+
+export const LargeChecked: Story = {
+  args: {
+    size: 'large',
+    src: '',
+    checked: true,
+  },
+};
+
+export const SmallChecked: Story = {
+  args: {
+    size: 'small',
+    src: '',
+    checked: true,
   },
 };

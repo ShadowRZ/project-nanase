@@ -2,6 +2,7 @@ import { DropdownMenu } from '@kobalte/core/dropdown-menu';
 import { createSignal, type Component } from 'solid-js';
 import { Tooltip } from '@kobalte/core/tooltip';
 import ImageButton from '~/app/atoms/button/ImageButton';
+import Avatar from '~/app/components/avatar/Avatar';
 import Panel from '~/app/atoms/panel/Panel';
 import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 import { profiles } from '~/app/hooks/createProfileStore';
@@ -10,6 +11,7 @@ import t from '~/app/i18n';
 import ConfrimDialog from '~/app/molecules/confrim-dialog/ConfirmDialog';
 import ProfileContent from '~/app/molecules/profile/ProfileContent';
 import ClientSwitchDialog from '~/app/organisms/switch-dialog/ClientSwitchDialog';
+import Box from '~/app/atoms/box/Box';
 import PowerDuotone from '~icons/ph/power-duotone';
 import UserCircleDuotone from '~icons/ph/user-circle-duotone';
 import UserSwitchDuotone from '~icons/ph/user-switch-duotone';
@@ -33,11 +35,11 @@ const AccountMenu: Component = () => {
     <>
       <DropdownMenu fitViewport modal preventScroll>
         <Tooltip placement='right' openDelay={0} closeDelay={0}>
-          <ImageButton
+          <Avatar.Button
             as={DropdownMenuWrapper}
             size='large'
             src={avatar()}
-            icon={UserCircleDuotone}
+            fallback={UserCircleDuotone}
           />
           <Tooltip.Portal>
             <Tooltip.Content class='ml-1'>{t('account_menu')}</Tooltip.Content>

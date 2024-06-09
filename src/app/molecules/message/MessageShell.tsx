@@ -1,6 +1,6 @@
 import { splitProps, type Component, type ParentComponent } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
-import Avatar from '~/app/atoms/avatar/Avatar';
+import Avatar from '~/app/components/avatar/Avatar';
 import Text from '~/app/atoms/text/Text';
 
 type BaseMessageProps = {

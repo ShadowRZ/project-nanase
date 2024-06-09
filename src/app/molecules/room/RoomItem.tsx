@@ -1,6 +1,6 @@
 import { Button } from '@kobalte/core/button';
 import { Show, type Component } from 'solid-js';
-import Avatar from '~/app/atoms/avatar/Avatar';
+import Avatar from '~/app/components/avatar/Avatar';
 import NotificationCount from '~/app/atoms/notification/NotificationCount';
 import Text from '~/app/atoms/text/Text';
 import Time from '~/app/atoms/time/Time';
@@ -33,10 +33,14 @@ const RoomItem: Component<RoomItemProps> = (props) => {
       <Show
         when={props.direct}
         fallback={
-          <Avatar src={props.avatar} size='large' icon={HashStraightDuotone} />
+          <Avatar
+            src={props.avatar}
+            size='large'
+            fallback={HashStraightDuotone}
+          />
         }
       >
-        <Avatar src={props.avatar} size='large' icon={UserCircleDuotone} />
+        <Avatar src={props.avatar} size='large' fallback={UserCircleDuotone} />
       </Show>
       <div class='grow flex flex-col overflow-hidden'>
         <span class='inline-flex overflow-hidden'>

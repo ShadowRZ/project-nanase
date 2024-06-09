@@ -1,5 +1,5 @@
 import { type Component } from 'solid-js';
-import Avatar from '~/app/atoms/avatar/Avatar';
+import Avatar from '~/app/components/avatar/Avatar';
 import Text from '~/app/atoms/text/Text';
 
 export type ClientProfileProps = {

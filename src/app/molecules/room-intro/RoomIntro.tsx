@@ -1,6 +1,6 @@
 import { Show, type Component } from 'solid-js';
 import { DropdownMenu } from '@kobalte/core/dropdown-menu';
-import Avatar from '~/app/atoms/avatar/Avatar';
+import Avatar from '~/app/components/avatar/Avatar';
 import IconButton from '~/app/atoms/button/IconButton';
 import Text from '~/app/atoms/text/Text';
 import Panel from '~/app/atoms/panel/Panel';
@@ -37,10 +37,18 @@ const RoomIntro: Component<RoomIntroProps> = (props) => {
       <Show
         when={!props.direct}
         fallback={
-          <Avatar src={props.avatar} size='large' icon={UserCircleDuotone} />
+          <Avatar
+            src={props.avatar}
+            size='large'
+            fallback={UserCircleDuotone}
+          />
         }
       >
-        <Avatar src={props.avatar} size='large' icon={HashStraightDuotone} />
+        <Avatar
+          src={props.avatar}
+          size='large'
+          fallback={HashStraightDuotone}
+        />
       </Show>
       <span class='grow flex flex-col flex-1 min-w-0 truncate'>
         <Text font='bold' content='truncate' class='flex-1'>
