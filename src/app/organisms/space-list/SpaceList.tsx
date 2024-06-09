@@ -1,11 +1,10 @@
-import { For, Show, type Component } from 'solid-js';
 import { Tooltip } from '@kobalte/core/tooltip';
-import ImageButton from '~/app/atoms/button/ImageButton';
+import { For, Show, type Component } from 'solid-js';
 import Avatar from '~/app/components/avatar/Avatar';
 import { createRoomResource } from '~/app/hooks/createRoomResource';
 import { createSpaceList } from '~/app/hooks/createSpaces';
-import FoldersDuotone from '~icons/ph/folders-duotone';
 import Box from '~/app/atoms/box/Box';
+import FoldersFill from '~icons/ph/folders-fill';
 
 type SpaceItemProps = {
   spaceId: string;
@@ -26,7 +25,7 @@ const SpaceItem: Component<SpaceItemProps> = (props) => {
         }}
         size='large'
         src={avatar()}
-        fallback={FoldersDuotone}
+        fallback={FoldersFill}
         checked={props.currentSpaceId === props.spaceId}
       />
       <Tooltip.Portal>

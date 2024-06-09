@@ -9,8 +9,8 @@ import {
   type SpaceRooms,
 } from '~/app/organisms/room-list/RoomList';
 import SpaceList from '~/app/organisms/space-list/SpaceList';
-import ChatsTeardropDuotone from '~icons/ph/chats-teardrop-duotone';
-import FolderUserDuotone from '~icons/ph/folder-user-duotone';
+import ChatsTeardropFill from '~icons/ph/chats-teardrop-fill';
+import FolderUserFill from '~icons/ph/folder-user-fill';
 
 export type SidebarProps = {
   category: RoomCategory;
@@ -35,7 +35,7 @@ const Sidebar: Component<SidebarProps> = (props) => {
             onClick={() => {
               props.onCategoryChanged({ type: 'chats' });
             }}
-            icon={ChatsTeardropDuotone}
+            icon={ChatsTeardropFill}
             checked={categoryType() === 'chats'}
           />
           <Tooltip.Portal>
@@ -53,7 +53,7 @@ const Sidebar: Component<SidebarProps> = (props) => {
             onClick={() => {
               props.onCategoryChanged({ type: 'directs' });
             }}
-            icon={FolderUserDuotone}
+            icon={FolderUserFill}
             checked={categoryType() === 'directs'}
           />
           <Tooltip.Portal>
