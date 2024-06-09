@@ -14,7 +14,6 @@ import {
 } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 import { cva } from '~styled/css';
-import { styled } from '~styled/jsx';
 import UserCircleFill from '~icons/ph/user-circle-fill';
 
 type AvatarVariants = {
@@ -99,22 +98,22 @@ const fallback = cva({
   },
 });
 
-const button = cva({
+const buttonImage = cva({
   base: {
-    transitionProperty: 'border-color, background-color',
+    transitionProperty: 'filter',
     transitionDuration: '150ms',
     transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
     _hover: {
-      backgroundColor: 'ruby.4',
-    },
-    _active: {
-      backgroundColor: 'ruby.5',
+      filter: 'brightness(.9)',
     },
   },
   variants: {
     checked: {
       true: {
-        backgroundColor: 'ruby.5',
+        filter: 'brightness(.75)',
+        ':hover': {
+          filter: 'brightness(.75)',
+        },
       },
     },
   },
@@ -159,6 +158,7 @@ function AvatarImage<T extends ValidComponent = 'img'>(
 type AvatarFallbackProps = {
   children: string | ValidComponent;
   button?: boolean;
+  checked?: boolean;
 } & AvatarVariants;
 
 const AvatarFallback: Component<AvatarFallbackProps> = (props) => (
@@ -201,16 +201,21 @@ function PolymorphicAvatar<T extends ValidComponent = 'span'>(
 ) {
   const [local, variants, others] = splitProps(
     props,
-    ['fallback', 'src', 'button'],
+    ['fallback', 'src', 'button', 'checked'],
     ['size']
   );
 
   return (
     <AvatarRoot {...variants} {...others}>
-      <AvatarImage {...variants} src={local.src} />
+      <AvatarImage
+        {...variants}
+        src={local.src}
+        class={props.button ? buttonImage({ checked: local.checked }) : ''}
+      />
       <AvatarFallback
         children={local.fallback ?? UserCircleFill}
         button={local.button}
+        checked={local.checked}
         {...variants}
       />
     </AvatarRoot>
