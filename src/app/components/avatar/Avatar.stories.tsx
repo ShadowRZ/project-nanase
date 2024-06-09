@@ -25,3 +25,11 @@ export const Small: Story = {
     src: '',
   },
 };
+
+export const TextFallback: Story = {
+  args: {
+    size: 'large',
+    src: '',
+    fallback: 'UR',
+  },
+};
