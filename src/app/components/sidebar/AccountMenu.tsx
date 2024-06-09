@@ -1,9 +1,8 @@
 import { DropdownMenu } from '@kobalte/core/dropdown-menu';
-import { Tooltip } from '@kobalte/core/tooltip';
 import { createSignal, type Component } from 'solid-js';
+import { Tooltip } from '@kobalte/core/tooltip';
 import ImageButton from '~/app/atoms/button/ImageButton';
 import Panel from '~/app/atoms/panel/Panel';
-import TooltipContent from '~/app/atoms/tooltip/TooltipContent';
 import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 import { profiles } from '~/app/hooks/createProfileStore';
 import { useAppContext } from '~/app/hooks/useAppContext';
@@ -14,6 +13,7 @@ import ClientSwitchDialog from '~/app/organisms/switch-dialog/ClientSwitchDialog
 import PowerDuotone from '~icons/ph/power-duotone';
 import UserCircleDuotone from '~icons/ph/user-circle-duotone';
 import UserSwitchDuotone from '~icons/ph/user-switch-duotone';
+import Box from '~/app/atoms/box/Box';
 
 const DropdownMenuWrapper: Component = (props) => {
   return <DropdownMenu.Trigger as={Tooltip.Trigger} {...props} />;
@@ -40,9 +40,7 @@ const AccountMenu: Component = () => {
             icon={UserCircleDuotone}
           />
           <Tooltip.Portal>
-            <Tooltip.Content as={TooltipContent} class='ml-1'>
-              {t('account_menu')}
-            </Tooltip.Content>
+            <Tooltip.Content class='ml-1'>{t('account_menu')}</Tooltip.Content>
           </Tooltip.Portal>
         </Tooltip>
         <DropdownMenu.Portal>
@@ -69,7 +67,7 @@ const AccountMenu: Component = () => {
                     <UserSwitchDuotone class='size-6 text-orange-500' />
                   </DropdownMenu.Item>
                   <Tooltip.Portal>
-                    <Tooltip.Content as={TooltipContent} class='mb-1'>
+                    <Tooltip.Content class='mb-1'>
                       {t('switch_user')}
                     </Tooltip.Content>
                   </Tooltip.Portal>
@@ -87,7 +85,7 @@ const AccountMenu: Component = () => {
                     <PowerDuotone class='size-6 text-red-500' />
                   </DropdownMenu.Item>
                   <Tooltip.Portal>
-                    <Tooltip.Content as={TooltipContent} class='mb-1'>
+                    <Tooltip.Content as={Box} color='tooltip' mb='1'>
                       {t('logout')}
                     </Tooltip.Content>
                   </Tooltip.Portal>

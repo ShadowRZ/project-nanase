@@ -1,16 +1,16 @@
-import { Tooltip } from '@kobalte/core/tooltip';
 import type { Component } from 'solid-js';
+import { Tooltip } from '@kobalte/core/tooltip';
 import AccountMenu from './AccountMenu';
-import SpaceList from '~/app/organisms/space-list/SpaceList';
-import {
-  type SpaceRooms,
-  type RoomCategory,
-} from '~/app/organisms/room-list/RoomList';
-import t from '~/app/i18n';
-import ChatCircleBold from '~icons/ph/chats-circle-bold';
-import UserBold from '~icons/ph/user-bold';
 import IconButton from '~/app/atoms/button/IconButton';
-import TooltipContent from '~/app/atoms/tooltip/TooltipContent';
+import t from '~/app/i18n';
+import Box from '~/app/atoms/box/Box';
+import {
+  type RoomCategory,
+  type SpaceRooms,
+} from '~/app/organisms/room-list/RoomList';
+import SpaceList from '~/app/organisms/space-list/SpaceList';
+import ChatsTeardropDuotone from '~icons/ph/chats-teardrop-duotone';
+import FolderUserDuotone from '~icons/ph/folder-user-duotone';
 
 export type SidebarProps = {
   category: RoomCategory;
@@ -35,11 +35,11 @@ const Sidebar: Component<SidebarProps> = (props) => {
             onClick={() => {
               props.onCategoryChanged({ type: 'chats' });
             }}
-            icon={ChatCircleBold}
+            icon={ChatsTeardropDuotone}
             checked={categoryType() === 'chats'}
           />
           <Tooltip.Portal>
-            <Tooltip.Content as={TooltipContent} class='ml-1'>
+            <Tooltip.Content as={Box} color='tooltip' ml='1'>
               {t('chats')}
             </Tooltip.Content>
           </Tooltip.Portal>
@@ -53,11 +53,11 @@ const Sidebar: Component<SidebarProps> = (props) => {
             onClick={() => {
               props.onCategoryChanged({ type: 'directs' });
             }}
-            icon={UserBold}
+            icon={FolderUserDuotone}
             checked={categoryType() === 'directs'}
           />
           <Tooltip.Portal>
-            <Tooltip.Content as={TooltipContent} class='ml-1'>
+            <Tooltip.Content as={Box} color='tooltip' ml='1'>
               {t('directs')}
             </Tooltip.Content>
           </Tooltip.Portal>

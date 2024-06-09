@@ -19,6 +19,10 @@ const Box = styled('div', {
         backgroundColor: 'ruby.3',
         color: 'ruby.12',
       },
+      tooltip: {
+        backgroundColor: 'rgb(30 41 59)',
+        color: 'white',
+      },
     },
   },
 });
