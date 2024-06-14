@@ -9,6 +9,8 @@ import { createTiptapEditor } from 'solid-tiptap';
 import IconButton from '~/app/atoms/button/IconButton';
 import { ProseExtensions } from '~/app/lib/editor-extensions';
 import { sanitizeText } from '~/lib/utils/sanitize';
+import { css } from '~styled/css';
+import { Flex } from '~styled/jsx';
 import PaperPlaneTiltDuotone from '~icons/ph/paper-plane-tilt-duotone';
 import PaperclipDuotone from '~icons/ph/paperclip-duotone';
 import SmileyDuotone from '~icons/ph/smiley-duotone';
@@ -49,45 +51,61 @@ const Editor: Component<EditorProps> = (props) => {
     extensions: [
       ...ProseExtensions,
       Placeholder.configure({
-        emptyEditorClass:
-          'first:before:content-[attr(data-placeholder)] before:opacity-50 before:pointer-events-none before:float-left before:h-0',
+        emptyEditorClass: css({
+          _before: {
+            opacity: 0.5,
+            pointerEvents: 'none',
+            float: 'left',
+            height: 0,
+          },
+          _first: {
+            _before: {
+              content: 'attr(data-placeholder)',
+            },
+          },
+        }),
         placeholder: 'Write something...',
       }),
       EnterExtension,
     ],
     editorProps: {
       attributes: {
-        class: 'mx-auto focus:outline-none',
+        class: css({ mx: 'auto', _focus: { outline: 'none' } }),
       },
     },
   }));
 
   return (
-    <div class='flex flex-row items-center px-1 gap-1'>
+    <Flex direction='row' alignItems='center' px='1' gap='1'>
       <IconButton
         type='circle'
         icon={PaperclipDuotone}
-        class='size-8'
-        iconClass='size-5 text-slate-700'
+        iconClass={css({ color: 'mauve.9' })}
         title='Upload'
       />
       <div
         data-project-nanase-composer
-        class='grow max-h-32 overflow-y-scroll scrollbar-none'
+        class={css({
+          flexGrow: '1',
+          maxHeight: '8rem',
+          overflowY: 'scroll',
+          scrollbarWidth: 'none',
+          _scrollbar: {
+            display: 'none',
+          },
+        })}
         ref={ref}
       />
       <IconButton
         type='circle'
         icon={StickerDuotone}
-        class='size-8'
-        iconClass='size-5 text-slate-700'
+        iconClass={css({ color: 'mauve.9' })}
         title='Insert Emoji'
       />
       <IconButton
         type='circle'
         icon={SmileyDuotone}
-        class='size-8'
-        iconClass='size-5 text-slate-700'
+        iconClass={css({ color: 'mauve.9' })}
         title='Send Sticker'
       />
       <IconButton
@@ -96,11 +114,10 @@ const Editor: Component<EditorProps> = (props) => {
         }}
         type='circle'
         icon={PaperPlaneTiltDuotone}
-        class='size-8 group'
-        iconClass='size-5 text-rose-500 group-disabled:text-rose-500/50'
+        iconClass={css({ color: 'ruby.9' })}
         title='Send'
       />
-    </div>
+    </Flex>
   );
 };
 
