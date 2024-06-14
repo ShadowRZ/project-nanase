@@ -149,6 +149,7 @@ function AvatarImage<T extends ValidComponent = 'img'>(
   return (
     <Image.Img
       as='img'
+      draggable={false}
       {...others}
       class={`${avatar(variants)} ${others.class ?? ''}`}
     />
