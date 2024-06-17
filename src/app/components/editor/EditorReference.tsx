@@ -4,6 +4,9 @@ import IconButton from '~/app/atoms/button/IconButton';
 import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 import QuotedEvent from '~/app/organisms/quoted-event/QuotedEvent';
 import { type RelationData } from '~/types/room';
+import { css } from '~styled/css';
+import { Flex, styled } from '~styled/jsx';
+import { square } from '~styled/patterns';
 import ArrowBendUpLeftDuotone from '~icons/ph/arrow-bend-up-left-duotone';
 import PencilSimpleLineDuotone from '~icons/ph/pencil-simple-line-duotone';
 import XIcon from '~icons/ph/x';
@@ -24,34 +27,46 @@ const EditorReference: Component<EditorReferenceProps> = (props) => {
   const timelineSet = () => props.timelineSet;
 
   return (
-    <div class='px-2 flex flex-col gap-1 items-start'>
-      <div class='flex flex-row items-center gap-2 w-full'>
+    <Flex direction='column' gap='1' alignItems='start' px='2'>
+      <Flex direction='row' alignItems='center' gap='2' width='full'>
         <Switch>
           <Match when={type() === 'reply'}>
-            <ArrowBendUpLeftDuotone class='inline-block size-4 text-slate-700' />
+            <ArrowBendUpLeftDuotone
+              class={square({
+                size: '1rem',
+                display: 'inline-block',
+                color: 'mauve.9',
+              })}
+            />
           </Match>
           <Match when={type() === 'edit'}>
-            <PencilSimpleLineDuotone class='inline-block size-4 text-slate-700' />
+            <PencilSimpleLineDuotone
+              class={square({
+                size: '1rem',
+                display: 'inline-block',
+                color: 'mauve.9',
+              })}
+            />
           </Match>
         </Switch>
-        <span class='grow'>
+        <styled.span flexGrow='1'>
           <Switch>
             <Match when={type() === 'reply'}>Reply To</Match>
             <Match when={type() === 'edit'}>Edit</Match>
           </Switch>
-        </span>
+        </styled.span>
         <IconButton
           type='circle'
           icon={XIcon}
-          class='size-6'
-          iconClass='size-4 text-slate-700'
+          class={square({ size: '1.5rem' })}
+          iconClass={css({ color: 'mauve.9' })}
           title='Cancel'
           onClick={() => {
             props.onClose?.();
           }}
         />
-      </div>
-      <div class='px-6 w-full'>
+      </Flex>
+      <styled.div px='6' width='full'>
         <QuotedEvent
           showSender={type() !== 'edit'}
           roomId={roomId()}
@@ -59,8 +74,8 @@ const EditorReference: Component<EditorReferenceProps> = (props) => {
           timelineSet={timelineSet()}
           client={client()}
         />
-      </div>
-    </div>
+      </styled.div>
+    </Flex>
   );
 };
 
