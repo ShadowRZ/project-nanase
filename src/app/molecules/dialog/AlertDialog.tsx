@@ -7,10 +7,10 @@ import {
   Root,
   Title,
   Trigger,
-  type DialogContentProps,
-  type DialogDescriptionProps,
-  type DialogTitleProps,
-} from '@kobalte/core/dialog';
+  type AlertDialogContentProps,
+  type AlertDialogDescriptionProps,
+  type AlertDialogTitleProps,
+} from '@kobalte/core/alert-dialog';
 import { type PolymorphicProps } from '@kobalte/core/polymorphic';
 import { Show, type JSX, type ValidComponent } from 'solid-js';
 import IconButton from '~/app/atoms/button/IconButton';
@@ -49,7 +49,7 @@ const DialogOverlay = styled(Overlay, {
 });
 
 function DialogContent<T extends ValidComponent = 'div'>(
-  props: PolymorphicProps<T, DialogContentProps>
+  props: PolymorphicProps<T, AlertDialogContentProps>
 ) {
   return (
     <StyledPositioner>
@@ -58,11 +58,10 @@ function DialogContent<T extends ValidComponent = 'div'>(
         class={cx(
           css({
             bg: 'white',
-            display: 'flex',
-            flexDirection: 'column',
             padding: '1rem',
             maxHeight: '100%',
-            overflow: 'hidden',
+            width: '100%',
+            maxWidth: '28rem',
             rounded: 'lg',
             animationName: 'dialogClose',
             animationDuration: '150ms',
@@ -84,7 +83,7 @@ function DialogContent<T extends ValidComponent = 'div'>(
 }
 
 function DialogTitle<T extends ValidComponent = 'h2'>(
-  props: PolymorphicProps<T, DialogTitleProps>
+  props: PolymorphicProps<T, AlertDialogTitleProps>
 ) {
   return (
     <Title {...props} class={cx(css({ fontWeight: 'bold' }), props.class)} />
@@ -92,7 +91,7 @@ function DialogTitle<T extends ValidComponent = 'h2'>(
 }
 
 function DialogDescription<T extends ValidComponent = 'p'>(
-  props: PolymorphicProps<T, DialogDescriptionProps>
+  props: PolymorphicProps<T, AlertDialogDescriptionProps>
 ) {
   return (
     <Description
@@ -112,9 +111,9 @@ function DialogStyledHeader(props: DialogStyledHeaderProps) {
   return (
     <Flex direction='row' alignItems='center' gap='2' mb='2'>
       <span class={flex({ direction: 'column', flexGrow: '1' })}>
-        <Dialog.Title>{props.title}</Dialog.Title>
+        <AlertDialog.Title>{props.title}</AlertDialog.Title>
         <Show when={props.description}>
-          <Dialog.Description>{props.description}</Dialog.Description>
+          <AlertDialog.Description>{props.description}</AlertDialog.Description>
         </Show>
       </span>
       <Show when={props.closeButton}>
@@ -126,7 +125,7 @@ function DialogStyledHeader(props: DialogStyledHeaderProps) {
 
 const PublicObject = Root;
 
-const Dialog = Object.assign(PublicObject, {
+const AlertDialog = Object.assign(PublicObject, {
   Content: DialogContent,
   Overlay: DialogOverlay,
   Trigger,
@@ -137,4 +136,4 @@ const Dialog = Object.assign(PublicObject, {
   StyledHeader: DialogStyledHeader,
 });
 
-export default Dialog;
+export default AlertDialog;

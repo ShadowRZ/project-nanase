@@ -6,7 +6,45 @@ import { useAppContext } from '~/app/hooks/useAppContext';
 import t from '~/app/i18n';
 import Dialog from '~/app/molecules/dialog/Dialog';
 import ProfileContent from '~/app/molecules/profile/ProfileContent';
+import Text from '~/app/atoms/text/Text';
+import { css, cva } from '~styled/css';
+import { square } from '~styled/patterns';
+import { Flex, Square } from '~styled/jsx';
 import UserCirclePlusDuotone from '~icons/ph/user-circle-plus-duotone';
+
+const buttonBase = css.raw({
+  padding: '0.5rem',
+  transitionProperty: 'background-color',
+  transitionDuration: '200ms',
+  transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+  borderRadius: '0.75rem',
+  display: 'flex',
+  flexDirection: 'row',
+  gap: '0.5rem',
+  width: '100%',
+  alignItems: 'center',
+  _hover: {
+    backgroundColor: 'mauve.4',
+  },
+});
+
+export const button = cva({
+  base: buttonBase,
+  variants: {
+    current: {
+      true: {
+        backgroundColor: 'ruby.5',
+        _hover: {
+          backgroundColor: 'mauve.5',
+        },
+      },
+    },
+  },
+});
+
+export const addAccountButton = css(buttonBase, {
+  alignItems: 'center',
+});
 
 export type ClientSwitchDialogProps = {
   open: boolean;
@@ -35,47 +73,52 @@ const ClientSwitchDialog: Component<ClientSwitchDialogProps> = (props) => {
 
   return (
     <>
-      <Dialog
-        title={t('switch_user')}
-        modal
-        open={props.open}
-        onOpenChange={props.onOpenChange}
-        contentClass='w-full max-w-md'
-      >
-        <div class='mt-2 flex flex-col gap-1'>
-          <For each={ids()}>
-            {(id) => (
+      <Dialog modal open={props.open} onOpenChange={props.onOpenChange}>
+        <Dialog.Portal>
+          <Dialog.Overlay />
+          <Dialog.Content class={css({ width: '100%', maxWidth: '28rem' })}>
+            <Dialog.StyledHeader title={t('switch_user')} closeButton />
+            <Flex direction='column' mt='2' gap='1'>
+              <For each={ids()}>
+                {(id) => (
+                  <Button
+                    onClick={() => {
+                      props.onOpenChange(false);
+                      // TODO context()?.switch(id);
+                      navigate(`/rooms`, { replace: true });
+                    }}
+                    class={button({ current: id === current() })}
+                  >
+                    <ClientSwitchItem id={id} />
+                  </Button>
+                )}
+              </For>
               <Button
                 onClick={() => {
                   props.onOpenChange(false);
-                  // TODO context()?.switch(id);
-                  navigate(`/rooms`, { replace: true });
+                  setAddAccount(true);
                 }}
-                class='text-start p-2 transition duration-200 rounded-xl flex flex-row gap-2 w-full'
-                classList={{
-                  'bg-transparent hover:bg-neutral-200/75': id !== current(),
-                  'bg-rose-200/25 hover:bg-rose-200/75': id === current(),
-                }}
+                class={addAccountButton}
               >
-                <ClientSwitchItem id={id} />
+                <Square
+                  size='12'
+                  display='flex'
+                  flexShrink='0'
+                  alignItems='center'
+                  justifyContent='center'
+                  rounded='full'
+                >
+                  <UserCirclePlusDuotone class={square({ size: '8' })} />
+                </Square>
+                <Flex direction='column' flexGrow='1' overflow='hidden'>
+                  <Text font='bold' content='truncate'>
+                    Add Account
+                  </Text>
+                </Flex>
               </Button>
-            )}
-          </For>
-          <Button
-            onClick={() => {
-              props.onOpenChange(false);
-              setAddAccount(true);
-            }}
-            class='text-start p-2 transition duration-200 rounded-xl flex flex-row items-center gap-2 w-full hover:bg-neutral-200/75'
-          >
-            <div class='size-12 shrink-0 flex items-center justify-center text-rose-500 rounded-full border-2 border-rose-500/50'>
-              <UserCirclePlusDuotone class='size-8' />
-            </div>
-            <div class='grow flex flex-col overflow-hidden'>
-              <span class='font-bold truncate'>Add Account</span>
-            </div>
-          </Button>
-        </div>
+            </Flex>
+          </Dialog.Content>
+        </Dialog.Portal>
       </Dialog>
       {/* <AddAccountDialog open={addAccount()} onOpenChange={setAddAccount} /> */}
     </>

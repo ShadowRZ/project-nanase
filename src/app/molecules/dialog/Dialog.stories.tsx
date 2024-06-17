@@ -6,8 +6,18 @@ const meta: Meta<typeof CDialog> = {
   component: CDialog,
   tags: ['autodocs'],
   render: (props) => (
-    <div class='size-full'>
-      <CDialog {...props}>This is dialog content. Hello World!</CDialog>
+    <div style={{ width: '100%', height: '100%' }}>
+      <CDialog open {...props}>
+        <CDialog.Overlay />
+        <CDialog.Content>
+          <CDialog.StyledHeader
+            title='Dialog Title'
+            description='Dialog Description'
+            closeButton
+          />
+          <div>This is dialog content. Hello World!</div>
+        </CDialog.Content>
+      </CDialog>
     </div>
   ),
   args: {
@@ -18,10 +28,4 @@ const meta: Meta<typeof CDialog> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Dialog: Story = {
-  args: {
-    title: 'Dialog',
-    description: 'Example Description',
-    open: true,
-  },
-};
+export const Dialog: Story = {};

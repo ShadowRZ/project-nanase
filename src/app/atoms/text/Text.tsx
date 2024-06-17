@@ -44,6 +44,7 @@ const Text = styled('p', {
     },
     color: {
       default: {},
+      dimmed: { color: 'mauve.11' },
       warning: { color: 'yellow.11' },
       error: { color: 'red.11' },
     },
