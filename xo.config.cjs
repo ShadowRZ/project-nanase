@@ -5,7 +5,7 @@ module.exports = {
   plugins: ['solid'],
   extends: ['plugin:solid/typescript'],
   rules: {
-    'import/extensions': ['error', 'never', { svg: 'always' }],
+    'import/extensions': ['error', 'never', { svg: 'always', css: 'always' }],
     // Tiptap extensions are imcompatiable
     'import/no-named-as-default': 'off',
     'unicorn/prevent-abbreviations': 'off',
