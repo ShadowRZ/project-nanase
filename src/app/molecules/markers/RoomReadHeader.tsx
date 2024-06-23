@@ -1,15 +1,17 @@
 import { Separator } from '@kobalte/core/separator';
 import { type Component } from 'solid-js';
 import Text from '~/app/atoms/text/Text';
+import { divider } from '~styled/patterns';
+import { styled } from '~styled/jsx';
 
 const RoomReadHeader: Component = () => {
   return (
-    <div>
-      <Text class='text-right' font='bold'>
+    <styled.div color='gray.11'>
+      <Text font='bold' textAlign='right'>
         NEW
       </Text>
-      <Separator class='mt-1 border-1' />
-    </div>
+      <Separator class={divider({ orientation: 'horizontal' })} />
+    </styled.div>
   );
 };
 
