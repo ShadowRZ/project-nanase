@@ -13,7 +13,7 @@ import {
   type ValidComponent,
 } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
-import { cva } from '~styled/css';
+import { cva, cx } from '~styled/css';
 import UserCircleFill from '~icons/ph/user-circle-fill';
 
 type AvatarVariants = {
@@ -25,34 +25,33 @@ const avatar = cva({
   base: {
     display: 'block',
     flexShrink: '0',
-    borderRadius: '100%',
+    rounded: 'full',
     overflow: 'clip',
   },
   variants: {
     size: {
       large: {
-        width: '3rem',
-        height: '3rem',
+        width: '12',
+        height: '12',
       },
       small: {
-        width: '1.5rem',
-        height: '1.5rem',
+        width: '6',
+        height: '6',
       },
     },
   },
 });
 
 const icon = cva({
-  base: {},
   variants: {
     size: {
       large: {
-        width: '2rem',
-        height: '2rem',
+        width: '8',
+        height: '8',
       },
       small: {
-        width: '1rem',
-        height: '1rem',
+        width: '4',
+        height: '4',
       },
     },
   },
@@ -69,19 +68,17 @@ const fallback = cva({
   variants: {
     size: {
       large: {
-        width: '3rem',
-        height: '3rem',
+        width: '12',
+        height: '12',
       },
       small: {
-        width: '1.5rem',
-        height: '1.5rem',
+        width: '6',
+        height: '6',
       },
     },
     button: {
       true: {
-        transitionProperty: 'border-color, background-color',
-        transitionDuration: '150ms',
-        transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        transition: 'common',
         _hover: {
           backgroundColor: 'ruby.4',
         },
@@ -100,9 +97,7 @@ const fallback = cva({
 
 const buttonImage = cva({
   base: {
-    transitionProperty: 'filter',
-    transitionDuration: '150ms',
-    transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    transition: 'common',
     _hover: {
       filter: 'brightness(.9)',
     },
@@ -129,11 +124,7 @@ function AvatarRoot<T extends ValidComponent = 'span'>(
   const [variants, others] = splitProps(props as AvatarRootProps<T>, ['size']);
 
   return (
-    <Image
-      as='span'
-      {...others}
-      class={`${avatar(variants)} ${others.class ?? ''}`}
-    />
+    <Image as='span' {...others} class={cx(avatar(variants), others.class)} />
   );
 }
 
@@ -151,7 +142,7 @@ function AvatarImage<T extends ValidComponent = 'img'>(
       as='img'
       draggable={false}
       {...others}
-      class={`${avatar(variants)} ${others.class ?? ''}`}
+      class={cx(avatar(variants), others.class)}
     />
   );
 }

@@ -41,13 +41,13 @@ const Checkbox: Component<CheckboxProps> = (props) => {
         css={{
           flexShrink: 0,
           boxSizing: 'content-box',
-          borderWidth: '1px',
+          borderWidth: '1',
           borderColor: 'mauve.7',
-          outlineOffset: '2px',
+          outlineOffset: '0.5',
           outlineColor: 'ruby.8',
           _focus: {
             outlineStyle: 'solid',
-            outlineWidth: '2px',
+            outlineWidth: '2',
           },
         }}
       >

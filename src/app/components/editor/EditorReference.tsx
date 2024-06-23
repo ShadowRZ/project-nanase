@@ -33,7 +33,7 @@ const EditorReference: Component<EditorReferenceProps> = (props) => {
           <Match when={type() === 'reply'}>
             <ArrowBendUpLeftDuotone
               class={square({
-                size: '1rem',
+                size: '4',
                 display: 'inline-block',
                 color: 'mauve.9',
               })}
@@ -42,7 +42,7 @@ const EditorReference: Component<EditorReferenceProps> = (props) => {
           <Match when={type() === 'edit'}>
             <PencilSimpleLineDuotone
               class={square({
-                size: '1rem',
+                size: '4',
                 display: 'inline-block',
                 color: 'mauve.9',
               })}
@@ -58,7 +58,7 @@ const EditorReference: Component<EditorReferenceProps> = (props) => {
         <IconButton
           type='circle'
           icon={XIcon}
-          class={square({ size: '1.5rem' })}
+          class={square({ size: '6' })}
           iconClass={css({ color: 'mauve.9' })}
           title='Cancel'
           onClick={() => {

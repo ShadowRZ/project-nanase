@@ -53,7 +53,7 @@ const Editor: Component<EditorProps> = (props) => {
       Placeholder.configure({
         emptyEditorClass: css({
           _before: {
-            opacity: 0.5,
+            opacity: '50',
             pointerEvents: 'none',
             float: 'left',
             height: 0,
@@ -87,7 +87,7 @@ const Editor: Component<EditorProps> = (props) => {
         data-project-nanase-composer
         class={css({
           flexGrow: '1',
-          maxHeight: '8rem',
+          maxHeight: '32',
           overflowY: 'scroll',
           scrollbarWidth: 'none',
           _scrollbar: {

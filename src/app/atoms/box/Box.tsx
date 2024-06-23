@@ -2,8 +2,8 @@ import { styled } from '~styled/jsx';
 
 const Box = styled('div', {
   base: {
-    borderRadius: '0.5rem',
-    padding: '0.5rem',
+    rounded: 'lg',
+    padding: '2',
   },
   variants: {
     color: {

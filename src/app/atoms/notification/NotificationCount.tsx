@@ -5,9 +5,9 @@ const Wrapper = styled('div', {
   base: {
     rounded: 'full',
     width: 'fit-content',
-    minWidth: '1.5rem',
-    height: '1.5rem',
-    px: '0.25rem',
+    minWidth: '6',
+    height: '6',
+    px: '1',
     textAlign: 'center',
   },
   variants: {

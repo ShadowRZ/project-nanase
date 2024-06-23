@@ -1,19 +1,16 @@
 import { TextField as KTextField } from '@kobalte/core/text-field';
-import { type JSX, Show, splitProps, type Component } from 'solid-js';
+import { Show, splitProps, type Component, type JSX } from 'solid-js';
 import { Flex, styled } from '~styled/jsx';
-import { flex } from '~styled/patterns';
 
 const InputField = styled(KTextField.Input, {
   base: {
-    transitionProperty: 'outline-color',
-    transitionDuration: '150ms',
-    transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-    outlineWidth: '2px',
+    transition: 'common',
+    outlineWidth: '2',
     outlineStyle: 'solid',
-    outlineOffset: '2px',
+    outlineOffset: '0.5',
     outlineColor: 'mauve.7',
-    borderRadius: '0.75rem',
-    padding: '0.5rem',
+    rounded: 'xl',
+    padding: '2',
     _disabled: {
       cursor: 'not-allowed',
     },

@@ -10,9 +10,7 @@ const Text = styled('p', {
       default: {},
       truncate: {
         minWidth: '0',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
+        truncate: true,
       },
     },
     font: {
@@ -22,24 +20,19 @@ const Text = styled('p', {
     },
     size: {
       default: {
-        fontSize: '1rem',
-        lineHeight: '1.5rem',
+        textStyle: 'md',
       },
       large: {
-        fontSize: '1.25rem',
-        lineHeight: '1.75rem',
+        textStyle: 'lg',
       },
       medium: {
-        fontSize: '1.125rem',
-        lineHeight: '1.75rem',
+        textStyle: 'xl',
       },
       small: {
-        fontSize: '0.875rem',
-        lineHeight: '1.25rem',
+        textStyle: 'sm',
       },
       smaller: {
-        fontSize: '0.75rem',
-        lineHeight: '1rem',
+        textStyle: 'xs',
       },
     },
     color: {

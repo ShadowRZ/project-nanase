@@ -27,7 +27,7 @@ const StyledPositioner = styled('div', {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: '1rem',
+    margin: '4',
   },
 });
 
@@ -36,7 +36,7 @@ const DialogOverlay = styled(Overlay, {
     zIndex: 50,
     position: 'fixed',
     inset: 0,
-    backgroundColor: 'rgb(0 0 0 / 0.25)',
+    backgroundColor: 'black/25',
     animationName: 'overlayClose',
     animationDuration: '150ms',
     animationTimingFunction: 'ease-in',
@@ -58,9 +58,9 @@ function DialogContent<T extends ValidComponent = 'div'>(
         class={cx(
           css({
             bg: 'white',
-            padding: '1rem',
-            maxHeight: '100%',
-            width: '100%',
+            padding: '4',
+            maxHeight: 'full',
+            width: 'full',
             maxWidth: '28rem',
             rounded: 'lg',
             animationName: 'dialogClose',

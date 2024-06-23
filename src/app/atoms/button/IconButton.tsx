@@ -7,9 +7,7 @@ export const iconButton = cva({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    transitionProperty: 'border-color, background-color',
-    transitionDuration: '150ms',
-    transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    transition: 'common',
   },
   variants: {
     checked: {
@@ -59,7 +57,7 @@ export const iconButton = cva({
       circle: {
         rounded: 'full',
         bg: 'transparent',
-        padding: '0.25rem',
+        padding: '1',
         _hover: {
           bg: 'gray.3',
         },
@@ -70,7 +68,7 @@ export const iconButton = cva({
       normal: {
         rounded: 'md',
         bg: 'transparent',
-        padding: '0.25rem',
+        padding: '1',
         _hover: {
           bg: 'gray.3',
         },
@@ -119,20 +117,20 @@ export const icon = cva({
   variants: {
     type: {
       'large-bordered': {
-        width: '2rem',
-        height: '2rem',
+        width: '8',
+        height: '8',
       },
       'small-bordered': {
-        width: '1rem',
-        height: '1rem',
+        width: '4',
+        height: '4',
       },
       circle: {
-        width: '1.5rem',
-        height: '1.5rem',
+        width: '6',
+        height: '6',
       },
       normal: {
-        width: '1.5rem',
-        height: '1.5rem',
+        width: '6',
+        height: '6',
       },
     },
   },

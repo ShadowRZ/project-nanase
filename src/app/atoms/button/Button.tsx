@@ -5,9 +5,7 @@ const Button = styled(KButton, {
   base: {
     display: 'inline-flex',
     justifyContent: 'center',
-    transitionProperty: 'background-color, filter',
-    transitionDuration: '150ms',
-    transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    transition: 'common',
   },
   variants: {
     color: {
