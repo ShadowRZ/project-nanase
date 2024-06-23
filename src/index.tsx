@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/no-unassigned-import
 import '@fontsource-variable/inter';
-import '@unocss/reset/tailwind.css';
 import 'uno.css';
 import 'prismjs/themes/prism.min.css';
 import { render } from 'solid-js/web';

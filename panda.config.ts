@@ -1,10 +1,39 @@
-import { defineConfig } from '@pandacss/dev';
+import { defineConfig, defineGlobalStyles } from '@pandacss/dev';
 import radixColorsPreset from 'pandacss-preset-radix-colors';
+
+const globalCss = defineGlobalStyles({
+  'html, body': {
+    fontFamily: 'sans',
+    overflow: 'hidden',
+    bg: {
+      base: 'white',
+      _dark: 'black',
+    },
+    color: {
+      base: 'black',
+      _dark: 'white',
+    },
+  },
+  '#root': {
+    height: 'dvh',
+    maxHeight: 'dvh',
+  },
+});
 
 export default defineConfig({
   preflight: true,
   include: ['./src/**/*.{js,jsx,ts,tsx}'],
   exclude: [],
+  presets: [
+    radixColorsPreset({
+      darkMode: true,
+    }),
+    '@pandacss/preset-panda',
+  ],
+  outdir: 'styled-system',
+  jsxFramework: 'solid',
+  importMap: '~styled',
+  globalCss,
   theme: {
     extend: {
       keyframes: {
@@ -87,12 +116,4 @@ export default defineConfig({
       },
     },
   },
-  presets: [
-    radixColorsPreset({
-      darkMode: true,
-    }),
-    '@pandacss/preset-panda',
-  ],
-  outdir: 'styled-system',
-  jsxFramework: 'solid',
 });
