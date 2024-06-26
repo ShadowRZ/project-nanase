@@ -2,6 +2,7 @@ import { splitProps, type Component, type ParentComponent } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 import Avatar from '~/app/components/avatar/Avatar';
 import Text from '~/app/atoms/text/Text';
+import { Flex } from '~styled/jsx';
 
 type BaseMessageProps = {
   name?: string;
@@ -15,7 +16,7 @@ type MessageProps = {
 } & BaseMessageProps;
 
 const StaticAvatar: Component<BaseMessageProps> = (props) => {
-  return <Avatar size='large' src={props.avatar} />;
+  return <Avatar.Img size='large' src={props.avatar} />;
 };
 
 const StaticText: Component<BaseMessageProps> = (props) => {
@@ -25,13 +26,13 @@ const StaticText: Component<BaseMessageProps> = (props) => {
 const MessageShell: ParentComponent<MessageProps> = (props) => {
   const [base] = splitProps(props, ['name', 'avatar', 'userId']);
   return (
-    <div class='flex flex-row gap-2'>
+    <Flex direction='row' gap='2'>
       <Dynamic component={props.avatarComponent ?? StaticAvatar} {...base} />
-      <div class='flex flex-col'>
+      <Flex direction='column'>
         <Dynamic component={props.nameComponent ?? StaticText} {...base} />
         {props.children}
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   );
 };
 

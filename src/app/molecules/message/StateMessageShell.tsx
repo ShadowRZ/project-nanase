@@ -2,6 +2,7 @@ import { type ParentComponent } from 'solid-js';
 import Avatar from '~/app/components/avatar/Avatar';
 import Text from '~/app/atoms/text/Text';
 import Time from '~/app/atoms/time/Time';
+import { Flex, styled } from '~styled/jsx';
 
 type MessageProps = {
   name?: string;
@@ -12,18 +13,25 @@ type MessageProps = {
 
 const StateMessageShell: ParentComponent<MessageProps> = (props) => {
   return (
-    <div class='pr-1 pl-4 flex flex-row items-center gap-2 overflow-hidden'>
-      <Avatar size='small' src={props.avatar} />
-      <Text font='italic' class='opacity-50 flex-1'>
-        <Text font='bold' as='span'>
+    <Flex
+      direction='row'
+      pr='1'
+      pl='4'
+      gap='2'
+      overflow='hidden'
+      alignItems='center'
+    >
+      <Avatar.Img size='small' src={props.avatar} />
+      <Text font='italic' css={{ flex: '1', opacity: '50' }}>
+        <styled.span fontWeight='bold'>
           {props.name ?? props.userId}
-        </Text>{' '}
+        </styled.span>{' '}
         {props.children}
       </Text>
-      <Text size='small' class='opacity-50'>
+      <Text size='small' css={{ opacity: '50' }}>
         <Time timestamp={props.timestamp} />
       </Text>
-    </div>
+    </Flex>
   );
 };
 

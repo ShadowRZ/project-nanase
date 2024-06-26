@@ -159,6 +159,7 @@ const IconButton: Component<IconButtonProps> = (props) => {
   return (
     <Dynamic
       component={local.as ?? 'button'}
+      {...others}
       class={cx(
         iconButton({
           checked: props.checked,
@@ -167,7 +168,6 @@ const IconButton: Component<IconButtonProps> = (props) => {
         }),
         local.class
       )}
-      {...others}
     >
       <Dynamic
         component={local.icon}

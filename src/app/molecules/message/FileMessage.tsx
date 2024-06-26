@@ -1,19 +1,41 @@
-import {
-  type Component,
-  Show,
-  type ParentComponent,
-  Switch,
-  Match,
-} from 'solid-js';
 import { Button } from '@kobalte/core/button';
+import { Show, type Component } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 import Box from '~/app/atoms/box/Box';
-import Text from '~/app/atoms/text/Text';
 import Time from '~/app/atoms/time/Time';
+import { cva } from '~styled/css';
+import { Flex, Square, styled } from '~styled/jsx';
+import { square } from '~styled/patterns';
 import Checks from '~icons/ph/checks';
-import PencilSimpleLine from '~icons/ph/pencil-simple-line';
 import FileDuotone from '~icons/ph/file-duotone';
+import PencilSimpleLine from '~icons/ph/pencil-simple-line';
 import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
+
+const button = cva({
+  base: {
+    width: 'fit',
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'initial',
+    textAlign: 'start',
+  },
+  variants: {
+    status: {
+      sending: {
+        opacity: '50',
+      },
+      sent: {},
+    },
+  },
+});
+
+const IconPlaceholder = styled('div', {
+  base: {
+    height: '4',
+    visibility: 'hidden',
+  },
+});
 
 type FileMessageProps = {
   timestamp: number;
@@ -29,51 +51,57 @@ type FileMessageProps = {
 
 const FileMessage: Component<FileMessageProps> = (props) => {
   return (
-    <Box
-      as={Button}
+    <Button
+      as={Box}
       color={props.color ?? 'default'}
-      class='w-fit relative flex flex-row items-initial text-start'
-      classList={{
-        'opacity-50': props.status === 'sending',
-      }}
+      class={button({ status: props.status })}
       onClick={props.onClick}
     >
-      <div class='flex flex-row gap-2'>
-        <div class='size-12 rounded-full bg-white dark:bg-black flex items-center justify-center'>
+      <Flex direction='row' gap='2'>
+        <Square
+          size='12'
+          rounded='full'
+          bg={{ base: 'white', _dark: 'black' }}
+          display='flex'
+          alignItems='center'
+          justifyContent='center'
+        >
           <Dynamic
             component={props.download ? LoadingIndicator : FileDuotone}
-            class='size-8 text-black dark:text-white'
+            class={square({
+              size: '8',
+              color: { base: 'black', _dark: 'white' },
+            })}
           />
-        </div>
-        <div class='flex flex-col'>
-          <Text as='span' font='bold' content='truncate'>
+        </Square>
+        <Flex direction='column'>
+          <styled.span fontWeight='bold' minW='0' truncate>
             {props.filename ?? '<File>'}
-          </Text>
-          <Text as='span' class='opacity-50' content='truncate'>
+          </styled.span>
+          <styled.span opacity='50' minW='0' truncate>
             {props.mime ?? '<Unknown Type>'}
-          </Text>
-        </div>
-      </div>
-      <Text
-        as='div'
-        size='smaller'
-        class='ml-2 inline-flex flex-row gap-0.5 items-end justify-center translate-y-1'
+          </styled.span>
+        </Flex>
+      </Flex>
+      <styled.div
+        textStyle='xs'
+        display='inline-flex'
+        ml='2'
+        flexDirection='row'
+        gap='0.5'
+        alignItems='flex-end'
+        justifyContent='center'
+        translateY='1'
       >
-        <Show
-          when={props.edited ?? false}
-          fallback={<div class='invisible h-4' />}
-        >
-          <PencilSimpleLine class='size-4' />
+        <Show when={props.edited ?? false} fallback={<IconPlaceholder />}>
+          <PencilSimpleLine class={square({ size: 4 })} />
         </Show>
-        <Show
-          when={props.read ?? false}
-          fallback={<div class='invisible h-4' />}
-        >
-          <Checks class='size-4' />
+        <Show when={props.read ?? false} fallback={<IconPlaceholder />}>
+          <Checks class={square({ size: 4 })} />
         </Show>
         <Time timestamp={props.timestamp} />
-      </Text>
-    </Box>
+      </styled.div>
+    </Button>
   );
 };
 
