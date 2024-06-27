@@ -30,7 +30,7 @@ import PenNibDuotone from '~icons/ph/pen-nib-duotone';
 import KeyDuotone from '~icons/ph/key-duotone';
 import EnvelopeDuotone from '~icons/ph/envelope-duotone';
 import CheckBold from '~icons/ph/check-bold';
-import Checkbox from '~/app/atoms/button/Checkbox';
+import Checkbox from '~/app/atoms/checkbox/Checkbox';
 
 type EmailFormProps = {
   email: string;

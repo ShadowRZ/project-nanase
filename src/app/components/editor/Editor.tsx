@@ -6,7 +6,7 @@ import {
 import Placeholder from '@tiptap/extension-placeholder';
 import { type Component } from 'solid-js';
 import { createTiptapEditor } from 'solid-tiptap';
-import IconButton from '~/app/atoms/button/IconButton';
+import IconButton from '~/app/atoms/icon-button/IconButton';
 import { ProseExtensions } from '~/app/lib/editor-extensions';
 import { sanitizeText } from '~/lib/utils/sanitize';
 import { css } from '~styled/css';

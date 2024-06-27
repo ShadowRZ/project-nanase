@@ -1,7 +1,7 @@
 import { Show, type Component } from 'solid-js';
 import { DropdownMenu } from '@kobalte/core/dropdown-menu';
 import Avatar from '~/app/components/avatar/Avatar';
-import IconButton from '~/app/atoms/button/IconButton';
+import IconButton from '~/app/atoms/icon-button/IconButton';
 import Text from '~/app/atoms/text/Text';
 import Panel from '~/app/atoms/panel/Panel';
 import HashStraightDuotone from '~icons/ph/hash-straight-duotone';

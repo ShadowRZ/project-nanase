@@ -1,7 +1,7 @@
 import type { Component } from 'solid-js';
 import { Tooltip } from '@kobalte/core/tooltip';
 import AccountMenu from './AccountMenu';
-import IconButton from '~/app/atoms/button/IconButton';
+import IconButton from '~/app/atoms/icon-button/IconButton';
 import t from '~/app/i18n';
 import Box from '~/app/atoms/box/Box';
 import {

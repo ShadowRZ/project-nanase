@@ -13,7 +13,7 @@ import {
 } from '@kobalte/core/alert-dialog';
 import { type PolymorphicProps } from '@kobalte/core/polymorphic';
 import { Show, type JSX, type ValidComponent } from 'solid-js';
-import IconButton from '~/app/atoms/button/IconButton';
+import IconButton from '~/app/atoms/icon-button/IconButton';
 import { css, cx } from '~styled/css';
 import { Flex, styled } from '~styled/jsx';
 import { flex } from '~styled/patterns';

@@ -1,6 +1,6 @@
 import { type EventTimelineSet } from 'matrix-js-sdk';
 import { Match, Switch, type Component } from 'solid-js';
-import IconButton from '~/app/atoms/button/IconButton';
+import IconButton from '~/app/atoms/icon-button/IconButton';
 import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 import QuotedEvent from '~/app/organisms/quoted-event/QuotedEvent';
 import { type RelationData } from '~/types/room';
