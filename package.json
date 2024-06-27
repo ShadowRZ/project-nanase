@@ -70,8 +70,6 @@
     "emojibase": "^15.3.0",
     "emojibase-data": "^15.3.0",
     "file-saver": "^2.0.5",
-    "hast-util-from-dom": "^5.0.0",
-    "hast-util-to-jsx-runtime": "^2.3.0",
     "linkify-element": "^4.1.3",
     "linkifyjs": "^4.1.3",
     "matrix-encrypt-attachment": "^1.0.3",
