@@ -1,5 +1,7 @@
 import { defineConfig, defineGlobalStyles } from '@pandacss/dev';
 import radixColorsPreset from 'pandacss-preset-radix-colors';
+import { removeUnusedCssVars } from 'utils/remove-unused-css-vars';
+import { removeUnusedKeyframes } from 'utils/remove-unused-keyframes';
 
 const globalCss = defineGlobalStyles({
   'html, body': {
@@ -114,6 +116,13 @@ export default defineConfig({
           },
         },
       },
+    },
+  },
+  hooks: {
+    'cssgen:done'({ artifact, content }) {
+      if (artifact === 'styles.css') {
+        return removeUnusedCssVars(removeUnusedKeyframes(content));
+      }
     },
   },
 });
