@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js';
-import { Tooltip } from '@kobalte/core/tooltip';
 import AccountMenu from './AccountMenu';
+import Tooltip from '~/app/atoms/tooltip/Tooltip';
 import IconButton from '~/app/atoms/icon-button/IconButton';
 import t from '~/app/i18n';
 import Box from '~/app/atoms/box/Box';
@@ -39,9 +39,7 @@ const Sidebar: Component<SidebarProps> = (props) => {
             checked={categoryType() === 'chats'}
           />
           <Tooltip.Portal>
-            <Tooltip.Content as={Box} color='tooltip' ml='1'>
-              {t('chats')}
-            </Tooltip.Content>
+            <Tooltip.Content ml='1'>{t('chats')}</Tooltip.Content>
           </Tooltip.Portal>
         </Tooltip>
         <Tooltip placement='right' openDelay={0} closeDelay={0}>
@@ -57,9 +55,7 @@ const Sidebar: Component<SidebarProps> = (props) => {
             checked={categoryType() === 'directs'}
           />
           <Tooltip.Portal>
-            <Tooltip.Content as={Box} color='tooltip' ml='1'>
-              {t('directs')}
-            </Tooltip.Content>
+            <Tooltip.Content ml='1'>{t('directs')}</Tooltip.Content>
           </Tooltip.Portal>
         </Tooltip>
         <SpaceList

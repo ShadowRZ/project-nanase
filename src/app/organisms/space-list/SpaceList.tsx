@@ -1,5 +1,5 @@
-import { Tooltip } from '@kobalte/core/tooltip';
 import { For, Show, type Component } from 'solid-js';
+import Tooltip from '~/app/atoms/tooltip/Tooltip';
 import Avatar from '~/app/components/avatar/Avatar';
 import { createRoomResource } from '~/app/hooks/createRoomResource';
 import { createSpaceList } from '~/app/hooks/createSpaces';
@@ -29,9 +29,7 @@ const SpaceItem: Component<SpaceItemProps> = (props) => {
         checked={props.currentSpaceId === props.spaceId}
       />
       <Tooltip.Portal>
-        <Tooltip.Content as={Box} color='tooltip' ml='1'>
-          {name() ?? props.spaceId}
-        </Tooltip.Content>
+        <Tooltip.Content ml='1'>{name() ?? props.spaceId}</Tooltip.Content>
       </Tooltip.Portal>
     </Tooltip>
   );

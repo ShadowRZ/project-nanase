@@ -1,6 +1,6 @@
 import { DropdownMenu } from '@kobalte/core/dropdown-menu';
-import { Tooltip } from '@kobalte/core/tooltip';
 import { createSignal, type Component } from 'solid-js';
+import Tooltip from '~/app/atoms/tooltip/Tooltip';
 import Box from '~/app/atoms/box/Box';
 import Panel from '~/app/atoms/panel/Panel';
 import Avatar from '~/app/components/avatar/Avatar';
@@ -34,9 +34,7 @@ const AccountMenu: Component = () => {
         <Tooltip placement='right' openDelay={0} closeDelay={0}>
           <Avatar.Button as={DropdownMenuWrapper} size='large' src={avatar()} />
           <Tooltip.Portal>
-            <Tooltip.Content as={Box} color='tooltip' ml='1'>
-              {t('account_menu')}
-            </Tooltip.Content>
+            <Tooltip.Content ml='1'>{t('account_menu')}</Tooltip.Content>
           </Tooltip.Portal>
         </Tooltip>
         <DropdownMenu.Portal>
@@ -63,9 +61,7 @@ const AccountMenu: Component = () => {
                     <UserSwitchDuotone class='size-6 text-orange-500' />
                   </DropdownMenu.Item>
                   <Tooltip.Portal>
-                    <Tooltip.Content as={Box} color='tooltip' mb='1'>
-                      {t('switch_user')}
-                    </Tooltip.Content>
+                    <Tooltip.Content mb='1'>{t('switch_user')}</Tooltip.Content>
                   </Tooltip.Portal>
                 </Tooltip>
                 <Tooltip placement='top' openDelay={0} closeDelay={0}>
@@ -81,9 +77,7 @@ const AccountMenu: Component = () => {
                     <PowerDuotone class='size-6 text-red-500' />
                   </DropdownMenu.Item>
                   <Tooltip.Portal>
-                    <Tooltip.Content as={Box} color='tooltip' mb='1'>
-                      {t('logout')}
-                    </Tooltip.Content>
+                    <Tooltip.Content mb='1'>{t('logout')}</Tooltip.Content>
                   </Tooltip.Portal>
                 </Tooltip>
               </div>
