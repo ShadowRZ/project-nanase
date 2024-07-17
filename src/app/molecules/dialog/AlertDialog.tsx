@@ -49,7 +49,7 @@ const DialogOverlay = styled(Overlay, {
 });
 
 function DialogContent<T extends ValidComponent = 'div'>(
-  props: PolymorphicProps<T, AlertDialogContentProps>
+  props: PolymorphicProps<T, AlertDialogContentProps<T>>
 ) {
   return (
     <StyledPositioner>
