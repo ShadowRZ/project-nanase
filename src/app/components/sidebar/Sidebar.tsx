@@ -3,12 +3,13 @@ import AccountMenu from './AccountMenu';
 import Tooltip from '~/app/atoms/tooltip/Tooltip';
 import IconButton from '~/app/atoms/icon-button/IconButton';
 import t from '~/app/i18n';
-import Box from '~/app/atoms/box/Box';
 import {
   type RoomCategory,
   type SpaceRooms,
 } from '~/app/organisms/room-list/RoomList';
 import SpaceList from '~/app/organisms/space-list/SpaceList';
+import { square } from '~styled/patterns';
+import { Flex } from '~styled/jsx';
 import ChatsTeardropFill from '~icons/ph/chats-teardrop-fill';
 import FolderUserFill from '~icons/ph/folder-user-fill';
 
@@ -24,13 +25,21 @@ const Sidebar: Component<SidebarProps> = (props) => {
     categoryType() === 'space' ? (category() as SpaceRooms).space : undefined;
 
   return (
-    <div class='shrink-0 flex flex-col w-16 h-dvh overflow-y-scroll border-r sm:border-slate-200 dark:sm:border-slate-800 scrollbar-none'>
-      <div class='flex flex-col gap-2 p-2'>
+    <Flex
+      direction='column'
+      shrink='0'
+      w='16'
+      h='dvh'
+      overflowY='scroll'
+      borderRightWidth='1'
+      scrollbar='hidden'
+      borderColor={{ sm: 'mauve.6' }}
+    >
+      <Flex direction='column' gap='2' p='2'>
         <Tooltip placement='right' openDelay={0} closeDelay={0}>
           <IconButton
             as={Tooltip.Trigger}
-            class='text-rose-500'
-            iconClass='size-6'
+            iconClass={square({ size: '6' })}
             type='large-bordered'
             onClick={() => {
               props.onCategoryChanged({ type: 'chats' });
@@ -45,8 +54,7 @@ const Sidebar: Component<SidebarProps> = (props) => {
         <Tooltip placement='right' openDelay={0} closeDelay={0}>
           <IconButton
             as={Tooltip.Trigger}
-            class='text-rose-500'
-            iconClass='size-6'
+            iconClass={square({ size: '6' })}
             type='large-bordered'
             onClick={() => {
               props.onCategoryChanged({ type: 'directs' });
@@ -64,11 +72,19 @@ const Sidebar: Component<SidebarProps> = (props) => {
             props.onCategoryChanged({ type: 'space', space: spaceId });
           }}
         />
-      </div>
-      <div class='mt-auto flex flex-col gap-2 p-2 sticky bottom-0 bg-white dark:bg-black'>
+      </Flex>
+      <Flex
+        direction='column'
+        gap='2'
+        p='2'
+        mt='auto'
+        position='sticky'
+        bottom='0'
+        bg={{ base: 'white', _dark: 'black ' }}
+      >
         <AccountMenu />
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   );
 };
 
