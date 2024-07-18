@@ -18,12 +18,24 @@ import Room from '~/app/organisms/room/Room';
 import { Welcome } from '~/app/organisms/welcome/Welcome';
 import XCircleFill from '~icons/ph/x-circle-fill';
 import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
+import { Flex } from '~styled/jsx';
 
 const StatusContainer: ParentComponent = (props) => {
   return (
-    <div class='sticky bottom-0 p-2 border-t w-full flex flex-row gap-2 items-center bg-white dark:bg-black'>
+    <Flex
+      direction='row'
+      position='sticky'
+      bottom='0'
+      p='2'
+      borderTopWidth='1'
+      borderColor='mauve.7'
+      w='full'
+      gap='2'
+      alignItems='center'
+      bg={{ base: 'white', _dark: 'black' }}
+    >
       {props.children}
-    </div>
+    </Flex>
   );
 };
 
@@ -51,13 +63,27 @@ const LeftContent: Component = () => {
   const [category, setCategory] = createSignal<RoomCategory>({ type: 'chats' });
 
   return (
-    <div class='flex flex-row flex-none relative w-full md:w-110 border-r sm:border-slate-200 dark:sm:border-slate-800'>
+    <Flex
+      direction='row'
+      flex='none'
+      w={{ base: 'full', md: '27.5rem' }}
+      borderRightWidth={{ base: 'unset', sm: '1' }}
+      borderColor='mauve.7'
+      position='relative'
+    >
       <Sidebar category={category()} onCategoryChanged={setCategory} />
-      <div class='relative w-full h-dvh overflow-y-scroll scrollbar-none flex flex-col'>
+      <Flex
+        direction='column'
+        position='relative'
+        w='full'
+        h='dvh'
+        overflowY='scroll'
+        scrollbar='hidden'
+      >
         <RoomList category={category()} />
         <SyncStatus />
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   );
 };
 
@@ -66,19 +92,28 @@ const RightContent: Component = () => {
 
   return (
     <Show when={selectedRoom() !== undefined} fallback={<Welcome />}>
-      <div class='absolute w-full min-w-0 md:static z-5 flex-1 flex flex-col h-dvh bg-white dark:bg-black'>
+      <Flex
+        direction='column'
+        w='full'
+        h='dvh'
+        minW='0'
+        zIndex='5'
+        flex='1'
+        position={{ base: 'absolute', md: 'static' }}
+        bg={{ base: 'white', _dark: 'black' }}
+      >
         <Room roomId={selectedRoom()} />
-      </div>
+      </Flex>
     </Show>
   );
 };
 
 const MatrixChat: Component = () => {
   return (
-    <div class='flex flex-row'>
+    <Flex direction='row'>
       <LeftContent />
       <RightContent />
-    </div>
+    </Flex>
   );
 };
 
