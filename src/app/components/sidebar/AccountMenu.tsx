@@ -1,8 +1,7 @@
 import { DropdownMenu } from '@kobalte/core/dropdown-menu';
 import { createSignal, type Component } from 'solid-js';
-import Tooltip from '~/app/atoms/tooltip/Tooltip';
-import Box from '~/app/atoms/box/Box';
 import Panel from '~/app/atoms/panel/Panel';
+import Tooltip from '~/app/atoms/tooltip/Tooltip';
 import Avatar from '~/app/components/avatar/Avatar';
 import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 import { profiles } from '~/app/hooks/createProfileStore';
@@ -11,6 +10,8 @@ import t from '~/app/i18n';
 import ConfrimDialog from '~/app/molecules/confrim-dialog/ConfirmDialog';
 import ProfileContent from '~/app/molecules/profile/ProfileContent';
 import ClientSwitchDialog from '~/app/organisms/switch-dialog/ClientSwitchDialog';
+import { flex, square } from '~styled/patterns';
+import { Flex } from '~styled/jsx';
 import PowerDuotone from '~icons/ph/power-duotone';
 import UserSwitchDuotone from '~icons/ph/user-switch-duotone';
 
@@ -38,27 +39,72 @@ const AccountMenu: Component = () => {
           </Tooltip.Portal>
         </Tooltip>
         <DropdownMenu.Portal>
-          <Panel
-            as={DropdownMenu.Content}
+          <DropdownMenu.Content
+            as={Panel}
             decoration='bordered'
-            class='mb-1 mr-4 max-w-[min(20rem,var(--kb-popper-content-available-width))] outline-none rounded-md bg-white dark-bg-black flex flex-col animate-popup-close ui-expanded:animate-popup-open'
+            class={flex({
+              direction: 'column',
+              mb: '1',
+              mr: '4',
+              maxWidth: 'min(20rem, var(--kb-popper-content-available-width))',
+              outline: 'none',
+              rounded: 'md',
+              bg: {
+                base: 'white',
+                _dark: 'black',
+              },
+              animationName: 'popupClose',
+              animationDuration: '150ms',
+              animationTimingFunction: 'ease-in',
+              _expanded: {
+                animationName: 'popupOpen',
+                animationDuration: '200ms',
+                animationTimingFunction: 'ease-out',
+              },
+            })}
           >
-            <div class='rounded-t-md rounded-b-md bg-neutral-100 dark:bg-neutral-900 p-2 flex flex-row gap-2 items-center justify-start'>
+            <Flex
+              direction='row'
+              gap='2'
+              roundedTop='md'
+              roundedBottom='md'
+              bg='mauve.3'
+              p='2'
+              alignItems='center'
+              justifyContent='start'
+            >
               <ProfileContent
                 name={name()}
                 avatar={avatar()}
                 userId={userId()}
               />
-              <div class='flex flex-row gap-2'>
+              <Flex direction='row' gap='2'>
                 <Tooltip placement='top' openDelay={0} closeDelay={0}>
                   <DropdownMenu.Item
                     onSelect={() => {
                       setSwitchOpen(true);
                     }}
                     as={Tooltip.Trigger}
-                    class='flex items-center justify-center size-8 rounded-full transform duration-200 ui-highlighted:bg-orange-100 dark:ui-highlighted:bg-orange-900 outline-none ui-highlighted:ring-2 ring-orange-300'
+                    class={square({
+                      size: '8',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      rounded: 'full',
+                      _highlighted: {
+                        bg: {
+                          base: 'orange.100',
+                          _dark: 'orange.900',
+                        },
+                        ringWidth: '2',
+                        outlineStyle: 'solid',
+                      },
+                      ringColor: 'orange.300',
+                    })}
                   >
-                    <UserSwitchDuotone class='size-6 text-orange-500' />
+                    <UserSwitchDuotone
+                      class={square({ size: '6', color: 'orange.500' })}
+                    />
                   </DropdownMenu.Item>
                   <Tooltip.Portal>
                     <Tooltip.Content mb='1'>{t('switch_user')}</Tooltip.Content>
@@ -72,17 +118,34 @@ const AccountMenu: Component = () => {
                       });
                     }}
                     as={Tooltip.Trigger}
-                    class='flex items-center justify-center size-8 rounded-full transform duration-200 ui-highlighted:bg-red-100 dark:ui-highlighted:bg-red-900 outline-none ui-highlighted:ring-2 ring-red-300'
+                    class={square({
+                      size: '8',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      rounded: 'full',
+                      _highlighted: {
+                        bg: {
+                          base: 'red.100',
+                          _dark: 'red.900',
+                        },
+                        ringWidth: '2',
+                        outlineStyle: 'solid',
+                      },
+                      ringColor: 'red.300',
+                    })}
                   >
-                    <PowerDuotone class='size-6 text-red-500' />
+                    <PowerDuotone
+                      class={square({ size: '6', color: 'red.500' })}
+                    />
                   </DropdownMenu.Item>
                   <Tooltip.Portal>
                     <Tooltip.Content mb='1'>{t('logout')}</Tooltip.Content>
                   </Tooltip.Portal>
                 </Tooltip>
-              </div>
-            </div>
-          </Panel>
+              </Flex>
+            </Flex>
+          </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu>
       <ConfrimDialog

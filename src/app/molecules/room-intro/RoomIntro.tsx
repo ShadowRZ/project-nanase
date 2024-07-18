@@ -4,6 +4,9 @@ import Avatar from '~/app/components/avatar/Avatar';
 import IconButton from '~/app/atoms/icon-button/IconButton';
 import Text from '~/app/atoms/text/Text';
 import Panel from '~/app/atoms/panel/Panel';
+import { Flex } from '~styled/jsx';
+import { css } from '~styled/css';
+import { flex } from '~styled/patterns';
 import HashStraightDuotone from '~icons/ph/hash-straight-duotone';
 import UserCircleDuotone from '~icons/ph/user-circle-duotone';
 import ArrowLeft from '~icons/ph/arrow-left';
@@ -27,12 +30,27 @@ type RoomIntroProps = {
 
 const RoomIntro: Component<RoomIntroProps> = (props) => {
   return (
-    <div class='box-content flex flex-row gap-4 items-center h-12 px-4 py-2 border-b border-slate-200 dark:border-slate-800'>
+    <Flex
+      direction='row'
+      boxSizing='content-box'
+      gap='4'
+      alignItems='center'
+      h='12'
+      px='4'
+      py='2'
+      borderBottomWidth='1'
+      borderColor='mauve.7'
+    >
       <IconButton
         onClick={props.onBack}
         type='normal'
         icon={ArrowLeft}
-        class='static md:hidden'
+        class={css({
+          display: {
+            base: 'unset',
+            md: 'none',
+          },
+        })}
       />
       <Show
         when={!props.direct}
@@ -50,15 +68,28 @@ const RoomIntro: Component<RoomIntroProps> = (props) => {
           fallback={HashStraightDuotone}
         />
       </Show>
-      <span class='grow flex flex-col flex-1 min-w-0 truncate'>
-        <Text font='bold' content='truncate' class='flex-1'>
+      <span
+        class={flex({
+          direction: 'column',
+          flex: '1',
+          minW: '0',
+          truncate: true,
+        })}
+      >
+        <Text font='bold' content='truncate' class={css({ flex: '1' })}>
           <Show when={props.encrypted}>
-            <ShieldDuotone class='inline mb-1 text-rose-500' />
+            <ShieldDuotone
+              class={css({ display: 'inline', mb: '1', color: 'ruby.11' })}
+            />
           </Show>{' '}
           {props.name}
         </Text>
         <Show when={props.topic}>
-          <Text content='truncate' title={props.topic} class='flex-1'>
+          <Text
+            content='truncate'
+            title={props.topic}
+            class={css({ flex: '1' })}
+          >
             {props.topic}
           </Text>
         </Show>
@@ -70,33 +101,77 @@ const RoomIntro: Component<RoomIntroProps> = (props) => {
           icon={DotsThreeVerticalBold}
         />
         <DropdownMenu.Portal>
-          <Panel
-            as={DropdownMenu.Content}
+          <DropdownMenu.Content
+            as={Panel}
             decoration='bordered'
-            class='mt-1 z-5 outline-none animate-hovercard-close ui-expanded:animate-hovercard-open overflow-clip'
+            class={css({
+              mt: '1',
+              zIndex: '5',
+              outline: 'none',
+              overflow: 'clip',
+              animationName: 'hovercardClose',
+              animationDuration: '150ms',
+              animationTimingFunction: 'ease-in',
+              _expanded: {
+                animationName: 'hovercardOpen',
+                animationDuration: '200ms',
+                animationTimingFunction: 'ease-out',
+              },
+            })}
           >
             <DropdownMenu.Item
               onSelect={props.onMembers}
-              class='px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'
+              class={flex({
+                direction: 'row',
+                px: '4',
+                py: '2',
+                gap: '2',
+                alignItems: 'center',
+                _hover: {
+                  cursor: 'pointer',
+                  bg: 'mauve.4',
+                },
+              })}
             >
               <UsersThreeDuotone /> Members
             </DropdownMenu.Item>
             <DropdownMenu.Item
               onSelect={props.onSettings}
-              class='px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'
+              class={flex({
+                direction: 'row',
+                px: '4',
+                py: '2',
+                gap: '2',
+                alignItems: 'center',
+                _hover: {
+                  cursor: 'pointer',
+                  bg: 'mauve.4',
+                },
+              })}
             >
               <GearDuotone /> Settings
             </DropdownMenu.Item>
             <DropdownMenu.Item
               onSelect={props.onLeaveRoom}
-              class='px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900 text-red'
+              class={flex({
+                direction: 'row',
+                px: '4',
+                py: '2',
+                gap: '2',
+                alignItems: 'center',
+                _hover: {
+                  cursor: 'pointer',
+                  bg: 'mauve.4',
+                },
+                color: 'red.11',
+              })}
             >
               <DoorOpenDuotone /> Leave Room
             </DropdownMenu.Item>
-          </Panel>
+          </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu>
-    </div>
+    </Flex>
   );
 };
 

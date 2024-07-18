@@ -3,7 +3,6 @@ import Tooltip from '~/app/atoms/tooltip/Tooltip';
 import Avatar from '~/app/components/avatar/Avatar';
 import { createRoomResource } from '~/app/hooks/createRoomResource';
 import { createSpaceList } from '~/app/hooks/createSpaces';
-import Box from '~/app/atoms/box/Box';
 import FoldersFill from '~icons/ph/folders-fill';
 
 type SpaceItemProps = {

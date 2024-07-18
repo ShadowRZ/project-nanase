@@ -10,6 +10,7 @@ import TimelineItem from '~/app/organisms/timeline/TimelineItem';
 import { annoationOrReplace } from '~/app/utils/room';
 import { type RelationData } from '~/types/room';
 import { createCurrentClientResource } from '~/app/hooks/createClientResource';
+import { Box, Flex } from '~styled/jsx';
 
 type RoomTimelineProps = {
   roomId: string;
@@ -60,14 +61,18 @@ const RoomTimeline: Component<RoomTimelineProps> = (props) => {
   });
 
   return (
-    <div
+    <Flex
       ref={timelineRef}
-      class='relative grow h-full overflow-y-auto flex flex-col'
+      direction='column'
+      position='relative'
+      grow='1'
+      overflowY='auto'
+      h='full'
     >
       <Show when={events()?.at(0)?.getWireType() !== 'm.room.create'}>
-        <div class='mt-1 px-2 py-1'>
+        <Box mt='1' px='2' py='1'>
           <Placeholder />
-        </div>
+        </Box>
       </Show>
       <Show when={timelineSet() !== undefined}>
         <Key each={events()} by={(event) => event.getId()}>
@@ -89,7 +94,7 @@ const RoomTimeline: Component<RoomTimelineProps> = (props) => {
         </Key>
         <div ref={endRef} data-project-nanase-timeline-end />
       </Show>
-    </div>
+    </Flex>
   );
 };
 

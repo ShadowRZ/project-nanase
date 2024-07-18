@@ -22,6 +22,7 @@ import { sanitizeMatrixHtml, sanitizeText } from '~/lib/utils/sanitize';
 import { type AnyMessage } from '~/types/event-content';
 import { type RelationData } from '~/types/room';
 import ConfrimDialog from '~/app/molecules/confrim-dialog/ConfirmDialog';
+import { Box, Flex } from '~styled/jsx';
 
 type RoomProps = {
   roomId: string;
@@ -104,7 +105,7 @@ const Room: Component<RoomProps> = (props) => {
   const [leaveRoomOpen, setLeaveRoomOpen] = createSignal(false);
 
   return (
-    <div class='flex flex-col h-dvh'>
+    <Flex direction='column' h='dvh'>
       <RoomIntro
         name={name() ?? roomId()}
         topic={topic()}
@@ -137,7 +138,7 @@ const Room: Component<RoomProps> = (props) => {
         setRelationData={setRelationData}
       />
       <Show when={maySendMessage()}>
-        <div class='py-1 border-t-1 border-slate-200 dark:border-slate-800'>
+        <Box py='1' borderTopWidth='1' borderColor='mauve.7'>
           <Show when={relationData() !== undefined}>
             <EditorReference
               roomId={roomId()}
@@ -149,9 +150,9 @@ const Room: Component<RoomProps> = (props) => {
             />
           </Show>
           <Editor onSend={onSend} />
-        </div>
+        </Box>
       </Show>
-    </div>
+    </Flex>
   );
 };
 

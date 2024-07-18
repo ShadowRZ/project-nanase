@@ -9,6 +9,8 @@ import Text from '~/app/atoms/text/Text';
 import { createFetchedEvent } from '~/app/hooks/createFetchedEvent';
 import createRoomProfileSnapshot from '~/app/hooks/createRoomProfileSnapshot';
 import { trimReplyFallback } from '~/lib/utils/matrix';
+import { styled } from '~styled/jsx';
+import { flex } from '~styled/patterns';
 
 type QuotedEventProps = {
   roomId: string;
@@ -25,6 +27,24 @@ type QuotedEventInnerProps = {
   showSender?: boolean;
 };
 
+const RedactedWrapper = styled('span', {
+  base: {
+    flexShrink: '1',
+    truncate: true,
+    textWrap: 'wrap',
+    whiteSpace: 'pre-wrap',
+    wordBreak: 'break-all',
+  },
+  variants: {
+    redacted: {
+      true: {
+        opacity: '50',
+        fontStyle: 'italic',
+      },
+    },
+  },
+});
+
 const QuotedEventInner: Component<QuotedEventInnerProps> = (props) => {
   const roomId = () => props.roomId;
   const target = () => props.target;
@@ -33,23 +53,38 @@ const QuotedEventInner: Component<QuotedEventInnerProps> = (props) => {
   return (
     <>
       <Show when={props.showSender ?? true}>
-        <span class='font-bold'>{name() ?? sender()}</span>
+        <styled.span fontWeight='700'>{name() ?? sender()}</styled.span>
       </Show>
-      <span
-        class='shrink truncate text-wrap whitespace-pre-wrap break-all'
-        classList={{
-          'opacity-50 font-italic': target().isRedacted(),
-        }}
-      >
+      <RedactedWrapper redacted={target().isRedacted()}>
         {target().isRedacted()
           ? 'Event was redacted.'
           : trimReplyFallback(target().getContent().body as string)}
-      </span>
+      </RedactedWrapper>
     </>
   );
 };
 
+const QuoteButton = styled(Button, {
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    w: 'fit-content',
+    textAlign: 'start',
+    mb: '1',
+    pl: '2',
+    borderLeftWidth: '2',
+  },
+  variants: {
+    primary: {
+      true: {
+        borderColor: 'ruby.9',
+      },
+    },
+  },
+});
+
 const QuotedEvent: Component<QuotedEventProps> = (props) => {
+  const primary = () => props.primary;
   const roomId = () => props.roomId;
   const eventId = () => props.eventId;
   const timelineSet = () => props.timelineSet;
@@ -57,13 +92,7 @@ const QuotedEvent: Component<QuotedEventProps> = (props) => {
   const target = createFetchedEvent(roomId, eventId, timelineSet, client);
 
   return (
-    <Button
-      class='w-fit text-start mb-1 pl-2 border-l-2 flex flex-col'
-      classList={{
-        'border-inherit': props.primary,
-        'border-rose-500': !props.primary,
-      }}
-    >
+    <QuoteButton primary={!primary()}>
       <Suspense fallback={<span>......</span>}>
         <ErrorBoundary fallback={<Text font='italic'>Event not found.</Text>}>
           <Show when={target()}>
@@ -71,7 +100,7 @@ const QuotedEvent: Component<QuotedEventProps> = (props) => {
           </Show>
         </ErrorBoundary>
       </Suspense>
-    </Button>
+    </QuoteButton>
   );
 };
 

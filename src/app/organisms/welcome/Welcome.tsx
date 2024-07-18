@@ -1,9 +1,19 @@
 import { type Component } from 'solid-js';
+import { Box, styled } from '~styled/jsx';
 
 export const Welcome: Component = () => {
   return (
-    <div class='hidden w-full h-dvh grow md:flex items-center justify-center'>
-      <p class='font-bold text-gray-600 text-xl'>Have a nice day.</p>
-    </div>
+    <Box
+      display={{ base: 'hidden', md: 'flex' }}
+      flexGrow='1'
+      alignItems='center'
+      justifyContent='center'
+      w='full'
+      h='dvh'
+    >
+      <styled.p fontWeight='700' color='mauve.11' textStyle='xl'>
+        Have a nice day.
+      </styled.p>
+    </Box>
   );
 };

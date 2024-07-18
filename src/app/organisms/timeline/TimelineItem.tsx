@@ -6,6 +6,8 @@ import EventComponent from '~/app/components/event-component/EventComponent';
 import createMaybeRedactedEvent from '~/app/hooks/createMaybeRedactedEvent';
 import ViewSourceDialog from '~/app/organisms/view-source/ViewSourceDialog';
 import { type RelationData } from '~/types/room';
+import { css } from '~styled/css';
+import { flex } from '~styled/patterns';
 import ArrowBendUpLeftDuotone from '~icons/ph/arrow-bend-up-left-duotone';
 import CodeDuotone from '~icons/ph/code-duotone';
 
@@ -32,7 +34,7 @@ const TimelineItem: Component<EventProps> = (props) => {
           as='div'
           data-project-nanase-roomid={roomId()}
           data-project-nanase-eventid={event().getId()}
-          class='ui-expanded:bg-slate-100 dark:ui-expanded:bg-slate-900 px-2 py-1'
+          class={css({ _expanded: { bg: 'mauve.4' }, px: '2', py: '1' })}
         >
           <EventComponent
             roomId={roomId()}
@@ -41,10 +43,21 @@ const TimelineItem: Component<EventProps> = (props) => {
           />
         </ContextMenu.Trigger>
         <ContextMenu.Portal>
-          <Panel
+          <ContextMenu.Content
             decoration='bordered'
-            as={ContextMenu.Content}
-            class='z-5 animate-popup-close ui-expanded:animate-popup-open overflow-clip'
+            as={Panel}
+            class={css({
+              zIndex: '5',
+              overflow: 'clip',
+              animationName: 'popupClose',
+              animationDuration: '150ms',
+              animationTimingFunction: 'ease-in',
+              _expanded: {
+                animationName: 'popupOpen',
+                animationDuration: '200ms',
+                animationTimingFunction: 'ease-out',
+              },
+            })}
           >
             <Show when={canReply()}>
               <ContextMenu.Item
@@ -54,7 +67,17 @@ const TimelineItem: Component<EventProps> = (props) => {
                     eventId: event().getId()!,
                   });
                 }}
-                class='px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'
+                class={flex({
+                  direction: 'row',
+                  px: '4',
+                  py: '2',
+                  gap: '2',
+                  alignItems: 'center',
+                  _hover: {
+                    cursor: 'pointer',
+                    bg: 'mauve.4',
+                  },
+                })}
               >
                 <ArrowBendUpLeftDuotone /> Reply
               </ContextMenu.Item>
@@ -63,11 +86,21 @@ const TimelineItem: Component<EventProps> = (props) => {
               onSelect={() => {
                 setSourceOpen(true);
               }}
-              class='px-4 py-2 flex flex-row gap-2 items-center hover:cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900'
+              class={flex({
+                direction: 'row',
+                px: '4',
+                py: '2',
+                gap: '2',
+                alignItems: 'center',
+                _hover: {
+                  cursor: 'pointer',
+                  bg: 'mauve.4',
+                },
+              })}
             >
               <CodeDuotone /> View Source
             </ContextMenu.Item>
-          </Panel>
+          </ContextMenu.Content>
         </ContextMenu.Portal>
       </ContextMenu>
       <ViewSourceDialog

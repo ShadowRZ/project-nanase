@@ -9,6 +9,7 @@ import { createRooms } from '~/app/hooks/createRooms';
 import { createSpaceChildrens } from '~/app/hooks/createSpaceRooms';
 import RoomItem from '~/app/molecules/room/RoomItem';
 import { trimReplyFallback } from '~/lib/utils/matrix';
+import { Flex } from '~styled/jsx';
 
 // 'chats' | 'directs' | 'favorties'
 export type ChatRooms = {
@@ -116,7 +117,7 @@ const RoomList: Component<RoomListProps> = (props) => {
   };
 
   return (
-    <div class='px-1 py-1 flex flex-col gap-1 grow'>
+    <Flex direction='column' px='1' py='1' gap='1' grow='1'>
       <Switch>
         <Match when={categoryType() === 'chats'}>
           <Show when={chats()}>
@@ -138,7 +139,7 @@ const RoomList: Component<RoomListProps> = (props) => {
           </Show>
         </Match>
       </Switch>
-    </div>
+    </Flex>
   );
 };
 

@@ -1,9 +1,11 @@
 import { Button } from '@kobalte/core/button';
 import { Show, type Component } from 'solid-js';
-import Avatar from '~/app/components/avatar/Avatar';
 import NotificationCount from '~/app/atoms/notification/NotificationCount';
 import Text from '~/app/atoms/text/Text';
 import Time from '~/app/atoms/time/Time';
+import Avatar from '~/app/components/avatar/Avatar';
+import { styled, Flex } from '~styled/jsx';
+import { css } from '~styled/css';
 import HashStraightDuotone from '~icons/ph/hash-straight-duotone';
 import UserCircleDuotone from '~icons/ph/user-circle-duotone';
 
@@ -20,16 +22,38 @@ type RoomItemProps = {
   onClick?: (ev: MouseEvent) => void;
 };
 
+const RoomItemButton = styled(Button, {
+  base: {
+    display: 'flex',
+    flexDirection: 'row',
+    textAlign: 'start',
+    p: '2',
+    gap: '2',
+    w: 'full',
+    rounded: '2xl',
+    transition: 'common',
+    transitionDuration: '150ms',
+    bg: {
+      base: 'transparent',
+      _hover: 'mauve.a.4',
+    },
+  },
+  variants: {
+    current: {
+      true: {
+        bg: {
+          base: 'ruby.a.3',
+          _hover: 'ruby.a.4',
+        },
+      },
+    },
+  },
+});
+
 const RoomItem: Component<RoomItemProps> = (props) => {
+  const current = () => props.current;
   return (
-    <Button
-      onClick={props.onClick}
-      class='text-start p-2 transition duration-150 rounded-2xl flex flex-row gap-2 w-full'
-      classList={{
-        'bg-transparent hover:bg-neutral-200/75': !props.current,
-        'bg-rose-200/25 hover:bg-rose-200/75': props.current,
-      }}
-    >
+    <RoomItemButton onClick={props.onClick} current={current()}>
       <Show
         when={props.direct}
         fallback={
@@ -42,19 +66,24 @@ const RoomItem: Component<RoomItemProps> = (props) => {
       >
         <Avatar src={props.avatar} size='large' fallback={UserCircleDuotone} />
       </Show>
-      <div class='grow flex flex-col overflow-hidden'>
-        <span class='inline-flex overflow-hidden'>
-          <Text as='span' font='bold' content='truncate' class='grow'>
+      <Flex direction='column' grow='1' overflow='hidden'>
+        <styled.span display='inline-flex' overflow='hidden'>
+          <Text
+            as='span'
+            font='bold'
+            content='truncate'
+            class={css({ flexGrow: '1' })}
+          >
             {props.name}
           </Text>
           <Show when={props.lastTs !== undefined}>
-            <span class='opacity-50 shrink-0 -z-5'>
+            <styled.span opacity='50' flexShrink='0' zIndex='-5'>
               <Time timestamp={props.lastTs} />
-            </span>
+            </styled.span>
           </Show>
-        </span>
-        <span class='inline-flex overflow-hidden'>
-          <span class='grow truncate opacity-75'>
+        </styled.span>
+        <styled.span display='inline-flex' overflow='hidden'>
+          <styled.span flexGrow='1' truncate opacity='75'>
             <Show when={props.lastSender}>
               <Text font='bold' as='span'>
                 {props.lastSender}:{' '}
@@ -63,13 +92,13 @@ const RoomItem: Component<RoomItemProps> = (props) => {
             <Show when={props.lastSender}>
               <Text as='span'>{props.lastContent}</Text>
             </Show>
-          </span>
+          </styled.span>
           <Show when={props.unread && props.unread > 0}>
             <NotificationCount count={props.unread!} highlight />
           </Show>
-        </span>
-      </div>
-    </Button>
+        </styled.span>
+      </Flex>
+    </RoomItemButton>
   );
 };
 

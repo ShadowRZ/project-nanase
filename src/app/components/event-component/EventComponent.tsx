@@ -40,13 +40,24 @@ import {
 } from '~/types/event-content';
 import TrashDuotone from '~icons/ph/trash-duotone';
 import { getMediaPromise } from '~/lib/utils/media';
+import { Flex, styled } from '~styled/jsx';
 
 const RedactedMessage: Component = () => {
   return (
-    <div class='font-italic flex flex-row items-center gap-1 w-fit rounded-xl bg-neutral-200 p-2 opacity-50'>
+    <Flex
+      direction='row'
+      fontStyle='italic'
+      alignItems='center'
+      gap='1'
+      w='fit'
+      rounded='xl'
+      bg='mauve.3'
+      p='2'
+      opacity='50'
+    >
       <TrashDuotone />
       This message was deleted.
-    </div>
+    </Flex>
   );
 };
 
@@ -94,7 +105,7 @@ const MessageContent: Component<EventComponentProps> = (props) => {
           </CTextMessage>
         </Match>
         <Match when={msgtype() === MsgType.Image}>
-          <Box color='default' class='max-w-2/3'>
+          <Box color='default' maxW='2/3'>
             <Show when={event().replyEventId !== undefined}>
               <QuotedEvent
                 roomId={props.roomId}
@@ -103,7 +114,6 @@ const MessageContent: Component<EventComponentProps> = (props) => {
                 client={client()}
               />
             </Show>
-
             <CImageMessage
               timestamp={event().getTs()}
               status={sending() ? 'sending' : 'sent'}
@@ -274,9 +284,17 @@ const EventComponent: Component<EventComponentProps> = (props) => {
       fallback={
         <StateMessage roomId={roomId()} event={event()}>
           sent{' '}
-          <code class='px-2 font-mono bg-gray-200 dark:bg-gray-800 rounded-md border border-slate-100'>
+          <styled.code
+            px='2'
+            fontFamily='monospace'
+            bg='mauve.3'
+            rounded='md'
+            borderWidth='1px'
+            borderStyle='solid'
+            borderColor='mauve.7'
+          >
             {type()}
-          </code>{' '}
+          </styled.code>{' '}
           event.
         </StateMessage>
       }
