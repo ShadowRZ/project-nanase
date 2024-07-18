@@ -18,7 +18,10 @@ const ProgressButton: Component<ProgressButtonProps> = (props) => {
       disabled={props.busy}
       type={props.type}
       onClick={props.onClick}
-      class='flex flex-row items-center gap-1'
+      display='flex'
+      flexDirection='row'
+      alignItems='center'
+      gap='1'
     >
       {props.text}
       <Show when={props.busy} fallback={<ArrowRightBold />}>
