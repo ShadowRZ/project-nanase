@@ -1,11 +1,29 @@
-import { klassed } from '@klass/solid';
+import { styled } from '~styled/jsx';
 
-const Panel = klassed('div', {
-  base: 'rounded-lg bg-white dark:bg-black text-black dark:text-white',
+const Panel = styled('div', {
+  base: {
+    rounded: 'lg',
+    bg: {
+      base: 'white',
+      _dark: 'black',
+    },
+    color: {
+      base: 'black',
+      _dark: 'white',
+    },
+  },
   variants: {
     decoration: {
-      bordered: 'border border-slate-200 dark:border-slate-800',
-      shadowed: 'shadow-md dark:shadow-slate-800/50',
+      bordered: {
+        borderWidth: '1',
+        borderColor: 'mauve.7',
+      },
+      shadowed: {
+        shadow: 'md',
+        _dark: {
+          shadowColor: 'mauve.9',
+        },
+      },
     },
   },
 });

@@ -111,6 +111,9 @@ export const iconButton = cva({
       },
     },
   ],
+  defaultVariants: {
+    color: 'default',
+  },
 });
 
 export const icon = cva({
