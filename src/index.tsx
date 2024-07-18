@@ -3,7 +3,6 @@ import '@fontsource-variable/inter';
 import 'uno.css';
 import 'prismjs/themes/prism.min.css';
 import { render } from 'solid-js/web';
-import './lib/keyframes.css';
 import './index.css';
 import App from './app/pages/App';
 
