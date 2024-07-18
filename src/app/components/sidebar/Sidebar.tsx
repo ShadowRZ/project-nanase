@@ -33,7 +33,7 @@ const Sidebar: Component<SidebarProps> = (props) => {
       overflowY='scroll'
       borderRightWidth='1'
       scrollbar='hidden'
-      borderColor={{ sm: 'mauve.6' }}
+      borderColor='mauve.7'
     >
       <Flex direction='column' gap='2' p='2'>
         <Tooltip placement='right' openDelay={0} closeDelay={0}>

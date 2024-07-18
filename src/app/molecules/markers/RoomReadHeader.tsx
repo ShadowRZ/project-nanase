@@ -7,7 +7,7 @@ import { styled } from '~styled/jsx';
 const RoomReadHeader: Component = () => {
   return (
     <styled.div color='gray.11'>
-      <Text font='bold' textAlign='right'>
+      <Text font='bold' css={{ textAlign: 'right' }}>
         NEW
       </Text>
       <Separator class={divider({ orientation: 'horizontal' })} />
