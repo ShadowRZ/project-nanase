@@ -7,6 +7,7 @@ import {
   type Component,
 } from 'solid-js';
 import FeatureCheck from './FeatureCheck';
+import { I18NProvider } from '~/app/i18n';
 import Panel from '~/app/atoms/panel/Panel';
 import { setProfiles } from '~/app/hooks/createProfileStore';
 import { AppContext } from '~/app/hooks/useAppContext';
@@ -99,13 +100,15 @@ const ChatWrapper: Component = () => {
 
 const App: Component = () => {
   return (
-    <FeatureCheck>
-      <Router>
-        <Route path='/' component={Index} />
-        <Route path='/login' component={AuthWrapper} />
-        <Route path='/rooms/:id?' component={ChatWrapper} />
-      </Router>
-    </FeatureCheck>
+    <I18NProvider>
+      <FeatureCheck>
+        <Router>
+          <Route path='/' component={Index} />
+          <Route path='/login' component={AuthWrapper} />
+          <Route path='/rooms/:id?' component={ChatWrapper} />
+        </Router>
+      </FeatureCheck>
+    </I18NProvider>
   );
 };
 
