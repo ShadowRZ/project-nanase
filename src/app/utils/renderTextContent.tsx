@@ -50,9 +50,10 @@ export function renderTextContent(
   // Migrate <font />
   for (const item of node.querySelectorAll('font')) {
     const replaced = document.createElement('span');
+    replaced.innerHTML = item.innerHTML;
+    item.replaceWith(replaced);
     replaced.style.setProperty('color', item.color);
     replaced.style.setProperty('font-family', item.face);
-    item.replaceWith(replaced);
   }
 
   // Add highlight to <code />
