@@ -213,11 +213,10 @@ const MemberContent: Component<Omit<EventComponentProps, 'timelineSet'>> = (
   const event = () => props.event;
   const sender = () => event().getSender()!;
   const { name, avatar } = createRoomProfileSnapshot(roomId, sender);
-  const prevName = () => event().getPrevContent().displayname ?? name();
 
   return (
     <StateMessageShell
-      name={prevName()}
+      name={name()}
       avatar={avatar()}
       userId={sender()}
       timestamp={props.event.getTs()}
