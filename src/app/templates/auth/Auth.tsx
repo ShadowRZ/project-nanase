@@ -11,6 +11,9 @@ import Login from './Login';
 import { Register } from './Register';
 import { getHomeserverUrl } from '~/lib/utils/matrix';
 import { type SessionData } from '~/lib/auth';
+import { Box, Flex, styled } from '~styled/jsx';
+import { flex, square } from '~styled/patterns';
+import { css } from '~styled/css';
 import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
 
 type AuthLoadingProps = {
@@ -19,12 +22,24 @@ type AuthLoadingProps = {
 
 const AuthLoading: Component<AuthLoadingProps> = (props) => {
   return (
-    <div class='flex flex-row gap-2 items-center'>
-      <LoadingIndicator class='size-8' />
+    <Flex direction='row' gap='2' alignItems='center'>
+      <LoadingIndicator class={square({ size: '8' })} />
       <span>{props.message}</span>
-    </div>
+    </Flex>
   );
 };
+
+const LinkButton = styled('button', {
+  base: {
+    display: 'inline',
+    fontWeight: 'bold',
+    color: 'red.11',
+    _hover: {
+      textDecoration: 'underline',
+      cursor: 'pointer',
+    },
+  },
+});
 
 type IErrorJson = {
   error?: string;
@@ -93,15 +108,39 @@ const Homeserver: Component<HomeserverProps> = (props) => {
 
   return (
     <>
-      <TextField class='my-2 flex flex-col gap-2' onChange={onChange}>
-        <TextField.Label class='font-bold'>Homeserver</TextField.Label>
-        <TextField.Input class='transition duration-200 rounded-xl p-2 ring ring-neutral/25 focus:ring-rose-500 focus:ring-2 outline-none' />
+      <TextField
+        class={flex({ direction: 'column', my: '2', gap: '2' })}
+        onChange={onChange}
+      >
+        <TextField.Label class={css({ fontWeight: 'bold' })}>
+          Homeserver
+        </TextField.Label>
+        <TextField.Input
+          class={css({
+            transition: 'common',
+            transitionDuration: '200ms',
+            outlineWidth: '2',
+            outlineStyle: 'solid',
+            outlineOffset: '0.5',
+            outlineColor: 'mauve.7',
+            rounded: 'xl',
+            padding: '2',
+            _disabled: {
+              cursor: 'not-allowed',
+            },
+            _focus: {
+              outlineColor: 'ruby.9',
+            },
+          })}
+        />
       </TextField>
       <Show when={progress().loading}>
         <AuthLoading message={progress().message} />
       </Show>
       <Show when={progress().error !== undefined}>
-        <span class='text-red font-bold'>{progress().error}</span>
+        <styled.span color='red.11' fontWeight='bold'>
+          {progress().error}
+        </styled.span>
       </Show>
     </>
   );
@@ -145,54 +184,52 @@ export const AuthContent: Component<AuthContentProps> = (props) => {
                     />
                   </Match>
                   <Match when={info().register.errcode !== undefined}>
-                    <span class='font-bold text-red'>
+                    <styled.span color='red.11' fontWeight='bold'>
                       {info().register.error}
-                    </span>
+                    </styled.span>
                   </Match>
                 </Switch>
               </Match>
             </Switch>
-            <div class='mt-2'>
+            <Box mt='2'>
               <Switch>
                 <Match when={loginOrRegister() === 'login'}>
                   <Switch>
                     <Match when={info().register.errcode === undefined}>
                       <span>
                         You can{' '}
-                        <button
+                        <LinkButton
                           onClick={() => {
                             setLoginOrRegister('register');
                           }}
-                          class='inline font-bold text-rose-500 hover:underline'
                         >
                           register
-                        </button>{' '}
+                        </LinkButton>{' '}
                         if you don't have an account.
                       </span>
                     </Match>
                     <Match when={info().register.errcode !== undefined}>
-                      <span class='font-bold text-red'>
+                      <styled.span color='red.11' fontWeight='bold'>
                         {info().register.error}
-                      </span>
+                      </styled.span>
                     </Match>
                   </Switch>
                 </Match>
                 <Match when={loginOrRegister() === 'register'}>
                   <span>
                     Already have an account?{' '}
-                    <button
+                    <LinkButton
                       onClick={() => {
                         setLoginOrRegister('login');
                       }}
-                      class='inline font-bold text-rose-500 hover:underline'
                     >
                       Sign in
-                    </button>
+                    </LinkButton>
                     .
                   </span>
                 </Match>
               </Switch>
-            </div>
+            </Box>
           </>
         )}
       </Show>

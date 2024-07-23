@@ -6,9 +6,11 @@ import { SSOLogin } from './SSOLogin';
 import { type SessionData } from '~/lib/auth';
 import { findSSOFlows } from '~/lib/utils/matrix';
 import Input from '~/app/atoms/input/Input';
-import KeyDuotone from '~icons/ph/key-duotone';
 import Text from '~/app/atoms/text/Text';
 import ProgressButton from '~/app/components/progress-button/ProgressButton';
+import { Flex, styled } from '~styled/jsx';
+import { flex } from '~styled/patterns';
+import KeyDuotone from '~icons/ph/key-duotone';
 
 // https://github.com/fabian-hiller/modular-forms/issues/2#issuecomment-1321178563
 type LoginForm = {
@@ -49,18 +51,26 @@ const Login: Component<LoginProps> = (props) => {
   });
 
   return (
-    <div class='mt-2 flex flex-col gap-2'>
+    <Flex direction='column' mt='2' gap='2'>
       <Show
         when={flows().flows.some((value) => value.type === 'm.login.password')}
       >
         <div>
-          <span class='inline-flex flex-row items-center gap-2'>
+          <styled.span
+            display='inline-flex'
+            flexDirection='row'
+            alignItems='center'
+            gap='2'
+          >
             <KeyDuotone />
             <Text as='h2' size='medium' font='bold'>
               Sign in with password
             </Text>
-          </span>
-          <Form onSubmit={onSubmit} class='flex flex-col gap-2'>
+          </styled.span>
+          <Form
+            onSubmit={onSubmit}
+            class={flex({ direction: 'column', gap: '2' })}
+          >
             <Field
               name='username'
               validate={[required('Please enter your username.')]}
@@ -92,23 +102,27 @@ const Login: Component<LoginProps> = (props) => {
                 />
               )}
             </Field>
-            <Text color='error' font='bold' class='empty:hidden mt-2'>
+            <Text
+              color='error'
+              font='bold'
+              css={{ _empty: { display: 'none' }, mt: '2' }}
+            >
               {form.response.message}
             </Text>
-            <div class='mt-2 w-full flex justify-center'>
+            <Flex w='full' mt='2' justifyContent='center'>
               <ProgressButton
                 type='submit'
                 text='Login'
                 busy={form.submitting}
               />
-            </div>
+            </Flex>
           </Form>
         </div>
       </Show>
       <Show when={findSSOFlows(flows())}>
         {(idps) => <SSOLogin idps={idps()} client={client()} />}
       </Show>
-    </div>
+    </Flex>
   );
 };
 

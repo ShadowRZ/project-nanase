@@ -1,6 +1,7 @@
 import { Button } from '@kobalte/core/button';
 import { type Component, For, Match, Show, Switch } from 'solid-js';
 import { type IIdentityProvider, type MatrixClient } from 'matrix-js-sdk';
+import { Flex, styled } from '~styled/jsx';
 import ArrowSquareOutDuotone from '~icons/ph/arrow-square-out-duotone';
 import LogoApple from '~icons/simple-icons/apple';
 import LogoGoogle from '~icons/simple-icons/google';
@@ -13,6 +14,27 @@ type SSOOtherIconProps = {
   icon?: string;
   client: MatrixClient;
 };
+
+const SSOButton = styled(Button, {
+  base: {
+    transition: 'common',
+    transitionDuration: '200ms',
+    position: 'relative',
+    gap: '2',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    rounded: 'xl',
+    p: '2',
+    borderWidth: '1',
+    borderColor: 'mauve.7',
+    borderStyle: 'solid',
+    _hover: {
+      cursor: 'pointer',
+    },
+  },
+});
 
 const SSOOtherIcon: Component<SSOOtherIconProps> = (props) => {
   return (
@@ -45,23 +67,27 @@ export const SSOLogin: Component<SSOLoginProps> = (props) => {
 
   return (
     <>
-      <span class='inline-flex flex-row items-center gap-2'>
+      <styled.span
+        display='inline-flex'
+        flexDirection='row'
+        alignItems='center'
+        gap='2'
+      >
         <ArrowSquareOutDuotone />
-        <h2 class='font-bold text-lg'>
+        <styled.h2 fontWeight='bold' textStyle='lg'>
           <Switch>
             <Match when={props.register !== true}>Sign in with...</Match>
             <Match when={props.register === true}>Register with...</Match>
           </Switch>
-        </h2>
-      </span>
-      <div class='mt-2 flex flex-col gap-2'>
+        </styled.h2>
+      </styled.span>
+      <Flex direction='column' mt='2' gap='2'>
         <For each={props.idps}>
           {(idp) => (
-            <Button
+            <SSOButton
               onClick={() => {
                 ssoLoginBegin(idp.id);
               }}
-              class='transition duration-200 relative flex flex-row gap-2 items-center justify-center rounded-xl p-2 border border-neutral/25 hover-bg-neutral-200'
             >
               <Switch
                 fallback={
@@ -88,10 +114,10 @@ export const SSOLogin: Component<SSOLoginProps> = (props) => {
                 </Match>
               </Switch>
               <span>{idp.name}</span>
-            </Button>
+            </SSOButton>
           )}
         </For>
-      </div>
+      </Flex>
     </>
   );
 };
