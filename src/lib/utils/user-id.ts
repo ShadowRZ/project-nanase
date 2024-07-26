@@ -16,3 +16,5 @@ export function matchMXID(input: string): MXIDMatchResult | undefined {
     homeserver,
   };
 }
+
+export const MXIDRegex = re;

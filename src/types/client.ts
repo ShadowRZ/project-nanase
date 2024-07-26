@@ -18,3 +18,12 @@ export type ClientContext = {
   wait: Promise<void>;
   roomList: Promise<RoomList>;
 };
+
+export type Session = {
+  baseUrl: string;
+  userId: string;
+  accessToken: string;
+  deviceId: string;
+};
+
+export type SessionMap = Record<string, Session>;

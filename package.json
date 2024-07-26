@@ -54,7 +54,7 @@
     "@klass/core": "^3.4.11",
     "@klass/solid": "^3.4.11",
     "@kobalte/core": "^0.13.3",
-    "@modular-forms/solid": "^0.20.0",
+    "@modular-forms/solid": "^0.22.1",
     "@solid-primitives/i18n": "^2.1.1",
     "@solid-primitives/intersection-observer": "^2.1.6",
     "@solid-primitives/keyed": "^1.2.2",
@@ -69,6 +69,7 @@
     "@tiptap/starter-kit": "^2.4.0",
     "@tiptap/suggestion": "^2.4.0",
     "@unocss/reset": "^0.60.2",
+    "await-to-js": "^3.0.0",
     "emojibase": "^15.3.1",
     "emojibase-data": "^15.3.2",
     "file-saver": "^2.0.5",
@@ -79,7 +80,8 @@
     "prismjs": "^1.29.0",
     "sanitize-html": "^2.13.0",
     "solid-js": "^1.8.18",
-    "solid-tiptap": "^0.7.0"
+    "solid-tiptap": "^0.7.0",
+    "valibot": "^0.36.0"
   },
   "packageManager": "pnpm@9.4.0"
 }

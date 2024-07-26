@@ -1,16 +1,16 @@
 import { createForm, required, type SubmitHandler } from '@modular-forms/solid';
-import { useNavigate } from '@solidjs/router';
-import { type ILoginFlowsResponse, type MatrixClient } from 'matrix-js-sdk';
 import { Show, type Component } from 'solid-js';
-import { SSOLogin } from './SSOLogin';
-import { type SessionData } from '~/lib/auth';
-import { findSSOFlows } from '~/lib/utils/matrix';
+import { useSearchParams } from '@solidjs/router';
+import { useServerMeta } from '../WithServerMeta';
+import { SSOLogin } from '../SSOLogin';
+import LoginHeader from './LoginHeader';
 import Input from '~/app/atoms/input/Input';
 import Text from '~/app/atoms/text/Text';
 import ProgressButton from '~/app/components/progress-button/ProgressButton';
+import { findSSOFlows } from '~/lib/utils/matrix';
+import KeyDuotone from '~icons/ph/key-duotone';
 import { Flex, styled } from '~styled/jsx';
 import { flex } from '~styled/patterns';
-import KeyDuotone from '~icons/ph/key-duotone';
 
 // https://github.com/fabian-hiller/modular-forms/issues/2#issuecomment-1321178563
 type LoginForm = {
@@ -18,40 +18,21 @@ type LoginForm = {
   password: string;
 };
 
-export type LoginProps = {
-  flows: ILoginFlowsResponse;
-  client: MatrixClient;
-  onClientCreated: (data: SessionData) => void;
-};
-
-const Login: Component<LoginProps> = (props) => {
-  const client = (): MatrixClient => props.client;
-  const flows = (): ILoginFlowsResponse => props.flows;
-  const navigate = useNavigate();
-
-  const onSubmit: SubmitHandler<LoginForm> = async (values) => {
-    try {
-      const result = await client().loginWithPassword(
-        values.username,
-        values.password
-      );
-      const data: SessionData = {
-        ...result,
-        homeserver: client().getHomeserverUrl(),
-      };
-      props.onClientCreated(data);
-      navigate('/rooms', { replace: true });
-    } catch (error: any) {
-      throw new Error((error.data?.error as string) ?? 'Unknown Error');
-    }
-  };
+const PasswordLogin: Component = () => {
+  const serverMeta = useServerMeta();
+  const [searchParams] = useSearchParams();
+  const flows = () => serverMeta.authFlows.loginFlows;
+  const mx = () => serverMeta.mx;
 
   const [form, { Form, Field }] = createForm<LoginForm>({
     validateOn: 'input',
   });
 
+  const onSubmit: SubmitHandler<LoginForm> = async (values) => {};
+
   return (
-    <Flex direction='column' mt='2' gap='2'>
+    <Flex direction='column' gap='2'>
+      <LoginHeader />
       <Show
         when={flows().flows.some((value) => value.type === 'm.login.password')}
       >
@@ -80,9 +61,10 @@ const Login: Component<LoginProps> = (props) => {
                   {...props}
                   label='Username'
                   autocomplete='username'
-                  value={field.value}
+                  value={searchParams.username ?? field.value}
                   error={field.error}
                   required
+                  disabled={searchParams.username !== undefined}
                 />
               )}
             </Field>
@@ -120,10 +102,10 @@ const Login: Component<LoginProps> = (props) => {
         </div>
       </Show>
       <Show when={findSSOFlows(flows())}>
-        {(idps) => <SSOLogin idps={idps()} client={client()} />}
+        {(idps) => <SSOLogin idps={idps()} client={mx()} />}
       </Show>
     </Flex>
   );
 };
 
-export default Login;
+export default PasswordLogin;

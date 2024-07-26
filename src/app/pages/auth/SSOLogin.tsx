@@ -9,6 +9,7 @@ import LogoGithub from '~icons/simple-icons/github';
 import LogoGitlab from '~icons/simple-icons/gitlab';
 import LogoFacebook from '~icons/simple-icons/facebook';
 import LogoXOrTwitter from '~icons/simple-icons/x';
+import { getAppBaseUrl } from '~/lib/utils/url';
 
 type SSOOtherIconProps = {
   icon?: string;
@@ -56,11 +57,7 @@ export type SSOLoginProps = {
 
 export const SSOLogin: Component<SSOLoginProps> = (props) => {
   const ssoLoginBegin = (idp?: string): void => {
-    const redirect = props.client.getSsoLoginUrl(
-      window.location.href,
-      'sso',
-      idp
-    );
+    const redirect = props.client.getSsoLoginUrl(getAppBaseUrl(), 'sso', idp);
     const homeserver = props.client.getHomeserverUrl();
     console.log(homeserver, redirect);
   };
