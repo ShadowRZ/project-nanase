@@ -6,6 +6,7 @@ import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
 export type ProgressButtonProps = {
   text: string;
   busy: boolean;
+  disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
 };
@@ -15,7 +16,7 @@ const ProgressButton: Component<ProgressButtonProps> = (props) => {
     <Button
       color='primary'
       size='medium'
-      disabled={props.busy}
+      disabled={props.busy || props.disabled}
       type={props.type}
       onClick={props.onClick}
       display='flex'

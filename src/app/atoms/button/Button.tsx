@@ -14,12 +14,15 @@ const Button = styled(KButton, {
         color: 'white',
         _disabled: {
           backgroundColor: 'red.a.9',
+          opacity: '0.75',
         },
-        _hover: {
-          backgroundColor: 'red.8',
-        },
-        _active: {
-          filter: 'brightness(0.90) saturate(1.1)',
+        _enabled: {
+          _hover: {
+            backgroundColor: 'red.8',
+          },
+          _active: {
+            filter: 'brightness(0.90) saturate(1.1)',
+          },
         },
       },
       primary: {
@@ -27,12 +30,15 @@ const Button = styled(KButton, {
         color: 'white',
         _disabled: {
           backgroundColor: 'ruby.a.9',
+          opacity: '0.75',
         },
-        _hover: {
-          backgroundColor: 'ruby.10',
-        },
-        _active: {
-          filter: 'brightness(0.90) saturate(1.1)',
+        _enabled: {
+          _hover: {
+            backgroundColor: 'ruby.10',
+          },
+          _active: {
+            filter: 'brightness(0.90) saturate(1.1)',
+          },
         },
       },
       secondary: {
@@ -40,12 +46,15 @@ const Button = styled(KButton, {
         color: 'ruby.12',
         _disabled: {
           backgroundColor: 'ruby.a.3',
+          opacity: '0.75',
         },
-        _hover: {
-          backgroundColor: 'ruby.7',
-        },
-        _active: {
-          backgroundColor: 'ruby.5',
+        _enabled: {
+          _hover: {
+            backgroundColor: 'ruby.7',
+          },
+          _active: {
+            backgroundColor: 'ruby.5',
+          },
         },
       },
     },

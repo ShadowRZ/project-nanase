@@ -24,6 +24,14 @@ const Panel = styled('div', {
           shadowColor: 'mauve.9',
         },
       },
+      all: {
+        borderWidth: '1',
+        borderColor: 'mauve.7',
+        shadow: 'md',
+        _dark: {
+          shadowColor: 'mauve.9',
+        },
+      },
     },
   },
 });

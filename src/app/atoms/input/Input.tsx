@@ -6,14 +6,15 @@ import { Flex, styled } from '~styled/jsx';
 const InputField = styled(KTextField.Input, {
   base: {
     transition: 'common',
-    outlineWidth: '2',
+    outlineWidth: '1',
     outlineStyle: 'solid',
     outlineOffset: '0.5',
     outlineColor: 'mauve.7',
-    rounded: 'xl',
+    rounded: 'md',
     padding: '2',
     _disabled: {
       cursor: 'not-allowed',
+      opacity: '0.5',
     },
     _focus: {
       outlineColor: 'ruby.9',
