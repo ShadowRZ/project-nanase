@@ -1,16 +1,24 @@
-import { createForm, required, type SubmitHandler } from '@modular-forms/solid';
+import {
+  createForm,
+  FormError,
+  required,
+  type SubmitHandler,
+} from '@modular-forms/solid';
 import { Show, type Component } from 'solid-js';
 import { useSearchParams } from '@solidjs/router';
+import to from 'await-to-js';
 import { useServerMeta } from '../WithServerMeta';
 import { SSOLogin } from '../SSOLogin';
 import LoginHeader from './LoginHeader';
+import { loginWithPassword, sessionFromLoginResponse } from './utils';
 import Input from '~/app/atoms/input/Input';
 import Text from '~/app/atoms/text/Text';
 import ProgressButton from '~/app/components/progress-button/ProgressButton';
 import { findSSOFlows } from '~/lib/utils/matrix';
-import KeyDuotone from '~icons/ph/key-duotone';
 import { Flex, styled } from '~styled/jsx';
 import { flex } from '~styled/patterns';
+import KeyDuotone from '~icons/ph/key-duotone';
+import { addSession } from '~/app/state/sessions';
 
 // https://github.com/fabian-hiller/modular-forms/issues/2#issuecomment-1321178563
 type LoginForm = {
@@ -23,12 +31,18 @@ const PasswordLogin: Component = () => {
   const [searchParams] = useSearchParams();
   const flows = () => serverMeta.authFlows.loginFlows;
   const mx = () => serverMeta.mx;
+  const baseUrl = () => serverMeta.baseUrl;
 
   const [form, { Form, Field }] = createForm<LoginForm>({
     validateOn: 'input',
   });
 
-  const onSubmit: SubmitHandler<LoginForm> = async (values) => {};
+  const onSubmit: SubmitHandler<LoginForm> = async (values) => {
+    const { username, password } = values;
+    const [err, res] = await to(loginWithPassword(mx(), username, password));
+    if (err) throw new FormError<LoginForm>(err.message);
+    addSession(sessionFromLoginResponse(baseUrl(), res));
+  };
 
   return (
     <Flex direction='column' gap='2'>

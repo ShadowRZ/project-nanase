@@ -12,6 +12,7 @@ import { getAuthFlows } from '~/app/utils/auth-flows';
 import { type AuthFlows } from '~/app/hooks/useAuthFlows';
 
 export type ServerMeta = {
+  baseUrl: string;
   wellKnown: AutoDiscoveryInfo;
   authFlows: AuthFlows;
   versions: SpecVersions;
@@ -35,6 +36,7 @@ export const getServerMeta = cache(
       const mx = createClient({ baseUrl });
       const authFlows = await getAuthFlows(mx);
       return {
+        baseUrl,
         wellKnown,
         authFlows,
         versions,
