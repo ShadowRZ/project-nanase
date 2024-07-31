@@ -21,7 +21,7 @@ import {
 import { sanitizeMatrixHtml, sanitizeText } from '~/lib/utils/sanitize';
 import { type AnyMessage } from '~/types/event-content';
 import { type RelationData } from '~/types/room';
-import ConfrimDialog from '~/app/molecules/confrim-dialog/ConfirmDialog';
+import ConfrimDialog from '~/app/molecules/confirm-dialog/ConfirmDialog';
 import { Box, Flex } from '~styled/jsx';
 
 type RoomProps = {

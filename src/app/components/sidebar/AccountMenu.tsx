@@ -7,7 +7,7 @@ import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 import { profiles } from '~/app/hooks/createProfileStore';
 import { useAppContext } from '~/app/hooks/useAppContext';
 import t from '~/app/i18n';
-import ConfrimDialog from '~/app/molecules/confrim-dialog/ConfirmDialog';
+import ConfrimDialog from '~/app/molecules/confirm-dialog/ConfirmDialog';
 import ProfileContent from '~/app/molecules/profile/ProfileContent';
 import ClientSwitchDialog from '~/app/organisms/switch-dialog/ClientSwitchDialog';
 import { flex, square } from '~styled/patterns';
