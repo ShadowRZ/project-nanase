@@ -6,7 +6,7 @@ const AuthFormLayout: ParentComponent = (props) => {
   return (
     <Suspense fallback={<p>Loading...</p>}>
       <ErrorBoundary
-        fallback={(err) => (
+        fallback={(err: Error) => (
           <Text color='error' font='bold'>
             {err.message}
           </Text>

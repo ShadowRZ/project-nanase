@@ -7,11 +7,11 @@ export function createRooms() {
 
   const [chats, { refetch: refetchChats }] = createResource(
     roomList,
-    ($roomList) => Array.from($roomList.rooms)
+    ($roomList) => [...$roomList.rooms]
   );
   const [directs, { refetch: refetchDirects }] = createResource(
     roomList,
-    ($roomList) => Array.from($roomList.directs)
+    ($roomList) => [...$roomList.directs]
   );
 
   const onRoomList = () => {

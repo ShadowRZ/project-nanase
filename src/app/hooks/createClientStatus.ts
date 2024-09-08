@@ -7,7 +7,7 @@ export function createClientStatus(id: () => string) {
   const client = createClientResource(id);
 
   // In matrix-js-sdk, null is used for sync state.
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line unicorn/no-null
   const [status, setStatus] = createSignal<SyncState | null>(null);
 
   const onSync = (state: SyncState) => {

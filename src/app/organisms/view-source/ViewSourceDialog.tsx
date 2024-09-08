@@ -14,7 +14,7 @@ export type ViewSourceDialogProps = {
 
 const ViewSourceDialog: Component<ViewSourceDialogProps> = (props) => {
   const event = () => props.event;
-  const content = createMemo(() => JSON.stringify(event().event, null, 2));
+  const content = createMemo(() => JSON.stringify(event().event, undefined, 2));
 
   return (
     <Dialog modal open={props.open} onOpenChange={props.onOpenChange}>

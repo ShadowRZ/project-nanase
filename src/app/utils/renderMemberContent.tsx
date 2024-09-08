@@ -9,7 +9,6 @@ type RoomMemberEventContent = {
   reason?: string;
 };
 
-// eslint-disable-next-line complexity
 export function renderMemberContent(event: MatrixEvent) {
   const content = event.getContent<RoomMemberEventContent>();
   const prevContent = event.getPrevContent() as RoomMemberEventContent;

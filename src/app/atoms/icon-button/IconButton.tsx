@@ -140,6 +140,7 @@ export const icon = cva({
 });
 
 type IconButtonProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
   as?: ValidComponent;
   type: 'large-bordered' | 'small-bordered' | 'normal' | 'circle';

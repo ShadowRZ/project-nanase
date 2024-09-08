@@ -148,7 +148,7 @@ function AvatarImage<T extends ValidComponent = 'img'>(
 }
 
 type AvatarFallbackProps = {
-  children: string | ValidComponent;
+  children: ValidComponent;
   button?: boolean;
   checked?: boolean;
 } & AvatarVariants;

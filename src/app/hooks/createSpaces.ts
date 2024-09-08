@@ -8,7 +8,7 @@ export function createSpaceList() {
   const [spaces, { refetch: refetchSpaces }] = createResource(
     roomList,
     ($roomList) => {
-      return Array.from($roomList.spaceChildrens.keys());
+      return [...$roomList.spaceChildrens.keys()];
     }
   );
 

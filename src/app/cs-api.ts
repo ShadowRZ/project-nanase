@@ -38,7 +38,6 @@ export const autoDiscovery = async (
     request(autoDiscoveryUrl, { method: 'GET' })
   );
 
-  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
   if (err || response.status === 404) {
     // AutoDiscoveryAction.IGNORE
     // We will use default value for IGNORE action
@@ -66,7 +65,6 @@ export const autoDiscovery = async (
     response.json() as Promise<AutoDiscoveryInfo>
   );
 
-  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
   if (contentErr || typeof content !== 'object') {
     return [
       {

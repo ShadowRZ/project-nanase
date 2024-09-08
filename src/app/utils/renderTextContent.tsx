@@ -58,7 +58,7 @@ export function renderTextContent(
 
   // Add highlight to <code />
   for (const item of node.querySelectorAll('code')) {
-    const children = Array.from(item.childNodes);
+    const children = [...item.childNodes];
     item.replaceChildren();
     render(
       () =>
@@ -72,7 +72,7 @@ export function renderTextContent(
   // Process <span />
   for (const item of node.querySelectorAll('span')) {
     if (Object.hasOwn(item.dataset, 'mxSpoiler')) {
-      const children = Array.from(item.childNodes);
+      const children = [...item.childNodes];
       item.replaceChildren();
       render(
         () =>
@@ -82,9 +82,11 @@ export function renderTextContent(
         item
       );
     } else {
+      // eslint-disable-next-line unicorn/no-null
       item.style.setProperty('color', item.dataset.mxColor ?? null);
       item.style.setProperty(
         'background-color',
+        // eslint-disable-next-line unicorn/no-null
         item.dataset.mxBgColor ?? null
       );
     }

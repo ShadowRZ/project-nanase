@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unassigned-import
 import '@fontsource-variable/inter';
 import 'uno.css';
 import 'prismjs/themes/prism.min.css';

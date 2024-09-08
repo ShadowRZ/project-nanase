@@ -1,6 +1,7 @@
-import { Navigate, Route, MemoryRouter as Router } from '@solidjs/router';
+import { Navigate, Route, HashRouter as Router } from '@solidjs/router';
 import {
   Show,
+  createEffect,
   createSignal,
   onCleanup,
   onMount,
@@ -8,19 +9,21 @@ import {
   type ParentComponent,
 } from 'solid-js';
 import FeatureCheck from './FeatureCheck';
+import AuthFormLayout from './auth/AuthFormLayout';
 import AuthLayout from './auth/AuthLayout';
 import Login from './auth/login/Login';
 import PasswordLogin from './auth/login/PasswordLogin';
-import AuthFormLayout from './auth/AuthFormLayout';
+import ClientLayout from './client/ClientLayout';
 import { setProfiles } from '~/app/hooks/createProfileStore';
 import { AppContext } from '~/app/hooks/useAppContext';
 import { I18NProvider } from '~/app/i18n';
 import MatrixChat from '~/app/templates/client/MatrixChat';
 import { SessionList, SessionListEvents } from '~/lib/client/session';
+import { isInitial } from '~/app/state/sessions';
 
 const Index: Component = () => {
   return (
-    <Show when={!SessionList.isInitial()} fallback={<Navigate href='/login' />}>
+    <Show when={!isInitial()} fallback={<Navigate href='/login' />}>
       <Navigate href='/rooms' />
     </Show>
   );
@@ -84,6 +87,7 @@ const App: Component = () => {
         </Route>
       </Route>
       <Route path='/rooms/:id?' component={ChatWrapper} />
+      <Route component={ClientLayout} />
     </Router>
   );
 };

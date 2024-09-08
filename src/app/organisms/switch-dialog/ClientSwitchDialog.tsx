@@ -68,7 +68,7 @@ const ClientSwitchItem: Component<ClientSwitchItemProps> = (props) => {
 const ClientSwitchDialog: Component<ClientSwitchDialogProps> = (props) => {
   const { clients, current } = useAppContext();
   const navigate = useNavigate();
-  const [ids, setIds] = createSignal<string[]>(Array.from(clients.keys()));
+  const [ids, setIds] = createSignal<string[]>([...clients.keys()]);
   const [addAccount, setAddAccount] = createSignal(false);
 
   return (

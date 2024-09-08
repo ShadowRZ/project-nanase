@@ -85,7 +85,7 @@ export default class RoomList extends TypedEventEmitter<
         }
       }
 
-    return Array.from(children);
+    return [...children];
   }
 
   private getMDirects(): Set<string> {

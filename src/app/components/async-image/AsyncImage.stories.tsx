@@ -14,6 +14,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    // eslint-disable-next-line @typescript-eslint/require-await
     src: async () => IMAGE_URL,
   },
 };
@@ -29,6 +30,7 @@ export const Loading: Story = {
 export const Error: Story = {
   args: {
     src: async () =>
+      // eslint-disable-next-line promise/param-names -- Don't care about the resolve
       new Promise((_, reject) => {
         setTimeout(() => {
           reject(new window.Error('This image just failed to load!'));

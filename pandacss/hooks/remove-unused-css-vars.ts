@@ -6,7 +6,7 @@ type UseRecord = {
   declarations: Set<postcss.Declaration>;
 };
 
-const varRegex = /var\(\s*(?<name>--[^ ,);]+)/g;
+const varRegex = /var\(\s*(?<name>--[^ ),;]+)/g;
 
 /**
  * Adapted from https://github.com/tomasklaen/postcss-prune-var/blob/57ad5041806b73479d0c558e0b1a918803cb7cbc/index.js

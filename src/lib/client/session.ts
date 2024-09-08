@@ -49,7 +49,6 @@ export class Session extends TypedEventEmitter<
 
   private roomList_?: RoomList;
 
-  // eslint-disable-next-line max-params
   constructor(
     id: string,
     baseUrl: string,
@@ -193,9 +192,9 @@ export class SessionList extends TypedEventEmitter<
 
   public static fromLocalStorage() {
     const current = localStorage.getItem(cons.internal.storage.CURRENT_TOKEN);
-    if (current === null) return undefined;
+    if (current === null) return;
     const stored = localStorage.getItem(cons.internal.storage.SESSIONS_TOKEN);
-    if (stored === null) return undefined;
+    if (stored === null) return;
     const clients = new Map<string, Session>();
 
     const data = JSON.parse(stored) as ClientDataList;

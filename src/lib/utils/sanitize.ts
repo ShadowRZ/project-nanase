@@ -140,8 +140,8 @@ export function sanitizeMatrixHtml(
     allowedClasses: TAG_ALLOWED_CLASSES,
     allowedStyles: {
       '*': {
-        color: [/^#(?:[\da-fA-F]{3}){1,2}$/],
-        'background-color': [/^#(?:[\da-fA-F]{3}){1,2}$/],
+        color: [/^#(?:[\dA-Fa-f]{3}){1,2}$/],
+        'background-color': [/^#(?:[\dA-Fa-f]{3}){1,2}$/],
       },
     },
     transformTags: ignoreUIReplacement
@@ -172,5 +172,5 @@ export function sanitizeText(body: string) {
     '"': '&quot;',
     "'": '&#39;',
   };
-  return body.replaceAll(/[&<>'"]/g, (tag) => tagsToReplace[tag] || tag);
+  return body.replaceAll(/["&'<>]/g, (tag) => tagsToReplace[tag] || tag);
 }

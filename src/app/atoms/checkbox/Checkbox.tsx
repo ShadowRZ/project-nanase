@@ -5,6 +5,7 @@ import { css } from '~styled/css';
 import { Flex, Square, styled } from '~styled/jsx';
 
 type CheckboxProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
   value?: string;
   label: string;
