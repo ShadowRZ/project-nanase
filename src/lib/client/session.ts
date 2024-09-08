@@ -91,7 +91,7 @@ export class Session extends TypedEventEmitter<
           SessionEvents.ProfileUpdated,
           profile.displayname,
           profile.avatar_url
-            ? this.client.mxcUrlToHttp(profile.avatar_url) ?? undefined
+            ? (this.client.mxcUrlToHttp(profile.avatar_url) ?? undefined)
             : undefined
         );
       })
@@ -129,7 +129,7 @@ export class Session extends TypedEventEmitter<
       SessionEvents.ProfileUpdated,
       user.displayName,
       user.avatarUrl
-        ? this.client.mxcUrlToHttp(user.avatarUrl) ?? undefined
+        ? (this.client.mxcUrlToHttp(user.avatarUrl) ?? undefined)
         : undefined
     );
   }
