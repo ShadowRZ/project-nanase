@@ -1,7 +1,6 @@
 import {
   Show,
   type ParentComponent,
-  Suspense,
   createResource,
   type Component,
 } from 'solid-js';
