@@ -57,7 +57,7 @@ const RoomTimeline: Component<RoomTimelineProps> = (props) => {
 
   createEffect(() => {
     if (scroll.y <= 256 && events()?.at(0)?.getType() !== 'm.room.create')
-      paginateBack().catch(() => {});
+      paginateBack().catch(() => { });
   });
 
   return (
@@ -92,8 +92,8 @@ const RoomTimeline: Component<RoomTimelineProps> = (props) => {
             );
           }}
         </Key>
-        <div ref={endRef} data-project-nanase-timeline-end />
       </Show>
+      <div ref={endRef} data-project-nanase-timeline-end />
     </Flex>
   );
 };

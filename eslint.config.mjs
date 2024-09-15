@@ -57,6 +57,7 @@ export default tseslint.config(
       'unicorn/prevent-abbreviations': 'off',
       'unicorn/filename-case': 'off',
       'unicorn/empty-brace-spaces': 'off',
+      'unicorn/consistent-function-scoping': 'off',
       // Element.innerText preserves line breaks while textContent doesn't.
       // And we want the former.
       'unicorn/prefer-dom-node-text-content': 'off',
