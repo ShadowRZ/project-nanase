@@ -64,5 +64,11 @@ export default tseslint.config(
       '@typescript-eslint/naming-convention': 'off',
       '@typescript-eslint/no-empty-function': 'off',
     },
+  },
+  // Disable Typed lintings for Storybook configs
+  {
+    files: ['.storybook/*.{ts,tsx}'],
+    // eslint-disable-next-line import-x/no-named-as-default-member
+    extends: [tseslint.configs.disableTypeChecked],
   }
 );

@@ -114,6 +114,9 @@ importers:
       '@eslint/js':
         specifier: ^9.12.0
         version: 9.12.0
+      '@fontsource-variable/outfit':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@iconify-json/ph':
         specifier: ^1.2.1
         version: 1.2.1
@@ -938,6 +941,9 @@ packages:
 
   '@fontsource-variable/inter@5.1.0':
     resolution: {integrity: sha512-Wj2dUGP0vUpxRGQTXQTCNJO+aLcFcQm+gUPXfj/aS877bQkEPBPv9JvZJpwdm2vzelt8NTZ+ausKlBCJjh2XIg==}
+
+  '@fontsource-variable/outfit@5.1.0':
+    resolution: {integrity: sha512-WUZiMehPerX/sUWC65Ku9hQ741cJtkCiy5T9XSZd1XbyYudNd/qoZSbUyEbiC00+4rGheNcKzaFdMGp5uonQog==}
 
   '@humanfs/core@0.19.0':
     resolution: {integrity: sha512-2cbWIHbZVEweE853g8jymffCA+NCMiuqeECeBBLm8dg2oFdjuGJhgN4UAbI+6v0CKbbhvtXA4qV8YR5Ji86nmw==}
@@ -5176,6 +5182,8 @@ snapshots:
   '@floating-ui/utils@0.2.8': {}
 
   '@fontsource-variable/inter@5.1.0': {}
+
+  '@fontsource-variable/outfit@5.1.0': {}
 
   '@humanfs/core@0.19.0': {}
 
