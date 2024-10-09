@@ -1,5 +1,5 @@
 import { defineConfig, defineGlobalStyles } from '@pandacss/dev';
-import radixColorsPreset from 'pandacss-preset-radix-colors';
+import { createPreset } from './pandacss/preset';
 import { removeUnusedCssVars } from './pandacss/hooks/remove-unused-css-vars';
 import { removeUnusedKeyframes } from './pandacss/hooks/remove-unused-keyframes';
 import keyframes from './pandacss/keyframes';
@@ -28,10 +28,13 @@ export default defineConfig({
   include: ['./src/**/*.{js,jsx,ts,tsx}'],
   exclude: [],
   presets: [
-    radixColorsPreset({
-      darkMode: true,
+    createPreset({
+      semanticColors: {
+        success: 'grass',
+        warning: 'amber',
+        error: 'red',
+      },
     }),
-    '@pandacss/preset-panda',
   ],
   outdir: 'styled-system',
   jsxFramework: 'solid',
