@@ -1,5 +1,5 @@
 export const getAppBaseUrl = () => {
-  const origin: string = trimSlash(window.location.origin);
+  const origin: string = trimSlash(location.origin);
   const baseUrl = trimSlash(import.meta.env.BASE_URL ?? '');
 
   return `${origin}/${baseUrl}`;

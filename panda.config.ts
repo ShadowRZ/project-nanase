@@ -16,6 +16,7 @@ const globalCss = defineGlobalStyles({
       base: 'black',
       _dark: 'white',
     },
+    colorPalette: 'accent',
   },
   '#root': {
     height: 'dvh',

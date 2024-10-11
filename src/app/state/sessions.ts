@@ -5,13 +5,13 @@ import { type Session, type SessionMap } from '~/types/client';
 
 // eslint-disable-next-line solid/reactivity
 const [sessions, setSessions] = makePersisted(createStore<Session[]>([]), {
-  storage: window.localStorage,
+  storage: localStorage,
   name: 'project-nanase-sessions',
 });
 
 // eslint-disable-next-line solid/reactivity
 const [current, setCurrent] = makePersisted(createSignal<string>(), {
-  storage: window.localStorage,
+  storage: localStorage,
   name: 'project-nanase-current-session',
 });
 
