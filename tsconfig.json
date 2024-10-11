@@ -18,6 +18,9 @@
     "noEmit": true,
     "isolatedModules": true,
     "strict": true,
+    "skipLibCheck": true,
+    "noUncheckedSideEffectImports": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "exclude": ["node_modules/"]
 }
