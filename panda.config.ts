@@ -1,8 +1,5 @@
 import { defineConfig, defineGlobalStyles } from '@pandacss/dev';
 import { createPreset } from './pandacss/preset';
-import { removeUnusedCssVars } from './pandacss/hooks/remove-unused-css-vars';
-import { removeUnusedKeyframes } from './pandacss/hooks/remove-unused-keyframes';
-import keyframes from './pandacss/keyframes';
 
 const globalCss = defineGlobalStyles({
   'html, body': {
@@ -41,16 +38,4 @@ export default defineConfig({
   jsxFramework: 'solid',
   importMap: '~styled',
   globalCss,
-  theme: {
-    extend: {
-      keyframes,
-    },
-  },
-  hooks: {
-    'cssgen:done'({ artifact, content }) {
-      if (artifact === 'styles.css') {
-        return removeUnusedCssVars(removeUnusedKeyframes(content));
-      }
-    },
-  },
 });

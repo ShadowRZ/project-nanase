@@ -1,12 +1,12 @@
 import { createClient, IndexedDBStore, type MatrixClient } from 'matrix-js-sdk';
 import { type Session } from '~/types/client';
 
-export const initClient = (session: Session) => {
+export const initClient = async (session: Session) => {
   const { baseUrl, accessToken, userId, deviceId } = session;
   const store = new IndexedDBStore({
-    indexedDB: window.indexedDB,
-    localStorage: window.localStorage,
-    dbName: `project-nanase:${session.userId}:sync-store`,
+    indexedDB: globalThis.indexedDB,
+    localStorage: globalThis.localStorage,
+    dbName: `project-nanase:sync-store:${session.userId}`,
   });
 
   const mx = createClient({
@@ -22,6 +22,7 @@ export const initClient = (session: Session) => {
     verificationMethods: ['m.sas.v1'],
   });
 
+  await store.startup();
   // TODO: Encryption
   mx.setMaxListeners(50);
 
@@ -37,7 +38,7 @@ export const startClient = async (mx: MatrixClient) => {
 export const clearCacheAndReload = async (mx: MatrixClient) => {
   mx.stopClient();
   await mx.store.deleteAllData();
-  window.location.reload();
+  location.reload();
 };
 
 export const logoutClient = async (mx: MatrixClient) => {

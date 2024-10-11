@@ -1,13 +1,13 @@
 import {
+  type Accessor,
   createMemo,
   createResource,
-  type FlowProps,
-  untrack,
-  type Accessor,
   type FlowComponent,
+  type FlowProps,
   type JSX,
-  Suspense,
-  ErrorBoundary,
+  Match,
+  Switch,
+  untrack,
 } from 'solid-js';
 import { specVersions, type SpecVersions } from '~/app/cs-api';
 
@@ -41,18 +41,24 @@ const WithSpecVersions: FlowComponent<
 > = (props) => {
   const baseUrl = () => props.baseUrl;
 
-  const [versions] = createResource(baseUrl, async ($baseUrl) =>
+  const [versions, { refetch }] = createResource(baseUrl, async ($baseUrl) =>
     specVersions(fetch, $baseUrl)
   );
 
   return (
-    <ErrorBoundary fallback={props.error}>
-      <Suspense fallback={props.fallback}>
+    <Switch>
+      <Match when={versions.loading}>{props.fallback}</Match>
+      <Match when={!!versions.error}>
+        {props.error(versions.error as Error, () => {
+          void refetch();
+        })}
+      </Match>
+      <Match when={versions.state === 'ready'}>
         <RemoveUndefinedProp specVersions={versions()}>
           {props.children}
         </RemoveUndefinedProp>
-      </Suspense>
-    </ErrorBoundary>
+      </Match>
+    </Switch>
   );
 };
 

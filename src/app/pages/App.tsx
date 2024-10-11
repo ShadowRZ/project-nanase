@@ -21,10 +21,10 @@ import MatrixChat from '~/app/templates/client/MatrixChat';
 import { SessionList, SessionListEvents } from '~/lib/client/session';
 import { isInitial } from '~/app/state/sessions';
 
-const Index: Component = () => {
+const Index: ParentComponent = (props) => {
   return (
     <Show when={!isInitial()} fallback={<Navigate href='/login' />}>
-      <Navigate href='/rooms' />
+      {props.children}
     </Show>
   );
 };
@@ -79,7 +79,9 @@ const Layout: ParentComponent = (props) => (
 const App: Component = () => {
   return (
     <Router root={Layout}>
-      <Route path='/' component={Index} />
+      <Route path='/' component={Index}>
+        <Route component={ClientLayout} />
+      </Route>
       <Route component={AuthLayout}>
         <Route path='/login' component={Login} />
         <Route component={AuthFormLayout}>
@@ -87,7 +89,6 @@ const App: Component = () => {
         </Route>
       </Route>
       <Route path='/rooms/:id?' component={ChatWrapper} />
-      <Route component={ClientLayout} />
     </Router>
   );
 };

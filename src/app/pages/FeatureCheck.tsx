@@ -4,19 +4,27 @@ import {
   createResource,
   type Component,
 } from 'solid-js';
+import { Flex, styled } from '~styled/jsx';
 
 const IDBUnsupported: Component = () => {
   return (
-    <div class='h-dvh flex items-center justify-center flex-col text-center p-4'>
-      <span class='text-lg font-bold text-red'>
+    <Flex
+      direction='column'
+      textAlign='center'
+      h='dvh'
+      alignItems='center'
+      justifyContent='center'
+      p='4'
+    >
+      <styled.span textStyle='lg' fontWeight='bold' color='fg.error'>
         A Feature required by the app is missing
-      </span>
+      </styled.span>
       <span>
         This app requires IndexedDB, however we can't find such support on your
         browser.
       </span>
       <span>Please make sure to enable such support and allow cookies.</span>
-    </div>
+    </Flex>
   );
 };
 
