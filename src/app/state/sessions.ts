@@ -13,6 +13,8 @@ const [sessions, setSessions] = makePersisted(createStore<Session[]>([]), {
 const [current, setCurrent] = makePersisted(createSignal<string>(), {
   storage: localStorage,
   name: 'project-nanase-current-session',
+  serialize: (value) => value!,
+  deserialize: (value) => value,
 });
 
 export const currentSession = () =>
