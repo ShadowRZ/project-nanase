@@ -1,7 +1,8 @@
-import { defineRecipe } from "@pandacss/dev";
+import { defineRecipe } from '@pandacss/dev';
 
 export const input = defineRecipe({
   className: 'input',
+  jsx: ['Input', 'Field.Input', 'UIField.Input'],
   base: {
     appearance: 'none',
     background: 'none',
@@ -31,5 +32,5 @@ export const input = defineRecipe({
         boxShadow: '0 0 0 1px token(colors.border.error)',
       },
     },
-  }
-})
+  },
+});

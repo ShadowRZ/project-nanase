@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import solidPlugin from 'vite-plugin-solid';
 // Import devtools from 'solid-devtools/vite';
-import unocssPlugin from 'unocss/vite';
 import icons from 'unplugin-icons/vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
@@ -15,9 +14,6 @@ export default defineConfig({
     */
     // devtools(),
     solidPlugin(),
-    unocssPlugin({
-      // Your config or in uno.config.ts
-    }),
     icons({ compiler: 'solid' }),
     tsconfigPaths({ root: './' }),
   ],

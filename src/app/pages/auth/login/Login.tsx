@@ -5,18 +5,19 @@ import {
   type SubmitHandler,
 } from '@modular-forms/solid';
 import { useNavigate } from '@solidjs/router';
-import { type Component } from 'solid-js';
-import * as v from 'valibot';
 import to from 'await-to-js';
+import { Show, type Component } from 'solid-js';
+import * as v from 'valibot';
+import ArrowRightBold from '~icons/ph/arrow-right-bold';
+import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
+import { getLoginPath } from '~/app/utils/paths';
+import { Card } from '~/components/ui/card';
+import { Field as UIField } from '~/components/ui/field';
+import { matchMXID, MXIDRegex } from '~/lib/utils/user-id';
+import { flex } from '~styled/patterns';
 import { getServerMeta } from '../getServerMeta';
 import LoginHeader from './LoginHeader';
-import Input from '~/app/atoms/input/Input';
-import Text from '~/app/atoms/text/Text';
-import ProgressButton from '~/app/components/progress-button/ProgressButton';
-import { getLoginPath } from '~/app/utils/paths';
-import { matchMXID, MXIDRegex } from '~/lib/utils/user-id';
-import { Flex, styled } from '~styled/jsx';
-import { flex } from '~styled/patterns';
+import { Button } from '@/components/ui/button';
 
 const LoginSchema = v.object({
   user_id: v.pipe(
@@ -43,42 +44,39 @@ const Login: Component = () => {
 
   const [form, { Form, Field }] = createForm<LoginForm>({
     validateOn: 'submit',
+    // @ts-expect-error: Not sure why.
     validate: valiForm(LoginSchema),
   });
 
   return (
-    <Flex direction='column'>
+    <>
       <LoginHeader />
       <Form onSubmit={onSubmit} class={flex({ direction: 'column', gap: '2' })}>
-        <Field name='user_id'>
-          {(field, props) => (
-            <Input
-              {...props}
-              label='Matrix ID'
-              value={field.value}
-              error={field.error}
-              required
-              placeholder='@example:example.com'
-            />
-          )}
-        </Field>
-        <Text
-          color='error'
-          font='bold'
-          css={{ _empty: { display: 'none' }, mt: '2' }}
-        >
-          {form.response.message}
-        </Text>
-        <Flex w='full' mt='2' justifyContent='center'>
-          <ProgressButton
-            disabled={form.invalid}
-            type='submit'
-            text='Next'
-            busy={form.submitting}
-          />
-        </Flex>
+        <Card.Body>
+          <Field name='user_id'>
+            {(field, props) => (
+              <UIField.Root invalid={!!field.error}>
+                <UIField.Label>Matrix ID</UIField.Label>
+                <UIField.Input
+                  value={field.value}
+                  placeholder='@example:example.com'
+                  {...props}
+                />
+                <UIField.ErrorText>{field.error}</UIField.ErrorText>
+              </UIField.Root>
+            )}
+          </Field>
+        </Card.Body>
+        <Card.Footer w='full' justifyContent='center'>
+          <Button disabled={form.submitting}>
+            Continue
+            <Show when={form.submitting} fallback={<ArrowRightBold />}>
+              <LoadingIndicator />
+            </Show>
+          </Button>
+        </Card.Footer>
       </Form>
-    </Flex>
+    </>
   );
 };
 

@@ -1,13 +1,15 @@
 import { type Component } from 'solid-js';
-import { Flex, styled } from '~styled/jsx';
+import { Card } from '~/components/ui/card';
 
 const LoginHeader: Component = () => (
-  <Flex direction='column' mb='2'>
-    <styled.span textStyle='xl' fontWeight='bold'>
+  <Card.Header mb='2'>
+    <Card.Title textStyle='xl' fontWeight='bold'>
       Sign In
-    </styled.span>
-    <styled.span>You need to provide your credentials to proceed.</styled.span>
-  </Flex>
+    </Card.Title>
+    <Card.Description>
+      You need to provide your credentials to proceed.
+    </Card.Description>
+  </Card.Header>
 );
 
 export default LoginHeader;

@@ -5,7 +5,7 @@ import { styled, Flex } from '~styled/jsx';
 const StyledLink = styled(Link, {
   base: {
     textDecoration: { base: 'inherit', _hover: 'underline' },
-    color: 'ruby.11',
+    color: 'colorPalette.11',
   },
 });
 

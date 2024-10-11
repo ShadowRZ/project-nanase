@@ -1,4 +1,4 @@
-import { Button } from '@kobalte/core/button';
+import { Button } from '@/components/ui/button';
 import { type Component, For, Match, Show, Switch } from 'solid-js';
 import { type IIdentityProvider, type MatrixClient } from 'matrix-js-sdk';
 import { Flex, styled } from '~styled/jsx';
@@ -16,33 +16,13 @@ type SSOOtherIconProps = {
   client: MatrixClient;
 };
 
-const SSOButton = styled(Button, {
-  base: {
-    transition: 'common',
-    transitionDuration: '200ms',
-    position: 'relative',
-    gap: '2',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    rounded: 'xl',
-    p: '2',
-    borderWidth: '1',
-    borderColor: 'mauve.7',
-    borderStyle: 'solid',
-    _hover: {
-      cursor: 'pointer',
-    },
-  },
-});
-
 const SSOOtherIcon: Component<SSOOtherIconProps> = (props) => {
   return (
     <Show when={props.icon !== undefined} fallback={<ArrowSquareOutDuotone />}>
       {}
-      <img
-        class='w-6 inline-block'
+      <styled.img
+        w='6'
+        display='inline-block'
         src={props.client.mxcUrlToHttp(props.icon!) ?? undefined}
       />
     </Show>
@@ -71,7 +51,7 @@ export const SSOLogin: Component<SSOLoginProps> = (props) => {
         gap='2'
       >
         <ArrowSquareOutDuotone />
-        <styled.h2 fontWeight='bold' textStyle='lg'>
+        <styled.h2 fontWeight='bold'>
           <Switch>
             <Match when={props.register !== true}>Sign in with...</Match>
             <Match when={props.register === true}>Register with...</Match>
@@ -81,7 +61,9 @@ export const SSOLogin: Component<SSOLoginProps> = (props) => {
       <Flex direction='column' mt='2' gap='2'>
         <For each={props.idps}>
           {(idp) => (
-            <SSOButton
+            <Button
+              variant='outline'
+              color='fg.default'
               onClick={() => {
                 ssoLoginBegin(idp.id);
               }}
@@ -111,7 +93,7 @@ export const SSOLogin: Component<SSOLoginProps> = (props) => {
                 </Match>
               </Switch>
               <span>{idp.name}</span>
-            </SSOButton>
+            </Button>
           )}
         </For>
       </Flex>

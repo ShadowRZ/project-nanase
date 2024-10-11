@@ -1,5 +1,4 @@
 import '@fontsource-variable/inter';
-import 'uno.css';
 import 'prismjs/themes/prism.min.css';
 import { render } from 'solid-js/web';
 import './index.css';
