@@ -12,7 +12,6 @@ import {
   Show,
   Switch,
   type ParentComponent,
-  type JSX,
 } from 'solid-js';
 import { SplashScreen } from '~/app/components/splash-screen/Splashscreen';
 import { MatrixClientProvider } from '~/app/hooks/useMatrixClient';
@@ -99,10 +98,7 @@ const ClientRoot: ParentComponent = (props) => {
                       mediaConfig,
                     }}
                   >
-                    <Flex grow='1'>
-                      <Flex shrink='0'>{props.nav}</Flex>
-                      <Flex grow='1'>{props.children}</Flex>
-                    </Flex>
+                    {props.children}
                   </ServerDetailsProvider>
                 )}
               </WithServerDetails>
