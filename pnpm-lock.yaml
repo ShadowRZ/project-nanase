@@ -32,6 +32,9 @@ importers:
       '@solid-primitives/keyed':
         specifier: ^1.2.2
         version: 1.2.2(solid-js@1.9.2)
+      '@solid-primitives/resource':
+        specifier: ^0.3.1
+        version: 0.3.1(solid-js@1.9.2)
       '@solid-primitives/scheduled':
         specifier: ^1.4.3
         version: 1.4.3(solid-js@1.9.2)
@@ -110,7 +113,7 @@ importers:
     devDependencies:
       '@ark-ui/anatomy':
         specifier: ^3.5.0
-        version: 3.5.0(@internationalized/date@3.5.5)
+        version: 3.5.0(@internationalized/date@3.5.6)
       '@ark-ui/solid':
         specifier: ^4.2.1
         version: 4.2.1(solid-js@1.9.2)
@@ -1336,6 +1339,11 @@ packages:
     resolution: {integrity: sha512-KbPhwal6ML9OHeUTZszBbt6PYSMj89d4wVCLxlvDYL4U0+p+xlCEaqz6v9dkCwm/0Lb+Wed7W5T1dQZCP3JUUw==}
     peerDependencies:
       solid-js: ^1.6.12
+
+  '@solid-primitives/resource@0.3.1':
+    resolution: {integrity: sha512-17YquMeg58aGOxUP85x4sN7PL1qBgm6euFY7a2pQQLiu5dzrCzKPHsZ8hmgSEztejVlk8VCgOIteGdTCkDgJmw==}
+    peerDependencies:
+      solid-js: ^1.6.0
 
   '@solid-primitives/rootless@1.4.5':
     resolution: {integrity: sha512-GFJE9GC3ojx0aUKqAUZmQPyU8fOVMtnVNrkdk2yS4kd17WqVSpXpoTmo9CnOwA+PG7FTzdIkogvfLQSLs4lrww==}
@@ -5051,7 +5059,7 @@ snapshots:
 
   '@antfu/utils@0.7.10': {}
 
-  '@ark-ui/anatomy@3.5.0(@internationalized/date@3.5.5)':
+  '@ark-ui/anatomy@3.5.0(@internationalized/date@3.5.6)':
     dependencies:
       '@zag-js/accordion': 0.62.1
       '@zag-js/anatomy': 0.62.1
@@ -5064,7 +5072,7 @@ snapshots:
       '@zag-js/color-utils': 0.62.1
       '@zag-js/combobox': 0.62.1
       '@zag-js/date-picker': 0.62.1
-      '@zag-js/date-utils': 0.62.1(@internationalized/date@3.5.5)
+      '@zag-js/date-utils': 0.62.1(@internationalized/date@3.5.6)
       '@zag-js/dialog': 0.62.1
       '@zag-js/editable': 0.62.1
       '@zag-js/file-upload': 0.62.1
@@ -6207,6 +6215,10 @@ snapshots:
       '@solid-primitives/rootless': 1.4.5(solid-js@1.9.2)
       '@solid-primitives/static-store': 0.0.8(solid-js@1.9.2)
       '@solid-primitives/utils': 6.2.3(solid-js@1.9.2)
+      solid-js: 1.9.2
+
+  '@solid-primitives/resource@0.3.1(solid-js@1.9.2)':
+    dependencies:
       solid-js: 1.9.2
 
   '@solid-primitives/rootless@1.4.5(solid-js@1.9.2)':
@@ -7412,6 +7424,10 @@ snapshots:
   '@zag-js/date-utils@0.62.1(@internationalized/date@3.5.5)':
     dependencies:
       '@internationalized/date': 3.5.5
+
+  '@zag-js/date-utils@0.62.1(@internationalized/date@3.5.6)':
+    dependencies:
+      '@internationalized/date': 3.5.6
 
   '@zag-js/date-utils@0.74.2(@internationalized/date@3.5.6)':
     dependencies:

@@ -13,13 +13,13 @@ import AuthFormLayout from './auth/AuthFormLayout';
 import AuthLayout from './auth/AuthLayout';
 import Login from './auth/login/Login';
 import PasswordLogin from './auth/login/PasswordLogin';
-import ClientLayout from './client/ClientLayout';
 import { setProfiles } from '~/app/hooks/createProfileStore';
 import { AppContext } from '~/app/hooks/useAppContext';
 import { I18NProvider } from '~/app/i18n';
 import MatrixChat from '~/app/templates/client/MatrixChat';
 import { SessionList, SessionListEvents } from '~/lib/client/session';
 import { isInitial } from '~/app/state/sessions';
+import { ClientRoute } from './client/ClientRoute';
 
 const Index: ParentComponent = (props) => {
   return (
@@ -80,7 +80,7 @@ const App: Component = () => {
   return (
     <Router root={Layout}>
       <Route path='/' component={Index}>
-        <Route component={ClientLayout} />
+        <Route component={ClientRoute} />
       </Route>
       <Route component={AuthLayout}>
         <Route path='/login' component={Login} />

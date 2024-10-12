@@ -12,6 +12,7 @@ import {
   Show,
   Switch,
   type ParentComponent,
+  type JSX,
 } from 'solid-js';
 import { SplashScreen } from '~/app/components/splash-screen/Splashscreen';
 import { MatrixClientProvider } from '~/app/hooks/useMatrixClient';
@@ -24,6 +25,8 @@ import SpecVersions from './SpecVersions';
 import { Dialog } from '@/components/ui/dialog';
 import { Portal } from 'solid-js/web';
 import { Button } from '~/components/ui/button';
+import { WithServerDetails } from '~/app/components/with-server-details/WithServerDetails';
+import { ServerDetailsProvider } from '~/app/hooks/useServerDetails';
 
 const createLogoutListener = (
   mx: Accessor<MatrixClient | undefined>,
@@ -87,13 +90,27 @@ const ClientRoot: ParentComponent = (props) => {
             <p>Error</p>
           </Match>
           <Match when={start.state === 'ready'}>
-            <MatrixClientProvider value={mx()}>
-              {props.children}
+            <MatrixClientProvider value={mx as Accessor<MatrixClient>}>
+              <WithServerDetails>
+                {(capabilities, mediaConfig) => (
+                  <ServerDetailsProvider
+                    value={{
+                      capabilities,
+                      mediaConfig,
+                    }}
+                  >
+                    <Flex grow='1'>
+                      <Flex shrink='0'>{props.nav}</Flex>
+                      <Flex grow='1'>{props.children}</Flex>
+                    </Flex>
+                  </ServerDetailsProvider>
+                )}
+              </WithServerDetails>
             </MatrixClientProvider>
           </Match>
         </Switch>
       </Show>
-      <Dialog.Root open={errored()} unmountOnExit>
+      <Dialog.Root open={errored()}>
         <Portal>
           <Dialog.Backdrop />
           <Dialog.Positioner>

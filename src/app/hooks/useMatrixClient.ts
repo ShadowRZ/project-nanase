@@ -1,11 +1,11 @@
 import { type MatrixClient } from 'matrix-js-sdk';
-import { createContext, useContext } from 'solid-js';
+import { Accessor, createContext, useContext } from 'solid-js';
 
-const MatrixClientContext = createContext<MatrixClient>();
+const MatrixClientContext = createContext<Accessor<MatrixClient>>();
 
 export const MatrixClientProvider = MatrixClientContext.Provider;
 
-export function useMatrixClient(): MatrixClient {
+export function useMatrixClient(): Accessor<MatrixClient> {
   const mx = useContext(MatrixClientContext);
   if (!mx)
     throw new Error('Matrix client used without providing a MatrixClient!');

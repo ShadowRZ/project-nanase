@@ -1,12 +1,13 @@
-import { type ParentComponent } from 'solid-js';
-import ClientRoot from './ClientRoot';
-import { SplashScreen } from '~/app/components/splash-screen/Splashscreen';
-import { Flex, styled } from '~styled/jsx';
-import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
-import { Text } from '@/components/ui/text';
+import type { JSX, ParentComponent } from 'solid-js';
+import { Flex } from '~styled/jsx';
 
-const ClientLayout: ParentComponent = (props) => {
-  return <ClientRoot>Hello</ClientRoot>;
+const ClientLayout: ParentComponent<{ nav?: JSX.Element }> = (props) => {
+  return (
+    <Flex grow='1'>
+      <Flex shrink='0'>{props.nav}</Flex>
+      <Flex grow='1'>{props.children}</Flex>
+    </Flex>
+  );
 };
 
 export default ClientLayout;
