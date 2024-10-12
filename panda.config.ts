@@ -3,7 +3,7 @@ import { createPreset } from './pandacss/preset';
 
 const globalCss = defineGlobalStyles({
   'html, body': {
-    fontFamily: 'sans',
+    '--global-font-body': '"Inter Variable", Inter, sans-serif',
     overflow: 'hidden',
     bg: {
       base: 'white',

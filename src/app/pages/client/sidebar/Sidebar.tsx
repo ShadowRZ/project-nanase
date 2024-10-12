@@ -1,33 +1,17 @@
-import { createSignal, createUniqueId, type Component } from 'solid-js';
+import { createSignal, type Component } from 'solid-js';
 import AccountMenu from './AccountMenu';
 import { Tooltip } from '@/components/ui/tooltip';
-import t from '~/app/i18n';
-import {
-  type RoomCategory,
-  type SpaceRooms,
-} from '~/app/organisms/room-list/RoomList';
-import SpaceList from '~/app/organisms/space-list/SpaceList';
 import { flex, square } from '~styled/patterns';
-import { Flex, Square } from '~styled/jsx';
+import { Flex } from '~styled/jsx';
 import ChatsTeardropFill from '~icons/ph/chats-teardrop-fill';
 import FolderUserFill from '~icons/ph/folder-user-fill';
 import { Tabs } from '@ark-ui/solid';
-import { css, cx } from '~styled/css';
 import { IconButton } from '@/components/ui/icon-button';
 import { Portal } from 'solid-js/web';
-import { button } from '~styled/recipes';
+import { JoinedRooms } from './RoomList';
+import { css } from '~styled/css';
 
-export type SidebarProps = {
-  category: RoomCategory;
-  onCategoryChanged: (category: RoomCategory) => void;
-};
-
-const Sidebar: Component = (props) => {
-  // const category = (): RoomCategory => props.category;
-  // const categoryType = () => category().type;
-  // const currentSpaceId = () =>
-  //   categoryType() === 'space' ? (category() as SpaceRooms).space : undefined;
-
+const Sidebar: Component = () => {
   const [value, setValue] = createSignal('chats');
 
   return (
@@ -42,6 +26,7 @@ const Sidebar: Component = (props) => {
         overflowY: 'scroll',
         borderRightWidth: '1',
         scrollbar: 'hidden',
+        w: { base: 'full', md: '27.5rem' },
         borderColor: 'border.default',
       })}
     >
@@ -66,6 +51,7 @@ const Sidebar: Component = (props) => {
                 height='12'
                 rounded='full'
                 colorPalette='accent'
+                color='colorPalette.12'
                 _selected={{ bg: 'colorPalette.5' }}
                 {...props()}
               >
@@ -94,6 +80,7 @@ const Sidebar: Component = (props) => {
                 height='12'
                 rounded='full'
                 colorPalette='accent'
+                color='colorPalette.12'
                 _selected={{ bg: 'colorPalette.5' }}
                 {...props()}
               >
@@ -111,12 +98,16 @@ const Sidebar: Component = (props) => {
             </Tooltip.Positioner>
           </Portal>
         </Tooltip.Root>
-        {/* Accounts Menu */}
         <Flex direction='column' mt='auto' position='sticky' bottom='0'>
-          <Square size='12'>Hello</Square>
+          <AccountMenu />
         </Flex>
       </Tabs.List>
-      <Tabs.Content value='chats'>Chats</Tabs.Content>
+      <Tabs.Content
+        value='chats'
+        class={css({ overflow: 'scroll', width: 'full' })}
+      >
+        <JoinedRooms />
+      </Tabs.Content>
       <Tabs.Content value='dms'>DMs</Tabs.Content>
     </Tabs.Root>
   );

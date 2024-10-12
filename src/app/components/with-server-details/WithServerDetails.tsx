@@ -5,6 +5,7 @@ import {
   type FlowComponent,
   createResource,
   createMemo,
+  untrack,
 } from 'solid-js';
 import { useMatrixClient } from '~/app/hooks/useMatrixClient';
 import { MediaConfig } from '~/app/hooks/useServerDetails';
@@ -33,7 +34,9 @@ export const WithServerDetails: FlowComponent<
 
   const ret = createMemo(() => {
     const child = props.children;
-    return child(capabilities(), mediaConfig());
+    return untrack(() => {
+      return child(capabilities(), mediaConfig());
+    });
   }) as unknown as JSX.Element;
 
   return ret;

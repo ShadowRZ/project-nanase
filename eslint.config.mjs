@@ -63,6 +63,18 @@ export default tseslint.config(
       'unicorn/prefer-dom-node-text-content': 'off',
       '@typescript-eslint/naming-convention': 'off',
       '@typescript-eslint/no-empty-function': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          args: 'all',
+          argsIgnorePattern: '^_',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
     },
   },
   // Disable Typed lintings for Storybook configs

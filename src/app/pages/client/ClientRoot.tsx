@@ -1,7 +1,9 @@
 import {
+  ClientEvent,
   HttpApiEvent,
   HttpApiEventHandlerMap,
   MatrixClient,
+  SyncState,
 } from 'matrix-js-sdk';
 import {
   Accessor,
@@ -26,6 +28,7 @@ import { Portal } from 'solid-js/web';
 import { Button } from '~/components/ui/button';
 import { WithServerDetails } from '~/app/components/with-server-details/WithServerDetails';
 import { ServerDetailsProvider } from '~/app/hooks/useServerDetails';
+import { WithClientState } from '~/app/hooks/useClientState';
 
 const createLogoutListener = (
   mx: Accessor<MatrixClient | undefined>,
@@ -55,10 +58,21 @@ const ClientRoot: ParentComponent = (props) => {
     currentSession,
     async ($currentSession) => await initClient($currentSession)
   );
-  const [start, { refetch: refetchStart }] = createResource(
-    mx,
-    async ($mx) => await startClient($mx)
-  );
+  const [start, { refetch: refetchStart }] = createResource(mx, async ($mx) => {
+    await Promise.all([
+      startClient($mx),
+      new Promise<void>((resolve) => {
+        const onSync = (state: SyncState) => {
+          if (state === SyncState.Prepared) {
+            $mx.off(ClientEvent.Sync, onSync);
+            resolve();
+          }
+        };
+
+        $mx.on(ClientEvent.Sync, onSync);
+      }),
+    ]);
+  });
 
   createLogoutListener(mx, () => {
     removeSession(currentSession());
@@ -98,7 +112,7 @@ const ClientRoot: ParentComponent = (props) => {
                       mediaConfig,
                     }}
                   >
-                    {props.children}
+                    <WithClientState>{props.children}</WithClientState>
                   </ServerDetailsProvider>
                 )}
               </WithServerDetails>

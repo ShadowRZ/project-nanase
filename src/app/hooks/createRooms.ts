@@ -1,31 +1,22 @@
-import { createEffect, createResource, onCleanup } from 'solid-js';
-import createRoomList from './createRoomList';
-import { RoomListEvents } from '~/lib/client/room-list';
+import { MatrixClient, Room } from 'matrix-js-sdk';
+import { Accessor } from 'solid-js';
+import { createDirects } from './createDirects';
+import { createJoinedRooms } from './createJoinedRooms';
 
-export function createRooms() {
-  const roomList = createRoomList();
+const isRoom = (room: Room | null) => {
+  if (!room) return false;
+  return !room.isSpaceRoom();
+};
 
-  const [chats, { refetch: refetchChats }] = createResource(
-    roomList,
-    ($roomList) => [...$roomList.rooms]
-  );
-  const [directs, { refetch: refetchDirects }] = createResource(
-    roomList,
-    ($roomList) => [...$roomList.directs]
-  );
+export const createRooms = (mx: Accessor<MatrixClient>) => {
+  const $directs = createDirects(mx);
+  const $joined = createJoinedRooms(mx);
 
-  const onRoomList = () => {
-    void refetchChats();
-    void refetchDirects();
-  };
+  const rooms = () =>
+    $joined.filter((id) => isRoom(mx().getRoom(id)) && !$directs.includes(id));
 
-  createEffect(() => {
-    const thisRoomList = roomList();
-    thisRoomList?.on(RoomListEvents.ListUpdated, onRoomList);
-    onCleanup(() => {
-      thisRoomList?.off(RoomListEvents.ListUpdated, onRoomList);
-    });
-  });
+  const directs = () =>
+    $joined.filter((id) => isRoom(mx().getRoom(id)) && $directs.includes(id));
 
-  return { chats, directs };
-}
+  return { rooms, directs };
+};

@@ -32,9 +32,15 @@ importers:
       '@solid-primitives/keyed':
         specifier: ^1.2.2
         version: 1.2.2(solid-js@1.9.2)
+      '@solid-primitives/map':
+        specifier: ^0.4.13
+        version: 0.4.13(solid-js@1.9.2)
       '@solid-primitives/resource':
         specifier: ^0.3.1
         version: 0.3.1(solid-js@1.9.2)
+      '@solid-primitives/rootless':
+        specifier: ^1.4.5
+        version: 1.4.5(solid-js@1.9.2)
       '@solid-primitives/scheduled':
         specifier: ^1.4.3
         version: 1.4.3(solid-js@1.9.2)
@@ -44,6 +50,9 @@ importers:
       '@solid-primitives/scroll':
         specifier: ^2.0.23
         version: 2.0.23(solid-js@1.9.2)
+      '@solid-primitives/set':
+        specifier: ^0.5.0
+        version: 0.5.0(solid-js@1.9.2)
       '@solid-primitives/storage':
         specifier: ^4.2.1
         version: 4.2.1(solid-js@1.9.2)
@@ -1362,6 +1371,11 @@ packages:
 
   '@solid-primitives/scroll@2.0.23':
     resolution: {integrity: sha512-kO0YpXKEUHaAnHp3zIsHYmxxuKXO3/LxVhZQHHmhqsmUY6A5IBObkSkoQ/ChIPl/WMKE7ynxEq40OgRmhvyUSw==}
+    peerDependencies:
+      solid-js: ^1.6.12
+
+  '@solid-primitives/set@0.5.0':
+    resolution: {integrity: sha512-ccMQ89GtBrCZpGk4GKnWe+WurYe+UlK4yyiPxb0KetHqsBRLYcOkYHSDMmERNw3rwn8Cb/aVprKH0khoJqZe8g==}
     peerDependencies:
       solid-js: ^1.6.12
 
@@ -6239,6 +6253,11 @@ snapshots:
       '@solid-primitives/event-listener': 2.3.3(solid-js@1.9.2)
       '@solid-primitives/rootless': 1.4.5(solid-js@1.9.2)
       '@solid-primitives/static-store': 0.0.8(solid-js@1.9.2)
+      solid-js: 1.9.2
+
+  '@solid-primitives/set@0.5.0(solid-js@1.9.2)':
+    dependencies:
+      '@solid-primitives/trigger': 1.1.0(solid-js@1.9.2)
       solid-js: 1.9.2
 
   '@solid-primitives/static-store@0.0.5(solid-js@1.9.2)':

@@ -1,0 +1,98 @@
+import { Avatar } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Text } from '@/components/ui/text';
+import { Component, Show } from 'solid-js';
+import NotificationCount from '~/app/atoms/notification/NotificationCount';
+import Time from '~/app/atoms/time/Time';
+import { MxcImg } from '~/app/components/mxc-img/MxcImg';
+import { createRoomInfo } from '~/app/hooks/createRoomInfo';
+import { useMatrixClient } from '~/app/hooks/useMatrixClient';
+import { trimReplyFallback } from '~/lib/utils/matrix';
+import HashStraightDuotone from '~icons/ph/hash-straight-duotone';
+import UserCircleFill from '~icons/ph/user-circle-fill';
+import { Flex, styled } from '~styled/jsx';
+
+type RoomItemProps = {
+  roomId: string;
+  direct?: boolean;
+};
+
+export const RoomItem: Component<RoomItemProps> = (props) => {
+  const mx = useMatrixClient();
+  const room = () => mx().getRoom(props.roomId) ?? undefined;
+  const { name, avatar, lastTs, unread, lastEvent } = createRoomInfo(room);
+
+  const lastSender = () =>
+    lastEvent()?.sender?.name ?? (lastEvent()?.getContent().sender as string);
+
+  const lastContent = () =>
+    trimReplyFallback(lastEvent()?.getContent().body as string);
+
+  return (
+    <Show when={room()}>
+      <Button
+        colorPalette='neutral'
+        variant='ghost'
+        display='flex'
+        flexDirection='row'
+        textAlign='start'
+        rounded='xl'
+        height='unset'
+        p='2'
+        css={{
+          '& svg': {
+            width: '6',
+            height: '6',
+          },
+        }}
+      >
+        <Avatar.WithComponent
+          flexShrink='0'
+          icon={
+            <Show when={props.direct} fallback={<HashStraightDuotone />}>
+              <UserCircleFill />
+            </Show>
+          }
+        >
+          {(props) => <MxcImg {...props()} client={mx()} src={avatar()} />}
+        </Avatar.WithComponent>
+        <Flex direction='column' grow='1' overflow='hidden'>
+          <styled.span display='inline-flex' overflow='hidden'>
+            <Text
+              as='span'
+              size='md'
+              fontWeight='bold'
+              minW='0'
+              flexGrow='1'
+              truncate
+            >
+              {name()}
+            </Text>
+            <Show when={lastTs !== undefined}>
+              <styled.span opacity='50' flexShrink='0' zIndex='-5'>
+                <Time timestamp={lastTs()!} />
+              </styled.span>
+            </Show>
+          </styled.span>
+          <styled.span display='inline-flex' overflow='hidden'>
+            <styled.span flexGrow='1' truncate opacity='75'>
+              <Show when={lastSender}>
+                <Text size='md' fontWeight='bold' as='span'>
+                  {lastSender()}:{' '}
+                </Text>
+              </Show>
+              <Show when={lastSender()}>
+                <Text size='md' as='span'>
+                  {lastContent()}
+                </Text>
+              </Show>
+            </styled.span>
+            <Show when={unread() && unread()! > 0}>
+              <NotificationCount count={unread()!} highlight />
+            </Show>
+          </styled.span>
+        </Flex>
+      </Button>
+    </Show>
+  );
+};
