@@ -6,9 +6,9 @@
       "@/*": ["./src/*"],
       "~styled/*": ["./styled-system/*"]
     },
-    "target": "ESNext",
+    "target": "ES2021",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
