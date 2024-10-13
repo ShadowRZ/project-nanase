@@ -11,7 +11,7 @@ type SetStoreReturn<T> = [
 
 export const createSetStore = <T>(value: T[]): SetStoreReturn<T> => {
   const [store, setStore] = createStore<T[]>(value);
-  const set = new Set<T>();
+  const set = new Set<T>(value);
 
   const add = (value: T) => {
     set.add(value);
