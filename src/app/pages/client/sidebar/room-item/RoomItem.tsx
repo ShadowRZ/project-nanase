@@ -1,16 +1,15 @@
-import { Avatar } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
 import { Component, Show } from 'solid-js';
-import NotificationCount from '~/app/atoms/notification/NotificationCount';
-import Time from '~/app/atoms/time/Time';
-import { MxcImg } from '~/app/components/mxc-img/MxcImg';
-import { createRoomInfo } from '~/app/hooks/createRoomInfo';
-import { useMatrixClient } from '~/app/hooks/useMatrixClient';
 import { trimReplyFallback } from '~/lib/utils/matrix';
 import HashStraightDuotone from '~icons/ph/hash-straight-duotone';
 import UserCircleFill from '~icons/ph/user-circle-fill';
 import { Flex, styled } from '~styled/jsx';
+import NotificationCount from '../../../../atoms/notification/NotificationCount';
+import Time from '../../../../atoms/time/Time';
+import { MxcAvatar } from '../../../../components/mxc-avatar/MxcAvatar';
+import { createRoomInfo } from '../../../../hooks/createRoomInfo';
+import { useMatrixClient } from '../../../../hooks/useMatrixClient';
 
 type RoomItemProps = {
   roomId: string;
@@ -74,16 +73,16 @@ export const RoomItem: Component<RoomItemProps> = (props) => {
           },
         }}
       >
-        <Avatar.WithComponent
+        <MxcAvatar
           flexShrink='0'
           icon={
             <Show when={props.direct} fallback={<HashStraightDuotone />}>
               <UserCircleFill />
             </Show>
           }
-        >
-          {(props) => <MxcImg {...props()} client={mx()} src={avatar()} />}
-        </Avatar.WithComponent>
+          client={mx()}
+          src={avatar()}
+        />
         <Flex direction='column' grow='1' overflow='hidden'>
           <styled.span display='inline-flex' overflow='hidden'>
             <Text

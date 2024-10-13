@@ -1,12 +1,7 @@
-import { Avatar } from '@/components/ui/avatar';
 import { Menu } from '@/components/ui/menu';
 import { Tooltip } from '@/components/ui/tooltip';
 import { createUniqueId, type Component } from 'solid-js';
 import { Portal } from 'solid-js/web';
-import { useSelfProfile } from '~/app/hooks/useClientState';
-import { useMatrixClient } from '~/app/hooks/useMatrixClient';
-import t from '~/app/i18n';
-import ProfileContent from '~/app/molecules/profile/ProfileContent';
 import CodeDuotone from '~icons/ph/code-duotone';
 import GearSixDuotone from '~icons/ph/gear-six-duotone';
 import PowerDuotone from '~icons/ph/power-duotone';
@@ -14,7 +9,11 @@ import ShieldCheckeredDuotone from '~icons/ph/shield-checkered-duotone';
 import UserSwitchDuotone from '~icons/ph/user-switch-duotone';
 import { Flex } from '~styled/jsx';
 import { square } from '~styled/patterns';
-import { MxcImg } from '../../../components/mxc-img/MxcImg';
+import { MxcAvatar } from '../../../components/mxc-avatar/MxcAvatar';
+import { useSelfProfile } from '../../../hooks/useClientState';
+import { useMatrixClient } from '../../../hooks/useMatrixClient';
+import t from '../../../i18n';
+import ProfileContent from '../../../molecules/profile/ProfileContent';
 
 const AccountMenu: Component = () => {
   const trigger = createUniqueId();
@@ -30,15 +29,12 @@ const AccountMenu: Component = () => {
             {(props) => (
               <Menu.Trigger.AsChild {...props()}>
                 {(props) => (
-                  <Avatar.WithComponent ids={{ root: trigger }} {...props()}>
-                    {(props) => (
-                      <MxcImg
-                        {...props()}
-                        client={mx()}
-                        src={profile.avatarUrl}
-                      />
-                    )}
-                  </Avatar.WithComponent>
+                  <MxcAvatar
+                    {...props()}
+                    ids={{ root: trigger }}
+                    client={mx()}
+                    src={profile.avatarUrl}
+                  />
                 )}
               </Menu.Trigger.AsChild>
             )}

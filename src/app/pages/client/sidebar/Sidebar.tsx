@@ -1,4 +1,3 @@
-import { Avatar } from '@/components/ui/avatar';
 import { IconButton } from '@/components/ui/icon-button';
 import { Tooltip } from '@/components/ui/tooltip';
 import { Tabs } from '@ark-ui/solid';
@@ -10,7 +9,7 @@ import FoldersDuotone from '~icons/ph/folders-duotone';
 import { css } from '~styled/css';
 import { Flex } from '~styled/jsx';
 import { flex, square } from '~styled/patterns';
-import { MxcImg } from '../../../components/mxc-img/MxcImg';
+import { MxcAvatar } from '../../../components/mxc-avatar/MxcAvatar';
 import { createRoomInfo } from '../../../hooks/createRoomInfo';
 import { useSpaces } from '../../../hooks/useClientState';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
@@ -32,15 +31,13 @@ const SpaceTabItem: Component<{ roomId: string }> = (props) => {
           <Tabs.Trigger
             value={roomId()}
             asChild={(props) => (
-              <Avatar.WithComponent
+              <MxcAvatar
+                {...props()}
                 icon={<FoldersDuotone />}
                 ids={{ root: trigger }}
-                {...props()}
-              >
-                {(props) => (
-                  <MxcImg {...props()} client={mx()} src={avatar()} />
-                )}
-              </Avatar.WithComponent>
+                client={mx()}
+                src={avatar()}
+              />
             )}
             {...props()}
           />

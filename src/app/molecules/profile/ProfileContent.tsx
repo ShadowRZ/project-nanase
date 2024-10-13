@@ -1,9 +1,8 @@
-import { type Component } from 'solid-js';
-import { Avatar } from '@/components/ui/avatar';
 import { Text } from '@/components/ui/text';
-import { Flex } from '~styled/jsx';
 import { MatrixClient } from 'matrix-js-sdk';
-import { MxcImg } from '~/app/components/mxc-img/MxcImg';
+import { type Component } from 'solid-js';
+import { Flex } from '~styled/jsx';
+import { MxcAvatar } from '../../components/mxc-avatar/MxcAvatar';
 
 export type ClientProfileProps = {
   mx: MatrixClient;
@@ -15,11 +14,7 @@ export type ClientProfileProps = {
 const ProfileContent: Component<ClientProfileProps> = (props) => {
   return (
     <Flex direction='row' gap='2' alignItems='center'>
-      <Avatar.WithComponent>
-        {(imgProps) => (
-          <MxcImg {...imgProps()} src={props.avatar} client={props.mx} />
-        )}
-      </Avatar.WithComponent>
+      <MxcAvatar src={props.avatar} client={props.mx} />
       <Flex direction='column' overflow='hidden'>
         <Text
           title={props.name ?? props.userId}

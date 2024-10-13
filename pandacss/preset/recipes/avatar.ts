@@ -3,7 +3,7 @@ import { defineSlotRecipe } from '@pandacss/dev';
 
 export const avatar = defineSlotRecipe({
   className: 'avatar',
-  jsx: ['Avatar', 'Avatar.WithComponent'],
+  jsx: ['Avatar', 'MxcAvatar', 'Avatar.WithComponent'],
   slots: avatarAnatomy.keys(),
   base: {
     root: {
@@ -47,7 +47,7 @@ export const avatar = defineSlotRecipe({
           '& svg': {
             width: '8',
             height: '8',
-          }
+          },
         },
       },
       small: {
