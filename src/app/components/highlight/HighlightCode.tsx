@@ -31,7 +31,7 @@ const HighlightCode: ParentComponent<HighlightCodeProps> = (props) => {
       class={`language-${props.lang ?? 'plain'}`}
       style={{
         'text-wrap': 'wrap',
-        'word-break': 'break-all', // @unocss-ignore
+        'word-break': 'break-all',
       }}
     >
       {props.children}
