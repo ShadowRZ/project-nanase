@@ -3,7 +3,36 @@ import {
   RelationType,
   type EventTimelineSet,
   EventType,
+  Room,
+  EventTimeline,
+  KnownMembership,
+  Membership,
 } from 'matrix-js-sdk';
+
+export const isJoined = (room: Room) =>
+  room.getMyMembership() === (KnownMembership.Join as Membership);
+
+export const isValidChildren = (event: MatrixEvent) =>
+  event.getType() === 'm.space.child' &&
+  Array.isArray(event.getContent<{ via: string[] }>().via);
+
+export const getSpaceChildrens = (room: Room) => {
+  const spaceChilds = room
+    .getLiveTimeline()
+    .getState(EventTimeline.FORWARDS)
+    ?.getStateEvents('m.space.child');
+  const children = new Set<string>();
+  if (spaceChilds)
+    for (const event of spaceChilds) {
+      const child = event.getStateKey()!;
+      // https://github.com/matrix-org/matrix-spec-proposals/pull/1772
+      if (isValidChildren(event)) {
+        children.add(child);
+      }
+    }
+
+  return children;
+};
 
 export function annoationOrReplace(event: MatrixEvent) {
   return (

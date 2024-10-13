@@ -13,7 +13,7 @@ export const useSyncState = (
     const client = mx();
     client?.on(ClientEvent.Sync, onChange);
     onCleanup(() => {
-      client?.removeListener(ClientEvent.Sync, onChange);
+      client?.off(ClientEvent.Sync, onChange);
     });
   });
 };

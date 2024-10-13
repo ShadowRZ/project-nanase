@@ -1,18 +1,63 @@
-import { createSignal, type Component } from 'solid-js';
-import AccountMenu from './AccountMenu';
+import { Avatar } from '@/components/ui/avatar';
+import { IconButton } from '@/components/ui/icon-button';
 import { Tooltip } from '@/components/ui/tooltip';
-import { flex, square } from '~styled/patterns';
-import { Flex } from '~styled/jsx';
+import { Tabs } from '@ark-ui/solid';
+import { createSignal, createUniqueId, For, type Component } from 'solid-js';
+import { Portal } from 'solid-js/web';
 import ChatsTeardropFill from '~icons/ph/chats-teardrop-fill';
 import FolderUserFill from '~icons/ph/folder-user-fill';
-import { Tabs } from '@ark-ui/solid';
-import { IconButton } from '@/components/ui/icon-button';
-import { Portal } from 'solid-js/web';
-import { JoinedRooms } from './RoomList';
+import FoldersDuotone from '~icons/ph/folders-duotone';
 import { css } from '~styled/css';
+import { Flex } from '~styled/jsx';
+import { flex, square } from '~styled/patterns';
+import { MxcImg } from '../../../components/mxc-img/MxcImg';
+import { createRoomInfo } from '../../../hooks/createRoomInfo';
+import { useSpaces } from '../../../hooks/useClientState';
+import { useMatrixClient } from '../../../hooks/useMatrixClient';
+import AccountMenu from './AccountMenu';
+import { DirectRooms, JoinedRooms, SpaceChildrens } from './RoomList';
+
+const SpaceTabItem: Component<{ roomId: string }> = (props) => {
+  const roomId = () => props.roomId;
+
+  const trigger = createUniqueId();
+  const mx = useMatrixClient();
+  const room = () => mx().getRoom(roomId()) ?? undefined;
+  const { name, avatar } = createRoomInfo(room);
+
+  return (
+    <Tooltip.Root ids={{ trigger }} positioning={{ placement: 'right' }}>
+      <Tooltip.Trigger.AsChild>
+        {(props) => (
+          <Tabs.Trigger
+            value={roomId()}
+            asChild={(props) => (
+              <Avatar.WithComponent
+                icon={<FoldersDuotone />}
+                ids={{ root: trigger }}
+                {...props()}
+              >
+                {(props) => (
+                  <MxcImg {...props()} client={mx()} src={avatar()} />
+                )}
+              </Avatar.WithComponent>
+            )}
+            {...props()}
+          />
+        )}
+      </Tooltip.Trigger.AsChild>
+      <Portal>
+        <Tooltip.Positioner>
+          <Tooltip.Content>{name()}</Tooltip.Content>
+        </Tooltip.Positioner>
+      </Portal>
+    </Tooltip.Root>
+  );
+};
 
 const Sidebar: Component = () => {
   const [value, setValue] = createSignal('chats');
+  const spaces = useSpaces();
 
   return (
     <Tabs.Root
@@ -98,6 +143,7 @@ const Sidebar: Component = () => {
             </Tooltip.Positioner>
           </Portal>
         </Tooltip.Root>
+        <For each={spaces()}>{(space) => <SpaceTabItem roomId={space} />}</For>
         <Flex direction='column' mt='auto' position='sticky' bottom='0'>
           <AccountMenu />
         </Flex>
@@ -108,7 +154,22 @@ const Sidebar: Component = () => {
       >
         <JoinedRooms />
       </Tabs.Content>
-      <Tabs.Content value='dms'>DMs</Tabs.Content>
+      <Tabs.Content
+        value='dms'
+        class={css({ overflow: 'scroll', width: 'full' })}
+      >
+        <DirectRooms />
+      </Tabs.Content>
+      <For each={spaces()}>
+        {(space) => (
+          <Tabs.Content
+            value={space}
+            class={css({ overflow: 'scroll', width: 'full' })}
+          >
+            <SpaceChildrens roomId={space} />
+          </Tabs.Content>
+        )}
+      </For>
     </Tabs.Root>
   );
 };

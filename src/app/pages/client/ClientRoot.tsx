@@ -47,7 +47,7 @@ const createLogoutListener = (
 
     $mx?.on(HttpApiEvent.SessionLoggedOut, handleLogout);
     onCleanup(() => {
-      $mx?.removeListener(HttpApiEvent.SessionLoggedOut, handleLogout);
+      $mx?.off(HttpApiEvent.SessionLoggedOut, handleLogout);
     });
   });
 };

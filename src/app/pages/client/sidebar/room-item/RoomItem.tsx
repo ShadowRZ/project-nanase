@@ -20,10 +20,38 @@ type RoomItemProps = {
 export const RoomItem: Component<RoomItemProps> = (props) => {
   const mx = useMatrixClient();
   const room = () => mx().getRoom(props.roomId) ?? undefined;
-  const { name, avatar, lastTs, unread, lastEvent } = createRoomInfo(room);
+  const {
+    name: $name,
+    avatar: $avatar,
+    lastTs,
+    unread,
+    lastEvent,
+  } = createRoomInfo(room);
 
   const lastSender = () =>
     lastEvent()?.sender?.name ?? (lastEvent()?.getContent().sender as string);
+
+  const name = () => {
+    if (props.direct) {
+      const userId = room()?.guessDMUserId();
+      return userId === undefined
+        ? undefined
+        : room()?.getMember(userId)?.rawDisplayName;
+    } else {
+      return $name();
+    }
+  };
+
+  const avatar = () => {
+    if (props.direct) {
+      const userId = room()?.guessDMUserId();
+      return userId === undefined
+        ? undefined
+        : room()?.getMember(userId)?.getMxcAvatarUrl();
+    } else {
+      return $avatar();
+    }
+  };
 
   const lastContent = () =>
     trimReplyFallback(lastEvent()?.getContent().body as string);
@@ -41,8 +69,8 @@ export const RoomItem: Component<RoomItemProps> = (props) => {
         p='2'
         css={{
           '& svg': {
-            width: '6',
-            height: '6',
+            width: '75%',
+            height: '75%',
           },
         }}
       >

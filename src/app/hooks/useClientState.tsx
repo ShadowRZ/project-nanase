@@ -1,12 +1,17 @@
+import { ReactiveMap } from '@solid-primitives/map';
+import { ReactiveSet } from '@solid-primitives/set';
 import { Accessor, createContext, ParentComponent, useContext } from 'solid-js';
-import { useMatrixClient } from './useMatrixClient';
-import { createSelfProfile, Profile } from './createSelfProfile';
+import { createRoomHierarchy } from './createRoomHierarchy';
 import { createRooms } from './createRooms';
+import { createSelfProfile, Profile } from './createSelfProfile';
+import { useMatrixClient } from './useMatrixClient';
 
 type ClientState = {
   rooms: Accessor<string[]>;
   directs: Accessor<string[]>;
+  spaces: Accessor<string[]>;
   profile: Profile;
+  hierarchy: ReactiveMap<string, ReactiveSet<string>>;
 };
 
 const ClientStateContext = createContext<ClientState>();
@@ -23,9 +28,12 @@ export const WithClientState: ParentComponent = (props) => {
   const mx = useMatrixClient();
   const { rooms, directs } = createRooms(mx);
   const profile = createSelfProfile(mx);
+  const [hierarchy, { spaces }] = createRoomHierarchy(mx);
 
   return (
-    <ClientStateContext.Provider value={{ rooms, directs, profile }}>
+    <ClientStateContext.Provider
+      value={{ rooms, directs, spaces, profile, hierarchy }}
+    >
       {props.children}
     </ClientStateContext.Provider>
   );
@@ -33,4 +41,6 @@ export const WithClientState: ParentComponent = (props) => {
 
 export const useDirects = () => useClientState().directs;
 export const useJoinedRooms = () => useClientState().rooms;
+export const useSpaces = () => useClientState().spaces;
 export const useSelfProfile = () => useClientState().profile;
+export const useRoomHierarchy = () => useClientState().hierarchy;

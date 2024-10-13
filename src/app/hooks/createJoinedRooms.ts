@@ -1,16 +1,7 @@
-import {
-  ClientEvent,
-  KnownMembership,
-  MatrixClient,
-  Membership,
-  Room,
-  RoomEvent,
-} from 'matrix-js-sdk';
+import { ClientEvent, MatrixClient, Room, RoomEvent } from 'matrix-js-sdk';
 import { Accessor, createEffect, onCleanup, untrack } from 'solid-js';
+import { isJoined } from '../utils/room';
 import { createSetStore } from './createSetStore';
-
-const isJoined = (room: Room) =>
-  room.getMyMembership() === (KnownMembership.Join as Membership);
 
 export const createJoinedRooms = (mx: Accessor<MatrixClient>) => {
   const [joined, { add, remove }] = createSetStore<string>(
@@ -41,9 +32,9 @@ export const createJoinedRooms = (mx: Accessor<MatrixClient>) => {
     $mx.on(RoomEvent.MyMembership, onMembershipChange);
     $mx.on(ClientEvent.DeleteRoom, onDeleteRoom);
     onCleanup(() => {
-      $mx.removeListener(ClientEvent.Room, onAddRoom);
-      $mx.removeListener(RoomEvent.MyMembership, onMembershipChange);
-      $mx.removeListener(ClientEvent.DeleteRoom, onDeleteRoom);
+      $mx.off(ClientEvent.Room, onAddRoom);
+      $mx.off(RoomEvent.MyMembership, onMembershipChange);
+      $mx.off(ClientEvent.DeleteRoom, onDeleteRoom);
     });
   });
 
