@@ -6,7 +6,7 @@ import HashStraightDuotone from '~icons/ph/hash-straight-duotone';
 import UserCircleFill from '~icons/ph/user-circle-fill';
 import { Flex, styled } from '~styled/jsx';
 import NotificationCount from '../../../../atoms/notification/NotificationCount';
-import Time from '../../../../atoms/time/Time';
+import { Time } from '../../../../components/time/Time';
 import { MxcAvatar } from '../../../../components/mxc-avatar/MxcAvatar';
 import { createRoomInfo } from '../../../../hooks/createRoomInfo';
 import { useMatrixClient } from '../../../../hooks/useMatrixClient';
@@ -96,8 +96,8 @@ export const RoomItem: Component<RoomItemProps> = (props) => {
               {name()}
             </Text>
             <Show when={lastTs !== undefined}>
-              <styled.span opacity='50' flexShrink='0' zIndex='-5'>
-                <Time timestamp={lastTs()!} />
+              <styled.span display='inline-flex' alignItems='center'>
+                <Time timestamp={lastTs()!} opacity='0.5' flexShrink='0' />
               </styled.span>
             </Show>
           </styled.span>

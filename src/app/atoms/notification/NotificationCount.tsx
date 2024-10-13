@@ -1,14 +1,17 @@
 import { type Component } from 'solid-js';
 import { styled } from '~styled/jsx';
 
-const Wrapper = styled('div', {
+const Wrapper = styled('span', {
   base: {
+    display: 'inline-flex',
     rounded: 'full',
     width: 'fit-content',
     minWidth: '6',
     height: '6',
     px: '1',
-    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight: 'medium',
   },
   variants: {
     highlight: {

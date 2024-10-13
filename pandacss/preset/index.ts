@@ -58,10 +58,5 @@ export const createPreset = (options?: Partial<PresetOptions>) => {
       },
     },
     conditions,
-    globalCss: {
-      html: {
-        lineHeight: 1.2,
-      },
-    },
   });
 };

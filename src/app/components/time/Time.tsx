@@ -1,4 +1,5 @@
-import { type Component } from 'solid-js';
+import { splitProps, type Component } from 'solid-js';
+import { styled } from '~styled/jsx';
 
 const timeOnlyFormatter = new Intl.DateTimeFormat(undefined, {
   hour: 'numeric',
@@ -24,8 +25,9 @@ function isInSameDay(dt2: Date, dt1: Date) {
   );
 }
 
-const Time: Component<TimeProps> = (props) => {
-  const timestamp = () => props.timestamp;
+const $Time: Component<TimeProps> = (props) => {
+  const [baseProps, rootProps] = splitProps(props, ['timestamp']);
+  const timestamp = () => baseProps.timestamp;
   const date = () => new Date(timestamp());
   const formatted = () => {
     const current = new Date();
@@ -37,10 +39,14 @@ const Time: Component<TimeProps> = (props) => {
   };
 
   return (
-    <time dateTime={date().toISOString()} title={date().toLocaleString()}>
+    <time
+      {...rootProps}
+      dateTime={date().toISOString()}
+      title={date().toLocaleString()}
+    >
       {formatted()}
     </time>
   );
 };
 
-export default Time;
+export const Time = styled($Time);
