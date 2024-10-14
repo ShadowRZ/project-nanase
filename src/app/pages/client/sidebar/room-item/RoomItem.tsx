@@ -97,19 +97,19 @@ export const RoomItem: Component<RoomItemProps> = (props) => {
             </Text>
             <Show when={lastTs !== undefined}>
               <styled.span display='inline-flex' alignItems='center'>
-                <Time timestamp={lastTs()!} opacity='0.5' flexShrink='0' />
+                <Time timestamp={lastTs()!} color='fg.subtle' flexShrink='0' />
               </styled.span>
             </Show>
           </styled.span>
           <styled.span display='inline-flex' overflow='hidden'>
-            <styled.span flexGrow='1' truncate opacity='75'>
+            <styled.span flexGrow='1' truncate>
               <Show when={lastSender}>
                 <Text size='md' fontWeight='bold' as='span'>
                   {lastSender()}:{' '}
                 </Text>
               </Show>
               <Show when={lastSender()}>
-                <Text size='md' as='span'>
+                <Text size='md' as='span' color='fg.muted'>
                   {lastContent()}
                 </Text>
               </Show>

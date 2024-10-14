@@ -6,14 +6,8 @@ const globalCss = defineGlobalStyles({
   'html, body': {
     '--global-font-body': '"Inter Variable", Inter, sans-serif',
     overflow: 'hidden',
-    bg: {
-      base: 'white',
-      _dark: 'black',
-    },
-    color: {
-      base: 'black',
-      _dark: 'white',
-    },
+    bg: 'bg.default',
+    color: 'fg.default',
     colorPalette: 'accent',
   },
   '#root': {
