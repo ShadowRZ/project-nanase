@@ -4,16 +4,15 @@ import { createUniqueId, type Component } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import CodeDuotone from '~icons/ph/code-duotone';
 import GearSixDuotone from '~icons/ph/gear-six-duotone';
-import PowerDuotone from '~icons/ph/power-duotone';
 import ShieldCheckeredDuotone from '~icons/ph/shield-checkered-duotone';
-import UserSwitchDuotone from '~icons/ph/user-switch-duotone';
 import { Flex } from '~styled/jsx';
-import { square } from '~styled/patterns';
 import { MxcAvatar } from '../../../components/mxc-avatar/MxcAvatar';
 import { useSelfProfile } from '../../../hooks/useClientState';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
 import t from '../../../i18n';
 import ProfileContent from '../../../molecules/profile/ProfileContent';
+import { ClientSwitchDialog } from './dialogs/ClientSwitchDialog';
+import { LogoutDialog } from './dialogs/LogoutDialog';
 
 const AccountMenu: Component = () => {
   const trigger = createUniqueId();
@@ -64,74 +63,8 @@ const AccountMenu: Component = () => {
                   avatar={profile.avatar()}
                   userId={userId()}
                 />
-                <Tooltip.Root positioning={{ placement: 'top' }}>
-                  <Tooltip.Trigger.AsChild>
-                    {(props) => (
-                      <Menu.Item
-                        {...props()}
-                        value='switch'
-                        colorPalette='orange'
-                        width='8'
-                        height='8'
-                        display='flex'
-                        alignItems='center'
-                        justifyContent='center'
-                        rounded='full'
-                        transition='all'
-                        _highlighted={{
-                          bg: 'colorPalette.3',
-                          ringWidth: '2',
-                          outlineStyle: 'solid',
-                        }}
-                        ringColor='colorPalette.ring'
-                      >
-                        <UserSwitchDuotone
-                          class={square({
-                            size: '6',
-                            color: 'colorPalette.text',
-                          })}
-                        />
-                      </Menu.Item>
-                    )}
-                  </Tooltip.Trigger.AsChild>
-                  <Tooltip.Positioner>
-                    <Tooltip.Content>Switch Account</Tooltip.Content>
-                  </Tooltip.Positioner>
-                </Tooltip.Root>
-                <Tooltip.Root positioning={{ placement: 'top' }}>
-                  <Tooltip.Trigger.AsChild>
-                    {(props) => (
-                      <Menu.Item
-                        {...props()}
-                        value='logout'
-                        colorPalette='red'
-                        width='8'
-                        height='8'
-                        display='flex'
-                        alignItems='center'
-                        justifyContent='center'
-                        rounded='full'
-                        transition='all'
-                        _highlighted={{
-                          bg: 'colorPalette.3',
-                          ringWidth: '2',
-                          outlineStyle: 'solid',
-                        }}
-                        ringColor='colorPalette.ring'
-                      >
-                        <PowerDuotone
-                          class={square({
-                            size: '6',
-                            color: 'colorPalette.text',
-                          })}
-                        />
-                      </Menu.Item>
-                    )}
-                  </Tooltip.Trigger.AsChild>
-                  <Tooltip.Positioner>
-                    <Tooltip.Content>Logout</Tooltip.Content>
-                  </Tooltip.Positioner>
-                </Tooltip.Root>
+                <ClientSwitchDialog />
+                <LogoutDialog />
               </Flex>
             </Menu.Content>
           </Menu.Positioner>
