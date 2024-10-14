@@ -1,41 +1,38 @@
-import {
-  createSignal,
-  createResource,
-  createEffect,
-  onCleanup,
-} from 'solid-js';
+import { ReactiveMap } from '@solid-primitives/map';
+import { ReactiveSet } from '@solid-primitives/set';
 import {
   type MatrixEvent,
   type RoomMember,
   RoomMemberEvent,
 } from 'matrix-js-sdk';
-import { createStore } from 'solid-js/store';
-import { createCurrentClientResource } from './createClientResource';
+import { createEffect, onCleanup } from 'solid-js';
+import { useMatrixClient } from './useMatrixClient';
 
 export const createTypings = () => {
-  const client = createCurrentClientResource();
+  const mx = useMatrixClient();
 
-  const [typings, setTypings] = createStore<Record<string, string[]>>();
+  const typings = new ReactiveMap<string, ReactiveSet<string>>();
 
-  const onTyping = (event: MatrixEvent, member: RoomMember) => {
+  const addTyping = (roomId: string, userId: string) => {
+    if (!typings.has(roomId)) typings.set(roomId, new ReactiveSet());
+    typings.get(roomId)!.add(userId);
+  };
+
+  const removeTyping = (roomId: string, userId: string) => {
+    if (!typings.has(roomId)) typings.set(roomId, new ReactiveSet());
+    typings.get(roomId)!.delete(userId);
+  };
+
+  const onTyping = (_: MatrixEvent, member: RoomMember) => {
     if (member.typing) {
-      setTypings(member.roomId, (ids) => {
-        const data = ids ?? [];
-        if (data.includes(member.userId)) return data;
-        return [...data, member.userId];
-      });
+      addTyping(member.roomId, member.userId);
     } else {
-      setTypings(member.roomId, (ids) => {
-        const data = ids ?? [];
-        if (data.includes(member.userId))
-          return data.filter((id) => id !== member.userId);
-        return data;
-      });
+      removeTyping(member.roomId, member.userId);
     }
   };
 
   createEffect(() => {
-    const thisClient = client();
+    const thisClient = mx();
     thisClient?.on(RoomMemberEvent.Typing, onTyping);
     onCleanup(() => {
       thisClient?.off(RoomMemberEvent.Typing, onTyping);

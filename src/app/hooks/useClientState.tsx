@@ -3,15 +3,17 @@ import { ReactiveSet } from '@solid-primitives/set';
 import { Accessor, createContext, ParentComponent, useContext } from 'solid-js';
 import { createRoomHierarchy } from './createRoomHierarchy';
 import { createRooms } from './createRooms';
-import { createSelfProfile, Profile } from './createSelfProfile';
+import { createSelfProfile, ProfileSignal } from './createSelfProfile';
 import { useMatrixClient } from './useMatrixClient';
+import { createTypings } from './createTypings';
 
 type ClientState = {
   rooms: Accessor<string[]>;
   directs: Accessor<string[]>;
   spaces: Accessor<string[]>;
-  profile: Profile;
+  profile: ProfileSignal;
   hierarchy: ReactiveMap<string, ReactiveSet<string>>;
+  typings: ReactiveMap<string, ReactiveSet<string>>;
 };
 
 const ClientStateContext = createContext<ClientState>();
@@ -28,11 +30,12 @@ export const WithClientState: ParentComponent = (props) => {
   const mx = useMatrixClient();
   const { rooms, directs } = createRooms(mx);
   const profile = createSelfProfile(mx);
+  const typings = createTypings();
   const [hierarchy, { spaces }] = createRoomHierarchy(mx);
 
   return (
     <ClientStateContext.Provider
-      value={{ rooms, directs, spaces, profile, hierarchy }}
+      value={{ rooms, directs, spaces, profile, hierarchy, typings }}
     >
       {props.children}
     </ClientStateContext.Provider>

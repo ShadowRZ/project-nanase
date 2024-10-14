@@ -32,7 +32,7 @@ export const DirectRooms: Component = () => {
 export const SpaceChildrens: Component<{ roomId: string }> = (props) => {
   const hierarchy = useRoomHierarchy();
   const roomId = () => props.roomId;
-  const rooms = () => hierarchy.get(roomId())?.values().toArray() ?? [];
+  const rooms = () => [...(hierarchy.get(roomId())?.values() ?? [])];
 
   return (
     <Flex direction='column' width='full' p='1'>

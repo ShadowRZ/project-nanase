@@ -25,5 +25,3 @@ export type Session = {
   accessToken: string;
   deviceId: string;
 };
-
-export type SessionMap = Record<string, Session>;

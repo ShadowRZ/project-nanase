@@ -1,47 +1,40 @@
+import { ReactiveMap } from '@solid-primitives/map';
 import { MatrixClient, MatrixEvent, User, UserEvent } from 'matrix-js-sdk';
-import { Accessor, createEffect, createMemo, onCleanup } from 'solid-js';
-import { createStore, produce } from 'solid-js/store';
+import { Accessor, batch, createEffect, createMemo, onCleanup } from 'solid-js';
 
-export type Profile = {
-  displayName?: string;
-  avatarUrl?: string;
+export type ProfileSignal = {
+  name: Accessor<string | undefined>;
+  avatar: Accessor<string | undefined>;
 };
 
+const names = new ReactiveMap<string, string | undefined>();
+const avatars = new ReactiveMap<string, string | undefined>();
+
 export const createSelfProfile = (mx: Accessor<MatrixClient>) => {
-  const user = createMemo(() => {
-    const $mx = mx();
-    return $mx.getUser($mx.getSafeUserId());
-  });
-  const [profile, setProfile] = createStore<Profile>({});
+  const userId = () => mx().getSafeUserId();
+  const user = createMemo(() => mx().getUser(userId()));
 
   createEffect(() => {
     const $mx = mx();
+    const userId = $mx.getSafeUserId();
     $mx
-      .getProfileInfo($mx.getSafeUserId())
+      .getProfileInfo(userId)
       .then(({ avatar_url, displayname }) => {
-        setProfile(
-          produce(($profile) => {
-            $profile.displayName = displayname;
-            $profile.avatarUrl = avatar_url;
-          })
-        );
+        batch(() => {
+          names.set(userId, displayname);
+          avatars.set(userId, avatar_url);
+        });
         return;
       })
       .catch(() => {});
   });
 
   const onDisplayName = (_: MatrixEvent | undefined, user: User) => {
-    setProfile(($profile) => ({
-      ...$profile,
-      displayName: user.displayName,
-    }));
+    names.set(user.userId, user.displayName);
   };
 
   const onAvatarUrl = (_: MatrixEvent | undefined, user: User) => {
-    setProfile(($profile) => ({
-      ...$profile,
-      avatarUrl: user.avatarUrl,
-    }));
+    avatars.set(user.userId, user.avatarUrl);
   };
 
   createEffect(() => {
@@ -54,5 +47,8 @@ export const createSelfProfile = (mx: Accessor<MatrixClient>) => {
     });
   });
 
-  return profile;
+  const name = () => names.get(userId());
+  const avatar = () => avatars.get(userId());
+
+  return { name, avatar };
 };

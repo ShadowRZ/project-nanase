@@ -82,7 +82,7 @@ export const createRoomHierarchy = (
     });
   });
 
-  const spaces = () => map.keys().toArray();
+  const spaces = () => [...map.keys()];
 
   return [map, { spaces }];
 };

@@ -33,7 +33,7 @@ const AccountMenu: Component = () => {
                     {...props()}
                     ids={{ root: trigger }}
                     client={mx()}
-                    src={profile.avatarUrl}
+                    src={profile.avatar()}
                   />
                 )}
               </Menu.Trigger.AsChild>
@@ -60,8 +60,8 @@ const AccountMenu: Component = () => {
               <Flex direction='row' mt='2' gap='2' px='1' alignItems='center'>
                 <ProfileContent
                   mx={mx()}
-                  name={profile.displayName}
-                  avatar={profile.avatarUrl}
+                  name={profile.name()}
+                  avatar={profile.avatar()}
                   userId={userId()}
                 />
                 <Tooltip.Root positioning={{ placement: 'top' }}>

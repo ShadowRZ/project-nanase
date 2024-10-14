@@ -1,10 +1,11 @@
 import { makePersisted } from '@solid-primitives/storage';
 import { createSignal } from 'solid-js';
-import { createStore, produce } from 'solid-js/store';
-import { type Session, type SessionMap } from '~/types/client';
+import { type Session } from '../../types/client';
+import { ClientEvent, MatrixClient, SyncState } from 'matrix-js-sdk';
+import { initClient, startClient } from '../../lib/client/init';
 
 // eslint-disable-next-line solid/reactivity
-const [sessions, setSessions] = makePersisted(createStore<Session[]>([]), {
+const [sessions, setSessions] = makePersisted(createSignal<Session[]>([]), {
   storage: localStorage,
   name: 'project-nanase-sessions',
 });
@@ -17,15 +18,50 @@ const [current, setCurrent] = makePersisted(createSignal<string>(), {
   deserialize: (value) => value,
 });
 
+const cache = new Map<string, MatrixClient>();
+const started = new Map<MatrixClient, boolean>();
+
+export const fetchClient = async (session: Session) => {
+  if (cache.has(session.userId)) {
+    return cache.get(session.userId)!;
+  } else {
+    const client = await initClient(session);
+    cache.set(session.userId, client);
+
+    return client;
+  }
+};
+
+export const fetchClientStart = async (mx: MatrixClient) => {
+  if (started.has(mx) && started.get(mx)) {
+    return;
+  } else {
+    let ok = false;
+    if (!mx.clientRunning) await startClient(mx);
+
+    await new Promise<void>((resolve) => {
+      const onSync = (state: SyncState) => {
+        if (state === SyncState.Prepared) {
+          mx.off(ClientEvent.Sync, onSync);
+          resolve();
+        }
+      };
+
+      mx.on(ClientEvent.Sync, onSync);
+    });
+
+    ok = true;
+    started.set(mx, ok);
+
+    return;
+  }
+};
+
 export const currentSession = () =>
-  sessions.find(($session) => $session.userId === current())!;
+  sessions().find(($session) => $session.userId === current())!;
 
 export const addSession = (session: Session) => {
-  setSessions(
-    produce(($state) => {
-      $state.push(session);
-    })
-  );
+  setSessions([...sessions(), session]);
 };
 
 export const removeSession = (session: Session) => {
@@ -34,15 +70,6 @@ export const removeSession = (session: Session) => {
   });
 };
 
-export const sessionMap = () => {
-  const ret: SessionMap = {};
-  for (const element of sessions) {
-    ret[element.userId] = element;
-  }
+export const isInitial = () => sessions().length === 0;
 
-  return ret;
-};
-
-export const isInitial = () => sessions.length === 0;
-
-export { sessions, current, setCurrent };
+export { current, sessions, setCurrent };

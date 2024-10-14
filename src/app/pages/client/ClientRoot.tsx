@@ -1,9 +1,10 @@
+import { Button } from '@/components/ui/button';
+import { Dialog } from '@/components/ui/dialog';
+import { Text } from '@/components/ui/text';
 import {
-  ClientEvent,
   HttpApiEvent,
   HttpApiEventHandlerMap,
   MatrixClient,
-  SyncState,
 } from 'matrix-js-sdk';
 import {
   Accessor,
@@ -15,20 +16,21 @@ import {
   Switch,
   type ParentComponent,
 } from 'solid-js';
-import { SplashScreen } from '~/app/components/splash-screen/Splashscreen';
-import { MatrixClientProvider } from '~/app/hooks/useMatrixClient';
-import { currentSession, removeSession } from '~/app/state/sessions';
-import { Text } from '~/components/ui/text';
-import { initClient, startClient } from '~/lib/client/init';
+import { Portal } from 'solid-js/web';
 import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
 import { Flex, HStack } from '~styled/jsx';
+import { SplashScreen } from '../../components/splash-screen/Splashscreen';
+import { WithServerDetails } from '../../components/with-server-details/WithServerDetails';
+import { WithClientState } from '../../hooks/useClientState';
+import { MatrixClientProvider } from '../../hooks/useMatrixClient';
+import { ServerDetailsProvider } from '../../hooks/useServerDetails';
+import {
+  currentSession,
+  fetchClient,
+  fetchClientStart,
+  removeSession,
+} from '../../state/sessions';
 import SpecVersions from './SpecVersions';
-import { Dialog } from '@/components/ui/dialog';
-import { Portal } from 'solid-js/web';
-import { Button } from '~/components/ui/button';
-import { WithServerDetails } from '~/app/components/with-server-details/WithServerDetails';
-import { ServerDetailsProvider } from '~/app/hooks/useServerDetails';
-import { WithClientState } from '~/app/hooks/useClientState';
 
 const createLogoutListener = (
   mx: Accessor<MatrixClient | undefined>,
@@ -56,23 +58,12 @@ const ClientRoot: ParentComponent = (props) => {
   const baseUrl = () => currentSession().baseUrl;
   const [mx, { refetch: refetchMx }] = createResource(
     currentSession,
-    async ($currentSession) => await initClient($currentSession)
+    async ($currentSession) => await fetchClient($currentSession)
   );
-  const [start, { refetch: refetchStart }] = createResource(mx, async ($mx) => {
-    await Promise.all([
-      startClient($mx),
-      new Promise<void>((resolve) => {
-        const onSync = (state: SyncState) => {
-          if (state === SyncState.Prepared) {
-            $mx.off(ClientEvent.Sync, onSync);
-            resolve();
-          }
-        };
-
-        $mx.on(ClientEvent.Sync, onSync);
-      }),
-    ]);
-  });
+  const [start, { refetch: refetchStart }] = createResource(
+    mx,
+    async ($mx) => await fetchClientStart($mx)
+  );
 
   createLogoutListener(mx, () => {
     removeSession(currentSession());
