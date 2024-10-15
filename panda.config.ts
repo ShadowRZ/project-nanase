@@ -1,6 +1,5 @@
 import { defineConfig, defineGlobalStyles } from '@pandacss/dev';
 import { createPreset } from './pandacss/preset';
-import { removeUnusedCssVars } from 'pandacss/hooks/remove-unused-css-vars';
 
 const globalCss = defineGlobalStyles({
   'html, body': {
@@ -33,11 +32,4 @@ export default defineConfig({
   jsxFramework: 'solid',
   importMap: '~styled',
   globalCss,
-  hooks: {
-    'cssgen:done': ({ artifact, content }) => {
-      if (artifact === 'styles.css') {
-        return removeUnusedCssVars(content);
-      }
-    },
-  },
 });

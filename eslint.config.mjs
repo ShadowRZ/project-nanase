@@ -18,7 +18,7 @@ export default tseslint.config(
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.es2022,
+        ...globals.es2021,
       },
       parserOptions: {
         projectService: true,
