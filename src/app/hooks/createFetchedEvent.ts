@@ -1,39 +1,25 @@
-import {
-  type MatrixClient,
-  type EventTimelineSet,
-  MatrixEvent,
-  type Room,
-} from 'matrix-js-sdk';
-import { type CryptoBackend } from 'matrix-js-sdk/lib/common-crypto/CryptoBackend';
-import { createResource } from 'solid-js';
+import { MatrixEvent } from 'matrix-js-sdk';
+import { useMatrixClient } from './useMatrixClient';
+import { createAsync } from '@solidjs/router';
 
 export function createFetchedEvent(
   roomId: () => string,
-  eventId: () => string,
-  timelineSet: () => EventTimelineSet,
-  client: () => MatrixClient
+  eventId: () => string
 ) {
-  const room = () => client().getRoom(roomId()) ?? undefined;
+  const mx = useMatrixClient();
+  const room = () => mx().getRoom(roomId());
+  const timelineSet = () => room()?.getUnfilteredTimelineSet();
 
-  const [target] = createResource(
-    (): [string, Room | undefined, string, EventTimelineSet] => [
-      roomId(),
-      room(),
-      eventId(),
-      timelineSet(),
-    ],
-    async ([$roomId, $room, $eventId, $timelineSet]) => {
-      await $room?.loadMembersIfNeeded();
-      const timelineEvent = $timelineSet.findEventById($eventId);
-      if (timelineEvent !== undefined) return timelineEvent;
-      const ev = new MatrixEvent(
-        await client().fetchRoomEvent($roomId, $eventId)
-      );
-      if (ev.isEncrypted() && client().getCrypto())
-        await ev.attemptDecryption(client().getCrypto() as CryptoBackend);
-      return ev;
-    }
-  );
+  const target = createAsync(async () => {
+    const $room = room();
+    if ($room === null) return;
+    await $room.loadMembersIfNeeded();
+    const timelineEvent = timelineSet()!.findEventById(eventId());
+    if (timelineEvent !== undefined) return timelineEvent;
+    const ev = new MatrixEvent(await mx().fetchRoomEvent(roomId(), eventId()));
+    await mx().decryptEventIfNeeded(ev);
+    return ev;
+  });
 
   return target;
 }

@@ -8,84 +8,76 @@ import {
   RoomEvent,
   RoomStateEvent,
 } from 'matrix-js-sdk';
-import { Accessor, createEffect, createResource, onCleanup } from 'solid-js';
+import { Accessor, createEffect, onCleanup } from 'solid-js';
+import { createRefetchMemo } from './createRefetchMemo';
 
 export const createRoomInfo = (room: Accessor<Room | undefined>) => {
-  const [name, { refetch: refetchName }] = createResource(
-    room,
-    ($room) => $room.name as string | undefined
-  );
-  const [topic, { refetch: refetchTopic }] = createResource(
-    room,
-    ($room) =>
-      $room
-        .getLiveTimeline()
+  const [name, refetchName] = createRefetchMemo(() => room()?.name);
+  const [topic, refetchTopic] = createRefetchMemo(
+    () =>
+      room()
+        ?.getLiveTimeline()
         .getState(EventTimeline.FORWARDS)
         ?.getStateEvents(EventType.RoomTopic, '')
         ?.getContent<MRoomTopicEventContent>().topic
   );
-  const [members, { refetch: refetchMembers }] = createResource(
-    room,
-    ($room) => $room.getMembers().length
+  const [members, refetchMembers] = createRefetchMemo(
+    () => room()?.getMembers.length ?? 0
   );
-  const [lastTs, { refetch: refetchLastTs }] = createResource(room, ($room) =>
-    $room.getLastActiveTimestamp()
+  const [lastTs, refetchLastTs] = createRefetchMemo(() =>
+    room()?.getLastActiveTimestamp()
   );
-  const [avatar, { refetch: refetchAvatar }] = createResource(
-    room,
-    ($room) => $room.getMxcAvatarUrl() ?? undefined
+  const [avatar, refetchAvatar] = createRefetchMemo(
+    () => room()?.getMxcAvatarUrl() ?? undefined
   );
-  const [unread, { refetch: refetchUnread }] = createResource(
-    room,
-    ($room) =>
-      $room.getRoomUnreadNotificationCount(NotificationCountType.Highlight) ?? 0
+  const [unread, refetchUnread] = createRefetchMemo(
+    () =>
+      room()?.getRoomUnreadNotificationCount(NotificationCountType.Highlight) ??
+      0
   );
-  const [maySendMessage, { refetch: refetchMaySendMessage }] = createResource(
-    room,
-    ($room) => $room.maySendMessage()
+  const [maySendMessage, refetchMaySendMessage] = createRefetchMemo(
+    () => room()?.maySendMessage() ?? false
   );
-  const [encrypted, { refetch: refetchEncrypted }] = createResource(
-    room,
-    ($room) => $room.hasEncryptionStateEvent()
+  const [encrypted, refetchEncrypted] = createRefetchMemo(
+    () => room()?.hasEncryptionStateEvent() ?? false
   );
-  const [lastEvent, { refetch: refetchLastEvent }] = createResource(
-    room,
-    ($room) => $room.getLastLiveEvent()
+  const [lastEvent, refetchLastEvent] = createRefetchMemo(() =>
+    room()?.getLastLiveEvent()
   );
 
-  const onRoomStateEvent = (event: MatrixEvent): void => {
+  const onRoomStateEvent = (event: MatrixEvent) => {
     if (event.getType() === 'm.room.topic') {
-      void refetchTopic();
+      refetchTopic();
     }
 
     if (event.getType() === 'm.room.avatar') {
-      void refetchAvatar();
+      refetchAvatar();
     }
 
     if (event.getType() === 'm.room.power_levels') {
-      void refetchMaySendMessage();
+      refetchMaySendMessage();
     }
 
     if (event.getType() === 'm.room.encryption') {
-      void refetchEncrypted();
+      refetchEncrypted();
     }
   };
 
   const onRoomName = (): void => {
-    void refetchName();
+    refetchName();
   };
 
   const onRoomMembers = (): void => {
-    void refetchMembers();
+    refetchMembers();
   };
 
   const onTimeLine = (): void => {
-    void refetchLastTs();
-    void refetchLastEvent();
+    refetchLastTs();
+    refetchLastEvent();
   };
 
   const onUnread = (): void => {
-    void refetchUnread();
+    refetchUnread();
   };
 
   createEffect(() => {
