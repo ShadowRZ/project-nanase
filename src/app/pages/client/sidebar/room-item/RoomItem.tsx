@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
 import { Component, Show } from 'solid-js';
 import { trimReplyFallback } from '~/lib/utils/matrix';
-import HashStraightDuotone from '~icons/ph/hash-straight-duotone';
+import HashStraightBold from '~icons/ph/hash-straight-bold';
 import UserCircleFill from '~icons/ph/user-circle-fill';
 import { Flex, styled } from '~styled/jsx';
 import NotificationCount from '../../../../atoms/notification/NotificationCount';
@@ -76,7 +76,7 @@ export const RoomItem: Component<RoomItemProps> = (props) => {
         <MxcAvatar
           flexShrink='0'
           icon={
-            <Show when={props.direct} fallback={<HashStraightDuotone />}>
+            <Show when={props.direct} fallback={<HashStraightBold />}>
               <UserCircleFill />
             </Show>
           }

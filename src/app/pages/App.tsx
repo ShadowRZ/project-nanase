@@ -8,6 +8,7 @@ import AuthLayout from './auth/AuthLayout';
 import Login from './auth/login/Login';
 import PasswordLogin from './auth/login/PasswordLogin';
 import { ClientRoute } from './client/ClientRoute';
+import { RoomRoute } from '../features/room/RoomRoute';
 
 const Index: ParentComponent = (props) => {
   return (
@@ -27,7 +28,10 @@ const App: Component = () => {
   return (
     <Router root={Layout}>
       <Route path='/' component={Index}>
-        <Route component={ClientRoute} />
+        <Route component={ClientRoute}>
+          <Route path='/' component={() => 'Hello World'} />
+          <Route path='/rooms/:roomId?' component={RoomRoute} />
+        </Route>
       </Route>
       <Route component={AuthLayout}>
         <Route path='/login' component={Login} />

@@ -4,8 +4,8 @@ import { Flex } from '~styled/jsx';
 const ClientLayout: ParentComponent<{ nav?: JSX.Element }> = (props) => {
   return (
     <Flex grow='1'>
-      <Flex shrink='0'>{props.nav}</Flex>
-      <Flex grow='1'>{props.children}</Flex>
+      {props.nav}
+      {props.children}
     </Flex>
   );
 };

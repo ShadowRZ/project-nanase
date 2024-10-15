@@ -32,12 +32,12 @@ importers:
       '@solid-primitives/map':
         specifier: ^0.4.13
         version: 0.4.13(solid-js@1.9.2)
+      '@solid-primitives/media':
+        specifier: ^2.2.9
+        version: 2.2.9(solid-js@1.9.2)
       '@solid-primitives/resource':
         specifier: ^0.3.1
         version: 0.3.1(solid-js@1.9.2)
-      '@solid-primitives/rootless':
-        specifier: ^1.4.5
-        version: 1.4.5(solid-js@1.9.2)
       '@solid-primitives/scheduled':
         specifier: ^1.4.3
         version: 1.4.3(solid-js@1.9.2)
