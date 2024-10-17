@@ -1,10 +1,12 @@
-import { Show, splitProps, type ParentComponent } from 'solid-js';
-import Time from '~/app/atoms/time/Time';
-import { styled } from '~styled/jsx';
-import { css } from '~styled/css';
-import { square } from '~styled/patterns';
+import { Component, Show, splitProps } from 'solid-js';
 import Checks from '~icons/ph/checks';
 import PencilSimpleLine from '~icons/ph/pencil-simple-line';
+import { css } from '~styled/css';
+import { styled } from '~styled/jsx';
+import { square } from '~styled/patterns';
+import { useMatrixClient } from '../../../hooks/useMatrixClient';
+import { MxcImg } from '../../mxc-img/MxcImg';
+import { Time } from '../../time/Time';
 
 const Root = styled('div', {
   base: {
@@ -21,8 +23,8 @@ const Root = styled('div', {
   },
 });
 
-type ImageBoxProps = {
-  src?: string;
+type ImageContentProps = {
+  src: string;
   width: number;
   height: number;
   timestamp: number;
@@ -32,11 +34,12 @@ type ImageBoxProps = {
   edited?: boolean;
 };
 
-const ImageMessage: ParentComponent<ImageBoxProps> = (props) => {
+export const ImageContent: Component<ImageContentProps> = (props) => {
+  const mx = useMatrixClient();
   const [image] = splitProps(props, ['src', 'width', 'height']);
   return (
     <Root status={props.status}>
-      {props.children ?? <img {...image} class={css({ rounded: 'lg' })} />}
+      <MxcImg client={mx()} {...image} rounded='lg' />
       <styled.span
         textStyle='xs'
         boxSizing='content-box'
@@ -66,5 +69,3 @@ const ImageMessage: ParentComponent<ImageBoxProps> = (props) => {
     </Root>
   );
 };
-
-export default ImageMessage;

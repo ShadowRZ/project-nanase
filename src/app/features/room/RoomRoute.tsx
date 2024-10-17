@@ -6,8 +6,8 @@ import { Room } from './Room';
 
 export const RoomRoute: Component = () => {
   const mx = useMatrixClient();
-  const { roomId } = useParams();
-  const room = () => mx().getRoom(roomId) ?? undefined;
+  const params = useParams();
+  const room = () => mx().getRoom(params.roomId) ?? undefined;
 
   return (
     <RoomProvider value={room}>

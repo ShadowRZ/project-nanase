@@ -1,12 +1,12 @@
 import { createMemo } from 'solid-js';
-import { createCurrentClientResource } from './createClientResource';
 import { getRoomMemberAvatarUrl } from '~/lib/utils/matrix';
+import { useMatrixClient } from './useMatrixClient';
 
 export default function createRoomProfileSnapshot(
   roomId: () => string,
   userId: () => string
 ) {
-  const client = createCurrentClientResource();
+  const client = useMatrixClient();
   const room = () => client()?.getRoom(roomId()) ?? undefined;
   const member = () => room()?.getMember(userId()) ?? undefined;
 

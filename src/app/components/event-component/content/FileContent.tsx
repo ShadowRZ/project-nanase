@@ -1,34 +1,13 @@
-import { Button } from '@kobalte/core/button';
+import { Button } from '@/components/ui/button';
 import { Show, type Component } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
-import Box from '~/app/atoms/box/Box';
-import Time from '~/app/atoms/time/Time';
-import { cva } from '~styled/css';
-import { Flex, Square, styled } from '~styled/jsx';
-import { square } from '~styled/patterns';
 import Checks from '~icons/ph/checks';
 import FileDuotone from '~icons/ph/file-duotone';
 import PencilSimpleLine from '~icons/ph/pencil-simple-line';
 import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
-
-const button = cva({
-  base: {
-    width: 'fit',
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'initial',
-    textAlign: 'start',
-  },
-  variants: {
-    status: {
-      sending: {
-        opacity: '50',
-      },
-      sent: {},
-    },
-  },
-});
+import { Flex, Square, styled } from '~styled/jsx';
+import { square } from '~styled/patterns';
+import { Time } from '../../time/Time';
 
 const IconPlaceholder = styled('div', {
   base: {
@@ -37,11 +16,11 @@ const IconPlaceholder = styled('div', {
   },
 });
 
-type FileMessageProps = {
+type FileContentProps = {
   timestamp: number;
   filename?: string;
   mime?: string;
-  color?: 'primary' | 'default';
+  primary?: boolean;
   status: 'sending' | 'sent';
   read?: boolean;
   edited?: boolean;
@@ -49,14 +28,9 @@ type FileMessageProps = {
   onClick?: () => void;
 };
 
-const FileMessage: Component<FileMessageProps> = (props) => {
+export const FileContent: Component<FileContentProps> = (props) => {
   return (
-    <Button
-      as={Box}
-      color={props.color ?? 'default'}
-      class={button({ status: props.status })}
-      onClick={props.onClick}
-    >
+    <Button onClick={props.onClick} data-project-nanase-primary={props.primary}>
       <Flex direction='row' gap='2'>
         <Square
           size='12'
@@ -104,5 +78,3 @@ const FileMessage: Component<FileMessageProps> = (props) => {
     </Button>
   );
 };
-
-export default FileMessage;

@@ -1,14 +1,13 @@
 import { Show, type ParentComponent } from 'solid-js';
 import Box from '~/app/atoms/box/Box';
-import Text from '~/app/atoms/text/Text';
-import Time from '~/app/atoms/time/Time';
+import { Time } from '../../time/Time';
 import { css, cva } from '~styled/css';
 import { square } from '~styled/patterns';
 import { styled } from '~styled/jsx';
 import Checks from '~icons/ph/checks';
 import PencilSimpleLine from '~icons/ph/pencil-simple-line';
 
-type TextMessageProps = {
+type TextContentProps = {
   timestamp: number;
   color?: 'primary' | 'default';
   status: 'sending' | 'sent';
@@ -45,7 +44,7 @@ const Wrapper = styled('div', {
   },
 });
 
-const TextMessage: ParentComponent<TextMessageProps> = (props) => {
+export const TextContent: ParentComponent<TextContentProps> = (props) => {
   return (
     <Box
       color={props.color ?? 'default'}
@@ -81,5 +80,3 @@ const TextMessage: ParentComponent<TextMessageProps> = (props) => {
     </Box>
   );
 };
-
-export default TextMessage;

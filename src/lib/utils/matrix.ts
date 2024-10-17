@@ -22,11 +22,7 @@ export function getRoomMemberAvatarUrl(
 ): string | undefined {
   if (room === undefined) return;
   if (member === undefined) return;
-  const homeserver = room.client.getHomeserverUrl();
-  return (
-    member.getAvatarUrl(homeserver, 48, 48, 'crop', undefined, false) ??
-    undefined
-  );
+  return member.getMxcAvatarUrl();
 }
 
 export function trimReplyFallback(body?: string): string | undefined {

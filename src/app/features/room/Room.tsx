@@ -4,6 +4,7 @@ import { Flex } from '~styled/jsx';
 import { RoomIntro } from './RoomIntro';
 import { createRoomInfo } from '../../hooks/createRoomInfo';
 import { useNavigate } from '@solidjs/router';
+import { RoomTimeline } from './RoomTimeline';
 
 export const Room: Component = () => {
   const room = useRoom();
@@ -21,6 +22,7 @@ export const Room: Component = () => {
           navigate('/', { replace: true });
         }}
       />
+      <RoomTimeline room={room()!} />
     </Flex>
   );
 };

@@ -10,7 +10,6 @@ import { createFetchedEvent } from '~/app/hooks/createFetchedEvent';
 import createRoomProfileSnapshot from '~/app/hooks/createRoomProfileSnapshot';
 import { trimReplyFallback } from '~/lib/utils/matrix';
 import { styled } from '~styled/jsx';
-import { flex } from '~styled/patterns';
 
 type QuotedEventProps = {
   roomId: string;
@@ -83,13 +82,11 @@ const QuoteButton = styled(Button, {
   },
 });
 
-const QuotedEvent: Component<QuotedEventProps> = (props) => {
+export const QuotedEvent: Component<QuotedEventProps> = (props) => {
   const primary = () => props.primary;
   const roomId = () => props.roomId;
   const eventId = () => props.eventId;
-  const timelineSet = () => props.timelineSet;
-  const client = () => props.client;
-  const target = createFetchedEvent(roomId, eventId, timelineSet, client);
+  const target = createFetchedEvent(roomId, eventId);
 
   return (
     <QuoteButton primary={!primary()}>
@@ -103,5 +100,3 @@ const QuotedEvent: Component<QuotedEventProps> = (props) => {
     </QuoteButton>
   );
 };
-
-export default QuotedEvent;

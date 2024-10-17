@@ -1,17 +1,19 @@
 import { type ParentComponent } from 'solid-js';
-import Avatar from '~/app/components/avatar/Avatar';
-import Text from '~/app/atoms/text/Text';
-import Time from '~/app/atoms/time/Time';
+import { useMatrixClient } from '~/app/hooks/useMatrixClient';
 import { Flex, styled } from '~styled/jsx';
+import { MxcAvatar } from '../mxc-avatar/MxcAvatar';
+import { Time } from '../time/Time';
 
-type MessageProps = {
+type StateProps = {
   name?: string;
   avatar?: string;
   userId: string;
   timestamp: number;
 };
 
-const StateMessageShell: ParentComponent<MessageProps> = (props) => {
+export const State: ParentComponent<StateProps> = (props) => {
+  const mx = useMatrixClient();
+
   return (
     <Flex
       direction='row'
@@ -21,18 +23,16 @@ const StateMessageShell: ParentComponent<MessageProps> = (props) => {
       overflow='hidden'
       alignItems='center'
     >
-      <Avatar.Img size='small' src={props.avatar} />
-      <Text font='italic' css={{ flex: '1', opacity: '50' }}>
+      <MxcAvatar client={mx()} src={props.avatar} flexShrink='0' />
+      <styled.p fontStyle='italic' flex='1' opacity='0.5'>
         <styled.span fontWeight='bold'>
           {props.name ?? props.userId}
         </styled.span>{' '}
         {props.children}
-      </Text>
-      <Text size='small' css={{ opacity: '50' }}>
+      </styled.p>
+      <styled.p textStyle='sm' opacity='0.5'>
         <Time timestamp={props.timestamp} />
-      </Text>
+      </styled.p>
     </Flex>
   );
 };
-
-export default StateMessageShell;

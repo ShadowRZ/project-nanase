@@ -14,33 +14,28 @@ import {
   type Component,
   type ParentComponent,
 } from 'solid-js';
-import AsyncImage from '~/app/components/async-image/AsyncImage';
-import Box from '~/app/atoms/box/Box';
-import {
-  createCurrentClientResource,
-  createCurrentClientUserId,
-} from '~/app/hooks/createClientResource';
-import createEventInfo from '~/app/hooks/createEventInfo';
-import createRoomProfileSnapshot from '~/app/hooks/createRoomProfileSnapshot';
-import CFileMessage from '~/app/molecules/message/FileMessage';
-import CImageMessage from '~/app/molecules/message/ImageMessage';
-import MessageShell from '~/app/molecules/message/MessageShell';
-import StateMessageShell from '~/app/molecules/message/StateMessageShell';
-import CTextMessage from '~/app/molecules/message/TextMessage';
-import QuotedEvent from '~/app/organisms/quoted-event/QuotedEvent';
-import { renderMemberContent } from '~/app/utils/renderMemberContent';
-import { renderTextContent } from '~/app/utils/renderTextContent';
-import { getEventReactions } from '~/app/utils/room';
 import {
   type AnyMessage,
   type FileMessage,
   type ImageMessage,
   type MaybeFormattedMessage,
   type Sticker,
-} from '~/types/event-content';
+} from '../../../types/event-content';
 import TrashDuotone from '~icons/ph/trash-duotone';
-import { getMediaPromise } from '~/lib/utils/media';
 import { Flex, styled } from '~styled/jsx';
+import Box from '../../atoms/box/Box';
+import createEventInfo from '../../hooks/createEventInfo';
+import createRoomProfileSnapshot from '../../hooks/createRoomProfileSnapshot';
+import { useMatrixClient } from '../../hooks/useMatrixClient';
+import { renderMemberContent } from '../../utils/renderMemberContent';
+import { renderTextContent } from '../../utils/renderTextContent';
+import { getEventReactions } from '../../utils/room';
+import { QuotedEvent } from '../quoted-event/QuotedEvent';
+import { FileContent } from './content/FileContent';
+import { ImageContent } from './content/ImageContent';
+import { TextContent } from './content/TextContent';
+import { Message } from './Message';
+import { State } from './State';
 
 const RedactedMessage: Component = () => {
   return (
@@ -51,7 +46,7 @@ const RedactedMessage: Component = () => {
       gap='1'
       w='fit'
       rounded='xl'
-      bg='mauve.3'
+      bg='bg.subtle'
       p='2'
       opacity='50'
     >
@@ -68,9 +63,9 @@ type EventComponentProps = {
 };
 
 const MessageContent: Component<EventComponentProps> = (props) => {
-  const client = createCurrentClientResource();
+  const mx = useMatrixClient();
   const sender = () => event().getSender()!;
-  const selfId = createCurrentClientUserId();
+  const selfId = () => mx().getSafeUserId();
   const timelineSet = () => props.timelineSet;
   const { event, edited, content, sending, msgtype } =
     createEventInfo<AnyMessage>(timelineSet, () => props.event);
@@ -81,7 +76,7 @@ const MessageContent: Component<EventComponentProps> = (props) => {
         <Match
           when={msgtype() === MsgType.Text || msgtype() === MsgType.Notice}
         >
-          <CTextMessage
+          <TextContent
             timestamp={event().getTs()}
             status={sending() ? 'sending' : 'sent'}
             color={sender() === selfId() ? 'primary' : 'default'}
@@ -93,16 +88,16 @@ const MessageContent: Component<EventComponentProps> = (props) => {
                 roomId={props.roomId}
                 eventId={event().replyEventId!}
                 timelineSet={timelineSet()}
-                client={client()}
+                client={mx()}
                 primary={sender() === selfId()}
               />
             </Show>
             {renderTextContent(
               content() as MaybeFormattedMessage,
               props.roomId,
-              client().baseUrl
+              mx().baseUrl
             )}
-          </CTextMessage>
+          </TextContent>
         </Match>
         <Match when={msgtype() === MsgType.Image}>
           <Box color='default' maxW='2/3'>
@@ -111,26 +106,17 @@ const MessageContent: Component<EventComponentProps> = (props) => {
                 roomId={props.roomId}
                 eventId={event().replyEventId!}
                 timelineSet={timelineSet()}
-                client={client()}
+                client={mx()}
               />
             </Show>
-            <CImageMessage
+            <ImageContent
               timestamp={event().getTs()}
               status={sending() ? 'sending' : 'sent'}
               edited={edited() !== undefined}
+              src={(content() as ImageMessage).url}
               width={(content() as ImageMessage).info.w}
               height={(content() as ImageMessage).info.h}
-            >
-              <AsyncImage
-                src={getMediaPromise(
-                  client(),
-                  client().mxcUrlToHttp((content() as ImageMessage).url) ??
-                    undefined
-                )}
-                width={(content() as ImageMessage).info.w}
-                height={(content() as ImageMessage).info.h}
-              />
-            </CImageMessage>
+            />
           </Box>
         </Match>
         <Match when={msgtype() === MsgType.File}>
@@ -139,18 +125,18 @@ const MessageContent: Component<EventComponentProps> = (props) => {
               roomId={props.roomId}
               eventId={event().replyEventId!}
               timelineSet={timelineSet()}
-              client={client()}
+              client={mx()}
             />
           </Show>
-          <CFileMessage
+          <FileContent
             timestamp={event().getTs()}
             status={sending() ? 'sending' : 'sent'}
-            color={sender() === selfId() ? 'primary' : 'default'}
+            primary={sender() === selfId()}
             filename={(content() as FileMessage).filename ?? content().body}
             mime={(content() as FileMessage).info.mimetype}
             onClick={() => {
               const url = (content() as FileMessage).url;
-              const httpUrl = client().mxcUrlToHttp(url);
+              const httpUrl = mx().mxcUrlToHttp(url);
               const filename =
                 (content() as FileMessage).filename ?? content().body;
               if (httpUrl) {
@@ -167,7 +153,7 @@ const MessageContent: Component<EventComponentProps> = (props) => {
 };
 
 const StickerContent: Component<EventComponentProps> = (props) => {
-  const client = createCurrentClientResource();
+  const mx = useMatrixClient();
   const timelineSet = () => props.timelineSet;
   const { event, edited, content, sending } = createEventInfo<Sticker>(
     timelineSet,
@@ -175,9 +161,7 @@ const StickerContent: Component<EventComponentProps> = (props) => {
   );
   const width = createMemo(() => content().info.w);
   const height = createMemo(() => content().info.h);
-  const url = createMemo(
-    () => client().mxcUrlToHttp(content().url) ?? undefined
-  );
+  const url = createMemo(() => content().url);
 
   return (
     <>
@@ -186,22 +170,17 @@ const StickerContent: Component<EventComponentProps> = (props) => {
           roomId={props.roomId}
           eventId={event().replyEventId!}
           timelineSet={timelineSet()}
-          client={client()}
+          client={mx()}
         />
       </Show>
-      <CImageMessage
+      <ImageContent
         timestamp={event().getTs()}
         status={sending() ? 'sending' : 'sent'}
         edited={edited() !== undefined}
+        src={url()}
         width={width()}
         height={height()}
-      >
-        <AsyncImage
-          src={getMediaPromise(client(), url())}
-          width={width()}
-          height={height()}
-        />
-      </CImageMessage>
+      />
     </>
   );
 };
@@ -215,14 +194,14 @@ const MemberContent: Component<Omit<EventComponentProps, 'timelineSet'>> = (
   const { name, avatar } = createRoomProfileSnapshot(roomId, sender);
 
   return (
-    <StateMessageShell
+    <State
       name={name()}
       avatar={avatar()}
       userId={sender()}
       timestamp={props.event.getTs()}
     >
       {renderMemberContent(event()) ?? 'has an unrecognized member change.'}
-    </StateMessageShell>
+    </State>
   );
 };
 
@@ -235,7 +214,7 @@ const RoomMessage: ParentComponent<EventComponentProps> = (props) => {
   const keyedReactions = () => getEventReactions(timelineSet(), event());
 
   return (
-    <MessageShell name={name()} userId={sender()} avatar={avatar()}>
+    <Message name={name()} userId={sender()} avatar={avatar()}>
       {props.children}
       <For each={keyedReactions()}>
         {([key, reactions]) => {
@@ -248,7 +227,7 @@ const RoomMessage: ParentComponent<EventComponentProps> = (props) => {
           );
         }}
       </For>
-    </MessageShell>
+    </Message>
   );
 };
 
@@ -261,14 +240,14 @@ const StateMessage: ParentComponent<
   const { name, avatar } = createRoomProfileSnapshot(roomId, sender);
 
   return (
-    <StateMessageShell
+    <State
       name={name()}
       avatar={avatar()}
       userId={sender()}
       timestamp={props.event.getTs()}
     >
       {props.children}
-    </StateMessageShell>
+    </State>
   );
 };
 

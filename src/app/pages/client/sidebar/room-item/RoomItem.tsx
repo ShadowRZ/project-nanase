@@ -10,6 +10,7 @@ import { Time } from '../../../../components/time/Time';
 import { MxcAvatar } from '../../../../components/mxc-avatar/MxcAvatar';
 import { createRoomInfo } from '../../../../hooks/createRoomInfo';
 import { useMatrixClient } from '../../../../hooks/useMatrixClient';
+import { useNavigate } from '@solidjs/router';
 
 type RoomItemProps = {
   roomId: string;
@@ -55,9 +56,15 @@ export const RoomItem: Component<RoomItemProps> = (props) => {
   const lastContent = () =>
     trimReplyFallback(lastEvent()?.getContent().body as string);
 
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate(`/rooms/${props.roomId}`);
+  };
+
   return (
     <Show when={room()}>
       <Button
+        onClick={onClick}
         colorPalette='neutral'
         variant='ghost'
         display='flex'
@@ -114,8 +121,8 @@ export const RoomItem: Component<RoomItemProps> = (props) => {
                 </Text>
               </Show>
             </styled.span>
-            <Show when={unread() && unread()! > 0}>
-              <NotificationCount count={unread()!} highlight />
+            <Show when={unread() && unread() > 0}>
+              <NotificationCount count={unread()} highlight />
             </Show>
           </styled.span>
         </Flex>

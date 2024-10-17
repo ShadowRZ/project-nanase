@@ -1,12 +1,14 @@
 import { createAsync } from '@solidjs/router';
 import { MatrixClient } from 'matrix-js-sdk';
-import { Component, onCleanup, splitProps } from 'solid-js';
+import { Component, onCleanup, splitProps, type JSX } from 'solid-js';
 import { css } from '~styled/css';
 import { splitCssProps } from '~styled/jsx';
 import { Assign, HTMLStyledProps } from '~styled/types';
 
 type MxcImgProps = {
   src?: string;
+  width: JSX.IntrinsicElements['img']['width'];
+  height: JSX.IntrinsicElements['img']['width'];
   client: MatrixClient;
   resizeMethod?: string;
   allowDirectLinks?: boolean;
@@ -17,18 +19,23 @@ type MxcImgProps = {
 export const MxcImg: Component<Assign<HTMLStyledProps<'img'>, MxcImgProps>> = (
   props
 ) => {
-  const [cssProps, restProps] = splitCssProps(props);
+  const [selfProps, sizeProps, restProps] = splitProps(
+    props,
+    [
+      'src',
+      'client',
+      'resizeMethod',
+      'allowDirectLinks',
+      'allowRedirects',
+      'useAuthentication',
+    ],
+    ['width', 'height']
+  );
+
+  const [cssProps, rootProps] = splitCssProps(restProps);
   const { css: cssProp, ...styleProps } = cssProps;
   const className = css(styleProps, cssProp);
 
-  const [selfProps, rootProps] = splitProps(restProps, [
-    'src',
-    'client',
-    'resizeMethod',
-    'allowDirectLinks',
-    'allowRedirects',
-    'useAuthentication',
-  ]);
   const mx = () => selfProps.client;
   const src = () => selfProps.src;
   const useAuthentication = () => selfProps.useAuthentication ?? false;
@@ -71,5 +78,5 @@ export const MxcImg: Component<Assign<HTMLStyledProps<'img'>, MxcImgProps>> = (
     // TODO: Schedule release
   });
 
-  return <img {...rootProps} src={imgSrc()} class={className} />;
+  return <img {...rootProps} {...sizeProps} src={imgSrc()} class={className} />;
 };
