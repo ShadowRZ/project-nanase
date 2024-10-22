@@ -21,6 +21,6 @@ export default defineConfig({
     port: 4000,
   },
   build: {
-    target: 'es2021',
+    target: 'es2022',
   },
 });
