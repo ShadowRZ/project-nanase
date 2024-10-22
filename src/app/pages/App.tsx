@@ -9,6 +9,7 @@ import Login from './auth/login/Login';
 import PasswordLogin from './auth/login/PasswordLogin';
 import { ClientRoute } from './client/ClientRoute';
 import { RoomRoute } from '../features/room/RoomRoute';
+import { HTMLParserProvider } from '../hooks/useHTMLParser';
 
 const Index: ParentComponent = (props) => {
   return (
@@ -19,9 +20,11 @@ const Index: ParentComponent = (props) => {
 };
 
 const Layout: ParentComponent = (props) => (
-  <I18NProvider>
-    <FeatureCheck>{props.children}</FeatureCheck>
-  </I18NProvider>
+  <HTMLParserProvider>
+    <I18NProvider>
+      <FeatureCheck>{props.children}</FeatureCheck>
+    </I18NProvider>
+  </HTMLParserProvider>
 );
 
 const App: Component = () => {

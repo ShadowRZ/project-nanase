@@ -76,7 +76,7 @@ const QuoteButton = styled(Button, {
   variants: {
     primary: {
       true: {
-        borderColor: 'ruby.9',
+        borderColor: 'colorPalette.default',
       },
     },
   },

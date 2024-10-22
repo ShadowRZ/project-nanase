@@ -1,4 +1,8 @@
-import { RecipeConfig, RecipeVariantRecord, SlotRecipeConfig } from '@pandacss/dev';
+import {
+  RecipeConfig,
+  RecipeVariantRecord,
+  SlotRecipeConfig,
+} from '@pandacss/dev';
 import { avatar } from './avatar';
 import { badge } from './badge';
 import { button } from './button';
@@ -19,6 +23,7 @@ import { progress } from './progress';
 import { formLabel } from './form-label';
 import { textarea } from './textarea';
 import { field } from './field';
+import { typography } from './typography';
 
 export const recipes: Record<string, RecipeConfig<RecipeVariantRecord>> = {
   button,
@@ -27,6 +32,7 @@ export const recipes: Record<string, RecipeConfig<RecipeVariantRecord>> = {
   input,
   text,
   textarea,
+  typography,
 };
 
 export const slotRecipes: Record<string, SlotRecipeConfig> = {

@@ -28,7 +28,6 @@ import createEventInfo from '../../hooks/createEventInfo';
 import createRoomProfileSnapshot from '../../hooks/createRoomProfileSnapshot';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { renderMemberContent } from '../../utils/renderMemberContent';
-import { renderTextContent } from '../../utils/renderTextContent';
 import { getEventReactions } from '../../utils/room';
 import { QuotedEvent } from '../quoted-event/QuotedEvent';
 import { FileContent } from './content/FileContent';
@@ -36,6 +35,7 @@ import { ImageContent } from './content/ImageContent';
 import { TextContent } from './content/TextContent';
 import { Message } from './Message';
 import { State } from './State';
+import { FormattedRenderer } from './FormattedRenderer';
 
 const RedactedMessage: Component = () => {
   return (
@@ -79,7 +79,7 @@ const MessageContent: Component<EventComponentProps> = (props) => {
           <TextContent
             timestamp={event().getTs()}
             status={sending() ? 'sending' : 'sent'}
-            color={sender() === selfId() ? 'primary' : 'default'}
+            primary={sender() === selfId()}
             edited={edited() !== undefined}
             notice={msgtype() === MsgType.Notice}
           >
@@ -92,15 +92,11 @@ const MessageContent: Component<EventComponentProps> = (props) => {
                 primary={sender() === selfId()}
               />
             </Show>
-            {renderTextContent(
-              content() as MaybeFormattedMessage,
-              props.roomId,
-              mx().baseUrl
-            )}
+            <FormattedRenderer content={content() as MaybeFormattedMessage} />
           </TextContent>
         </Match>
         <Match when={msgtype() === MsgType.Image}>
-          <Box color='default' maxW='2/3'>
+          <Box color='default' maxW='40rem'>
             <Show when={event().replyEventId !== undefined}>
               <QuotedEvent
                 roomId={props.roomId}

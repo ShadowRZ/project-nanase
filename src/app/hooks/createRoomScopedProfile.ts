@@ -5,16 +5,16 @@ import {
   type RoomMember,
 } from 'matrix-js-sdk';
 import { createEffect, createResource, onCleanup } from 'solid-js';
-import { createCurrentClientResource } from '~/app/hooks/createClientResource';
 import { getRoomMemberAvatarUrl } from '~/lib/utils/matrix';
 import { type ProfileResource } from '~/types/profile';
+import { useMatrixClient } from './useMatrixClient';
 
 export const createRoomScopedProfile = (
   roomId: () => string,
   userId: () => string
 ): ProfileResource => {
-  const client = createCurrentClientResource();
-  const room = () => client()?.getRoom(roomId()) ?? undefined;
+  const mx = useMatrixClient();
+  const room = () => mx()?.getRoom(roomId()) ?? undefined;
   const member = () => room()?.getMember(userId()) ?? undefined;
 
   const [name, { refetch: refetchName }] = createResource(
@@ -33,7 +33,7 @@ export const createRoomScopedProfile = (
     }
   );
 
-  const onMember = (_event: MatrixEvent, member: RoomMember) => {
+  const onMember = (_event: MatrixEvent, _member: RoomMember) => {
     void refetchName();
     void refetchAvatar();
   };

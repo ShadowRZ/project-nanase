@@ -1,27 +1,31 @@
+import { Typography } from '@/components/ui/typography';
 import { Show, type ParentComponent } from 'solid-js';
-import Box from '~/app/atoms/box/Box';
-import { Time } from '../../time/Time';
-import { css, cva } from '~styled/css';
-import { square } from '~styled/patterns';
-import { styled } from '~styled/jsx';
 import Checks from '~icons/ph/checks';
 import PencilSimpleLine from '~icons/ph/pencil-simple-line';
+import { css } from '~styled/css';
+import { styled } from '~styled/jsx';
+import { square } from '~styled/patterns';
+import { Time } from '../../time/Time';
 
 type TextContentProps = {
   timestamp: number;
-  color?: 'primary' | 'default';
   status: 'sending' | 'sent';
+  primary?: boolean;
   read?: boolean;
   edited?: boolean;
   notice?: boolean;
 };
 
-const root = cva({
+const Root = styled('div', {
   base: {
+    rounded: 'lg',
+    padding: '2',
+    maxW: '40rem',
     width: 'fit-content',
     position: 'relative',
     display: 'flex',
     flexDirection: 'row',
+    backgroundColor: 'gray.dimmed',
   },
   variants: {
     status: {
@@ -30,15 +34,9 @@ const root = cva({
       },
       sent: {},
     },
-  },
-});
-
-const Wrapper = styled('div', {
-  base: {},
-  variants: {
-    notice: {
+    primary: {
       true: {
-        opacity: '75',
+        backgroundColor: 'accent.dimmed',
       },
     },
   },
@@ -46,16 +44,8 @@ const Wrapper = styled('div', {
 
 export const TextContent: ParentComponent<TextContentProps> = (props) => {
   return (
-    <Box
-      color={props.color ?? 'default'}
-      class={root({ status: props.status })}
-      style={{
-        '--un-prose-links': props.color === 'primary' ? '#bfdbfe' : '#3b82f6',
-        '--project-nanase-pills':
-          props.color === 'primary' ? '#fecdd3' : '#e11d48',
-      }}
-    >
-      <Wrapper notice={props.notice}>{props.children}</Wrapper>
+    <Root primary={props.primary} status={props.status}>
+      <Typography>{props.children}</Typography>
       <styled.div
         textStyle='xs'
         ml='2'
@@ -77,6 +67,6 @@ export const TextContent: ParentComponent<TextContentProps> = (props) => {
         </Show>
         <Time timestamp={props.timestamp} />
       </styled.div>
-    </Box>
+    </Root>
   );
 };

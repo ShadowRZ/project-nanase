@@ -7,8 +7,8 @@ import { Assign, HTMLStyledProps } from '~styled/types';
 
 type MxcImgProps = {
   src?: string;
-  width: JSX.IntrinsicElements['img']['width'];
-  height: JSX.IntrinsicElements['img']['width'];
+  width?: JSX.IntrinsicElements['img']['width'];
+  height?: JSX.IntrinsicElements['img']['width'];
   client: MatrixClient;
   resizeMethod?: string;
   allowDirectLinks?: boolean;
