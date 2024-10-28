@@ -30,7 +30,7 @@ export const WithClientState: ParentComponent = (props) => {
   const mx = useMatrixClient();
   const { rooms, directs } = createRooms(mx);
   const profile = createSelfProfile(mx);
-  const typings = createTypings();
+  const typings = createTypings(mx);
   const [hierarchy, { spaces }] = createRoomHierarchy(mx);
 
   return (

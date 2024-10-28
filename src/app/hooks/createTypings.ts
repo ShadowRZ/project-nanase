@@ -1,17 +1,17 @@
 import { ReactiveMap } from '@solid-primitives/map';
 import { ReactiveSet } from '@solid-primitives/set';
 import {
+  MatrixClient,
   type MatrixEvent,
   type RoomMember,
   RoomMemberEvent,
 } from 'matrix-js-sdk';
-import { createEffect, onCleanup } from 'solid-js';
-import { useMatrixClient } from './useMatrixClient';
+import { Accessor, createEffect, on, onCleanup } from 'solid-js';
 
-export const createTypings = () => {
-  const mx = useMatrixClient();
-
+export const createTypings = (mx: Accessor<MatrixClient>) => {
   const typings = new ReactiveMap<string, ReactiveSet<string>>();
+
+  createEffect(on(mx, () => typings.clear()));
 
   const addTyping = (roomId: string, userId: string) => {
     if (!typings.has(roomId)) typings.set(roomId, new ReactiveSet());
@@ -32,10 +32,10 @@ export const createTypings = () => {
   };
 
   createEffect(() => {
-    const thisClient = mx();
-    thisClient?.on(RoomMemberEvent.Typing, onTyping);
+    const $mx = mx();
+    $mx?.on(RoomMemberEvent.Typing, onTyping);
     onCleanup(() => {
-      thisClient?.off(RoomMemberEvent.Typing, onTyping);
+      $mx?.off(RoomMemberEvent.Typing, onTyping);
     });
   });
 

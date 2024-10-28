@@ -1,5 +1,5 @@
 import { ClientEvent, MatrixClient, MatrixEvent } from 'matrix-js-sdk';
-import { Accessor, batch, createEffect, onCleanup } from 'solid-js';
+import { Accessor, batch, createEffect, on, onCleanup } from 'solid-js';
 import { createSetStore } from './createSetStore';
 
 export const createDirects = (mx: Accessor<MatrixClient>) => {
@@ -21,11 +21,16 @@ export const createDirects = (mx: Accessor<MatrixClient>) => {
     });
   };
 
+  createEffect(
+    on(mx, ($mx) => {
+      const event = $mx.getAccountData('m.direct');
+      if (event === undefined) clear();
+      else onAccountData(event);
+    })
+  );
+
   createEffect(() => {
     const $mx = mx();
-    const event = $mx.getAccountData('m.direct');
-    if (event === undefined) clear();
-    else onAccountData(event);
     $mx.on(ClientEvent.AccountData, onAccountData);
     onCleanup(() => {
       $mx.off(ClientEvent.AccountData, onAccountData);

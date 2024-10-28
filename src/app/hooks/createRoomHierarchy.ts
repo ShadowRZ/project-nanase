@@ -8,7 +8,7 @@ import {
   RoomEvent,
   RoomStateEvent,
 } from 'matrix-js-sdk';
-import { Accessor, batch, createEffect, onCleanup, untrack } from 'solid-js';
+import { Accessor, batch, createEffect, on, onCleanup } from 'solid-js';
 import { getSpaceChildrens, isJoined, isValidChildren } from '../utils/room';
 
 export const createRoomHierarchy = (
@@ -21,18 +21,20 @@ export const createRoomHierarchy = (
 ] => {
   const map = new ReactiveMap<string, ReactiveSet<string>>();
 
-  untrack(() => {
-    batch(() => {
-      console.log('Setting stores');
-      for (const room of mx()
-        .getRooms()
-        .filter((room) => room.isSpaceRoom())) {
-        const childrens = getSpaceChildrens(room);
+  createEffect(
+    on(mx, ($mx) => {
+      batch(() => {
+        map.clear();
+        for (const room of $mx
+          .getRooms()
+          .filter((room) => room.isSpaceRoom())) {
+          const childrens = getSpaceChildrens(room);
 
-        map.set(room.roomId, new ReactiveSet(childrens));
-      }
-    });
-  });
+          map.set(room.roomId, new ReactiveSet(childrens));
+        }
+      });
+    })
+  );
 
   const onAddRoom = (room: Room) => {
     if (isJoined(room)) {

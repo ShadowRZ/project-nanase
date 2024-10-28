@@ -1,16 +1,19 @@
 import { ClientEvent, MatrixClient, Room, RoomEvent } from 'matrix-js-sdk';
-import { Accessor, createEffect, onCleanup, untrack } from 'solid-js';
+import { Accessor, createEffect, on, onCleanup } from 'solid-js';
 import { isJoined } from '../utils/room';
 import { createSetStore } from './createSetStore';
 
 export const createJoinedRooms = (mx: Accessor<MatrixClient>) => {
-  const [joined, { add, remove }] = createSetStore<string>(
-    untrack(() =>
-      mx()
+  const [joined, { add, remove }] = createSetStore<string>([]);
+
+  createEffect(
+    on(mx, ($mx) => {
+      for (const $roomId of $mx
         .getRooms()
         .filter((room) => isJoined(room))
-        .map((room) => room.roomId)
-    )
+        .map((room) => room.roomId))
+        add($roomId);
+    })
   );
 
   const onAddRoom = (room: Room) => {

@@ -49,4 +49,8 @@ const $Time: Component<TimeProps> = (props) => {
   );
 };
 
-export const Time = styled($Time);
+export const Time = styled($Time, {
+  base: {
+    fontVariant: 'tabular-nums',
+  },
+});
