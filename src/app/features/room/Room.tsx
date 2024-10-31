@@ -5,6 +5,7 @@ import { RoomIntro } from './RoomIntro';
 import { createRoomInfo } from '../../hooks/createRoomInfo';
 import { useNavigate } from '@solidjs/router';
 import { RoomTimeline } from './RoomTimeline';
+import { Editor } from '../../components/editor/Editor';
 
 export const Room: Component = () => {
   const room = useRoom();
@@ -23,6 +24,7 @@ export const Room: Component = () => {
         }}
       />
       <RoomTimeline room={room()!} />
+      <Editor />
     </Flex>
   );
 };

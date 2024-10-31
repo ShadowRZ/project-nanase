@@ -60,6 +60,7 @@
   },
   "dependencies": {
     "@ark-ui/solid": "^4.2.1",
+    "@floating-ui/dom": "^1.6.12",
     "@fontsource-variable/inter": "^5.1.0",
     "@kobalte/core": "^0.13.7",
     "@modular-forms/solid": "^0.24.1",
@@ -69,6 +70,7 @@
     "@solid-primitives/map": "^0.4.13",
     "@solid-primitives/media": "^2.2.9",
     "@solid-primitives/resource": "^0.3.1",
+    "@solid-primitives/rootless": "^1.4.5",
     "@solid-primitives/scheduled": "^1.4.3",
     "@solid-primitives/script-loader": "^2.2.0",
     "@solid-primitives/scroll": "^2.0.23",
@@ -93,6 +95,7 @@
     "sanitize-html": "^2.13.1",
     "solid-js": "^1.9.2",
     "solid-tiptap": "^0.7.0",
+    "tiptap-solid": "^1.0.4",
     "valibot": "^0.42.1"
   },
   "packageManager": "pnpm@9.12.2"

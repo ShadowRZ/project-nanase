@@ -259,7 +259,7 @@ const EventComponent: Component<EventComponentProps> = (props) => {
         <StateMessage roomId={roomId()} event={event()}>
           sent{' '}
           <styled.code
-            px='2'
+            px='1'
             fontFamily='monospace'
             bg='mauve.3'
             rounded='md'

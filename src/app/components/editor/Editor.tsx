@@ -5,16 +5,21 @@ import {
 } from '@tiptap/core';
 import Placeholder from '@tiptap/extension-placeholder';
 import { type Component } from 'solid-js';
-import { createTiptapEditor } from 'solid-tiptap';
-import IconButton from '~/app/atoms/icon-button/IconButton';
+import { createEditor } from 'tiptap-solid';
 import { ProseExtensions } from '~/app/lib/editor-extensions';
 import { sanitizeText } from '~/lib/utils/sanitize';
-import { css } from '~styled/css';
-import { Flex } from '~styled/jsx';
+import TextAaDuotone from '~icons/ph/text-aa-duotone';
 import PaperPlaneTiltDuotone from '~icons/ph/paper-plane-tilt-duotone';
 import PaperclipDuotone from '~icons/ph/paperclip-duotone';
 import SmileyDuotone from '~icons/ph/smiley-duotone';
 import StickerDuotone from '~icons/ph/sticker-duotone';
+import { css } from '~styled/css';
+import { Flex, HStack } from '~styled/jsx';
+import { EditorContent } from './styled/EditorContent';
+import { IconButton } from './styled/IconButton';
+import { useRoom } from '../../hooks/useRoom';
+import { userSuggestion } from './suggestion/user-suggestion';
+import Mention from '@tiptap/extension-mention';
 
 export const customHtmlEqualsPlainText = (
   customHtml: string,
@@ -22,16 +27,16 @@ export const customHtmlEqualsPlainText = (
 ): boolean => customHtml.replaceAll('<br/>', '\n') === sanitizeText(plain);
 
 type EditorProps = {
-  onSend: (doc: JSONContent, text: string) => void;
+  onSend?: (doc: JSONContent, text: string) => void;
 };
 
-const Editor: Component<EditorProps> = (props) => {
-  let ref!: HTMLDivElement;
+export const Editor: Component<EditorProps> = (props) => {
+  const room = useRoom();
 
   function editorSend(editor: TiptapEditor): void {
     const json = editor.getJSON();
     const text = editor.getText({ blockSeparator: '\n' });
-    props.onSend(json, text);
+    props.onSend?.(json, text);
     editor.commands.setContent('');
   }
 
@@ -46,14 +51,13 @@ const Editor: Component<EditorProps> = (props) => {
     },
   });
 
-  const editor = createTiptapEditor(() => ({
-    element: ref,
+  const editor = createEditor({
     extensions: [
       ...ProseExtensions,
       Placeholder.configure({
         emptyEditorClass: css({
           _before: {
-            opacity: '50',
+            opacity: '0.5',
             pointerEvents: 'none',
             float: 'left',
             height: 0,
@@ -67,56 +71,52 @@ const Editor: Component<EditorProps> = (props) => {
         placeholder: 'Write something...',
       }),
       EnterExtension,
+      // User mention
+      Mention.configure({
+        HTMLAttributes: {
+          class: css({
+            border: '1px solid token(colors.border.default)',
+            p: '0.5',
+            rounded: 'md',
+          }),
+        },
+        suggestion: userSuggestion(room),
+      }),
     ],
     editorProps: {
       attributes: {
-        class: css({ mx: 'auto', _focus: { outline: 'none' } }),
+        class: css({ _focus: { outline: 'none' } }),
       },
     },
-  }));
+  });
 
   return (
-    <Flex direction='row' alignItems='center' px='1' gap='1'>
-      <IconButton
-        type='circle'
-        icon={PaperclipDuotone}
-        iconClass={css({ color: 'mauve.9' })}
-        title='Upload'
-      />
-      <div
-        data-project-nanase-composer
-        class={css({
-          flexGrow: '1',
-          maxHeight: '32',
-          overflowY: 'scroll',
-          scrollbarWidth: 'none',
-          _scrollbar: {
-            display: 'none',
-          },
-        })}
-        ref={ref}
-      />
-      <IconButton
-        type='circle'
-        icon={StickerDuotone}
-        iconClass={css({ color: 'mauve.9' })}
-        title='Insert Emoji'
-      />
-      <IconButton
-        type='circle'
-        icon={SmileyDuotone}
-        iconClass={css({ color: 'mauve.9' })}
-        title='Send Sticker'
-      />
-      <IconButton
-        onClick={() => {
-          editorSend(editor()!);
-        }}
-        type='circle'
-        icon={PaperPlaneTiltDuotone}
-        iconClass={css({ color: 'ruby.9' })}
-        title='Send'
-      />
+    <Flex
+      direction='column'
+      m='2'
+      bg='bg.subtle'
+      p='1'
+      rounded='md'
+      border='1px solid token(colors.border.default)'
+    >
+      <HStack gap='1'>
+        <IconButton size='small' variant='ghost' colorPalette='neutral'>
+          <PaperclipDuotone />
+        </IconButton>
+        <EditorContent editor={editor()} />
+        <IconButton size='small' variant='ghost' colorPalette='neutral'>
+          <TextAaDuotone />
+        </IconButton>
+        <IconButton size='small' variant='ghost' colorPalette='neutral'>
+          <SmileyDuotone />
+        </IconButton>
+        <IconButton size='small' variant='ghost' colorPalette='neutral'>
+          <StickerDuotone />
+        </IconButton>
+        <IconButton size='small' variant='ghost' colorPalette='accent'>
+          <PaperPlaneTiltDuotone />
+        </IconButton>
+      </HStack>
     </Flex>
   );
 };
