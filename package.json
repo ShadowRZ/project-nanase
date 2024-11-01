@@ -96,7 +96,8 @@
     "solid-js": "^1.9.2",
     "solid-tiptap": "^0.7.0",
     "tiptap-solid": "^1.0.4",
-    "valibot": "^0.42.1"
+    "valibot": "^0.42.1",
+    "virtua": "^0.36.1"
   },
   "packageManager": "pnpm@9.12.2"
 }

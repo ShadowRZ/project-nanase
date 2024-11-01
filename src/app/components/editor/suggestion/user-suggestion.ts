@@ -1,24 +1,22 @@
-import { autoPlacement, computePosition } from '@floating-ui/dom';
 import { createCallback } from '@solid-primitives/rootless';
 import { MentionNodeAttrs } from '@tiptap/extension-mention';
 import { SuggestionOptions } from '@tiptap/suggestion';
 import { Room, RoomMember } from 'matrix-js-sdk';
 import { Accessor } from 'solid-js';
 import { SolidRenderer } from 'tiptap-solid';
+import { css } from '~styled/css';
 import {
   UserMentionList,
   UserMentionListProps,
   UserMentionListRef,
 } from './components/UserMentionList';
 import { SuggestionParams } from './types';
-import { css } from '~styled/css';
 
 export const userItems = (room: Accessor<Room>) =>
   createCallback(({ query }: SuggestionParams) =>
     room()
       .getMembers()
       .filter((member) => member.name.startsWith(query))
-      .slice(0, 5)
   );
 
 export const userSuggestion = (
@@ -27,12 +25,13 @@ export const userSuggestion = (
   items: userItems(room),
   render: () => {
     let component: SolidRenderer<UserMentionListProps>;
-    let reference;
+    let mounted;
     let ref: UserMentionListRef;
 
     return {
       /* eslint-disable solid/reactivity */
       onStart: (props) => {
+        mounted = document.querySelector('#project-nanase-editor');
         component = new SolidRenderer(UserMentionList, {
           props: {
             ...props,
@@ -40,10 +39,7 @@ export const userSuggestion = (
           },
           editor: props.editor,
           className: css({
-            position: 'absolute',
-            w: 'max-content',
-            top: '0',
-            left: '0',
+            position: 'relative',
           }),
         });
 
@@ -51,24 +47,7 @@ export const userSuggestion = (
           return;
         }
 
-        reference = {
-          getBoundingClientRect: () => props.clientRect!()!,
-        };
-
-        document.body.append(component.element);
-
-        computePosition(reference, component.element as HTMLElement, {
-          middleware: [autoPlacement()],
-        })
-          .then(({ x, y }) => {
-            Object.assign((component.element as HTMLElement).style, {
-              left: `${x}px`,
-              top: `${y}px`,
-            });
-
-            return;
-          })
-          .catch(() => {});
+        mounted?.prepend(component.element);
       },
 
       onUpdate: (props) => {
@@ -77,23 +56,6 @@ export const userSuggestion = (
         if (!props.clientRect) {
           return;
         }
-
-        reference = {
-          getBoundingClientRect: () => props.clientRect!()!,
-        };
-
-        computePosition(reference, component.element as HTMLElement, {
-          middleware: [autoPlacement()],
-        })
-          .then(({ x, y }) => {
-            Object.assign((component.element as HTMLElement).style, {
-              left: `${x}px`,
-              top: `${y}px`,
-            });
-
-            return;
-          })
-          .catch(() => {});
       },
 
       onKeyDown(props) {

@@ -7,6 +7,7 @@ import { useMatrixClient } from '../../../../hooks/useMatrixClient';
 import { css, cx } from '~styled/css';
 
 import { menu } from '~styled/recipes';
+import { Box } from '~styled/jsx';
 
 export type UserMentionListRef = {
   onKeyDown: (ev: SuggestionKeyDownProps) => boolean;
@@ -70,23 +71,33 @@ export const UserMentionList: Component<UserMentionListProps> = (props) => {
   });
 
   return (
-    <div class={cx($menu.content, css({ minW: '32' }))}>
-      <For each={props.items}>
-        {(member, idx) => (
-          <button
-            class={cx($menu.item, css({ w: 'full' }))}
-            data-highlighted={idx() === selectedIndex() ? '' : undefined}
-            onClick={() => selectItem(idx())}
-          >
-            <MxcAvatar
-              client={client()}
-              src={member.getMxcAvatarUrl()}
-              size='small'
-            />
-            {member.name}
-          </button>
+    <Box p='2' position='absolute' bottom='0' left='0' right='0'>
+      <div
+        class={cx(
+          $menu.content,
+          css({
+            maxH: '72',
+            w: 'full',
+          })
         )}
-      </For>
-    </div>
+      >
+        <For each={props.items}>
+          {(member, idx) => (
+            <button
+              class={cx($menu.item, css({ w: 'full' }))}
+              data-highlighted={idx() === selectedIndex() ? '' : undefined}
+              onClick={() => selectItem(idx())}
+            >
+              <MxcAvatar
+                client={client()}
+                src={member.getMxcAvatarUrl()}
+                size='small'
+              />
+              {member.name}
+            </button>
+          )}
+        </For>
+      </div>
+    </Box>
   );
 };

@@ -122,6 +122,9 @@ importers:
       valibot:
         specifier: ^0.42.1
         version: 0.42.1(typescript@5.6.3)
+      virtua:
+        specifier: ^0.36.1
+        version: 0.36.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(solid-js@1.9.2)
     devDependencies:
       '@ark-ui/anatomy':
         specifier: ^3.5.0
@@ -1429,10 +1432,10 @@ packages:
       react-dom:
         optional: true
 
-  '@storybook/builder-vite@8.4.0-beta.5':
-    resolution: {integrity: sha512-OJ8ixXSEs03EA/49gjQxRl1AV6r1j87mB4/aDYlc2ksqI5YHBBX/igsM5N0nXAyhPpRYa2cxaZCqNG7aROug2g==}
+  '@storybook/builder-vite@8.5.0-alpha.1':
+    resolution: {integrity: sha512-TngE6zplD5jGtKxLjsGppH1qKLMvhotvupI2yXZP/5zDPBhd8JGxmcfZKl6fNCjFnRvbzf0yFPpT26iOcn1lug==}
     peerDependencies:
-      storybook: ^8.4.0-beta.5
+      storybook: ^8.5.0-alpha.1
       vite: ^4.0.0 || ^5.0.0
 
   '@storybook/core@8.3.5':
@@ -1443,10 +1446,10 @@ packages:
     peerDependencies:
       storybook: ^8.3.5
 
-  '@storybook/csf-plugin@8.4.0-beta.5':
-    resolution: {integrity: sha512-JCC+5/y5Mh/md/tyc7sSLi9ve+8Lgr5wltzMZInPDxY5BT/s3bmLHZhE/Q+UQXhN/XfZJmVVrYHtnVDRhZI1OA==}
+  '@storybook/csf-plugin@8.5.0-alpha.1':
+    resolution: {integrity: sha512-cv0mVCq5DiDIpk/Y+Iv5RSg5g8LldA3lFElEJM/jfMl8VS4se1Cruq+2QaHIvRA/A2od80Le6+tRTvMtOaBDPA==}
     peerDependencies:
-      storybook: ^8.4.0-beta.5
+      storybook: ^8.5.0-alpha.1
 
   '@storybook/csf@0.1.11':
     resolution: {integrity: sha512-dHYFQH3mA+EtnCkHXzicbLgsvzYjcDJ1JWsogbItZogkPHgSJM/Wr71uMkcvw8v9mmCyP4NpXJuu6bPoVsOnzg==}
@@ -4695,6 +4698,26 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
+  virtua@0.36.1:
+    resolution: {integrity: sha512-3LSt/c7bNXNMgoH77OBsPMWZFZnU5SaaDX5i6r3qFwQSlBoiY1C+IoMBhZGNtCG0YlCD9F7+r4qdRcqSZrgBKw==}
+    peerDependencies:
+      react: '>=16.14.0'
+      react-dom: '>=16.14.0'
+      solid-js: '>=1.0'
+      svelte: '>=5.0'
+      vue: '>=3.2'
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+      solid-js:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+
   vite-plugin-solid@2.10.2:
     resolution: {integrity: sha512-AOEtwMe2baBSXMXdo+BUwECC8IFHcKS6WQV/1NEd+Q7vHPap5fmIhLcAzr+DUJ04/KHx/1UBU0l1/GWP+rMAPQ==}
     peerDependencies:
@@ -6061,9 +6084,9 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@storybook/builder-vite@8.4.0-beta.5(storybook@8.3.5)(vite@5.4.9(@types/node@22.7.5)(lightningcss@1.27.0)(terser@5.34.1))(webpack-sources@3.2.3)':
+  '@storybook/builder-vite@8.5.0-alpha.1(storybook@8.3.5)(vite@5.4.9(@types/node@22.7.5)(lightningcss@1.27.0)(terser@5.34.1))(webpack-sources@3.2.3)':
     dependencies:
-      '@storybook/csf-plugin': 8.4.0-beta.5(storybook@8.3.5)(webpack-sources@3.2.3)
+      '@storybook/csf-plugin': 8.5.0-alpha.1(storybook@8.3.5)(webpack-sources@3.2.3)
       browser-assert: 1.2.1
       storybook: 8.3.5
       ts-dedent: 2.2.0
@@ -6098,7 +6121,7 @@ snapshots:
     transitivePeerDependencies:
       - webpack-sources
 
-  '@storybook/csf-plugin@8.4.0-beta.5(storybook@8.3.5)(webpack-sources@3.2.3)':
+  '@storybook/csf-plugin@8.5.0-alpha.1(storybook@8.3.5)(webpack-sources@3.2.3)':
     dependencies:
       storybook: 8.3.5
       unplugin: 1.14.1(webpack-sources@3.2.3)
@@ -9907,7 +9930,7 @@ snapshots:
 
   storybook-solidjs-vite@1.0.0-beta.2(storybook@8.3.5)(vite@5.4.9(@types/node@22.7.5)(lightningcss@1.27.0)(terser@5.34.1))(webpack-sources@3.2.3):
     dependencies:
-      '@storybook/builder-vite': 8.4.0-beta.5(storybook@8.3.5)(vite@5.4.9(@types/node@22.7.5)(lightningcss@1.27.0)(terser@5.34.1))(webpack-sources@3.2.3)
+      '@storybook/builder-vite': 8.5.0-alpha.1(storybook@8.3.5)(vite@5.4.9(@types/node@22.7.5)(lightningcss@1.27.0)(terser@5.34.1))(webpack-sources@3.2.3)
     transitivePeerDependencies:
       - storybook
       - vite
@@ -10223,6 +10246,12 @@ snapshots:
       spdx-expression-parse: 3.0.1
 
   vary@1.1.2: {}
+
+  virtua@0.36.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(solid-js@1.9.2):
+    optionalDependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      solid-js: 1.9.2
 
   vite-plugin-solid@2.10.2(@testing-library/jest-dom@6.5.0)(solid-js@1.9.2)(vite@5.4.9(@types/node@22.7.5)(lightningcss@1.27.0)(terser@5.34.1)):
     dependencies:

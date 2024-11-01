@@ -14,7 +14,7 @@ import PaperclipDuotone from '~icons/ph/paperclip-duotone';
 import SmileyDuotone from '~icons/ph/smiley-duotone';
 import StickerDuotone from '~icons/ph/sticker-duotone';
 import { css } from '~styled/css';
-import { Flex, HStack } from '~styled/jsx';
+import { Box, Flex, HStack } from '~styled/jsx';
 import { EditorContent } from './styled/EditorContent';
 import { IconButton } from './styled/IconButton';
 import { useRoom } from '../../hooks/useRoom';
@@ -91,33 +91,37 @@ export const Editor: Component<EditorProps> = (props) => {
   });
 
   return (
-    <Flex
-      direction='column'
-      m='2'
-      bg='bg.subtle'
-      p='1'
-      rounded='md'
-      border='1px solid token(colors.border.default)'
-    >
-      <HStack gap='1'>
-        <IconButton size='small' variant='ghost' colorPalette='neutral'>
-          <PaperclipDuotone />
-        </IconButton>
-        <EditorContent editor={editor()} />
-        <IconButton size='small' variant='ghost' colorPalette='neutral'>
-          <TextAaDuotone />
-        </IconButton>
-        <IconButton size='small' variant='ghost' colorPalette='neutral'>
-          <SmileyDuotone />
-        </IconButton>
-        <IconButton size='small' variant='ghost' colorPalette='neutral'>
-          <StickerDuotone />
-        </IconButton>
-        <IconButton size='small' variant='ghost' colorPalette='accent'>
-          <PaperPlaneTiltDuotone />
-        </IconButton>
-      </HStack>
-    </Flex>
+    <Box id='project-nanase-editor'>
+      <Flex
+        position='relative'
+        direction='column'
+        m='2'
+        mt='0'
+        bg='bg.subtle'
+        p='1'
+        rounded='md'
+        border='1px solid token(colors.border.default)'
+      >
+        <HStack gap='1'>
+          <IconButton size='small' variant='ghost' colorPalette='neutral'>
+            <PaperclipDuotone />
+          </IconButton>
+          <EditorContent editor={editor()} />
+          <IconButton size='small' variant='ghost' colorPalette='neutral'>
+            <TextAaDuotone />
+          </IconButton>
+          <IconButton size='small' variant='ghost' colorPalette='neutral'>
+            <SmileyDuotone />
+          </IconButton>
+          <IconButton size='small' variant='ghost' colorPalette='neutral'>
+            <StickerDuotone />
+          </IconButton>
+          <IconButton size='small' variant='ghost' colorPalette='accent'>
+            <PaperPlaneTiltDuotone />
+          </IconButton>
+        </HStack>
+      </Flex>
+    </Box>
   );
 };
 
