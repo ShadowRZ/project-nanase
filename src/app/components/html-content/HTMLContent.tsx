@@ -1,5 +1,5 @@
 import { Component, createMemo, For, Show, type JSX } from 'solid-js';
-import Spoiler from '../../atoms/text/Spoiler';
+import { Spoiler } from '../spoiler/Spoiler';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import HighlightCode from '../highlight/HighlightCode';
 import { MxcImg } from '../mxc-img/MxcImg';

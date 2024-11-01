@@ -1,13 +1,13 @@
 import { ErrorBoundary, Suspense, type ParentComponent } from 'solid-js';
 import WithServerMeta from './WithServerMeta';
-import Text from '~/app/atoms/text/Text';
+import { Text } from '@/components/ui/text';
 
 const AuthFormLayout: ParentComponent = (props) => {
   return (
     <Suspense fallback={<p>Loading...</p>}>
       <ErrorBoundary
         fallback={(err: Error) => (
-          <Text color='error' font='bold'>
+          <Text color='fg.error' fontWeight='bold'>
             {err.message}
           </Text>
         )}

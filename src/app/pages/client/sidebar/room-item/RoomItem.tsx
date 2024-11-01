@@ -1,16 +1,16 @@
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
+import { useNavigate } from '@solidjs/router';
 import { Component, Show } from 'solid-js';
 import { trimReplyFallback } from '~/lib/utils/matrix';
 import HashStraightBold from '~icons/ph/hash-straight-bold';
 import UserCircleFill from '~icons/ph/user-circle-fill';
 import { Flex, styled } from '~styled/jsx';
-import NotificationCount from '../../../../atoms/notification/NotificationCount';
-import { Time } from '../../../../components/time/Time';
 import { MxcAvatar } from '../../../../components/mxc-avatar/MxcAvatar';
+import NotificationCount from '../../../../components/notification-count/NotificationCount';
+import { Time } from '../../../../components/time/Time';
 import { createRoomInfo } from '../../../../hooks/createRoomInfo';
 import { useMatrixClient } from '../../../../hooks/useMatrixClient';
-import { useNavigate } from '@solidjs/router';
 
 type RoomItemProps = {
   roomId: string;
