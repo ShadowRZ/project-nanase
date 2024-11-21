@@ -1,15 +1,10 @@
+import { Text } from '@/components/ui/text';
 import { Button } from '@kobalte/core/button';
-import {
-  type EventTimelineSet,
-  type MatrixClient,
-  type MatrixEvent,
-} from 'matrix-js-sdk';
-import { ErrorBoundary, Show, Suspense, type Component } from 'solid-js';
-import Text from '~/app/atoms/text/Text';
-import { createFetchedEvent } from '~/app/hooks/createFetchedEvent';
-import createRoomProfileSnapshot from '~/app/hooks/createRoomProfileSnapshot';
+import { type EventTimelineSet, type MatrixClient } from 'matrix-js-sdk';
+import { Show, Suspense, type Component } from 'solid-js';
 import { trimReplyFallback } from '~/lib/utils/matrix';
 import { styled } from '~styled/jsx';
+import { createFetchedEvent } from '../../hooks/createFetchedEvent';
 
 type QuotedEventProps = {
   roomId: string;
@@ -21,8 +16,8 @@ type QuotedEventProps = {
 };
 
 type QuotedEventInnerProps = {
-  target: MatrixEvent;
   roomId: string;
+  eventId: string;
   showSender?: boolean;
 };
 
@@ -44,22 +39,27 @@ const RedactedWrapper = styled('span', {
   },
 });
 
-const QuotedEventInner: Component<QuotedEventInnerProps> = (props) => {
+const QuotedEventRenderer: Component<QuotedEventInnerProps> = (props) => {
   const roomId = () => props.roomId;
-  const target = () => props.target;
-  const sender = () => target().getSender()!;
-  const { name } = createRoomProfileSnapshot(roomId, sender);
+  const eventId = () => props.eventId;
+  const target = createFetchedEvent(roomId, eventId);
+  //const sender = () => target()?.getSender();
+  //const { name } = createRoomProfileSnapshot(roomId, sender);
   return (
-    <>
-      <Show when={props.showSender ?? true}>
-        <styled.span fontWeight='700'>{name() ?? sender()}</styled.span>
-      </Show>
-      <RedactedWrapper redacted={target().isRedacted()}>
-        {target().isRedacted()
-          ? 'Event was redacted.'
-          : trimReplyFallback(target().getContent().body as string)}
-      </RedactedWrapper>
-    </>
+    <Show when={target()}>
+      {(target) => (
+        <>
+          <Show when={props.showSender ?? true}>
+            <styled.span fontWeight='700'>{target().getSender()!}</styled.span>
+          </Show>
+          <RedactedWrapper redacted={target().isRedacted()}>
+            {target().isRedacted()
+              ? 'Event was redacted.'
+              : trimReplyFallback(target().getContent().body as string)}
+          </RedactedWrapper>
+        </>
+      )}
+    </Show>
   );
 };
 
@@ -91,11 +91,12 @@ export const QuotedEvent: Component<QuotedEventProps> = (props) => {
   return (
     <QuoteButton primary={!primary()}>
       <Suspense fallback={<span>......</span>}>
-        <ErrorBoundary fallback={<Text font='italic'>Event not found.</Text>}>
-          <Show when={target()}>
-            <QuotedEventInner target={target()!} roomId={roomId()} />
-          </Show>
-        </ErrorBoundary>
+        <Show
+          when={target()}
+          fallback={<Text fontStyle='italic'>Event not found.</Text>}
+        >
+          <QuotedEventRenderer roomId={roomId()} eventId={eventId()} />
+        </Show>
       </Suspense>
     </QuoteButton>
   );
