@@ -1,5 +1,5 @@
 // https://github.com/cinnyapp/cinny/blob/a1a822c5b64eb4e31edbf9cbd4bd12f3926f084b/src/app/hooks/useUIAFlows.ts
-import { AuthType, type IAuthData, type UIAFlow } from 'matrix-js-sdk';
+import { type IAuthData, type UIAFlow } from 'matrix-js-sdk';
 import { type Accessor, createMemo } from 'solid-js';
 import {
   getSupportedUIAFlows,
@@ -75,7 +75,7 @@ export const createUIAFlow = (
     const { stages } = uiaFlow();
     const nextStage = stages.find((stage) => !completed().includes(stage));
 
-    if (!nextStage) return undefined;
+    if (!nextStage) return;
 
     const thisParams = params();
     const info = thisParams[nextStage];

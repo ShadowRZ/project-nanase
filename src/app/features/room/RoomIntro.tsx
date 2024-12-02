@@ -1,5 +1,8 @@
-import { IconButton, Menu, Text } from '@shadowrz/hanekokoro-ui';
 import { MenuSelectionDetails } from '@ark-ui/solid';
+import { IconButton, Menu, Text } from '@shadowrz/hanekokoro-ui';
+import { css } from '@shadowrz/hanekokoro-ui/styled-system/css';
+import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { flex } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
 import { Show, type Component } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import ArrowLeft from '~icons/ph/arrow-left';
@@ -10,11 +13,7 @@ import HashStraightBold from '~icons/ph/hash-straight-bold';
 import ShieldDuotone from '~icons/ph/shield-duotone';
 import UserCircleFill from '~icons/ph/user-circle-fill';
 import UsersThreeDuotone from '~icons/ph/users-three-duotone';
-import { css } from '@shadowrz/hanekokoro-ui/styled-system/css';
-import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
-import { flex } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
 import { MxcAvatar } from '../../components/mxc-avatar/MxcAvatar';
-import { useMatrixClient } from '../../hooks/useMatrixClient';
 
 type RoomIntroProps = {
   name?: string;
@@ -29,8 +28,6 @@ type RoomIntroProps = {
 };
 
 export const RoomIntro: Component<RoomIntroProps> = (props) => {
-  const mx = useMatrixClient();
-
   const onSelect = (select: MenuSelectionDetails) => {
     switch (select.value) {
       case 'members': {

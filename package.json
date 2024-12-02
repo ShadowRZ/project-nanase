@@ -10,9 +10,8 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "lint": "xo",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "lint": "eslint",
+    "format": "prettier --write ."
   },
   "license": "AGPL-3.0-only",
   "devDependencies": {
