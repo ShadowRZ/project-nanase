@@ -126,13 +126,13 @@ const Sidebar: Component = () => {
       </Tabs.List>
       <Tabs.Content
         value='chats'
-        class={css({ overflow: 'scroll', width: 'full' })}
+        class={css({ overflowY: 'scroll', width: 'full' })}
       >
         <JoinedRooms />
       </Tabs.Content>
       <Tabs.Content
         value='dms'
-        class={css({ overflow: 'scroll', width: 'full' })}
+        class={css({ overflowY: 'scroll', width: 'full' })}
       >
         <DirectRooms />
       </Tabs.Content>
@@ -140,7 +140,7 @@ const Sidebar: Component = () => {
         {(space) => (
           <Tabs.Content
             value={space}
-            class={css({ overflow: 'scroll', width: 'full' })}
+            class={css({ overflowY: 'scroll', width: 'full' })}
           >
             <SpaceChildrens roomId={space} />
           </Tabs.Content>

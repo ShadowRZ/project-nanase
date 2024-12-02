@@ -76,7 +76,7 @@ export const RoomItem: Component<RoomItemProps> = (props) => {
         rounded='xl'
         height='unset'
         p='2'
-        _selected={{ bg: 'accent.dimmed' }}
+        _selected={{ bg: 'accent.4' }}
         css={{
           '& svg': {
             width: '75%',

@@ -62,7 +62,7 @@ export const RoomTimeline: Component<{ room: Room }> = (props) => {
   const { events, scrollback, timelineSet } = createRoomTimeline(room);
 
   return (
-    <Flex direction='column' overflow='scroll' mt='auto'>
+    <Flex direction='column' overflowY='scroll' mt='auto'>
       <For each={events()}>
         {(event) => (
           <TimelineItem

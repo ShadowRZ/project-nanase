@@ -10,6 +10,7 @@ import PasswordLogin from './auth/login/PasswordLogin';
 import { ClientRoute } from './client/ClientRoute';
 import { RoomRoute } from '../features/room/RoomRoute';
 import { HTMLParserProvider } from '../hooks/useHTMLParser';
+import { useRegisterSW } from 'virtual:pwa-register/solid';
 
 const Index: ParentComponent = (props) => {
   return (
@@ -28,6 +29,17 @@ const Layout: ParentComponent = (props) => (
 );
 
 const App: Component = () => {
+  useRegisterSW({
+    immediate: true,
+    onRegisteredSW: (swScriptUrl, registration) => {
+      console.log(`[SW] OK, Service Worker ${swScriptUrl} is registered.`);
+      console.log(registration?.active);
+    },
+    onRegisterError: (error) => {
+      console.log(`[SW] Error occured`, error);
+    },
+  });
+
   return (
     <Router root={Layout}>
       <Route path='/' component={Index}>

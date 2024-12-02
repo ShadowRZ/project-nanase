@@ -12,8 +12,10 @@ export const Message: ParentComponent<MessageProps> = (props) => {
   return (
     <Flex direction='row' gap='2'>
       <MxcAvatar src={props.avatar} flexShrink='0' />
-      <Flex direction='column'>
-        <styled.p fontWeight='bold'>{props.name ?? props.userId}</styled.p>
+      <Flex direction='column' minW='0'>
+        <styled.p fontWeight='bold' truncate minW='0'>
+          {props.name ?? props.userId}
+        </styled.p>
         {props.children}
       </Flex>
     </Flex>
