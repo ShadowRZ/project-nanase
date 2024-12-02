@@ -1,6 +1,6 @@
 import { Button, Text } from '@shadowrz/hanekokoro-ui';
 import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
-import { useNavigate } from '@solidjs/router';
+import { useNavigate, useParams } from '@solidjs/router';
 import { Component, Show } from 'solid-js';
 import { trimReplyFallback } from '~/lib/utils/matrix';
 import HashStraightBold from '~icons/ph/hash-straight-bold';
@@ -56,6 +56,9 @@ export const RoomItem: Component<RoomItemProps> = (props) => {
     trimReplyFallback(lastEvent()?.getContent().body as string);
 
   const navigate = useNavigate();
+  const params = useParams();
+  const selected = () => params.roomId === props.roomId;
+
   const onClick = () => {
     navigate(`/rooms/${props.roomId}`);
   };
@@ -63,6 +66,7 @@ export const RoomItem: Component<RoomItemProps> = (props) => {
   return (
     <Show when={room()}>
       <Button
+        data-selected={selected() ? '' : undefined}
         onClick={onClick}
         colorPalette='neutral'
         variant='ghost'
@@ -72,6 +76,7 @@ export const RoomItem: Component<RoomItemProps> = (props) => {
         rounded='xl'
         height='unset'
         p='2'
+        _selected={{ bg: 'accent.dimmed' }}
         css={{
           '& svg': {
             width: '75%',

@@ -1,6 +1,6 @@
 import { type MatrixEvent } from 'matrix-js-sdk';
 import { isMembershipChanged } from './room';
-import Text from '~/app/atoms/text/Text';
+import { Text } from '@shadowrz/hanekokoro-ui';
 
 type RoomMemberEventContent = {
   avatar_url?: string;
@@ -17,7 +17,7 @@ export function renderMemberContent(event: MatrixEvent) {
 
   const userName = content.displayname ?? userId;
 
-  if (!senderId || !userId) return undefined;
+  if (!senderId || !userId) return;
 
   if (isMembershipChanged(event)) {
     if (content.membership === 'invite') {
@@ -25,7 +25,7 @@ export function renderMemberContent(event: MatrixEvent) {
         return (
           <>
             accepted{' '}
-            <Text font='bold' as='span'>
+            <Text fontWeight='bold' as='span'>
               {userName}
             </Text>
             's join request
@@ -37,7 +37,7 @@ export function renderMemberContent(event: MatrixEvent) {
       return (
         <>
           invited{' '}
-          <Text font='bold' as='span'>
+          <Text fontWeight='bold' as='span'>
             {userName}
           </Text>
           {content.reason ? `: ${content.reason}` : '.'}
@@ -63,7 +63,7 @@ export function renderMemberContent(event: MatrixEvent) {
         ) : (
           <>
             rejected{' '}
-            <Text font='bold' as='span'>
+            <Text fontWeight='bold' as='span'>
               {userName}
             </Text>
             's join request
@@ -81,7 +81,7 @@ export function renderMemberContent(event: MatrixEvent) {
         ) : (
           <>
             revoked{' '}
-            <Text font='bold' as='span'>
+            <Text fontWeight='bold' as='span'>
               {userName}
             </Text>
             's invite
@@ -94,7 +94,7 @@ export function renderMemberContent(event: MatrixEvent) {
         return (
           <>
             unbanned{' '}
-            <Text font='bold' as='span'>
+            <Text fontWeight='bold' as='span'>
               {userName}
             </Text>
             {content.reason ? `: ${content.reason}` : '.'}
@@ -107,7 +107,7 @@ export function renderMemberContent(event: MatrixEvent) {
       ) : (
         <>
           kicked{' '}
-          <Text font='bold' as='span'>
+          <Text fontWeight='bold' as='span'>
             {userName}
           </Text>
           {content.reason ? `: ${content.reason}` : '.'}
@@ -119,7 +119,7 @@ export function renderMemberContent(event: MatrixEvent) {
       return (
         <>
           banned{' '}
-          <Text font='bold' as='span'>
+          <Text fontWeight='bold' as='span'>
             {userName}
           </Text>
           {content.reason ? `: ${content.reason}` : '.'}
@@ -132,7 +132,7 @@ export function renderMemberContent(event: MatrixEvent) {
     return content.displayname ? (
       <>
         changed display name to{' '}
-        <Text font='bold' as='span'>
+        <Text fontWeight='bold' as='span'>
           {userName}
         </Text>
         .
@@ -146,5 +146,5 @@ export function renderMemberContent(event: MatrixEvent) {
     return content.displayname ? <>changed avatar.</> : <>removed avatar.</>;
   }
 
-  return undefined;
+  return;
 }

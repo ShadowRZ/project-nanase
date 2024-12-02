@@ -25,7 +25,7 @@ const AccountMenu: Component = () => {
         <Tooltip.Root ids={{ trigger }} positioning={{ placement: 'right' }}>
           <Tooltip.Trigger.AsChild>
             {(props) => (
-              <Menu.Trigger.AsChild {...props()}>
+              <Menu.Trigger.AsChild _hover={{ cursor: 'pointer' }} {...props()}>
                 {(props) => (
                   <MxcAvatar
                     {...props()}
@@ -44,7 +44,7 @@ const AccountMenu: Component = () => {
         </Tooltip.Root>
         <Portal>
           <Menu.Positioner>
-            <Menu.Content>
+            <Menu.Content maxW='var(--available-width)'>
               <Menu.Item value='settings'>
                 <GearSixDuotone /> Settings
               </Menu.Item>

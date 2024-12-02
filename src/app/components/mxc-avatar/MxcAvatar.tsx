@@ -1,11 +1,11 @@
-import { createMxcUrl } from '../../hooks/createMxcUrl';
 import { Avatar as StyledAvatar } from '@shadowrz/hanekokoro-ui';
 import { type JSX, splitProps } from 'solid-js';
+import UserCircleFill from '~icons/ph/user-circle-fill';
 import {
   MatrixClientProvider,
   useMatrixClient,
 } from '../../hooks/useMatrixClient';
-import UserCircleFill from '~icons/ph/user-circle-fill';
+import { MxcImg } from '../mxc-img/MxcImg';
 
 export interface MxcAvatarProps extends StyledAvatar.RootProps {
   name?: string;
@@ -19,17 +19,18 @@ export const MxcAvatar = (props: MxcAvatarProps) => {
   const mx = useMatrixClient();
   const src = () => localProps.src;
 
-  const $src = createMxcUrl(mx, src);
-
   return (
     <MatrixClientProvider value={mx}>
-      <StyledAvatar.Root {...rootProps}>
+      <StyledAvatar.Root flexShrink='0' {...rootProps}>
         <StyledAvatar.Fallback>
           {getInitials(localProps.name) || localProps.icon || (
             <UserCircleFill />
           )}
         </StyledAvatar.Fallback>
-        <StyledAvatar.Image src={$src()} alt={localProps.name} />
+        <StyledAvatar.Image
+          alt={localProps.name}
+          asChild={(props) => <MxcImg {...props()} src={src()} />}
+        />
       </StyledAvatar.Root>
     </MatrixClientProvider>
   );

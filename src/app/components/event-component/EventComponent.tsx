@@ -23,7 +23,6 @@ import {
 } from '../../../types/event-content';
 import TrashDuotone from '~icons/ph/trash-duotone';
 import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
-import Box from '../../atoms/box/Box';
 import createEventInfo from '../../hooks/createEventInfo';
 import createRoomProfileSnapshot from '../../hooks/createRoomProfileSnapshot';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
@@ -36,6 +35,22 @@ import { TextContent } from './content/TextContent';
 import { Message } from './Message';
 import { State } from './State';
 import { FormattedRenderer } from './FormattedRenderer';
+
+const ContentBox = styled('div', {
+  base: {
+    rounded: 'lg',
+    padding: '2',
+    colorPalette: 'gray',
+    bg: 'colorPalette.dimmed',
+  },
+  variants: {
+    primary: {
+      true: {
+        colorPalette: 'accent',
+      },
+    },
+  },
+});
 
 const RedactedMessage: Component = () => {
   return (
@@ -96,7 +111,7 @@ const MessageContent: Component<EventComponentProps> = (props) => {
           </TextContent>
         </Match>
         <Match when={msgtype() === MsgType.Image}>
-          <Box color='default' maxW='40rem'>
+          <ContentBox primary={sender() === selfId()} maxW='40rem'>
             <Show when={event().replyEventId !== undefined}>
               <QuotedEvent
                 roomId={props.roomId}
@@ -113,7 +128,7 @@ const MessageContent: Component<EventComponentProps> = (props) => {
               width={(content() as ImageMessage).info.w}
               height={(content() as ImageMessage).info.h}
             />
-          </Box>
+          </ContentBox>
         </Match>
         <Match when={msgtype() === MsgType.File}>
           <Show when={event().replyEventId !== undefined}>

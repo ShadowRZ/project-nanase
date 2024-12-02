@@ -11,9 +11,9 @@ export type ClientProfileProps = {
 
 const ProfileContent: Component<ClientProfileProps> = (props) => {
   return (
-    <Flex direction='row' gap='2' alignItems='center'>
+    <Flex direction='row' gap='2' alignItems='center' minW='0'>
       <MxcAvatar src={props.avatar} />
-      <Flex direction='column' overflow='hidden'>
+      <Flex direction='column' overflow='hidden' minW='0'>
         <Text
           title={props.name ?? props.userId}
           size='md'

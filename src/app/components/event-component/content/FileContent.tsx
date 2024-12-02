@@ -34,7 +34,10 @@ type FileContentProps = {
 
 export const FileContent: Component<FileContentProps> = (props) => {
   return (
-    <Button onClick={props.onClick} data-project-nanase-primary={props.primary}>
+    <Button
+      onClick={props.onClick}
+      data-project-nanase-primary={props.primary ? '' : undefined}
+    >
       <Flex direction='row' gap='2'>
         <Square
           size='12'

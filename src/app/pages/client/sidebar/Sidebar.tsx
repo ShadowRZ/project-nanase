@@ -4,8 +4,8 @@ import { Flex, Square } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 import { square } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
 import { createSignal, createUniqueId, For, type Component } from 'solid-js';
 import { Portal } from 'solid-js/web';
-import ChatsTeardropFill from '~icons/ph/chats-teardrop-fill';
-import FolderUserFill from '~icons/ph/folder-user-fill';
+import ChatsTeardropDuotone from '~icons/ph/chats-teardrop-duotone';
+import FolderUserDuotone from '~icons/ph/folder-user-duotone';
 import FoldersDuotone from '~icons/ph/folders-duotone';
 import { MxcAvatar } from '../../../components/mxc-avatar/MxcAvatar';
 import { createRoomInfo } from '../../../hooks/createRoomInfo';
@@ -82,7 +82,7 @@ const Sidebar: Component = () => {
                   color='colorPalette.11'
                   bg='colorPalette.dimmed'
                 >
-                  <ChatsTeardropFill class={square({ size: '6' })} />
+                  <ChatsTeardropDuotone class={square({ size: '8' })} />
                 </Square>
               )}
             </Tooltip.Trigger.AsChild>
@@ -107,7 +107,7 @@ const Sidebar: Component = () => {
                   color='colorPalette.11'
                   bg='colorPalette.dimmed'
                 >
-                  <FolderUserFill class={square({ size: '6' })} />
+                  <FolderUserDuotone class={square({ size: '8' })} />
                 </Square>
               )}
             </Tooltip.Trigger.AsChild>

@@ -11,7 +11,7 @@ export const JoinedRooms: Component = () => {
   const rooms = useJoinedRooms();
 
   return (
-    <Flex direction='column' width='full' p='1'>
+    <Flex direction='column' width='full' p='1' gap='0.5'>
       <For each={rooms()}>{(roomId) => <RoomItem roomId={roomId} />}</For>
     </Flex>
   );
@@ -21,7 +21,7 @@ export const DirectRooms: Component = () => {
   const directs = useDirects();
 
   return (
-    <Flex direction='column' width='full' p='1'>
+    <Flex direction='column' width='full' p='1' gap='0.5'>
       <For each={directs()}>
         {(roomId) => <RoomItem direct roomId={roomId} />}
       </For>
@@ -35,7 +35,7 @@ export const SpaceChildrens: Component<{ roomId: string }> = (props) => {
   const rooms = () => [...(hierarchy.get(roomId())?.values() ?? [])];
 
   return (
-    <Flex direction='column' width='full' p='1'>
+    <Flex direction='column' width='full' p='1' gap='0.5'>
       <For each={rooms()}>{(roomId) => <RoomItem roomId={roomId} />}</For>
     </Flex>
   );

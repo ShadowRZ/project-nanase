@@ -23,7 +23,7 @@ export const Room: Component = () => {
           navigate('/', { replace: true });
         }}
       />
-      <RoomTimeline room={room()!} />
+      <RoomTimeline room={room()} />
       <Editor />
     </Flex>
   );
