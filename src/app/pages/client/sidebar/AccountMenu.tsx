@@ -1,11 +1,10 @@
-import { Menu } from '@/components/ui/menu';
-import { Tooltip } from '@/components/ui/tooltip';
+import { Menu, Tooltip } from '@shadowrz/hanekokoro-ui';
+import { Flex } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 import { createUniqueId, type Component } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import CodeDuotone from '~icons/ph/code-duotone';
 import GearSixDuotone from '~icons/ph/gear-six-duotone';
 import ShieldCheckeredDuotone from '~icons/ph/shield-checkered-duotone';
-import { Flex } from '~styled/jsx';
 import { MxcAvatar } from '../../../components/mxc-avatar/MxcAvatar';
 import { useSelfProfile } from '../../../hooks/useClientState';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
@@ -31,7 +30,6 @@ const AccountMenu: Component = () => {
                   <MxcAvatar
                     {...props()}
                     ids={{ root: trigger }}
-                    client={mx()}
                     src={profile.avatar()}
                   />
                 )}
@@ -58,7 +56,6 @@ const AccountMenu: Component = () => {
               </Menu.Item>
               <Flex direction='row' mt='2' gap='2' px='1' alignItems='center'>
                 <ProfileContent
-                  mx={mx()}
                   name={profile.name()}
                   avatar={profile.avatar()}
                   userId={userId()}

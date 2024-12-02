@@ -1,11 +1,10 @@
-import { Button } from '@/components/ui/button';
-import { Text } from '@/components/ui/text';
+import { Button, Text } from '@shadowrz/hanekokoro-ui';
+import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 import { useNavigate } from '@solidjs/router';
 import { Component, Show } from 'solid-js';
 import { trimReplyFallback } from '~/lib/utils/matrix';
 import HashStraightBold from '~icons/ph/hash-straight-bold';
 import UserCircleFill from '~icons/ph/user-circle-fill';
-import { Flex, styled } from '~styled/jsx';
 import { MxcAvatar } from '../../../../components/mxc-avatar/MxcAvatar';
 import NotificationCount from '../../../../components/notification-count/NotificationCount';
 import { Time } from '../../../../components/time/Time';
@@ -87,7 +86,6 @@ export const RoomItem: Component<RoomItemProps> = (props) => {
               <UserCircleFill />
             </Show>
           }
-          client={mx()}
           src={avatar()}
         />
         <Flex direction='column' grow='1' overflow='hidden'>

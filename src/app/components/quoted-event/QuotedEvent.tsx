@@ -1,9 +1,9 @@
-import { Text } from '@/components/ui/text';
+import { Text } from '@shadowrz/hanekokoro-ui';
 import { Button } from '@kobalte/core/button';
 import { type EventTimelineSet, type MatrixClient } from 'matrix-js-sdk';
 import { Show, Suspense, type Component } from 'solid-js';
 import { trimReplyFallback } from '~/lib/utils/matrix';
-import { styled } from '~styled/jsx';
+import { styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 import { createFetchedEvent } from '../../hooks/createFetchedEvent';
 
 type QuotedEventProps = {

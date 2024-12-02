@@ -4,20 +4,18 @@ import {
   valiForm,
   type SubmitHandler,
 } from '@modular-forms/solid';
+import { Button, Card, Field as UIField } from '@shadowrz/hanekokoro-ui';
+import { flex } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
 import { useNavigate } from '@solidjs/router';
 import to from 'await-to-js';
 import { Show, type Component } from 'solid-js';
 import * as v from 'valibot';
+import { getLoginPath } from '~/app/utils/paths';
+import { matchMXID, MXIDRegex } from '~/lib/utils/user-id';
 import ArrowRightBold from '~icons/ph/arrow-right-bold';
 import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
-import { getLoginPath } from '~/app/utils/paths';
-import { Card } from '~/components/ui/card';
-import { Field as UIField } from '~/components/ui/field';
-import { matchMXID, MXIDRegex } from '~/lib/utils/user-id';
-import { flex } from '~styled/patterns';
 import { getServerMeta } from '../getServerMeta';
 import LoginHeader from './LoginHeader';
-import { Button } from '@/components/ui/button';
 
 const LoginSchema = v.object({
   user_id: v.pipe(

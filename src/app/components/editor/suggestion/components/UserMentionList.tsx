@@ -3,11 +3,10 @@ import { SuggestionKeyDownProps } from '@tiptap/suggestion';
 import { RoomMember } from 'matrix-js-sdk';
 import { Component, For, createSignal, onMount } from 'solid-js';
 import { MxcAvatar } from '../../../mxc-avatar/MxcAvatar';
-import { useMatrixClient } from '../../../../hooks/useMatrixClient';
-import { css, cx } from '~styled/css';
+import { css, cx } from '@shadowrz/hanekokoro-ui/styled-system/css';
 
-import { menu } from '~styled/recipes';
-import { Box } from '~styled/jsx';
+import { menu } from '@shadowrz/hanekokoro-ui/styled-system/recipes';
+import { Box } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 
 export type UserMentionListRef = {
   onKeyDown: (ev: SuggestionKeyDownProps) => boolean;
@@ -22,7 +21,6 @@ export type UserMentionListProps = {
 const $menu = menu();
 
 export const UserMentionList: Component<UserMentionListProps> = (props) => {
-  const client = useMatrixClient();
   const [selectedIndex, setSelectedIndex] = createSignal(0);
 
   const selectItem = (index: number) => {
@@ -88,11 +86,7 @@ export const UserMentionList: Component<UserMentionListProps> = (props) => {
               data-highlighted={idx() === selectedIndex() ? '' : undefined}
               onClick={() => selectItem(idx())}
             >
-              <MxcAvatar
-                client={client()}
-                src={member.getMxcAvatarUrl()}
-                size='small'
-              />
+              <MxcAvatar src={member.getMxcAvatarUrl()} size='small' />
               {member.name}
             </button>
           )}

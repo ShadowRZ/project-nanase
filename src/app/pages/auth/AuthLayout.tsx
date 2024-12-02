@@ -1,7 +1,7 @@
 import { type ParentComponent } from 'solid-js';
 import AuthFooter from './AuthFooter';
-import { Flex } from '~styled/jsx';
-import { Card } from '~/components/ui/card';
+import { Flex } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { Card } from '@shadowrz/hanekokoro-ui';
 
 const AuthLayout: ParentComponent = (props) => {
   return (

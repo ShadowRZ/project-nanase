@@ -51,6 +51,7 @@
     "@fontsource-variable/inter": "^5.1.0",
     "@kobalte/core": "^0.13.7",
     "@modular-forms/solid": "^0.24.1",
+    "@shadowrz/hanekokoro-ui": "^0.1.0",
     "@solid-primitives/i18n": "^2.1.1",
     "@solid-primitives/intersection-observer": "^2.1.6",
     "@solid-primitives/keyed": "^1.2.2",

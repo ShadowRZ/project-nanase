@@ -7,7 +7,7 @@ import {
   cx,
   type RecipeVariantProps,
   type Styles,
-} from '~styled/css';
+} from '@shadowrz/hanekokoro-ui/styled-system/css';
 
 const text = cva({
   base: {

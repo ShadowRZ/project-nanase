@@ -1,6 +1,6 @@
 import { ErrorBoundary, Suspense, type ParentComponent } from 'solid-js';
 import WithServerMeta from './WithServerMeta';
-import { Text } from '@/components/ui/text';
+import { Text } from '@shadowrz/hanekokoro-ui';
 
 const AuthFormLayout: ParentComponent = (props) => {
   return (

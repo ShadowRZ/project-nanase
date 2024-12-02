@@ -22,7 +22,7 @@ import {
   type Sticker,
 } from '../../../types/event-content';
 import TrashDuotone from '~icons/ph/trash-duotone';
-import { Flex, styled } from '~styled/jsx';
+import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 import Box from '../../atoms/box/Box';
 import createEventInfo from '../../hooks/createEventInfo';
 import createRoomProfileSnapshot from '../../hooks/createRoomProfileSnapshot';

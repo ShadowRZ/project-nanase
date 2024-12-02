@@ -4,7 +4,7 @@ import {
   createResource,
   type Component,
 } from 'solid-js';
-import { Flex, styled } from '~styled/jsx';
+import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 
 const IDBUnsupported: Component = () => {
   return (

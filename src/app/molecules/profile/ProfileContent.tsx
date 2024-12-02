@@ -1,11 +1,9 @@
-import { Text } from '@/components/ui/text';
-import { MatrixClient } from 'matrix-js-sdk';
+import { Text } from '@shadowrz/hanekokoro-ui';
+import { Flex } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 import { type Component } from 'solid-js';
-import { Flex } from '~styled/jsx';
 import { MxcAvatar } from '../../components/mxc-avatar/MxcAvatar';
 
 export type ClientProfileProps = {
-  mx: MatrixClient;
   avatar?: string;
   name?: string;
   userId: string;
@@ -14,7 +12,7 @@ export type ClientProfileProps = {
 const ProfileContent: Component<ClientProfileProps> = (props) => {
   return (
     <Flex direction='row' gap='2' alignItems='center'>
-      <MxcAvatar src={props.avatar} client={props.mx} />
+      <MxcAvatar src={props.avatar} />
       <Flex direction='column' overflow='hidden'>
         <Text
           title={props.name ?? props.userId}

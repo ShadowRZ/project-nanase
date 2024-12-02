@@ -20,6 +20,9 @@ importers:
       '@modular-forms/solid':
         specifier: ^0.24.1
         version: 0.24.1(solid-js@1.9.2)(typescript@5.6.3)
+      '@shadowrz/hanekokoro-ui':
+        specifier: ^0.1.0
+        version: 0.1.0(@ark-ui/solid@4.2.1(solid-js@1.9.2))(solid-js@1.9.2)
       '@solid-primitives/i18n':
         specifier: ^2.1.1
         version: 2.1.1(solid-js@1.9.2)
@@ -989,6 +992,12 @@ packages:
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
+
+  '@shadowrz/hanekokoro-ui@0.1.0':
+    resolution: {integrity: sha512-FWWqArO8E1dWc0HgGjkibsZ3Pd8aryD0XV85dhgidvKhkmtES6azYLJptT6uMm5lqnjZZ7HKsJ4WKf193uR3ow==, tarball: https://npm.pkg.github.com/download/@shadowrz/hanekokoro-ui/0.1.0/63d674dc72ac566adcc95913fde60ba1f337ab6e}
+    peerDependencies:
+      '@ark-ui/solid': ^4.0.0
+      solid-js: ^1.8.19
 
   '@solid-devtools/debugger@0.23.4':
     resolution: {integrity: sha512-EfTB1Eo313wztQYGJ4Ec/wE70Ay2d603VCXfT3RlyqO5QfLrQGRHX5NXC07hJpQTJJJ3tbNgzO7+ZKo76MM5uA==}
@@ -4807,6 +4816,11 @@ snapshots:
     optional: true
 
   '@rtsao/scc@1.1.0': {}
+
+  '@shadowrz/hanekokoro-ui@0.1.0(@ark-ui/solid@4.2.1(solid-js@1.9.2))(solid-js@1.9.2)':
+    dependencies:
+      '@ark-ui/solid': 4.2.1(solid-js@1.9.2)
+      solid-js: 1.9.2
 
   '@solid-devtools/debugger@0.23.4(solid-js@1.9.2)':
     dependencies:

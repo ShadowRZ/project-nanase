@@ -4,7 +4,7 @@
     "paths": {
       "~/*": ["./src/*"],
       "@/*": ["./src/*"],
-      "~styled/*": ["./styled-system/*"]
+      "@shadowrz/hanekokoro-ui/styled-system/*": ["./styled-system/*"]
     },
     "target": "ES2022",
     "module": "ESNext",

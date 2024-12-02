@@ -1,12 +1,9 @@
-import { Button } from '@/components/ui/button';
-import { Dialog } from '@/components/ui/dialog';
-import { Menu } from '@/components/ui/menu';
-import { Tooltip } from '@/components/ui/tooltip';
+import { Button, Dialog, Menu, Tooltip } from '@shadowrz/hanekokoro-ui';
+import { Flex } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { square } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
 import { Component, createUniqueId } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import PowerDuotone from '~icons/ph/power-duotone';
-import { Flex } from '~styled/jsx';
-import { square } from '~styled/patterns';
 
 export const LogoutDialog: Component = () => {
   const trigger = createUniqueId();

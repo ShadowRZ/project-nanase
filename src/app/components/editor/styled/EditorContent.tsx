@@ -1,5 +1,5 @@
 import { EditorContent as BaseEditorContent } from 'tiptap-solid';
-import { styled } from '~styled/jsx';
+import { styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 
 export const EditorContent = styled(BaseEditorContent, {
   base: {

@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@shadowrz/hanekokoro-ui';
 import { type Component, For, Match, Show, Switch } from 'solid-js';
 import { type IIdentityProvider, type MatrixClient } from 'matrix-js-sdk';
-import { Flex, styled } from '~styled/jsx';
+import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 import ArrowSquareOutDuotone from '~icons/ph/arrow-square-out-duotone';
 import LogoApple from '~icons/simple-icons/apple';
 import LogoGoogle from '~icons/simple-icons/google';

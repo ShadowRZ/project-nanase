@@ -1,6 +1,5 @@
-import { Button } from '@/components/ui/button';
-import { Dialog } from '@/components/ui/dialog';
-import { Text } from '@/components/ui/text';
+import { Button, Dialog, Text } from '@shadowrz/hanekokoro-ui';
+import { Flex, HStack } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 import {
   HttpApiEvent,
   HttpApiEventHandlerMap,
@@ -18,7 +17,6 @@ import {
 } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
-import { Flex, HStack } from '~styled/jsx';
 import { SplashScreen } from '../../components/splash-screen/Splashscreen';
 import { WithServerDetails } from '../../components/with-server-details/WithServerDetails';
 import { WithClientState } from '../../hooks/useClientState';

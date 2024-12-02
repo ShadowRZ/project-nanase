@@ -1,6 +1,5 @@
+import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 import { type ParentComponent } from 'solid-js';
-import { useMatrixClient } from '~/app/hooks/useMatrixClient';
-import { Flex, styled } from '~styled/jsx';
 import { MxcAvatar } from '../mxc-avatar/MxcAvatar';
 import { Time } from '../time/Time';
 
@@ -12,8 +11,6 @@ type StateProps = {
 };
 
 export const State: ParentComponent<StateProps> = (props) => {
-  const mx = useMatrixClient();
-
   return (
     <Flex
       direction='row'
@@ -23,7 +20,7 @@ export const State: ParentComponent<StateProps> = (props) => {
       overflow='hidden'
       alignItems='center'
     >
-      <MxcAvatar client={mx()} size='small' src={props.avatar} flexShrink='0' />
+      <MxcAvatar size='small' src={props.avatar} flexShrink='0' />
       <styled.p fontStyle='italic' flex='1' opacity='0.5'>
         <styled.span fontWeight='bold'>
           {props.name ?? props.userId}

@@ -1,10 +1,10 @@
-import { Menu } from '@/components/ui/menu';
+import { Menu } from '@shadowrz/hanekokoro-ui';
 import { EventTimelineSet, MatrixEvent, Room } from 'matrix-js-sdk';
 import { Component, For } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import ArrowBendUpLeftDuotone from '~icons/ph/arrow-bend-up-left-duotone';
 import CodeDuotone from '~icons/ph/code-duotone';
-import { Flex, styled } from '~styled/jsx';
+import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 import EventComponent from '../../components/event-component/EventComponent';
 import { createRoomTimeline } from '../../hooks/createRoomTimeline';
 

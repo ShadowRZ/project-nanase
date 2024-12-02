@@ -1,6 +1,4 @@
-import { IconButton } from '@/components/ui/icon-button';
-import { Menu } from '@/components/ui/menu';
-import { Text } from '@/components/ui/text';
+import { IconButton, Menu, Text } from '@shadowrz/hanekokoro-ui';
 import { MenuSelectionDetails } from '@ark-ui/solid';
 import { Show, type Component } from 'solid-js';
 import { Portal } from 'solid-js/web';
@@ -12,9 +10,9 @@ import HashStraightBold from '~icons/ph/hash-straight-bold';
 import ShieldDuotone from '~icons/ph/shield-duotone';
 import UserCircleFill from '~icons/ph/user-circle-fill';
 import UsersThreeDuotone from '~icons/ph/users-three-duotone';
-import { css } from '~styled/css';
-import { Flex, styled } from '~styled/jsx';
-import { flex } from '~styled/patterns';
+import { css } from '@shadowrz/hanekokoro-ui/styled-system/css';
+import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { flex } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
 import { MxcAvatar } from '../../components/mxc-avatar/MxcAvatar';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 
@@ -76,7 +74,6 @@ export const RoomIntro: Component<RoomIntroProps> = (props) => {
             <UserCircleFill />
           </Show>
         }
-        client={mx()}
         src={props.avatar}
       />
       <styled.span

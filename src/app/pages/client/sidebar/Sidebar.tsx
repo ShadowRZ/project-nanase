@@ -1,14 +1,12 @@
-import { IconButton } from '@/components/ui/icon-button';
-import { Tooltip } from '@/components/ui/tooltip';
-import { Tabs } from '@ark-ui/solid';
+import { Tabs, Tooltip } from '@shadowrz/hanekokoro-ui';
+import { css } from '@shadowrz/hanekokoro-ui/styled-system/css';
+import { Flex, Square } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { square } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
 import { createSignal, createUniqueId, For, type Component } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import ChatsTeardropFill from '~icons/ph/chats-teardrop-fill';
 import FolderUserFill from '~icons/ph/folder-user-fill';
 import FoldersDuotone from '~icons/ph/folders-duotone';
-import { css } from '~styled/css';
-import { Flex } from '~styled/jsx';
-import { flex, square } from '~styled/patterns';
 import { MxcAvatar } from '../../../components/mxc-avatar/MxcAvatar';
 import { createRoomInfo } from '../../../hooks/createRoomInfo';
 import { useSpaces } from '../../../hooks/useClientState';
@@ -25,30 +23,25 @@ const SpaceTabItem: Component<{ roomId: string }> = (props) => {
   const { name, avatar } = createRoomInfo(room);
 
   return (
-    <Tooltip.Root ids={{ trigger }} positioning={{ placement: 'right' }}>
-      <Tooltip.Trigger.AsChild>
-        {(props) => (
-          <Tabs.Trigger
-            value={roomId()}
-            asChild={(props) => (
-              <MxcAvatar
-                {...props()}
-                icon={<FoldersDuotone />}
-                ids={{ root: trigger }}
-                client={mx()}
-                src={avatar()}
-              />
-            )}
-            {...props()}
-          />
-        )}
-      </Tooltip.Trigger.AsChild>
-      <Portal>
-        <Tooltip.Positioner>
-          <Tooltip.Content>{name()}</Tooltip.Content>
-        </Tooltip.Positioner>
-      </Portal>
-    </Tooltip.Root>
+    <Tabs.Trigger value={roomId()}>
+      <Tooltip.Root ids={{ trigger }} positioning={{ placement: 'right' }}>
+        <Tooltip.Trigger.AsChild>
+          {(props) => (
+            <MxcAvatar
+              {...props()}
+              icon={<FoldersDuotone />}
+              ids={{ root: trigger }}
+              src={avatar()}
+            />
+          )}
+        </Tooltip.Trigger.AsChild>
+        <Portal>
+          <Tooltip.Positioner>
+            <Tooltip.Content>{name()}</Tooltip.Content>
+          </Tooltip.Positioner>
+        </Portal>
+      </Tooltip.Root>
+    </Tabs.Trigger>
   );
 };
 
@@ -61,89 +54,75 @@ const Sidebar: Component = () => {
       orientation='vertical'
       value={value()}
       onValueChange={({ value }) => setValue(value)}
-      class={flex({
-        direction: 'row',
-        shrink: '0',
-        h: 'dvh',
-        overflowY: 'scroll',
-        borderRightWidth: '1',
-        scrollbar: 'hidden',
-        w: { base: 'full', md: '27.5rem' },
-        borderColor: 'border.default',
-      })}
+      flexShrink='0'
+      h='dvh'
+      overflowY='scroll'
+      borderRightWidth='1'
+      scrollbar='hidden'
+      w={{ base: 'full', md: '27.5rem' }}
+      borderColor='border.default'
     >
       <Tabs.List
-        class={flex({
-          direction: 'column',
-          gap: '2',
-          p: '2',
-          w: '16',
-          borderRightWidth: '1',
-          borderColor: 'border.default',
-        })}
+        borderRightWidth='1'
+        borderColor='border.default'
+        gap='2'
+        p='2'
       >
-        <Tooltip.Root positioning={{ placement: 'right' }}>
-          <Tooltip.Trigger.AsChild>
-            {(props) => (
-              <IconButton.AsChild
-                variant='outline'
-                px='0'
-                py='0'
-                width='12'
-                height='12'
-                rounded='full'
-                colorPalette='accent'
-                color='colorPalette.12'
-                _selected={{ bg: 'colorPalette.5' }}
-                {...props()}
-              >
-                {(props) => (
-                  <Tabs.Trigger value='chats' {...props()}>
-                    <ChatsTeardropFill class={square({ size: '6' })} />
-                  </Tabs.Trigger>
-                )}
-              </IconButton.AsChild>
-            )}
-          </Tooltip.Trigger.AsChild>
-          <Portal>
-            <Tooltip.Positioner>
-              <Tooltip.Content>Chats</Tooltip.Content>
-            </Tooltip.Positioner>
-          </Portal>
-        </Tooltip.Root>
-        <Tooltip.Root positioning={{ placement: 'right' }}>
-          <Tooltip.Trigger.AsChild>
-            {(props) => (
-              <IconButton.AsChild
-                variant='outline'
-                px='0'
-                py='0'
-                width='12'
-                height='12'
-                rounded='full'
-                colorPalette='accent'
-                color='colorPalette.12'
-                _selected={{ bg: 'colorPalette.5' }}
-                {...props()}
-              >
-                {(props) => (
-                  <Tabs.Trigger value='dms' {...props()}>
-                    <FolderUserFill class={square({ size: '6' })} />
-                  </Tabs.Trigger>
-                )}
-              </IconButton.AsChild>
-            )}
-          </Tooltip.Trigger.AsChild>
-          <Portal>
-            <Tooltip.Positioner>
-              <Tooltip.Content>DMs</Tooltip.Content>
-            </Tooltip.Positioner>
-          </Portal>
-        </Tooltip.Root>
+        <Tabs.Trigger value='chats'>
+          <Tooltip.Root positioning={{ placement: 'right' }}>
+            <Tooltip.Trigger.AsChild>
+              {(props) => (
+                <Square
+                  {...props()}
+                  size='12'
+                  rounded='full'
+                  alignContent='center'
+                  justifyContent='center'
+                  colorPalette='accent'
+                  color='colorPalette.11'
+                  bg='colorPalette.dimmed'
+                >
+                  <ChatsTeardropFill class={square({ size: '6' })} />
+                </Square>
+              )}
+            </Tooltip.Trigger.AsChild>
+            <Portal>
+              <Tooltip.Positioner>
+                <Tooltip.Content>Chats</Tooltip.Content>
+              </Tooltip.Positioner>
+            </Portal>
+          </Tooltip.Root>
+        </Tabs.Trigger>
+        <Tabs.Trigger value='dms'>
+          <Tooltip.Root positioning={{ placement: 'right' }}>
+            <Tooltip.Trigger.AsChild>
+              {(props) => (
+                <Square
+                  {...props()}
+                  size='12'
+                  rounded='full'
+                  alignContent='center'
+                  justifyContent='center'
+                  colorPalette='accent'
+                  color='colorPalette.11'
+                  bg='colorPalette.dimmed'
+                >
+                  <FolderUserFill class={square({ size: '6' })} />
+                </Square>
+              )}
+            </Tooltip.Trigger.AsChild>
+            <Portal>
+              <Tooltip.Positioner>
+                <Tooltip.Content>DMs</Tooltip.Content>
+              </Tooltip.Positioner>
+            </Portal>
+          </Tooltip.Root>
+        </Tabs.Trigger>
         <For each={spaces()}>{(space) => <SpaceTabItem roomId={space} />}</For>
         <Flex direction='column' mt='auto' position='sticky' bottom='0'>
           <AccountMenu />
         </Flex>
+        <Tabs.Indicator />
       </Tabs.List>
       <Tabs.Content
         value='chats'

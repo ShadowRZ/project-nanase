@@ -1,12 +1,16 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@shadowrz/hanekokoro-ui';
 import { Show, type Component } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 import Checks from '~icons/ph/checks';
 import FileDuotone from '~icons/ph/file-duotone';
 import PencilSimpleLine from '~icons/ph/pencil-simple-line';
 import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
-import { Flex, Square, styled } from '~styled/jsx';
-import { square } from '~styled/patterns';
+import {
+  Flex,
+  Square,
+  styled,
+} from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { square } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
 import { Time } from '../../time/Time';
 
 const IconPlaceholder = styled('div', {

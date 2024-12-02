@@ -1,5 +1,5 @@
 import { splitProps, type Component } from 'solid-js';
-import { styled } from '~styled/jsx';
+import { styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 
 const timeOnlyFormatter = new Intl.DateTimeFormat(undefined, {
   hour: 'numeric',

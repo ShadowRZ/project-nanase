@@ -1,10 +1,10 @@
-import { Typography } from '@/components/ui/typography';
+import { Typography } from '@shadowrz/hanekokoro-ui';
 import { Show, type ParentComponent } from 'solid-js';
 import Checks from '~icons/ph/checks';
 import PencilSimpleLine from '~icons/ph/pencil-simple-line';
-import { css } from '~styled/css';
-import { styled } from '~styled/jsx';
-import { square } from '~styled/patterns';
+import { css } from '@shadowrz/hanekokoro-ui/styled-system/css';
+import { styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { square } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
 import { Time } from '../../time/Time';
 
 type TextContentProps = {

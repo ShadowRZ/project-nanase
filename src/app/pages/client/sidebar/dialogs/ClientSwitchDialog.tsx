@@ -1,13 +1,10 @@
-import { Dialog } from '@/components/ui/dialog';
-import { Menu } from '@/components/ui/menu';
-import { Tooltip } from '@/components/ui/tooltip';
+import { Dialog, IconButton, Menu, Tooltip } from '@shadowrz/hanekokoro-ui';
+import { HStack } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { square } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
 import { Component, createUniqueId } from 'solid-js';
 import { Portal } from 'solid-js/web';
-import { IconButton } from '~/components/ui/icon-button';
 import UserSwitchDuotone from '~icons/ph/user-switch-duotone';
 import CloseIcon from '~icons/ph/x-bold';
-import { HStack } from '~styled/jsx';
-import { square } from '~styled/patterns';
 
 export const ClientSwitchDialog: Component = () => {
   const trigger = createUniqueId();

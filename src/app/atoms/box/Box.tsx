@@ -1,4 +1,4 @@
-import { styled } from '~styled/jsx';
+import { styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 
 const Box = styled('div', {
   base: {

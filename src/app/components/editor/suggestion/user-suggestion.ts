@@ -4,7 +4,7 @@ import { SuggestionOptions } from '@tiptap/suggestion';
 import { Room, RoomMember } from 'matrix-js-sdk';
 import { Accessor } from 'solid-js';
 import { SolidRenderer } from 'tiptap-solid';
-import { css } from '~styled/css';
+import { css } from '@shadowrz/hanekokoro-ui/styled-system/css';
 import {
   UserMentionList,
   UserMentionListProps,

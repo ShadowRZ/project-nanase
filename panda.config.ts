@@ -1,5 +1,5 @@
 import { defineConfig, defineGlobalStyles } from '@pandacss/dev';
-import { createPreset } from './pandacss/preset';
+import { createPreset } from '@shadowrz/hanekokoro-ui/panda-preset';
 
 const globalCss = defineGlobalStyles({
   'html, body': {
@@ -30,6 +30,6 @@ export default defineConfig({
   ],
   outdir: 'styled-system',
   jsxFramework: 'solid',
-  importMap: '~styled',
+  importMap: '@shadowrz/hanekokoro-ui/styled-system',
   globalCss,
 });
