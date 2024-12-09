@@ -92,6 +92,9 @@ importers:
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
+      idb:
+        specifier: ^8.0.0
+        version: 8.0.0
       linkify-element:
         specifier: ^4.1.4
         version: 4.1.4(linkifyjs@4.1.4)
@@ -3199,6 +3202,9 @@ packages:
 
   idb@7.1.1:
     resolution: {integrity: sha512-gchesWBzyvGHRO9W8tzUWFDycow5gwjvFKfyV9FF32Y7F50yZMp7mP+T2mJIWFx49zicqyC4uefHM17o6xKIVQ==}
+
+  idb@8.0.0:
+    resolution: {integrity: sha512-l//qvlAKGmQO31Qn7xdzagVPPaHTxXx199MhrAFuVBTPqydcPYBWjkrbv4Y0ktB+GmWOiwHl237UUOrLmQxLvw==}
 
   ignore@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
@@ -8846,6 +8852,8 @@ snapshots:
       entities: 4.5.0
 
   idb@7.1.1: {}
+
+  idb@8.0.0: {}
 
   ignore@5.3.2: {}
 

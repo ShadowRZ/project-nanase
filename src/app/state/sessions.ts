@@ -1,14 +1,13 @@
 import { makePersisted } from '@solid-primitives/storage';
-import { createSignal } from 'solid-js';
-import { type Session } from '../../types/client';
 import { ClientEvent, MatrixClient, SyncState } from 'matrix-js-sdk';
+import { createResource, createSignal } from 'solid-js';
 import { initClient, startClient } from '../../lib/client/init';
+import * as sm from '../../lib/session-idb';
+import { type Session } from '../../types/client';
 
-// eslint-disable-next-line solid/reactivity
-const [sessions, setSessions] = makePersisted(createSignal<Session[]>([]), {
-  storage: localStorage,
-  name: 'project-nanase-sessions',
-});
+const [$sessions, { refetch }] = createResource(async () => await sm.values());
+
+const sessions = () => $sessions() ?? [];
 
 // eslint-disable-next-line solid/reactivity
 const [current, setCurrent] = makePersisted(createSignal<string>(), {
@@ -61,13 +60,13 @@ export const currentSession = () =>
   sessions().find(($session) => $session.userId === current())!;
 
 export const addSession = (session: Session) => {
-  setSessions([...sessions(), session]);
+  const userId = session.userId;
+  void sm.set(userId, session).then(async () => await refetch());
 };
 
 export const removeSession = (session: Session) => {
-  setSessions(($state) => {
-    return $state.filter(($i) => $i !== session);
-  });
+  const userId = session.userId;
+  void sm.del(userId).then(async () => await refetch());
 };
 
 export const isInitial = () => sessions().length === 0;
