@@ -8,6 +8,8 @@ import {
   HTMLStyledProps,
 } from '@shadowrz/hanekokoro-ui/styled-system/types';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
+import { useSpecVersions } from '../../hooks/useSpecVersions';
+import { suggestsAuthMedia } from '../../utils/media';
 
 type MxcImgProps = {
   src?: string;
@@ -41,8 +43,10 @@ export const MxcImg: Component<Assign<HTMLStyledProps<'img'>, MxcImgProps>> = (
   const className = css(styleProps, cssProp);
 
   const mx = useMatrixClient();
+  const versions = useSpecVersions();
+  const suggestsAuth = () => suggestsAuthMedia(versions);
   const src = () => selfProps.src;
-  const useAuthentication = () => selfProps.useAuthentication ?? false;
+  const useAuthentication = () => selfProps.useAuthentication ?? suggestsAuth();
   const resizeMethod = () => selfProps.resizeMethod;
   const allowDirectLinks = () => selfProps.allowDirectLinks;
   const allowRedirects = () => selfProps.allowRedirects;
@@ -55,7 +59,7 @@ export const MxcImg: Component<Assign<HTMLStyledProps<'img'>, MxcImgProps>> = (
     const $allowRedirects = allowRedirects();
     const $useAuthentication = useAuthentication();
     if ($src === undefined) return;
-    const url = $mx.mxcUrlToHttp(
+    const $url = $mx.mxcUrlToHttp(
       $src,
       undefined,
       undefined,
@@ -64,17 +68,20 @@ export const MxcImg: Component<Assign<HTMLStyledProps<'img'>, MxcImgProps>> = (
       $allowRedirects,
       $useAuthentication
     );
+    const url = $url ? new URL($url) : undefined;
+    if (url) url.hash = `#user_id=${$mx.getSafeUserId()}`;
     // TODO: Use a blob cache
-    if ($useAuthentication) {
+    if ($useAuthentication && !('serviceWorker' in navigator)) {
       if (!url) return;
       const resp = await fetch(url, {
+        cache: 'default',
         headers: {
           Authorization: `Bearer ${$mx.getAccessToken()}`,
         },
       });
       return URL.createObjectURL(await resp.blob());
     } else {
-      return url ?? undefined;
+      return url?.toString() ?? undefined;
     }
   });
 

@@ -6,6 +6,8 @@ import { createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching';
 import { NavigationRoute, registerRoute } from 'workbox-routing';
 import { clientsClaim } from 'workbox-core';
 
+import * as sm from './lib/session-idb';
+
 void self.skipWaiting();
 clientsClaim();
 
@@ -18,16 +20,26 @@ registerRoute(
   ({ request }) => {
     const { url } = request;
     return (
-      url.includes('/_matrix/media/v3/download') ||
-      url.includes('/_matrix/media/v3/thumbnail')
+      url.includes('/_matrix/client/v1/media/download') ||
+      url.includes('/_matrix/client/v1/media/thumbnail')
     );
   },
-  async ({ request }) => {
-    const { url } = request;
+  async ({ url }) => {
+    const hash = url.hash.slice(1);
+    const params = new URLSearchParams(hash);
+    const userId = params.get('user_id');
 
     try {
       console.log(`[SW/Fetch] Fetching ${url}`);
-      return await fetch(url);
+      const session = userId ? await sm.get(userId) : undefined;
+      const params: RequestInit = {
+        cache: 'default',
+      };
+      if (session)
+        params.headers = {
+          Authorization: `Bearer ${session.accessToken}`,
+        };
+      return await fetch(url, params);
     } catch (error) {
       return new Response(
         JSON.stringify({
