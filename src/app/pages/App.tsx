@@ -1,7 +1,7 @@
 import { Navigate, Route, HashRouter as Router } from '@solidjs/router';
 import { Show, type Component, type ParentComponent } from 'solid-js';
-import { I18NProvider } from '~/app/i18n';
-import { isInitial } from '~/app/state/sessions';
+import { I18NProvider } from '../i18n';
+import { isInitial } from '../state/sessions';
 import FeatureCheck from './FeatureCheck';
 import AuthFormLayout from './auth/AuthFormLayout';
 import AuthLayout from './auth/AuthLayout';

@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'solid-js';
-import { type SpecVersions } from '~/app/cs-api';
+import { type SpecVersions } from '../cs-api';
 
 const SpecVersionsContext = createContext<SpecVersions>();
 
