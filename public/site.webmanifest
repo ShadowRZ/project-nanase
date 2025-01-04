@@ -32,6 +32,12 @@
   "start_url": "/project-nanase/",
   "display": "standalone",
   "background_color": "#FFFFFF",
-  "theme_color": "#fb7185",
-  "description": "@ShadowRZ's Matrix Client with its own ideas."
+  "theme_color": "#D6409F",
+  "description": "@ShadowRZ's Matrix Client with its own ideas.",
+  "protocol_handlers": [
+    {
+      "protocol": "matrix",
+      "url": "/project-nanase/?matrix=%s"
+    }
+  ]
 }
