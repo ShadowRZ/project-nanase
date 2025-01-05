@@ -1,7 +1,7 @@
 import { Text } from '@shadowrz/hanekokoro-ui';
 import { Flex } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 import { type Component } from 'solid-js';
-import { MxcAvatar } from '../../components/mxc-avatar/MxcAvatar';
+import { MxcAvatar } from '../mxc-avatar/MxcAvatar';
 
 export type ClientProfileProps = {
   avatar?: string;

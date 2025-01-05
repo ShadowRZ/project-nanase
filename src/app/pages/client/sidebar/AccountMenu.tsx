@@ -9,7 +9,7 @@ import { MxcAvatar } from '../../../components/mxc-avatar/MxcAvatar';
 import { useSelfProfile } from '../../../hooks/useClientState';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
 import t from '../../../i18n';
-import ProfileContent from '../../../molecules/profile/ProfileContent';
+import ProfileContent from '../../../components/profile-content/ProfileContent';
 import { ClientSwitchDialog } from './dialogs/ClientSwitchDialog';
 import { LogoutDialog } from './dialogs/LogoutDialog';
 
