@@ -9,7 +9,7 @@ import {
   Switch,
   untrack,
 } from 'solid-js';
-import { specVersions, type SpecVersions } from '~/app/cs-api';
+import { specVersions, type SpecVersions } from '../../cs-api';
 
 function RemoveUndefinedProp(
   props: FlowProps<

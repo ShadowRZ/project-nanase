@@ -1,15 +1,15 @@
 import { Button } from '@shadowrz/hanekokoro-ui';
-import { type Component, For, Match, Show, Switch } from 'solid-js';
-import { type IIdentityProvider, type MatrixClient } from 'matrix-js-sdk';
 import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { type IIdentityProvider, type MatrixClient } from 'matrix-js-sdk';
+import { type Component, For, Match, Show, Switch } from 'solid-js';
 import ArrowSquareOutDuotone from '~icons/ph/arrow-square-out-duotone';
 import LogoApple from '~icons/simple-icons/apple';
-import LogoGoogle from '~icons/simple-icons/google';
+import LogoFacebook from '~icons/simple-icons/facebook';
 import LogoGithub from '~icons/simple-icons/github';
 import LogoGitlab from '~icons/simple-icons/gitlab';
-import LogoFacebook from '~icons/simple-icons/facebook';
+import LogoGoogle from '~icons/simple-icons/google';
 import LogoXOrTwitter from '~icons/simple-icons/x';
-import { getAppBaseUrl } from '~/lib/utils/url';
+import { getAppBaseUrl } from '../../../lib/utils/url';
 
 type SSOOtherIconProps = {
   icon?: string;

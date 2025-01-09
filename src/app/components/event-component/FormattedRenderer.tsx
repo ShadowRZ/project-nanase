@@ -1,6 +1,6 @@
 import linkifyElement from 'linkify-element';
 import { Component, Match, Switch } from 'solid-js';
-import { MaybeFormattedMessage } from '~/types/event-content';
+import { MaybeFormattedMessage } from '../../../types/event-content';
 import { useHTMLParser } from '../../hooks/useHTMLParser';
 import { HTMLContent } from '../html-content/HTMLContent';
 

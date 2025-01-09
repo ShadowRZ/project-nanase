@@ -5,8 +5,8 @@ import {
   type RoomMember,
 } from 'matrix-js-sdk';
 import { createEffect, createResource, onCleanup } from 'solid-js';
-import { getRoomMemberAvatarUrl } from '~/lib/utils/matrix';
-import { type ProfileResource } from '~/types/profile';
+import { getRoomMemberAvatarUrl } from '../../lib/utils/matrix';
+import { type ProfileResource } from '../../types/profile';
 import { useMatrixClient } from './useMatrixClient';
 
 export const createRoomScopedProfile = (

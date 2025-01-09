@@ -1,5 +1,5 @@
 import { createClient, IndexedDBStore, type MatrixClient } from 'matrix-js-sdk';
-import { type Session } from '~/types/client';
+import { type Session } from '../../types/client';
 
 export const initClient = async (session: Session) => {
   const { baseUrl, accessToken, userId, deviceId } = session;

@@ -1,5 +1,5 @@
 import { createMemo } from 'solid-js';
-import { getRoomMemberAvatarUrl } from '~/lib/utils/matrix';
+import { getRoomMemberAvatarUrl } from '../../lib/utils/matrix';
 import { useMatrixClient } from './useMatrixClient';
 
 export default function createRoomProfileSnapshot(

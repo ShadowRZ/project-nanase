@@ -10,10 +10,10 @@ import { useNavigate } from '@solidjs/router';
 import to from 'await-to-js';
 import { Show, type Component } from 'solid-js';
 import * as v from 'valibot';
-import { getLoginPath } from '~/app/utils/paths';
-import { matchMXID, MXIDRegex } from '~/lib/utils/user-id';
 import ArrowRightBold from '~icons/ph/arrow-right-bold';
 import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
+import { matchMXID, MXIDRegex } from '../../../../lib/utils/user-id';
+import { getLoginPath } from '../../../utils/paths';
 import { getServerMeta } from '../getServerMeta';
 import LoginHeader from './LoginHeader';
 

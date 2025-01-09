@@ -8,7 +8,7 @@ import {
   getUIAErrorCode,
   getUIAParams,
   getUIASession,
-} from '~/app/utils/matrix-uia';
+} from '../utils/matrix-uia';
 
 export const createSupportedUIAFlows = (
   uiaFlows: Accessor<UIAFlow[]>,

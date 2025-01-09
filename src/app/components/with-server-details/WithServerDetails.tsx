@@ -7,8 +7,8 @@ import {
   createMemo,
   untrack,
 } from 'solid-js';
-import { useMatrixClient } from '~/app/hooks/useMatrixClient';
-import { MediaConfig } from '~/app/hooks/useServerDetails';
+import { useMatrixClient } from '../../hooks/useMatrixClient';
+import { MediaConfig } from '../../hooks/useServerDetails';
 
 export const WithServerDetails: FlowComponent<
   object,

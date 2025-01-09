@@ -6,8 +6,8 @@ import {
 import Placeholder from '@tiptap/extension-placeholder';
 import { type Component } from 'solid-js';
 import { createEditor } from 'tiptap-solid';
-import { ProseExtensions } from '~/app/lib/editor-extensions';
-import { sanitizeText } from '~/lib/utils/sanitize';
+import { ProseExtensions } from '../../../app/lib/editor-extensions';
+import { sanitizeText } from '../../../lib/utils/sanitize';
 import TextAaDuotone from '~icons/ph/text-aa-duotone';
 import PaperPlaneTiltDuotone from '~icons/ph/paper-plane-tilt-duotone';
 import PaperclipDuotone from '~icons/ph/paperclip-duotone';

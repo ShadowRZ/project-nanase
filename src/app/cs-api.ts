@@ -1,6 +1,6 @@
 // https://github.com/cinnyapp/cinny/blob/44161c4157dccac383025825f5fd4d7f4620ea67/src/app/cs-api.ts
 import to from 'await-to-js';
-import { trimTrailingSlash } from '~/lib/utils/url';
+import { trimTrailingSlash } from '../lib/utils/url';
 
 export enum AutoDiscoveryAction {
   PROMPT = 'PROMPT',

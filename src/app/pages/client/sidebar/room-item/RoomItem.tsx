@@ -2,7 +2,7 @@ import { Button, Text } from '@shadowrz/hanekokoro-ui';
 import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
 import { useNavigate, useParams } from '@solidjs/router';
 import { Component, Show } from 'solid-js';
-import { trimReplyFallback } from '~/lib/utils/matrix';
+import { trimReplyFallback } from '../../../../../lib/utils/matrix';
 import HashStraightBold from '~icons/ph/hash-straight-bold';
 import UserCircleFill from '~icons/ph/user-circle-fill';
 import { MxcAvatar } from '../../../../components/mxc-avatar/MxcAvatar';

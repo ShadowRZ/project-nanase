@@ -1,5 +1,5 @@
 import { type JSONContent, generateHTML } from '@tiptap/core';
-import { ProseExtensions } from '~/app/lib/editor-extensions';
+import { ProseExtensions } from '../lib/editor-extensions';
 
 export function isPlain(content: JSONContent[]): boolean {
   if (content.length === 1) {

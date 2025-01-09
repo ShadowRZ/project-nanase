@@ -4,9 +4,9 @@ import {
   type MatrixClient,
   type LoginResponse,
 } from 'matrix-js-sdk';
-import { AutoDiscoveryAction } from '~/app/cs-api';
-import { ErrorCode } from '~/app/cs-errorcode';
-import { type Session } from '~/types/client';
+import { AutoDiscoveryAction } from '../../../cs-api';
+import { ErrorCode } from '../../../cs-errorcode';
+import { type Session } from '../../../../types/client';
 
 export function errorForAutoDiscoveryAciton(
   action: AutoDiscoveryAction,

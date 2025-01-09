@@ -5,7 +5,7 @@ import {
   type Room,
   type SSOFlow,
 } from 'matrix-js-sdk';
-import type ClientDiscovery from '~/types/discovery';
+import type ClientDiscovery from '../../types/discovery';
 
 export function getRoomAvatarUrl(room?: Room): string | undefined {
   if (room !== undefined) {

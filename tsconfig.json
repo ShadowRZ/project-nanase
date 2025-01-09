@@ -2,8 +2,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"],
-      "@/*": ["./src/*"],
       "@shadowrz/hanekokoro-ui/styled-system/*": ["./styled-system/*"]
     },
     "target": "ES2022",

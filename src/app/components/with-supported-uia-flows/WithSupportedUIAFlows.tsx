@@ -6,7 +6,7 @@ import {
   type FlowComponent,
   type JSX,
 } from 'solid-js';
-import { createSupportedUIAFlows } from '~/app/hooks/createUIAFlows';
+import { createSupportedUIAFlows } from '../../hooks/createUIAFlows';
 
 const WithSupportedUIAFlows: FlowComponent<
   {

@@ -7,9 +7,9 @@ import {
   type AutoDiscoveryInfo,
   type SpecVersions,
   specVersions,
-} from '~/app/cs-api';
-import { getAuthFlows } from '~/app/utils/auth-flows';
-import { type AuthFlows } from '~/app/hooks/useAuthFlows';
+} from '../../cs-api';
+import { getAuthFlows } from '../../utils/auth-flows';
+import { type AuthFlows } from '../../hooks/useAuthFlows';
 
 export type ServerMeta = {
   baseUrl: string;
