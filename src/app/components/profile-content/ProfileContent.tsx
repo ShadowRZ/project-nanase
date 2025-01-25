@@ -1,5 +1,5 @@
-import { Text } from '@shadowrz/hanekokoro-ui';
-import { Flex } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { Text } from '@hanekokoro-ui/solid';
+import { Flex } from '@hanekokoro-ui/styled-system/jsx';
 import { type Component } from 'solid-js';
 import { MxcAvatar } from '../mxc-avatar/MxcAvatar';
 

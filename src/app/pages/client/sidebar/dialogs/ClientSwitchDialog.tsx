@@ -1,6 +1,6 @@
-import { Dialog, IconButton, Menu, Tooltip } from '@shadowrz/hanekokoro-ui';
-import { HStack } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
-import { square } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
+import { Dialog, IconButton, Menu, Tooltip } from '@hanekokoro-ui/solid';
+import { HStack } from '@hanekokoro-ui/styled-system/jsx';
+import { square } from '@hanekokoro-ui/styled-system/patterns';
 import { Component, createUniqueId } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import UserSwitchDuotone from '~icons/ph/user-switch-duotone';

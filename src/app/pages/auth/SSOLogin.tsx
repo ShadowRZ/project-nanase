@@ -1,5 +1,5 @@
-import { Button } from '@shadowrz/hanekokoro-ui';
-import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { Button } from '@hanekokoro-ui/solid';
+import { Flex, styled } from '@hanekokoro-ui/styled-system/jsx';
 import { type IIdentityProvider, type MatrixClient } from 'matrix-js-sdk';
 import { type Component, For, Match, Show, Switch } from 'solid-js';
 import ArrowSquareOutDuotone from '~icons/ph/arrow-square-out-duotone';

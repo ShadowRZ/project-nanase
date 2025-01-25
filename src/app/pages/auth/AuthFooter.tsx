@@ -1,6 +1,6 @@
 import { Link } from '@kobalte/core/link';
 import { type Component } from 'solid-js';
-import { styled, Flex } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { styled, Flex } from '@hanekokoro-ui/styled-system/jsx';
 
 const StyledLink = styled(Link, {
   base: {

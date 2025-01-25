@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@shadowrz/hanekokoro-ui/styled-system/*": ["./styled-system/*"]
+      "@hanekokoro-ui/styled-system/*": ["./styled-system/*"]
     },
     "target": "ES2022",
     "module": "ESNext",

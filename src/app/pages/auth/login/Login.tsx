@@ -4,8 +4,8 @@ import {
   valiForm,
   type SubmitHandler,
 } from '@modular-forms/solid';
-import { Button, Card, Field as UIField } from '@shadowrz/hanekokoro-ui';
-import { flex } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
+import { Button, Card, Field as UIField } from '@hanekokoro-ui/solid';
+import { flex } from '@hanekokoro-ui/styled-system/patterns';
 import { useNavigate } from '@solidjs/router';
 import to from 'await-to-js';
 import { Show, type Component } from 'solid-js';

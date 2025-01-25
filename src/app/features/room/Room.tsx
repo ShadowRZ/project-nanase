@@ -1,6 +1,6 @@
 import { Component } from 'solid-js';
 import { useRoom } from '../../hooks/useRoom';
-import { Flex } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { Flex } from '@hanekokoro-ui/styled-system/jsx';
 import { RoomIntro } from './RoomIntro';
 import { createRoomInfo } from '../../hooks/createRoomInfo';
 import { useNavigate } from '@solidjs/router';

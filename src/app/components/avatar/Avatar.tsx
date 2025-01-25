@@ -1,6 +1,6 @@
 import { type JSX, splitProps } from 'solid-js';
 import UserCircleFill from '~icons/ph/user-circle-fill';
-import { Avatar as StyledAvatar } from '@shadowrz/hanekokoro-ui';
+import { Avatar as StyledAvatar } from '@hanekokoro-ui/solid';
 
 export interface AvatarProps extends StyledAvatar.RootProps {
   name?: string;

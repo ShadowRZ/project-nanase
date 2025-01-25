@@ -1,4 +1,4 @@
-import { styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { styled } from '@hanekokoro-ui/styled-system/jsx';
 
 export const Spoiler = styled('span', {
   base: {

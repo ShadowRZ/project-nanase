@@ -2,9 +2,9 @@ import { type ParentComponent } from 'solid-js';
 import { SplashScreen } from '../../components/splash-screen/Splashscreen';
 import WithSpecVersions from '../../components/with-spec-versions/WithSpecVersions';
 import { SpecVersionsProvider } from '../../hooks/useSpecVersions';
-import { Text } from '@shadowrz/hanekokoro-ui';
+import { Text } from '@hanekokoro-ui/solid';
 import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
-import { HStack } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { HStack } from '@hanekokoro-ui/styled-system/jsx';
 
 const SpecVersions: ParentComponent<{ baseUrl: string }> = (props) => (
   <WithSpecVersions

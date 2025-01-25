@@ -1,5 +1,5 @@
 import { type Component } from 'solid-js';
-import { Card } from '@shadowrz/hanekokoro-ui';
+import { Card } from '@hanekokoro-ui/solid';
 
 const LoginHeader: Component = () => (
   <Card.Header mb='2'>

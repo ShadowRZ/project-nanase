@@ -1,6 +1,6 @@
-import { Button, Dialog, Menu, Tooltip } from '@shadowrz/hanekokoro-ui';
-import { Flex } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
-import { square } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
+import { Button, Dialog, Menu, Tooltip } from '@hanekokoro-ui/solid';
+import { Flex } from '@hanekokoro-ui/styled-system/jsx';
+import { square } from '@hanekokoro-ui/styled-system/patterns';
 import { Component, createUniqueId } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import PowerDuotone from '~icons/ph/power-duotone';

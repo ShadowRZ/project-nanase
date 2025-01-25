@@ -1,4 +1,4 @@
-import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { Flex, styled } from '@hanekokoro-ui/styled-system/jsx';
 import { type ParentComponent } from 'solid-js';
 import { MxcAvatar } from '../mxc-avatar/MxcAvatar';
 import { Time } from '../time/Time';

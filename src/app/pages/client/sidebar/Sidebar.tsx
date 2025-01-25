@@ -1,7 +1,7 @@
-import { Tabs, Tooltip } from '@shadowrz/hanekokoro-ui';
-import { css } from '@shadowrz/hanekokoro-ui/styled-system/css';
-import { Flex, Square } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
-import { square } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
+import { Tabs, Tooltip } from '@hanekokoro-ui/solid';
+import { css } from '@hanekokoro-ui/styled-system/css';
+import { Flex, Square } from '@hanekokoro-ui/styled-system/jsx';
+import { square } from '@hanekokoro-ui/styled-system/patterns';
 import { createSignal, createUniqueId, For, type Component } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import ChatsTeardropDuotone from '~icons/ph/chats-teardrop-duotone';

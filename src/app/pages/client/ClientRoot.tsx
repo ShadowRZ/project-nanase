@@ -1,5 +1,5 @@
-import { Button, Dialog, Text } from '@shadowrz/hanekokoro-ui';
-import { Flex, HStack } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { Button, Dialog, Text } from '@hanekokoro-ui/solid';
+import { Flex, HStack } from '@hanekokoro-ui/styled-system/jsx';
 import {
   HttpApiEvent,
   HttpApiEventHandlerMap,

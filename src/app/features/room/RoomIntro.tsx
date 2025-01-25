@@ -1,8 +1,8 @@
 import { MenuSelectionDetails } from '@ark-ui/solid';
-import { IconButton, Menu, Text } from '@shadowrz/hanekokoro-ui';
-import { css } from '@shadowrz/hanekokoro-ui/styled-system/css';
-import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
-import { flex } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
+import { IconButton, Menu, Text } from '@hanekokoro-ui/solid';
+import { css } from '@hanekokoro-ui/styled-system/css';
+import { Flex, styled } from '@hanekokoro-ui/styled-system/jsx';
+import { flex } from '@hanekokoro-ui/styled-system/patterns';
 import { Show, type Component } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import ArrowLeft from '~icons/ph/arrow-left';

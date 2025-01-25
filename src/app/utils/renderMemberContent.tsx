@@ -1,6 +1,6 @@
 import { type MatrixEvent } from 'matrix-js-sdk';
 import { isMembershipChanged } from './room';
-import { Text } from '@shadowrz/hanekokoro-ui';
+import { Text } from '@hanekokoro-ui/solid';
 
 type RoomMemberEventContent = {
   avatar_url?: string;

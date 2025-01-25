@@ -4,9 +4,9 @@ import {
   required,
   type SubmitHandler,
 } from '@modular-forms/solid';
-import { Button, Card, Field as UIField } from '@shadowrz/hanekokoro-ui';
-import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
-import { flex } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
+import { Button, Card, Field as UIField } from '@hanekokoro-ui/solid';
+import { Flex, styled } from '@hanekokoro-ui/styled-system/jsx';
+import { flex } from '@hanekokoro-ui/styled-system/patterns';
 import { useSearchParams } from '@solidjs/router';
 import to from 'await-to-js';
 import { Show, type Component } from 'solid-js';

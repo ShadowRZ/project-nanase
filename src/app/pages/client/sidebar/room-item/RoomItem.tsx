@@ -1,5 +1,5 @@
-import { Button, Text } from '@shadowrz/hanekokoro-ui';
-import { Flex, styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { Button, Text } from '@hanekokoro-ui/solid';
+import { Flex, styled } from '@hanekokoro-ui/styled-system/jsx';
 import { useNavigate, useParams } from '@solidjs/router';
 import { Component, Show } from 'solid-js';
 import { trimReplyFallback } from '../../../../../lib/utils/matrix';

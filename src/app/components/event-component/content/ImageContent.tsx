@@ -1,9 +1,9 @@
 import { Component, Show, splitProps } from 'solid-js';
 import Checks from '~icons/ph/checks';
 import PencilSimpleLine from '~icons/ph/pencil-simple-line';
-import { css } from '@shadowrz/hanekokoro-ui/styled-system/css';
-import { styled } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
-import { square } from '@shadowrz/hanekokoro-ui/styled-system/patterns';
+import { css } from '@hanekokoro-ui/styled-system/css';
+import { styled } from '@hanekokoro-ui/styled-system/jsx';
+import { square } from '@hanekokoro-ui/styled-system/patterns';
 import { useMatrixClient } from '../../../hooks/useMatrixClient';
 import { MxcImg } from '../../mxc-img/MxcImg';
 import { Time } from '../../time/Time';

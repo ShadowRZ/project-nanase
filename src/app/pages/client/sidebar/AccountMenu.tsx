@@ -1,5 +1,5 @@
-import { Menu, Tooltip } from '@shadowrz/hanekokoro-ui';
-import { Flex } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { Menu, Tooltip } from '@hanekokoro-ui/solid';
+import { Flex } from '@hanekokoro-ui/styled-system/jsx';
 import { createUniqueId, type Component } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import CodeDuotone from '~icons/ph/code-duotone';

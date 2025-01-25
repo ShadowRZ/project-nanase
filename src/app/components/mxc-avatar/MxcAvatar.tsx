@@ -1,4 +1,4 @@
-import { Avatar as StyledAvatar } from '@shadowrz/hanekokoro-ui';
+import { Avatar as StyledAvatar } from '@hanekokoro-ui/solid';
 import { type JSX, splitProps } from 'solid-js';
 import UserCircleFill from '~icons/ph/user-circle-fill';
 import {

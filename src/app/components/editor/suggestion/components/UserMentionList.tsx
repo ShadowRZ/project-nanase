@@ -3,10 +3,10 @@ import { SuggestionKeyDownProps } from '@tiptap/suggestion';
 import { RoomMember } from 'matrix-js-sdk';
 import { Component, For, createSignal, onMount } from 'solid-js';
 import { MxcAvatar } from '../../../mxc-avatar/MxcAvatar';
-import { css, cx } from '@shadowrz/hanekokoro-ui/styled-system/css';
+import { css, cx } from '@hanekokoro-ui/styled-system/css';
 
-import { menu } from '@shadowrz/hanekokoro-ui/styled-system/recipes';
-import { Box } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { menu } from '@hanekokoro-ui/styled-system/recipes';
+import { Box } from '@hanekokoro-ui/styled-system/jsx';
 
 export type UserMentionListRef = {
   onKeyDown: (ev: SuggestionKeyDownProps) => boolean;

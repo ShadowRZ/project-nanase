@@ -11,7 +11,7 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: '@shadowrz/hanekokoro-ui/styled-system',
+        find: '@hanekokoro-ui/styled-system',
         replacement: path.resolve(import.meta.dirname, 'styled-system'),
       },
     ],

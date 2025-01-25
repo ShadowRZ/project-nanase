@@ -4,7 +4,7 @@ import {
   useJoinedRooms,
   useRoomHierarchy,
 } from '../../../hooks/useClientState';
-import { Flex } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { Flex } from '@hanekokoro-ui/styled-system/jsx';
 import { RoomItem } from './room-item/RoomItem';
 
 export const JoinedRooms: Component = () => {

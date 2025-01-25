@@ -1,12 +1,9 @@
 import { createAsync } from '@solidjs/router';
 import { MatrixClient } from 'matrix-js-sdk';
 import { Component, onCleanup, splitProps, type JSX } from 'solid-js';
-import { css } from '@shadowrz/hanekokoro-ui/styled-system/css';
-import { splitCssProps } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
-import {
-  Assign,
-  HTMLStyledProps,
-} from '@shadowrz/hanekokoro-ui/styled-system/types';
+import { css } from '@hanekokoro-ui/styled-system/css';
+import { splitCssProps } from '@hanekokoro-ui/styled-system/jsx';
+import { Assign, HTMLStyledProps } from '@hanekokoro-ui/styled-system/types';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { useSpecVersions } from '../../hooks/useSpecVersions';
 import { suggestsAuthMedia } from '../../utils/media';

@@ -1,5 +1,5 @@
 import type { JSX, ParentComponent } from 'solid-js';
-import { Flex } from '@shadowrz/hanekokoro-ui/styled-system/jsx';
+import { Flex } from '@hanekokoro-ui/styled-system/jsx';
 
 const ClientLayout: ParentComponent<{ nav?: JSX.Element }> = (props) => {
   return (
