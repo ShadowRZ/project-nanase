@@ -11,6 +11,7 @@ import { ClientRoute } from './client/ClientRoute';
 import { RoomRoute } from '../features/room/RoomRoute';
 import { HTMLParserProvider } from '../hooks/useHTMLParser';
 import { useRegisterSW } from 'virtual:pwa-register/solid';
+import { Welcome } from '../components/welcome/Welcome';
 
 const Index: ParentComponent = (props) => {
   return (
@@ -44,7 +45,7 @@ const App: Component = () => {
     <Router root={Layout}>
       <Route path='/' component={Index}>
         <Route component={ClientRoute}>
-          <Route path='/' component={() => 'Hello World'} />
+          <Route path='/' component={Welcome} />
           <Route path='/rooms/:roomId?' component={RoomRoute} />
         </Route>
       </Route>
