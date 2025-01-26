@@ -26,7 +26,6 @@ export const ClientSwitchDialog: Component = () => {
                   alignItems='center'
                   justifyContent='center'
                   rounded='full'
-                  transition='all'
                   _highlighted={{
                     bg: 'colorPalette.3',
                     ringWidth: '2',

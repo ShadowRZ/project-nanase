@@ -25,7 +25,6 @@ export const LogoutDialog: Component = () => {
                   alignItems='center'
                   justifyContent='center'
                   rounded='full'
-                  transition='all'
                   _highlighted={{
                     bg: 'colorPalette.3',
                     ringWidth: '2',
