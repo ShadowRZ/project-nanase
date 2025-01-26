@@ -44,13 +44,16 @@ export default defineConfig({
     target: 'es2022',
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
-          if (
-            id.includes('matrix-js-sdk/lib/rust-crypto') ||
-            id.includes('@matrix-org/matrix-sdk-crypto-wasm')
-          )
-            return 'project-nanase-rust-crypto';
-          return 'project-nanase';
+        assetFileNames: ({ names }) =>
+          names.includes('index.css')
+            ? 'assets/project-nanase-[hash][extname]'
+            : 'assets/[name]-[hash][extname]',
+        entryFileNames: ({ name }) =>
+          name === 'index'
+            ? 'assets/project-nanase-[hash].js'
+            : 'assets/[name]-[hash].js',
+        manualChunks: {
+          'project-nanase-rust-crypto': ['matrix-js-sdk/lib/rust-crypto'],
         },
       },
     },
