@@ -1,10 +1,10 @@
+/* eslint-disable import-x/no-named-as-default-member */
 import globals from 'globals';
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import solid from 'eslint-plugin-solid/configs/typescript';
-import comments from '@eslint-community/eslint-plugin-eslint-comments/configs';
 import unicorn from 'eslint-plugin-unicorn';
-import imporPlugin from 'eslint-plugin-import';
+import importPlugin from 'eslint-plugin-import-x';
 import promise from 'eslint-plugin-promise';
 
 export default tseslint.config(
@@ -29,15 +29,11 @@ export default tseslint.config(
     },
   },
   eslint.configs.recommended,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-  imporPlugin.flatConfigs.recommended,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-  imporPlugin.flatConfigs.typescript,
+  importPlugin.flatConfigs.recommended,
+  importPlugin.flatConfigs.typescript,
   unicorn.configs['flat/recommended'],
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
   promise.configs['flat/recommended'],
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-  comments.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   {
     files: ['**/*.{ts,tsx}'],
@@ -46,9 +42,13 @@ export default tseslint.config(
   // Project Rules
   {
     rules: {
-      'import/no-unresolved': 'off',
-      'import/extensions': ['error', 'never', { svg: 'always', css: 'always' }],
-      'import/no-named-as-default': 'off',
+      'import-x/no-unresolved': 'off',
+      'import-x/extensions': [
+        'error',
+        'never',
+        { svg: 'always', css: 'always' },
+      ],
+      'import-x/no-named-as-default': 'off',
       'unicorn/prevent-abbreviations': 'off',
       'unicorn/filename-case': 'off',
       'unicorn/empty-brace-spaces': 'off',
