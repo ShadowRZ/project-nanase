@@ -61,9 +61,10 @@ export default defineConfig({
           name === 'index'
             ? 'assets/project-nanase-[hash].js'
             : 'assets/[name]-[hash].js',
-        manualChunks: {
-          'project-nanase-rust-crypto': ['matrix-js-sdk/lib/rust-crypto'],
-        },
+        chunkFileNames: ({ exports }) =>
+          exports.includes('initRustCrypto')
+            ? 'assets/project-nanase-rust-crypto-[hash].js'
+            : 'assets/[name]-[hash].js',
       },
     },
   },
