@@ -2,7 +2,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@hanekokoro-ui/styled-system/*": ["./styled-system/*"]
+      "@hanekokoro-ui/styled-system/*": ["./styled-system/*"],
+      // Slate Solid had incompatable types with moduleResolution: Bundler
+      // See https://arethetypeswrong.github.io/?p=%40slate-solid%2Fcore
+      "@slate-solid/core": ["node_modules/@slate-solid/core/dist/index.d.ts"]
     },
     "target": "ES2022",
     "module": "ESNext",

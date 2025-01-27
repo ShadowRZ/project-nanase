@@ -1,8 +1,9 @@
-import { EditorContent as BaseEditorContent } from 'tiptap-solid';
+import { Editable } from '@slate-solid/core';
 import { styled } from '@hanekokoro-ui/styled-system/jsx';
 
-export const EditorContent = styled(BaseEditorContent, {
+export const StyledEditable = styled(Editable, {
   base: {
     flexGrow: '1',
+    outline: 'none',
   },
 });

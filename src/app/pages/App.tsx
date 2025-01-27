@@ -12,6 +12,7 @@ import { RoomRoute } from '../features/room/RoomRoute';
 import { HTMLParserProvider } from '../hooks/useHTMLParser';
 import { useRegisterSW } from 'virtual:pwa-register/solid';
 import { Welcome } from '../components/welcome/Welcome';
+import { EditorProvider } from '../hooks/useEditor';
 
 const Index: ParentComponent = (props) => {
   return (
@@ -24,7 +25,9 @@ const Index: ParentComponent = (props) => {
 const Layout: ParentComponent = (props) => (
   <HTMLParserProvider>
     <I18NProvider>
-      <FeatureCheck>{props.children}</FeatureCheck>
+      <EditorProvider>
+        <FeatureCheck>{props.children}</FeatureCheck>
+      </EditorProvider>
     </I18NProvider>
   </HTMLParserProvider>
 );

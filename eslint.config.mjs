@@ -48,7 +48,6 @@ export default tseslint.config(
     rules: {
       'import/no-unresolved': 'off',
       'import/extensions': ['error', 'never', { svg: 'always', css: 'always' }],
-      // Tiptap extensions are imcompatiable
       'import/no-named-as-default': 'off',
       'unicorn/prevent-abbreviations': 'off',
       'unicorn/filename-case': 'off',

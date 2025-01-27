@@ -9,12 +9,21 @@ export default defineConfig({
   appType: 'spa',
   base: '/project-nanase/',
   resolve: {
-    alias: [
-      {
-        find: '@hanekokoro-ui/styled-system',
-        replacement: path.resolve(import.meta.dirname, 'styled-system'),
-      },
-    ],
+    // alias: [
+    //   {
+    //     find: '@hanekokoro-ui/styled-system',
+    //     replacement: path.resolve(import.meta.dirname, 'styled-system'),
+    //   },
+    // ],
+    alias: {
+      '@hanekokoro-ui/styled-system': path.resolve(
+        import.meta.dirname,
+        'styled-system'
+      ),
+    },
+  },
+  optimizeDeps: {
+    include: ['is-hotkey', 'lodash/debounce', 'lodash/throttle'],
   },
   plugins: [
     solidPlugin(),
