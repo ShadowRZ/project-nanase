@@ -10,7 +10,7 @@ import { sanitizeText } from '../../../lib/utils/sanitize';
 import { useEditor } from '../../hooks/useEditor';
 import { useRoom } from '../../hooks/useRoom';
 import { IconButton } from './styled/IconButton';
-import { StyledEditable } from './styled/EditorContent';
+import { StyledEditable } from './styled/StyledEditable';
 
 export const customHtmlEqualsPlainText = (
   customHtml: string,
