@@ -1,25 +1,15 @@
-import { Box, Flex, HStack } from '@hanekokoro-ui/styled-system/jsx';
-import { Slate } from '@slate-solid/core';
-import { type Component } from 'solid-js';
+import { Flex, HStack } from '@hanekokoro-ui/styled-system/jsx';
+import { Slate, withSolid } from '@slate-solid/core';
+import { createMemo, type Component } from 'solid-js';
 import PaperPlaneTiltDuotone from '~icons/ph/paper-plane-tilt-duotone';
 import PaperclipDuotone from '~icons/ph/paperclip-duotone';
 import SmileyDuotone from '~icons/ph/smiley-duotone';
 import StickerDuotone from '~icons/ph/sticker-duotone';
 import TextAaDuotone from '~icons/ph/text-aa-duotone';
-import { sanitizeText } from '../../../lib/utils/sanitize';
-import { useEditor } from '../../hooks/useEditor';
-import { useRoom } from '../../hooks/useRoom';
+//import { useRoom } from '../../hooks/useRoom';
 import { IconButton } from './styled/IconButton';
 import { StyledEditable } from './styled/StyledEditable';
-
-export const customHtmlEqualsPlainText = (
-  customHtml: string,
-  plain: string
-): boolean => customHtml.replaceAll('<br/>', '\n') === sanitizeText(plain);
-
-type EditorProps = {
-  onSend?: () => void;
-};
+import { createEditor } from 'slate';
 
 const initialValue = [
   {
@@ -28,13 +18,13 @@ const initialValue = [
   },
 ];
 
-export const Editor: Component<EditorProps> = (props) => {
-  const room = useRoom();
-  const editor = useEditor();
+export const Editor: Component = () => {
+  //const room = useRoom();
+  const editor = createMemo(() => withSolid(createEditor()));
 
   return (
     <Slate editor={editor()} initialValue={initialValue}>
-      <Box id='project-nanase-editor'>
+      <div id='project-nanase-editor'>
         <Flex
           position='relative'
           direction='column'
@@ -64,7 +54,7 @@ export const Editor: Component<EditorProps> = (props) => {
             </IconButton>
           </HStack>
         </Flex>
-      </Box>
+      </div>
     </Slate>
   );
 };

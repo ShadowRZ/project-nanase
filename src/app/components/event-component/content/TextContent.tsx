@@ -45,7 +45,7 @@ const Root = styled('div', {
 export const TextContent: ParentComponent<TextContentProps> = (props) => {
   return (
     <Root primary={props.primary} status={props.status}>
-      <Typography>{props.children}</Typography>
+      <Typography minW='0'>{props.children}</Typography>
       <styled.div
         textStyle='xs'
         ml='2'

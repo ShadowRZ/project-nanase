@@ -12,8 +12,6 @@ import { RoomRoute } from '../features/room/RoomRoute';
 import { HTMLParserProvider } from '../hooks/useHTMLParser';
 import { useRegisterSW } from 'virtual:pwa-register/solid';
 import { Welcome } from '../components/welcome/Welcome';
-import { EditorProvider } from '../hooks/useEditor';
-
 const Index: ParentComponent = (props) => {
   return (
     <Show when={!isInitial()} fallback={<Navigate href='/login' />}>
@@ -25,9 +23,7 @@ const Index: ParentComponent = (props) => {
 const Layout: ParentComponent = (props) => (
   <HTMLParserProvider>
     <I18NProvider>
-      <EditorProvider>
-        <FeatureCheck>{props.children}</FeatureCheck>
-      </EditorProvider>
+      <FeatureCheck>{props.children}</FeatureCheck>
     </I18NProvider>
   </HTMLParserProvider>
 );

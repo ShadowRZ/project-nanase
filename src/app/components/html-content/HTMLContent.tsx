@@ -27,6 +27,15 @@ const replace: ReplaceComponents = {
     );
   },
   code: () => (props) => <HighlightCode>{props.children}</HighlightCode>,
+  a: () => (props) => (
+    <a
+      {...props}
+      on:contextmenu={(ev) => {
+        // Stop propagation to retain default link behavior
+        ev.stopPropagation();
+      }}
+    />
+  ),
 };
 
 const toProps = (attrs: NamedNodeMap) => {

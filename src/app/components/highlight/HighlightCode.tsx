@@ -26,14 +26,7 @@ const HighlightCode: ParentComponent<HighlightCodeProps> = (props) => {
   });
 
   return (
-    <code
-      ref={ref}
-      class={`language-${props.lang ?? 'plain'}`}
-      style={{
-        'text-wrap': 'wrap',
-        'word-break': 'break-all',
-      }}
-    >
+    <code ref={ref} class={props.lang ? `language-${props.lang}` : undefined}>
       {props.children}
     </code>
   );
