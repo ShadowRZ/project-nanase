@@ -15,7 +15,6 @@ import {
   Switch,
   type ParentComponent,
 } from 'solid-js';
-import { Portal } from 'solid-js/web';
 import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
 import { SplashScreen } from '../../components/splash-screen/Splashscreen';
 import { WithServerDetails } from '../../components/with-server-details/WithServerDetails';
@@ -110,7 +109,7 @@ const ClientRoot: ParentComponent = (props) => {
         </Switch>
       </Show>
       <Dialog.Root open={errored()}>
-        <Portal>
+        <Dialog.Portal>
           <Dialog.Overlay />
           <Dialog.Positioner>
             <Dialog.Content>
@@ -135,7 +134,7 @@ const ClientRoot: ParentComponent = (props) => {
               </Flex>
             </Dialog.Content>
           </Dialog.Positioner>
-        </Portal>
+        </Dialog.Portal>
       </Dialog.Root>
     </SpecVersions>
   );

@@ -7,7 +7,6 @@ import {
   TooltipTriggerRenderProps,
 } from '@kobalte/core/tooltip';
 import { Component, ComponentProps } from 'solid-js';
-import { Portal } from 'solid-js/web';
 import PowerDuotone from '~icons/ph/power-duotone';
 
 export const LogoutDialog: Component = () => {
@@ -32,9 +31,9 @@ export const LogoutDialog: Component = () => {
               alignItems='center'
               justifyContent='center'
               rounded='full'
-              _highlighted={{
+              _hover={{
                 bg: 'colorPalette.3',
-                ringWidth: '2',
+                ringWidth: '3',
                 outlineStyle: 'solid',
               }}
               ringColor='colorPalette.ring'
@@ -52,7 +51,7 @@ export const LogoutDialog: Component = () => {
           <Tooltip.Content>Logout</Tooltip.Content>
         </Tooltip.Portal>
       </Tooltip.Root>
-      <Portal>
+      <AlertDialog.Portal>
         <AlertDialog.Overlay />
         <AlertDialog.Positioner>
           <AlertDialog.Content>
@@ -80,7 +79,7 @@ export const LogoutDialog: Component = () => {
             </Flex>
           </AlertDialog.Content>
         </AlertDialog.Positioner>
-      </Portal>
+      </AlertDialog.Portal>
     </AlertDialog.Root>
   );
 };

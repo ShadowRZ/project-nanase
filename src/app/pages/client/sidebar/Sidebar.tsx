@@ -1,8 +1,13 @@
 import { Tabs, Tooltip } from '@hanekokoro-ui/solid';
 import { css } from '@hanekokoro-ui/styled-system/css';
-import { Flex, Square } from '@hanekokoro-ui/styled-system/jsx';
+import { Box, Flex } from '@hanekokoro-ui/styled-system/jsx';
 import { square } from '@hanekokoro-ui/styled-system/patterns';
-import { createSignal, For, type Component } from 'solid-js';
+import { PolymorphicCallbackProps } from '@kobalte/core';
+import {
+  TooltipTriggerOptions,
+  TooltipTriggerRenderProps,
+} from '@kobalte/core/tooltip';
+import { ComponentProps, createSignal, For, type Component } from 'solid-js';
 import ChatsTeardropDuotone from '~icons/ph/chats-teardrop-duotone';
 import FolderUserDuotone from '~icons/ph/folder-user-duotone';
 import FoldersDuotone from '~icons/ph/folders-duotone';
@@ -21,18 +26,30 @@ const SpaceTabItem: Component<{ roomId: string }> = (props) => {
   const { name, avatar } = createRoomInfo(room);
 
   return (
-    <Tabs.Trigger value={roomId()}>
-      <Tooltip.Root placement='right'>
-        <Tooltip.Trigger
-          as={MxcAvatar}
-          icon={<FoldersDuotone />}
-          src={avatar()}
-        />
-        <Tooltip.Portal>
-          <Tooltip.Content>{name()}</Tooltip.Content>
-        </Tooltip.Portal>
-      </Tooltip.Root>
-    </Tabs.Trigger>
+    <Tooltip.Root placement='right'>
+      <Tooltip.Trigger
+        as={(
+          props: PolymorphicCallbackProps<
+            ComponentProps<typeof Tabs.Trigger<typeof MxcAvatar>>,
+            TooltipTriggerOptions,
+            TooltipTriggerRenderProps
+          >
+        ) => (
+          <Tabs.Trigger
+            value={roomId()}
+            as={MxcAvatar}
+            icon={<FoldersDuotone />}
+            src={avatar()}
+            {...props}
+          />
+        )}
+        icon={<FoldersDuotone />}
+        src={avatar()}
+      />
+      <Tooltip.Portal>
+        <Tooltip.Content>{name()}</Tooltip.Content>
+      </Tooltip.Portal>
+    </Tooltip.Root>
   );
 };
 
@@ -53,17 +70,14 @@ const Sidebar: Component = () => {
       w={{ base: 'full', md: '27.5rem' }}
       borderColor='border.default'
     >
-      <Tabs.List
-        borderRightWidth='1'
-        borderColor='border.default'
-        gap='2'
-        p='2'
-      >
-        <Tabs.Trigger value='chats'>
+      <Box h='full' py='2' borderRightWidth='1' borderColor='border.default'>
+        <Tabs.List h='full' gap='2' px='2'>
           <Tooltip.Root placement='right'>
             <Tooltip.Trigger
-              as={Square}
-              size='12'
+              as={Tabs.Trigger}
+              value='chats'
+              w='12'
+              h='12'
               rounded='full'
               alignContent='center'
               justifyContent='center'
@@ -77,12 +91,12 @@ const Sidebar: Component = () => {
               <Tooltip.Content>Chats</Tooltip.Content>
             </Tooltip.Portal>
           </Tooltip.Root>
-        </Tabs.Trigger>
-        <Tabs.Trigger value='dms'>
           <Tooltip.Root placement='right'>
             <Tooltip.Trigger
-              as={Square}
-              size='12'
+              as={Tabs.Trigger}
+              value='dms'
+              w='12'
+              h='12'
               rounded='full'
               alignContent='center'
               justifyContent='center'
@@ -96,13 +110,15 @@ const Sidebar: Component = () => {
               <Tooltip.Content>DMs</Tooltip.Content>
             </Tooltip.Portal>
           </Tooltip.Root>
-        </Tabs.Trigger>
-        <For each={spaces()}>{(space) => <SpaceTabItem roomId={space} />}</For>
-        <Flex direction='column' mt='auto' position='sticky' bottom='0'>
-          <AccountMenu />
-        </Flex>
-        <Tabs.Indicator />
-      </Tabs.List>
+          <For each={spaces()}>
+            {(space) => <SpaceTabItem roomId={space} />}
+          </For>
+          <Flex direction='column' mt='auto' position='sticky' bottom='0'>
+            <AccountMenu />
+          </Flex>
+          <Tabs.Indicator />
+        </Tabs.List>
+      </Box>
       <Tabs.Content
         value='chats'
         class={css({ overflowY: 'scroll', width: 'full' })}

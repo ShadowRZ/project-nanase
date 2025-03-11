@@ -7,7 +7,6 @@ import {
   TooltipTriggerRenderProps,
 } from '@kobalte/core/tooltip';
 import { Component, ComponentProps } from 'solid-js';
-import { Portal } from 'solid-js/web';
 import UserSwitchDuotone from '~icons/ph/user-switch-duotone';
 import CloseIcon from '~icons/ph/x-bold';
 
@@ -26,16 +25,16 @@ export const ClientSwitchDialog: Component = () => {
             <Dialog.Trigger
               {...props}
               value='switch'
-              colorPalette='orange'
+              colorPalette='red'
               width='8'
               height='8'
               display='flex'
               alignItems='center'
               justifyContent='center'
               rounded='full'
-              _highlighted={{
+              _hover={{
                 bg: 'colorPalette.3',
-                ringWidth: '2',
+                ringWidth: '3',
                 outlineStyle: 'solid',
               }}
               ringColor='colorPalette.ring'
@@ -53,7 +52,7 @@ export const ClientSwitchDialog: Component = () => {
           <Tooltip.Content>Switch Account</Tooltip.Content>
         </Tooltip.Portal>
       </Tooltip.Root>
-      <Portal>
+      <Dialog.Portal>
         <Dialog.Overlay />
         <Dialog.Positioner>
           <Dialog.Content>
@@ -64,7 +63,7 @@ export const ClientSwitchDialog: Component = () => {
               <Dialog.Close
                 as={IconButton}
                 variant='ghost'
-                size='small'
+                size='sm'
                 colorPalette='gray'
               >
                 <CloseIcon />
@@ -72,7 +71,7 @@ export const ClientSwitchDialog: Component = () => {
             </HStack>
           </Dialog.Content>
         </Dialog.Positioner>
-      </Portal>
+      </Dialog.Portal>
     </Dialog.Root>
   );
 };
