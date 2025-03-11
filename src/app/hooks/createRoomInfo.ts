@@ -19,7 +19,7 @@ export const createRoomInfo = (room: Accessor<Room | undefined>) => {
         ?.getLiveTimeline()
         .getState(EventTimeline.FORWARDS)
         ?.getStateEvents(EventType.RoomTopic, '')
-        ?.getContent<MRoomTopicEventContent>().topic
+        ?.getContent<MRoomTopicEventContent>().topic ?? undefined
   );
   const [members, refetchMembers] = createRefetchMemo(
     () => room()?.getMembers.length ?? 0

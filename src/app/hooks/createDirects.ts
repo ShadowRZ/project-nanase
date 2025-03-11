@@ -1,4 +1,9 @@
-import { ClientEvent, MatrixClient, MatrixEvent } from 'matrix-js-sdk';
+import {
+  ClientEvent,
+  EventType,
+  MatrixClient,
+  MatrixEvent,
+} from 'matrix-js-sdk';
 import { Accessor, batch, createEffect, on, onCleanup } from 'solid-js';
 import { createSetStore } from './createSetStore';
 
@@ -23,7 +28,7 @@ export const createDirects = (mx: Accessor<MatrixClient>) => {
 
   createEffect(
     on(mx, ($mx) => {
-      const event = $mx.getAccountData('m.direct');
+      const event = $mx.getAccountData(EventType.Direct);
       if (event === undefined) clear();
       else onAccountData(event);
     })
