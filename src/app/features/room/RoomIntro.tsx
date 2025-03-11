@@ -1,10 +1,8 @@
-import { MenuSelectionDetails } from '@ark-ui/solid';
-import { IconButton, Menu, Text } from '@hanekokoro-ui/solid';
+import { IconButton, DropdownMenu, Text } from '@hanekokoro-ui/solid';
 import { css } from '@hanekokoro-ui/styled-system/css';
 import { Flex, styled } from '@hanekokoro-ui/styled-system/jsx';
 import { flex } from '@hanekokoro-ui/styled-system/patterns';
 import { Show, type Component } from 'solid-js';
-import { Portal } from 'solid-js/web';
 import ArrowLeft from '~icons/ph/arrow-left';
 import DoorOpenDuotone from '~icons/ph/door-open-duotone';
 import DotsThreeVerticalBold from '~icons/ph/dots-three-vertical-bold';
@@ -28,23 +26,6 @@ type RoomIntroProps = {
 };
 
 export const RoomIntro: Component<RoomIntroProps> = (props) => {
-  const onSelect = (select: MenuSelectionDetails) => {
-    switch (select.value) {
-      case 'members': {
-        props.onMembers?.();
-        break;
-      }
-      case 'settings': {
-        props.onSettings?.();
-        break;
-      }
-      case 'leave': {
-        props.onLeaveRoom?.();
-        break;
-      }
-    }
-  };
-
   return (
     <Flex
       direction='row'
@@ -108,30 +89,31 @@ export const RoomIntro: Component<RoomIntroProps> = (props) => {
           </Text>
         </Show>
       </styled.span>
-      <Menu.Root onSelect={onSelect}>
-        <Menu.Trigger.AsChild>
-          {(props) => (
-            <IconButton variant='ghost' colorPalette='neutral' {...props()}>
-              <DotsThreeVerticalBold />
-            </IconButton>
-          )}
-        </Menu.Trigger.AsChild>
-        <Portal>
-          <Menu.Positioner>
-            <Menu.Content>
-              <Menu.Item value='members'>
-                <UsersThreeDuotone /> Members
-              </Menu.Item>
-              <Menu.Item value='settings'>
-                <GearDuotone /> Settings
-              </Menu.Item>
-              <Menu.Item value='leave' colorPalette='red'>
-                <DoorOpenDuotone /> Leave Room
-              </Menu.Item>
-            </Menu.Content>
-          </Menu.Positioner>
-        </Portal>
-      </Menu.Root>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger
+          as={IconButton}
+          variant='ghost'
+          colorPalette='neutral'
+        >
+          <DotsThreeVerticalBold />
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Portal>
+          <DropdownMenu.Content>
+            <DropdownMenu.Item onSelect={() => props.onMembers?.()}>
+              <UsersThreeDuotone /> Members
+            </DropdownMenu.Item>
+            <DropdownMenu.Item onSelect={() => props.onSettings?.()}>
+              <GearDuotone /> Settings
+            </DropdownMenu.Item>
+            <DropdownMenu.Item
+              onSelect={() => props.onLeaveRoom?.()}
+              colorPalette='red'
+            >
+              <DoorOpenDuotone /> Leave Room
+            </DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu.Portal>
+      </DropdownMenu.Root>
     </Flex>
   );
 };

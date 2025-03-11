@@ -20,7 +20,7 @@ export const State: ParentComponent<StateProps> = (props) => {
       overflow='hidden'
       alignItems='center'
     >
-      <MxcAvatar size='small' src={props.avatar} flexShrink='0' />
+      <MxcAvatar size='sm' src={props.avatar} flexShrink='0' />
       <styled.p fontStyle='italic' flex='1' opacity='0.5'>
         <styled.span fontWeight='bold'>
           {props.name ?? props.userId}

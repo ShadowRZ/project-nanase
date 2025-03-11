@@ -15,7 +15,7 @@
   "license": "AGPL-3.0-only",
   "devDependencies": {
     "@eslint/js": "^9.22.0",
-    "@hanekokoro-ui/panda-preset": "^0.1.1",
+    "@hanekokoro-ui/panda-preset": "0.2.0-alpha.0",
     "@iconify-json/ph": "^1.2.2",
     "@iconify-json/simple-icons": "^1.2.28",
     "@iconify-json/svg-spinners": "^1.2.2",
@@ -48,9 +48,8 @@
     "workbox-window": "^7.3.0"
   },
   "dependencies": {
-    "@ark-ui/solid": "^4.10.1",
     "@fontsource-variable/inter": "^5.1.1",
-    "@hanekokoro-ui/solid": "^0.1.1",
+    "@hanekokoro-ui/solid": "0.2.0-alpha.0",
     "@kobalte/core": "^0.13.8",
     "@modular-forms/solid": "^0.25.0",
     "@slate-solid/core": "^1.0.13",

@@ -4,7 +4,7 @@ import {
   valiForm,
   type SubmitHandler,
 } from '@modular-forms/solid';
-import { Button, Card, Field as UIField } from '@hanekokoro-ui/solid';
+import { Button, Card, Input, Text } from '@hanekokoro-ui/solid';
 import { flex } from '@hanekokoro-ui/styled-system/patterns';
 import { useNavigate } from '@solidjs/router';
 import to from 'await-to-js';
@@ -16,6 +16,7 @@ import { matchMXID, MXIDRegex } from '../../../../lib/utils/user-id';
 import { getLoginPath } from '../../../utils/paths';
 import { getServerMeta } from '../getServerMeta';
 import LoginHeader from './LoginHeader';
+import { Flex, styled } from '@hanekokoro-ui/styled-system/jsx';
 
 const LoginSchema = v.object({
   user_id: v.pipe(
@@ -53,15 +54,21 @@ const Login: Component = () => {
         <Card.Body>
           <Field name='user_id'>
             {(field, props) => (
-              <UIField.Root invalid={!!field.error}>
-                <UIField.Label>Matrix ID</UIField.Label>
-                <UIField.Input
+              <Flex direction='column' gap='2'>
+                <styled.label for={field.name} fontWeight='bold'>
+                  Matrix ID
+                </styled.label>
+                <Input
                   value={field.value}
                   placeholder='@example:example.com'
                   {...props}
                 />
-                <UIField.ErrorText>{field.error}</UIField.ErrorText>
-              </UIField.Root>
+                <Show when={!!field.error}>
+                  <Text fontWeight='bold' color='fg.error'>
+                    {field.error}
+                  </Text>
+                </Show>
+              </Flex>
             )}
           </Field>
         </Card.Body>

@@ -1,5 +1,3 @@
-import { Avatar as StyledAvatar } from '@hanekokoro-ui/solid';
-import { type JSX, splitProps } from 'solid-js';
 import UserCircleFill from '~icons/ph/user-circle-fill';
 import {
   MatrixClientProvider,
@@ -7,21 +5,28 @@ import {
 } from '../../hooks/useMatrixClient';
 import { MxcImg } from '../mxc-img/MxcImg';
 
-export interface MxcAvatarProps extends StyledAvatar.RootProps {
-  name?: string;
-  src?: string;
-  icon?: JSX.Element;
-}
+import { Avatar as StyledAvatar } from '@hanekokoro-ui/solid/avatar';
+import type { ElementType } from '@hanekokoro-ui/styled-system/types';
+import { PolymorphicCallbackProps } from '@kobalte/core';
+import type { ImageImgOptions, ImageImgRenderProps } from '@kobalte/core/image';
+import { ComponentProps, type JSX, splitProps } from 'solid-js';
 
-export const MxcAvatar = (props: MxcAvatarProps) => {
+export type MxcAvatarProps<T extends ElementType = 'span'> =
+  StyledAvatar.RootProps<T> & {
+    name?: string;
+    src?: string;
+    icon?: JSX.Element;
+  };
+
+export const MxcAvatar = <T extends ElementType = 'span'>(
+  props: MxcAvatarProps<T>
+) => {
   const [localProps, rootProps] = splitProps(props, ['name', 'src', 'icon']);
-
   const mx = useMatrixClient();
-  const src = () => localProps.src;
-
+  const src = () => localProps.src as string | undefined;
   return (
     <MatrixClientProvider value={mx}>
-      <StyledAvatar.Root flexShrink='0' {...rootProps}>
+      <StyledAvatar.Root {...(rootProps as StyledAvatar.RootProps<T>)}>
         <StyledAvatar.Fallback>
           {getInitials(localProps.name) || localProps.icon || (
             <UserCircleFill />
@@ -29,7 +34,13 @@ export const MxcAvatar = (props: MxcAvatarProps) => {
         </StyledAvatar.Fallback>
         <StyledAvatar.Image
           alt={localProps.name}
-          asChild={(props) => <MxcImg {...props()} src={src()} />}
+          as={(
+            props: PolymorphicCallbackProps<
+              ComponentProps<typeof MxcImg>,
+              ImageImgOptions,
+              ImageImgRenderProps
+            >
+          ) => <MxcImg {...props} src={src()} />}
         />
       </StyledAvatar.Root>
     </MatrixClientProvider>

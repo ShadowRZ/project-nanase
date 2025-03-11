@@ -1,7 +1,6 @@
-import { Menu } from '@hanekokoro-ui/solid';
+import { ContextMenu } from '@hanekokoro-ui/solid';
 import { EventTimelineSet, MatrixEvent, Room } from 'matrix-js-sdk';
 import { Component, For } from 'solid-js';
-import { Portal } from 'solid-js/web';
 import ArrowBendUpLeftDuotone from '~icons/ph/arrow-bend-up-left-duotone';
 import CodeDuotone from '~icons/ph/code-duotone';
 import { Flex, styled } from '@hanekokoro-ui/styled-system/jsx';
@@ -14,46 +13,35 @@ const TimelineItem: Component<{
   timelineSet: EventTimelineSet;
 }> = (rootProps) => {
   return (
-    <Menu.Root>
-      <Menu.Context>
-        {(context) => (
-          <Menu.ContextTrigger.AsChild>
-            {(props) => (
-              <styled.div
-                {...props()}
-                style={{
-                  'user-select': context().open ? 'none' : undefined,
-                  '-webkit-user-select': context().open ? 'none' : undefined,
-                  '-webkit-touch-callout': context().open ? 'none' : undefined,
-                }}
-                data-state={context().open ? 'open' : 'closed'}
-                bg={{ _open: 'bg.subtle' }}
-                px='2'
-                py='1'
-              >
-                <EventComponent
-                  event={rootProps.event}
-                  roomId={rootProps.roomId}
-                  timelineSet={rootProps.timelineSet}
-                />
-              </styled.div>
-            )}
-          </Menu.ContextTrigger.AsChild>
-        )}
-      </Menu.Context>
-      <Portal>
-        <Menu.Positioner>
-          <Menu.Content w='48'>
-            <Menu.Item value='reply'>
-              <ArrowBendUpLeftDuotone /> Reply
-            </Menu.Item>
-            <Menu.Item value='source'>
-              <CodeDuotone /> Source Code
-            </Menu.Item>
-          </Menu.Content>
-        </Menu.Positioner>
-      </Portal>
-    </Menu.Root>
+    <ContextMenu.Root>
+      <ContextMenu.Trigger
+        as={styled.div}
+        bg={{ _open: 'bg.subtle' }}
+        px='2'
+        py='1'
+        _expanded={{
+          userSelect: 'none',
+          WebkitUserSelect: 'none',
+          WebkitTouchCallout: 'none',
+        }}
+      >
+        <EventComponent
+          event={rootProps.event}
+          roomId={rootProps.roomId}
+          timelineSet={rootProps.timelineSet}
+        />
+      </ContextMenu.Trigger>
+      <ContextMenu.Portal>
+        <ContextMenu.Content w='48'>
+          <ContextMenu.Item>
+            <ArrowBendUpLeftDuotone /> Reply
+          </ContextMenu.Item>
+          <ContextMenu.Item>
+            <CodeDuotone /> Source Code
+          </ContextMenu.Item>
+        </ContextMenu.Content>
+      </ContextMenu.Portal>
+    </ContextMenu.Root>
   );
 };
 

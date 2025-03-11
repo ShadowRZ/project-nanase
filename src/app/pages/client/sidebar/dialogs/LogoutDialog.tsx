@@ -1,79 +1,86 @@
-import { Button, Dialog, Menu, Tooltip } from '@hanekokoro-ui/solid';
+import { AlertDialog, Button, Tooltip } from '@hanekokoro-ui/solid';
 import { Flex } from '@hanekokoro-ui/styled-system/jsx';
 import { square } from '@hanekokoro-ui/styled-system/patterns';
-import { Component, createUniqueId } from 'solid-js';
+import { PolymorphicCallbackProps } from '@kobalte/core';
+import {
+  TooltipTriggerOptions,
+  TooltipTriggerRenderProps,
+} from '@kobalte/core/tooltip';
+import { Component, ComponentProps } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import PowerDuotone from '~icons/ph/power-duotone';
 
 export const LogoutDialog: Component = () => {
-  const trigger = createUniqueId();
-
   return (
-    <Dialog.Root ids={{ trigger }}>
-      <Tooltip.Root ids={{ trigger }} positioning={{ placement: 'top' }}>
-        <Dialog.Trigger.AsChild>
-          {(props) => (
-            <Tooltip.Trigger.AsChild {...props()}>
-              {(props) => (
-                <Menu.Item
-                  {...props()}
-                  value='logout'
-                  colorPalette='red'
-                  width='8'
-                  height='8'
-                  display='flex'
-                  alignItems='center'
-                  justifyContent='center'
-                  rounded='full'
-                  _highlighted={{
-                    bg: 'colorPalette.3',
-                    ringWidth: '2',
-                    outlineStyle: 'solid',
-                  }}
-                  ringColor='colorPalette.ring'
-                >
-                  <PowerDuotone
-                    class={square({
-                      size: '6',
-                      color: 'colorPalette.text',
-                    })}
-                  />
-                </Menu.Item>
-              )}
-            </Tooltip.Trigger.AsChild>
+    <AlertDialog.Root>
+      <Tooltip.Root placement='top'>
+        <Tooltip.Trigger
+          as={(
+            props: PolymorphicCallbackProps<
+              ComponentProps<typeof AlertDialog.Trigger>,
+              TooltipTriggerOptions,
+              TooltipTriggerRenderProps
+            >
+          ) => (
+            <AlertDialog.Trigger
+              {...props}
+              value='switch'
+              colorPalette='orange'
+              width='8'
+              height='8'
+              display='flex'
+              alignItems='center'
+              justifyContent='center'
+              rounded='full'
+              _highlighted={{
+                bg: 'colorPalette.3',
+                ringWidth: '2',
+                outlineStyle: 'solid',
+              }}
+              ringColor='colorPalette.ring'
+            />
           )}
-        </Dialog.Trigger.AsChild>
-        <Tooltip.Positioner>
+        >
+          <PowerDuotone
+            class={square({
+              size: '6',
+              color: 'colorPalette.text',
+            })}
+          />
+        </Tooltip.Trigger>
+        <Tooltip.Portal>
           <Tooltip.Content>Logout</Tooltip.Content>
-        </Tooltip.Positioner>
+        </Tooltip.Portal>
       </Tooltip.Root>
       <Portal>
-        <Dialog.Backdrop />
-        <Dialog.Positioner>
-          <Dialog.Content>
-            <Dialog.Title>Logout</Dialog.Title>
+        <AlertDialog.Overlay />
+        <AlertDialog.Positioner>
+          <AlertDialog.Content>
+            <AlertDialog.Title>Logout</AlertDialog.Title>
             <Flex direction='column' mt='2' gap='2'>
               Proceed to logout?
               <Flex justify='end' gap='2'>
-                <Dialog.CloseTrigger.AsChild onClick={() => {}}>
-                  {(props) => (
-                    <Button {...props()} variant='ghost' colorPalette='gray'>
-                      Cancel
-                    </Button>
-                  )}
-                </Dialog.CloseTrigger.AsChild>
-                <Dialog.CloseTrigger.AsChild onClick={() => {}}>
-                  {(props) => (
-                    <Button {...props()} variant='solid' colorPalette='red'>
-                      Logout
-                    </Button>
-                  )}
-                </Dialog.CloseTrigger.AsChild>
+                <AlertDialog.Cancel
+                  as={Button}
+                  variant='ghost'
+                  colorPalette='gray'
+                  onClick={() => {}}
+                >
+                  Cancel
+                </AlertDialog.Cancel>
+                <AlertDialog.Action
+                  as={Button}
+                  variant='solid'
+                  colorPalette='red'
+                  onClick={() => {}}
+                >
+                  Logout
+                </AlertDialog.Action>
               </Flex>
             </Flex>
-          </Dialog.Content>
-        </Dialog.Positioner>
+          </AlertDialog.Content>
+        </AlertDialog.Positioner>
       </Portal>
-    </Dialog.Root>
+    </AlertDialog.Root>
   );
 };

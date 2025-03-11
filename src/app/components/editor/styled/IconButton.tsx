@@ -1,4 +1,3 @@
-import { ark } from '@ark-ui/solid';
 import type { ComponentProps } from 'solid-js';
 import { styled } from '@hanekokoro-ui/styled-system/jsx';
 import {
@@ -6,7 +5,7 @@ import {
   button,
 } from '@hanekokoro-ui/styled-system/recipes';
 export type IconButtonProps = ComponentProps<typeof IconButton>;
-export const IconButton = styled(ark.button, button, {
+export const IconButton = styled('button', button, {
   defaultProps: {
     px: '0',
     py: '0',

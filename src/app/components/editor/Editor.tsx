@@ -36,20 +36,20 @@ export const Editor: Component = () => {
           border='1px solid token(colors.border.default)'
         >
           <HStack gap='1'>
-            <IconButton size='small' variant='ghost' colorPalette='neutral'>
+            <IconButton size='sm' variant='ghost' colorPalette='neutral'>
               <PaperclipDuotone />
             </IconButton>
             <StyledEditable placeholder='Write something...' />
-            <IconButton size='small' variant='ghost' colorPalette='neutral'>
+            <IconButton size='sm' variant='ghost' colorPalette='neutral'>
               <TextAaDuotone />
             </IconButton>
-            <IconButton size='small' variant='ghost' colorPalette='neutral'>
+            <IconButton size='sm' variant='ghost' colorPalette='neutral'>
               <SmileyDuotone />
             </IconButton>
-            <IconButton size='small' variant='ghost' colorPalette='neutral'>
+            <IconButton size='sm' variant='ghost' colorPalette='neutral'>
               <StickerDuotone />
             </IconButton>
-            <IconButton size='small' variant='ghost' colorPalette='accent'>
+            <IconButton size='sm' variant='ghost' colorPalette='accent'>
               <PaperPlaneTiltDuotone />
             </IconButton>
           </HStack>

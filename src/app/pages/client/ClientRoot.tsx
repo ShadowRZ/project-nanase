@@ -111,7 +111,7 @@ const ClientRoot: ParentComponent = (props) => {
       </Show>
       <Dialog.Root open={errored()}>
         <Portal>
-          <Dialog.Backdrop />
+          <Dialog.Overlay />
           <Dialog.Positioner>
             <Dialog.Content>
               <Dialog.Title>Unable to connect</Dialog.Title>
@@ -123,13 +123,14 @@ const ClientRoot: ParentComponent = (props) => {
                   <Text>{`Failed to load: ${(start.error as Error).message}`}</Text>
                 </Show>
                 <Flex justify='end'>
-                  <Dialog.CloseTrigger.AsChild onClick={handleRetry}>
-                    {(props) => (
-                      <Button {...props()} variant='soft' colorPalette='accent'>
-                        Retry
-                      </Button>
-                    )}
-                  </Dialog.CloseTrigger.AsChild>
+                  <Dialog.Close
+                    as={Button}
+                    variant='soft'
+                    colorPalette='accent'
+                    onClick={handleRetry}
+                  >
+                    Retry
+                  </Dialog.Close>
                 </Flex>
               </Flex>
             </Dialog.Content>

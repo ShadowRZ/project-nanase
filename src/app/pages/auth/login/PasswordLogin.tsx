@@ -4,7 +4,7 @@ import {
   required,
   type SubmitHandler,
 } from '@modular-forms/solid';
-import { Button, Card, Field as UIField } from '@hanekokoro-ui/solid';
+import { Button, Card, Input, Text } from '@hanekokoro-ui/solid';
 import { Flex, styled } from '@hanekokoro-ui/styled-system/jsx';
 import { flex } from '@hanekokoro-ui/styled-system/patterns';
 import { useSearchParams } from '@solidjs/router';
@@ -73,17 +73,23 @@ const PasswordLogin: Component = () => {
                 validate={[required('Please enter your username.')]}
               >
                 {(field, props) => (
-                  <UIField.Root invalid={!!field.error}>
-                    <UIField.Label>Username</UIField.Label>
-                    <UIField.Input
+                  <Flex direction='column' gap='2'>
+                    <styled.label for={field.name} fontWeight='bold'>
+                      Username
+                    </styled.label>
+                    <Input
                       value={searchParams.username ?? field.value}
                       autocomplete='username'
                       required
                       disabled={searchParams.username !== undefined}
                       {...props}
                     />
-                    <UIField.ErrorText>{field.error}</UIField.ErrorText>
-                  </UIField.Root>
+                    <Show when={!!field.error}>
+                      <Text fontWeight='bold' color='fg.error'>
+                        {field.error}
+                      </Text>
+                    </Show>
+                  </Flex>
                 )}
               </Field>
               <Field
@@ -91,17 +97,23 @@ const PasswordLogin: Component = () => {
                 validate={[required('Please enter your password.')]}
               >
                 {(field, props) => (
-                  <UIField.Root invalid={!!field.error}>
-                    <UIField.Label>Password</UIField.Label>
-                    <UIField.Input
+                  <Flex direction='column' gap='2'>
+                    <styled.label for={field.name} fontWeight='bold'>
+                      Password
+                    </styled.label>
+                    <Input
                       value={field.value}
                       type='password'
                       autocomplete='current-password'
                       required
                       {...props}
                     />
-                    <UIField.ErrorText>{field.error}</UIField.ErrorText>
-                  </UIField.Root>
+                    <Show when={!!field.error}>
+                      <Text fontWeight='bold' color='fg.error'>
+                        {field.error}
+                      </Text>
+                    </Show>
+                  </Flex>
                 )}
               </Field>
               <Flex w='full' justifyContent='center'>

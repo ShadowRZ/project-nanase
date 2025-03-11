@@ -1,4 +1,4 @@
-import { Typography } from '@hanekokoro-ui/solid';
+import { Prose } from '@hanekokoro-ui/solid';
 import { Show, type ParentComponent } from 'solid-js';
 import Checks from '~icons/ph/checks';
 import PencilSimpleLine from '~icons/ph/pencil-simple-line';
@@ -45,7 +45,7 @@ const Root = styled('div', {
 export const TextContent: ParentComponent<TextContentProps> = (props) => {
   return (
     <Root primary={props.primary} status={props.status}>
-      <Typography minW='0'>{props.children}</Typography>
+      <Prose minW='0'>{props.children}</Prose>
       <styled.div
         textStyle='xs'
         ml='2'
