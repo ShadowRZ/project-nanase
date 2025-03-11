@@ -1,14 +1,22 @@
-import { createAsync } from '@solidjs/router';
-import { MatrixClient } from 'matrix-js-sdk';
-import { Component, onCleanup, splitProps, type JSX } from 'solid-js';
 import { css } from '@hanekokoro-ui/styled-system/css';
 import { splitCssProps } from '@hanekokoro-ui/styled-system/jsx';
 import { Assign, HTMLStyledProps } from '@hanekokoro-ui/styled-system/types';
+import { createAsync } from '@solidjs/router';
+import { MatrixClient } from 'matrix-js-sdk';
+import {
+  Component,
+  onCleanup,
+  splitProps,
+  ValidComponent,
+  type JSX,
+} from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { useSpecVersions } from '../../hooks/useSpecVersions';
 import { suggestsAuthMedia } from '../../utils/media';
 
 type MxcImgProps = {
+  as?: ValidComponent;
   src?: string;
   width?: JSX.IntrinsicElements['img']['width'];
   height?: JSX.IntrinsicElements['img']['width'];
@@ -25,6 +33,7 @@ export const MxcImg: Component<Assign<HTMLStyledProps<'img'>, MxcImgProps>> = (
   const [selfProps, sizeProps, restProps] = splitProps(
     props,
     [
+      'as',
       'src',
       'client',
       'resizeMethod',
@@ -86,5 +95,13 @@ export const MxcImg: Component<Assign<HTMLStyledProps<'img'>, MxcImgProps>> = (
     // TODO: Schedule release
   });
 
-  return <img {...rootProps} {...sizeProps} src={imgSrc()} class={className} />;
+  return (
+    <Dynamic
+      {...rootProps}
+      {...sizeProps}
+      src={imgSrc()}
+      class={className}
+      component={selfProps.as ?? 'img'}
+    />
+  );
 };

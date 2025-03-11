@@ -7,9 +7,7 @@ import { MxcImg } from '../mxc-img/MxcImg';
 
 import { Avatar as StyledAvatar } from '@hanekokoro-ui/solid/avatar';
 import type { ElementType } from '@hanekokoro-ui/styled-system/types';
-import { PolymorphicCallbackProps } from '@kobalte/core';
-import type { ImageImgOptions, ImageImgRenderProps } from '@kobalte/core/image';
-import { ComponentProps, type JSX, splitProps } from 'solid-js';
+import { type JSX, splitProps } from 'solid-js';
 
 export type MxcAvatarProps<T extends ElementType = 'span'> =
   StyledAvatar.RootProps<T> & {
@@ -32,16 +30,7 @@ export const MxcAvatar = <T extends ElementType = 'span'>(
             <UserCircleFill />
           )}
         </StyledAvatar.Fallback>
-        <StyledAvatar.Image
-          alt={localProps.name}
-          as={(
-            props: PolymorphicCallbackProps<
-              ComponentProps<typeof MxcImg>,
-              ImageImgOptions,
-              ImageImgRenderProps
-            >
-          ) => <MxcImg {...props} src={src()} />}
-        />
+        <MxcImg as={StyledAvatar.Image} src={src()} alt={localProps.name} />
       </StyledAvatar.Root>
     </MatrixClientProvider>
   );
