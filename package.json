@@ -70,7 +70,7 @@
     "linkify-element": "^4.2.0",
     "linkifyjs": "^4.2.0",
     "matrix-encrypt-attachment": "^1.0.3",
-    "matrix-js-sdk": "^36.2.0",
+    "matrix-js-sdk": "^37.1.0",
     "prismjs": "^1.30.0",
     "slate": "^0.112.0",
     "slate-dom": "^0.112.2",
