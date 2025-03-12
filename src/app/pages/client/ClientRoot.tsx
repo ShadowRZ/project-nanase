@@ -88,7 +88,7 @@ const ClientRoot: ParentComponent = (props) => {
             </SplashScreen>
           </Match>
           <Match when={!!start.error}>
-            <p>Error</p>
+            <p>Error: {start.error}</p>
           </Match>
           <Match when={start.state === 'ready'}>
             <MatrixClientProvider value={mx as Accessor<MatrixClient>}>

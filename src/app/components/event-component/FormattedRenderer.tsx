@@ -3,6 +3,7 @@ import { Component, Match, Switch } from 'solid-js';
 import { MaybeFormattedMessage } from '../../../types/event-content';
 import { useHTMLParser } from '../../hooks/useHTMLParser';
 import { HTMLContent } from '../html-content/HTMLContent';
+import { sanitizeMatrixHtml } from '../../../lib/utils/sanitize';
 
 const TextRenderer: Component<{ body: string }> = (props) => {
   const body = () => props.body;
@@ -24,7 +25,7 @@ const TextRenderer: Component<{ body: string }> = (props) => {
 const HTMLRenderer: Component<{ body: string }> = (props) => {
   const { parse } = useHTMLParser();
   const body = () => props.body;
-  const node = () => parse(body());
+  const node = () => parse(sanitizeMatrixHtml(body()));
   const renderered = () =>
     linkifyElement(node(), {
       rel: 'noopener',
