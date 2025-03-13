@@ -1,20 +1,24 @@
 import { ContextMenu } from '@hanekokoro-ui/solid';
+import { Flex, styled } from '@hanekokoro-ui/styled-system/jsx';
 import { EventTimelineSet, MatrixEvent, Room } from 'matrix-js-sdk';
 import { Component, For } from 'solid-js';
 import ArrowBendUpLeftDuotone from '~icons/ph/arrow-bend-up-left-duotone';
 import CodeDuotone from '~icons/ph/code-duotone';
-import { Flex, styled } from '@hanekokoro-ui/styled-system/jsx';
 import EventComponent from '../../components/event-component/EventComponent';
 import { createRoomTimeline } from '../../hooks/createRoomTimeline';
+import { useSelected } from '../../hooks/useSelected';
 
 const TimelineItem: Component<{
   roomId: string;
   event: MatrixEvent;
   timelineSet: EventTimelineSet;
 }> = (rootProps) => {
+  const selected = useSelected();
+
   return (
     <ContextMenu.Root>
       <ContextMenu.Trigger
+        disabled={selected()}
         as={styled.div}
         bg={{ _open: 'bg.subtle' }}
         px='2'
