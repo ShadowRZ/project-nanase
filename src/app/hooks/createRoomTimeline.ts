@@ -1,5 +1,5 @@
 import { Room, RoomEvent } from 'matrix-js-sdk';
-import { Accessor, createEffect, createSignal, onCleanup } from 'solid-js';
+import { type Accessor, createEffect, createSignal, onCleanup } from 'solid-js';
 
 export const createRoomTimeline = (room: Accessor<Room>) => {
   const timelineSet = () => room().getUnfilteredTimelineSet();

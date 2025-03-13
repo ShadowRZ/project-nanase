@@ -4,4 +4,4 @@ type ClientDiscovery = {
   };
 };
 
-export default ClientDiscovery;
+export type { ClientDiscovery as default };

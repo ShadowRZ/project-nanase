@@ -1,12 +1,12 @@
 import { Dialog, IconButton, Tooltip } from '@hanekokoro-ui/solid';
 import { HStack } from '@hanekokoro-ui/styled-system/jsx';
 import { square } from '@hanekokoro-ui/styled-system/patterns';
-import { PolymorphicCallbackProps } from '@kobalte/core';
-import {
+import type { PolymorphicCallbackProps } from '@kobalte/core';
+import type {
   TooltipTriggerOptions,
   TooltipTriggerRenderProps,
 } from '@kobalte/core/tooltip';
-import { Component, ComponentProps } from 'solid-js';
+import type { Component, ComponentProps } from 'solid-js';
 import UserSwitchDuotone from '~icons/ph/user-switch-duotone';
 import CloseIcon from '~icons/ph/x-bold';
 

@@ -1,11 +1,11 @@
 import { DropdownMenu, Tooltip } from '@hanekokoro-ui/solid';
 import { Flex } from '@hanekokoro-ui/styled-system/jsx';
-import { PolymorphicCallbackProps } from '@kobalte/core';
-import {
+import type { PolymorphicCallbackProps } from '@kobalte/core';
+import type {
   DropdownMenuTriggerOptions,
   DropdownMenuTriggerRenderProps,
 } from '@kobalte/core/dropdown-menu';
-import { ComponentProps, type Component } from 'solid-js';
+import type { Component, ComponentProps } from 'solid-js';
 import CodeDuotone from '~icons/ph/code-duotone';
 import GearSixDuotone from '~icons/ph/gear-six-duotone';
 import ShieldCheckeredDuotone from '~icons/ph/shield-checkered-duotone';

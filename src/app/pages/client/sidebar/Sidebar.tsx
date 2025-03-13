@@ -2,12 +2,17 @@ import { Tabs, Tooltip } from '@hanekokoro-ui/solid';
 import { css } from '@hanekokoro-ui/styled-system/css';
 import { Box, Flex } from '@hanekokoro-ui/styled-system/jsx';
 import { square } from '@hanekokoro-ui/styled-system/patterns';
-import { PolymorphicCallbackProps } from '@kobalte/core';
-import {
+import type { PolymorphicCallbackProps } from '@kobalte/core';
+import type {
   TooltipTriggerOptions,
   TooltipTriggerRenderProps,
 } from '@kobalte/core/tooltip';
-import { ComponentProps, createSignal, For, type Component } from 'solid-js';
+import {
+  createSignal,
+  For,
+  type Component,
+  type ComponentProps,
+} from 'solid-js';
 import ChatsTeardropDuotone from '~icons/ph/chats-teardrop-duotone';
 import FolderUserDuotone from '~icons/ph/folder-user-duotone';
 import FoldersDuotone from '~icons/ph/folders-duotone';

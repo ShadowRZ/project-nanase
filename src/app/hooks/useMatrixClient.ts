@@ -1,5 +1,5 @@
 import { type MatrixClient } from 'matrix-js-sdk';
-import { Accessor, createContext, useContext } from 'solid-js';
+import { type Accessor, createContext, useContext } from 'solid-js';
 
 const MatrixClientContext = createContext<Accessor<MatrixClient>>();
 

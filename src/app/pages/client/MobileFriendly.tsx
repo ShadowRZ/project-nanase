@@ -1,6 +1,6 @@
 import { createBreakpoints } from '@solid-primitives/media';
 import { useMatch } from '@solidjs/router';
-import { ParentComponent, Show } from 'solid-js';
+import { type ParentComponent, Show } from 'solid-js';
 
 const $breakpoints = {
   sm: '640px',

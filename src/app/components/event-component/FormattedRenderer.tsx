@@ -1,9 +1,9 @@
 import linkifyElement from 'linkify-element';
-import { Component, Match, Switch } from 'solid-js';
-import { MaybeFormattedMessage } from '../../../types/event-content';
+import { type Component, Match, Switch } from 'solid-js';
+import { sanitizeMatrixHtml } from '../../../lib/utils/sanitize';
+import type { MaybeFormattedMessage } from '../../../types/event-content';
 import { useHTMLParser } from '../../hooks/useHTMLParser';
 import { HTMLContent } from '../html-content/HTMLContent';
-import { sanitizeMatrixHtml } from '../../../lib/utils/sanitize';
 
 const TextRenderer: Component<{ body: string }> = (props) => {
   const body = () => props.body;

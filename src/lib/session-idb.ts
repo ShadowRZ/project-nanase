@@ -1,5 +1,5 @@
-import { DBSchema, openDB } from 'idb';
-import { Session } from '../types/client';
+import { type DBSchema, openDB } from 'idb';
+import type { Session } from '../types/client';
 
 export interface ProjectNanaseIDB extends DBSchema {
   'kv-sessions': {

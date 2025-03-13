@@ -1,9 +1,9 @@
-import { Component, createMemo, For, Show, type JSX } from 'solid-js';
-import { Spoiler } from '../spoiler/Spoiler';
+import { createMemo, For, Show, type Component, type JSX } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import HighlightCode from '../highlight/HighlightCode';
 import { MxcImg } from '../mxc-img/MxcImg';
-import { Dynamic } from 'solid-js/web';
+import { Spoiler } from '../spoiler/Spoiler';
 
 type ReplaceComponents = Partial<{
   [K in keyof JSX.IntrinsicElements]: (

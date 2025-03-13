@@ -1,5 +1,5 @@
 import { ClientEvent, MatrixClient, Room, RoomEvent } from 'matrix-js-sdk';
-import { Accessor, createEffect, on, onCleanup } from 'solid-js';
+import { type Accessor, createEffect, on, onCleanup } from 'solid-js';
 import { isJoined } from '../utils/room';
 import { createSetStore } from './createSetStore';
 

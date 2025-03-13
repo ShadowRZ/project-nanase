@@ -1,6 +1,12 @@
 import { ReactiveMap } from '@solid-primitives/map';
 import { MatrixClient, MatrixEvent, User, UserEvent } from 'matrix-js-sdk';
-import { Accessor, batch, createEffect, createMemo, onCleanup } from 'solid-js';
+import {
+  type Accessor,
+  batch,
+  createEffect,
+  createMemo,
+  onCleanup,
+} from 'solid-js';
 
 export type ProfileSignal = {
   name: Accessor<string | undefined>;

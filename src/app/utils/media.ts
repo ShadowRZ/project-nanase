@@ -1,4 +1,4 @@
-import { SpecVersions } from '../cs-api';
+import type { SpecVersions } from '../cs-api';
 
 export function suggestsAuthMedia(versions: SpecVersions) {
   const ver_cond = versions.versions.includes('v1.11');

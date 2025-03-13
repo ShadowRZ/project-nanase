@@ -1,12 +1,12 @@
 import {
-  type MatrixEvent,
-  RelationType,
+  EventTimeline,
   type EventTimelineSet,
   EventType,
-  Room,
-  EventTimeline,
   KnownMembership,
-  Membership,
+  type MatrixEvent,
+  type Membership,
+  RelationType,
+  Room,
 } from 'matrix-js-sdk';
 
 export const isJoined = (room: Room) =>

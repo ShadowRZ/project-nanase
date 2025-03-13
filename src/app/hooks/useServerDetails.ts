@@ -1,5 +1,5 @@
+import type { Capabilities } from 'matrix-js-sdk';
 import { createContext, useContext } from 'solid-js';
-import { Capabilities } from 'matrix-js-sdk';
 
 export interface MediaConfig {
   [key: string]: unknown;

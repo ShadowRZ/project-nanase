@@ -2,18 +2,18 @@ import { Button, Dialog, Text } from '@hanekokoro-ui/solid';
 import { Flex, HStack } from '@hanekokoro-ui/styled-system/jsx';
 import {
   HttpApiEvent,
-  HttpApiEventHandlerMap,
+  type HttpApiEventHandlerMap,
   MatrixClient,
 } from 'matrix-js-sdk';
 import {
-  Accessor,
+  type Accessor,
   createEffect,
   createResource,
   Match,
   onCleanup,
+  type ParentComponent,
   Show,
   Switch,
-  type ParentComponent,
 } from 'solid-js';
 import LoadingIndicator from '~icons/svg-spinners/90-ring-with-bg';
 import { SplashScreen } from '../../components/splash-screen/Splashscreen';

@@ -1,11 +1,11 @@
-import { Component } from 'solid-js';
-import { useRoom } from '../../hooks/useRoom';
 import { Flex } from '@hanekokoro-ui/styled-system/jsx';
-import { RoomIntro } from './RoomIntro';
-import { createRoomInfo } from '../../hooks/createRoomInfo';
 import { useNavigate } from '@solidjs/router';
-import { RoomTimeline } from './RoomTimeline';
+import type { Component } from 'solid-js';
 import { Editor } from '../../components/editor/Editor';
+import { createRoomInfo } from '../../hooks/createRoomInfo';
+import { useRoom } from '../../hooks/useRoom';
+import { RoomIntro } from './RoomIntro';
+import { RoomTimeline } from './RoomTimeline';
 
 export const Room: Component = () => {
   const room = useRoom();

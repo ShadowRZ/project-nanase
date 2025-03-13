@@ -1,10 +1,10 @@
 import { Button, Text } from '@hanekokoro-ui/solid';
 import { Flex, styled } from '@hanekokoro-ui/styled-system/jsx';
 import { useNavigate, useParams } from '@solidjs/router';
-import { Component, Show } from 'solid-js';
-import { trimReplyFallback } from '../../../../../lib/utils/matrix';
+import { type Component, Show } from 'solid-js';
 import HashStraightBold from '~icons/ph/hash-straight-bold';
 import UserCircleFill from '~icons/ph/user-circle-fill';
+import { trimReplyFallback } from '../../../../../lib/utils/matrix';
 import { MxcAvatar } from '../../../../components/mxc-avatar/MxcAvatar';
 import NotificationCount from '../../../../components/notification-count/NotificationCount';
 import { Time } from '../../../../components/time/Time';

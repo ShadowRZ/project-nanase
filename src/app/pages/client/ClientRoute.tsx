@@ -1,4 +1,4 @@
-import { ParentComponent } from 'solid-js';
+import type { ParentComponent } from 'solid-js';
 import ClientLayout from './ClientLayout';
 import ClientRoot from './ClientRoot';
 import { MobileFriendlyPage, MobileFriendlySidebar } from './MobileFriendly';

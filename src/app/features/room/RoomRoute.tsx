@@ -1,5 +1,5 @@
 import { useParams } from '@solidjs/router';
-import { Component, Show } from 'solid-js';
+import { type Component, Show } from 'solid-js';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
 import { RoomProvider } from '../../hooks/useRoom';
 import { Room } from './Room';

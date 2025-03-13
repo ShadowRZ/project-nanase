@@ -1,14 +1,14 @@
 import { createDeepSignal } from '@solid-primitives/resource';
-import { Capabilities } from 'matrix-js-sdk';
+import type { Capabilities } from 'matrix-js-sdk';
 import {
-  type JSX,
   type FlowComponent,
-  createResource,
+  type JSX,
   createMemo,
+  createResource,
   untrack,
 } from 'solid-js';
 import { useMatrixClient } from '../../hooks/useMatrixClient';
-import { MediaConfig } from '../../hooks/useServerDetails';
+import type { MediaConfig } from '../../hooks/useServerDetails';
 
 export const WithServerDetails: FlowComponent<
   object,

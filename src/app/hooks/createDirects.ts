@@ -4,7 +4,7 @@ import {
   MatrixClient,
   MatrixEvent,
 } from 'matrix-js-sdk';
-import { Accessor, batch, createEffect, on, onCleanup } from 'solid-js';
+import { type Accessor, batch, createEffect, on, onCleanup } from 'solid-js';
 import { createSetStore } from './createSetStore';
 
 export const createDirects = (mx: Accessor<MatrixClient>) => {

@@ -1,6 +1,6 @@
 import { createAsync } from '@solidjs/router';
 import { MatrixClient } from 'matrix-js-sdk';
-import { Accessor, onCleanup } from 'solid-js';
+import { type Accessor, onCleanup } from 'solid-js';
 
 export const createMxcUrl = (
   mx: Accessor<MatrixClient>,

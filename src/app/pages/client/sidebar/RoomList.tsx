@@ -1,10 +1,10 @@
-import { Component, For } from 'solid-js';
+import { Flex } from '@hanekokoro-ui/styled-system/jsx';
+import { type Component, For } from 'solid-js';
 import {
   useDirects,
   useJoinedRooms,
   useRoomHierarchy,
 } from '../../../hooks/useClientState';
-import { Flex } from '@hanekokoro-ui/styled-system/jsx';
 import { RoomItem } from './room-item/RoomItem';
 
 export const JoinedRooms: Component = () => {

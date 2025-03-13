@@ -1,5 +1,5 @@
-import { ParentComponent } from 'solid-js';
 import { Flex, styled } from '@hanekokoro-ui/styled-system/jsx';
+import type { ParentComponent } from 'solid-js';
 
 export const SplashScreen: ParentComponent = (props) => (
   <Flex direction='column' minH='full'>

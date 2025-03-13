@@ -1,7 +1,7 @@
 import { ContextMenu } from '@hanekokoro-ui/solid';
 import { Flex, styled } from '@hanekokoro-ui/styled-system/jsx';
 import { EventTimelineSet, MatrixEvent, Room } from 'matrix-js-sdk';
-import { Component, For } from 'solid-js';
+import { type Component, For } from 'solid-js';
 import ArrowBendUpLeftDuotone from '~icons/ph/arrow-bend-up-left-duotone';
 import CodeDuotone from '~icons/ph/code-duotone';
 import EventComponent from '../../components/event-component/EventComponent';

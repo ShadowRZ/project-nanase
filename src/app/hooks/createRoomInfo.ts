@@ -2,13 +2,13 @@ import {
   EventTimeline,
   EventType,
   MatrixEvent,
-  MRoomTopicEventContent,
+  type MRoomTopicEventContent,
   NotificationCountType,
   Room,
   RoomEvent,
   RoomStateEvent,
 } from 'matrix-js-sdk';
-import { Accessor, createEffect, onCleanup } from 'solid-js';
+import { type Accessor, createEffect, onCleanup } from 'solid-js';
 import { createRefetchMemo } from './createRefetchMemo';
 
 export const createRoomInfo = (room: Accessor<Room | undefined>) => {

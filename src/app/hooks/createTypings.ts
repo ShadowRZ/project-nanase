@@ -6,7 +6,7 @@ import {
   type RoomMember,
   RoomMemberEvent,
 } from 'matrix-js-sdk';
-import { Accessor, createEffect, on, onCleanup } from 'solid-js';
+import { type Accessor, createEffect, on, onCleanup } from 'solid-js';
 
 export const createTypings = (mx: Accessor<MatrixClient>) => {
   const typings = new ReactiveMap<string, ReactiveSet<string>>();

@@ -1,5 +1,5 @@
 import { MatrixClient, Room } from 'matrix-js-sdk';
-import { Accessor } from 'solid-js';
+import type { Accessor } from 'solid-js';
 import { createDirects } from './createDirects';
 import { createJoinedRooms } from './createJoinedRooms';
 

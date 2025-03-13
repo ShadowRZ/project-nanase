@@ -1,14 +1,17 @@
 import { css } from '@hanekokoro-ui/styled-system/css';
 import { splitCssProps } from '@hanekokoro-ui/styled-system/jsx';
-import { Assign, HTMLStyledProps } from '@hanekokoro-ui/styled-system/types';
+import type {
+  Assign,
+  HTMLStyledProps,
+} from '@hanekokoro-ui/styled-system/types';
 import { createAsync } from '@solidjs/router';
 import { MatrixClient } from 'matrix-js-sdk';
 import {
-  Component,
+  type Component,
+  type JSX,
   onCleanup,
   splitProps,
-  ValidComponent,
-  type JSX,
+  type ValidComponent,
 } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
 import { useMatrixClient } from '../../hooks/useMatrixClient';

@@ -1,11 +1,16 @@
 import { ReactiveMap } from '@solid-primitives/map';
 import { ReactiveSet } from '@solid-primitives/set';
-import { Accessor, createContext, ParentComponent, useContext } from 'solid-js';
+import {
+  type Accessor,
+  createContext,
+  type ParentComponent,
+  useContext,
+} from 'solid-js';
 import { createRoomHierarchy } from './createRoomHierarchy';
 import { createRooms } from './createRooms';
-import { createSelfProfile, ProfileSignal } from './createSelfProfile';
-import { useMatrixClient } from './useMatrixClient';
+import { createSelfProfile, type ProfileSignal } from './createSelfProfile';
 import { createTypings } from './createTypings';
+import { useMatrixClient } from './useMatrixClient';
 
 type ClientState = {
   rooms: Accessor<string[]>;

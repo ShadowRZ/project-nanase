@@ -1,4 +1,4 @@
-import { createContext, ParentComponent, useContext } from 'solid-js';
+import { createContext, type ParentComponent, useContext } from 'solid-js';
 
 const HTMLParserContext = createContext<{
   parse: (body: string) => HTMLElement;

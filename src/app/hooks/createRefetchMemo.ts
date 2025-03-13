@@ -1,4 +1,9 @@
-import { Accessor, createMemo, createSignal, EffectFunction } from 'solid-js';
+import {
+  type Accessor,
+  createMemo,
+  createSignal,
+  type EffectFunction,
+} from 'solid-js';
 
 export const createRefetchMemo = <Next extends Prev, Prev = Next>(
   fn: EffectFunction<undefined | NoInfer<Prev>, Next>
