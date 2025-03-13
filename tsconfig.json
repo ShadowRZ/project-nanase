@@ -1,26 +1,33 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "ES2022",
+    "allowJs": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+
+    "strict": true,
+    "noUncheckedSideEffectImports": true,
+    "noUncheckedIndexedAccess": false, // TODO: Use better methods
+    "noImplicitOverride": true,
+
+    "module": "Preserve",
+    "noEmit": true,
+
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "forceConsistentCasingInFileNames": true,
     "paths": {
       "@hanekokoro-ui/styled-system/*": ["./styled-system/*"],
       // Slate Solid had incompatable types with moduleResolution: Bundler
       // See https://arethetypeswrong.github.io/?p=%40slate-solid%2Fcore
       "@slate-solid/core": ["./node_modules/@slate-solid/core/dist/index.d.ts"]
-    },
-    "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "jsx": "preserve",
-    "jsxImportSource": "solid-js",
-    "noEmit": true,
-    "isolatedModules": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "noUncheckedSideEffectImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "verbatimModuleSyntax": true
+    }
   },
   "exclude": ["node_modules/"]
 }
