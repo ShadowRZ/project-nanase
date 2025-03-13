@@ -66,6 +66,8 @@
     "emojibase-data": "^16.0.2",
     "file-saver": "^2.0.5",
     "idb": "^8.0.2",
+    "lexical": "^0.24.0",
+    "lexical-solid": "^0.19.0",
     "linkify-element": "^4.2.0",
     "linkifyjs": "^4.2.0",
     "matrix-encrypt-attachment": "^1.0.3",
